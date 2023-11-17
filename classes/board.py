@@ -30,7 +30,8 @@ class Board:
         board = [[' ' for _ in range(8)] for __ in range(8)] 
         
         for figure in self.get_figures():
-            board[8 - (figure.x)][figure.y - 1] = symbols[figure.color + '_' + figure.name.lower()]
+            if figure.is_alive():
+                board[8 - (figure.x)][figure.y - 1] = symbols[figure.color + '_' + figure.name.lower()]
 
         return '\n'.join([''.join(s) for s in board])
 
@@ -40,8 +41,8 @@ class Board:
     def move(self, x1, y1, x2, y2):
         for figure in self.get_figures():
             if figure.get_coordinates() == (x1, y1):
+                
                 print(figure.move(x2, y2))
-                if 
                 break 
         else:
             raise FigureNotFoundException(x1, y1)
@@ -49,8 +50,20 @@ class Board:
     def game_is_going(self):
         for figure in self.get_figures():
             if isinstance(figure, King):
-                if not figure.is_alive:
+                if not figure.is_alive():
                     return False 
         return True
+    
+    def how_is_winner(self):
+        alive_kings = []
+        for figure in self.get_figures():
+            if isinstance(figure, King):
+                if figure.is_alive():
+                    alive_kings.append(figure.color)
+        
+        if len(alive_kings) in [0, 2]:
+            return None 
+        else:
+            return alive_kings[0]
 
 

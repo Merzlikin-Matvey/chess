@@ -10,4 +10,5 @@ while board.game_is_going():
         print(board)
     except Exception as e:
         print(e)
+print(board.how_is_winner())
 

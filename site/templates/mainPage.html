@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Example</title>
+</head>
+<body>
+    <button id="startGameButton" class="button">Начать игру</button>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+<script>
+    const startGameButton = document.getElementById("startGameButton")
+    startGameButton.addEventListener("click", function () {
+        window.location.href = "game"
+    })
+        
+</script>
+</html>

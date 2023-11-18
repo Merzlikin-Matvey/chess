@@ -1,0 +1,22 @@
+#chessboard_div {
+    width: 50%; /* или любая другая ширина */
+    margin: auto;
+}
+
+td {
+    width: 75px; 
+    height: 75px
+}
+
+td:hover {
+    background-color: #7C0902
+}
+
+.black {
+    background-color: #1B1B1B
+}
+
+.white {
+    background-color: #E0AB76
+}
+

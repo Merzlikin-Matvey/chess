@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, send_from_directory
 from flask_socketio import SocketIO
 from flask_cors import CORS
 
@@ -13,30 +13,35 @@ CORS(app)
 
 socketio = SocketIO(app)
 
-# Объявление board как глобальной переменной
 board = None
 
 @app.route('/')
 def mainPage():
-    file_path = 'mainPage.html'
-    return render_template(file_path)
+    return render_template('mainPage.html')
 
 @app.route('/game')
 def game():
-    file_path = 'game.html'
-    return render_template(file_path)
+    return render_template('game.html')
+
+@app.route('/site/js/<filename>')
+def uploaded_js(filename):
+    return send_from_directory('js', filename)
+
+@app.route('/site/css/<filename>')
+def uploaded_css(filename):
+    return send_from_directory('css', filename)
 
 @socketio.on('message_from_client')
 def handle_message(message):
-    global board  # Используйте ключевое слово global, чтобы указать, что вы используете глобальную переменную
+    global board  
     print('Message from client:', message)
     
     if message == 'start':
         board = Board()
         print(board)
     else:
-        board.move()
-        print(board)
+        pass
+       
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)

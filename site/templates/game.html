@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/site/css/board.css">
-    <title>WebSocket Example</title>
+    <link rel="stylesheet" type="text/css" href="/site/css/figures.css">
+    <title>Знаете чем шахматист отличается от пенсионера?</title>
 </head>
 <body>
     <button id="startGameButton" class="button">Нажми</button>
@@ -25,7 +26,7 @@
             sendMessage('start')
                     .then(() => sendMessage('get_new_figures'))
                     .then(() => generateChessboard())
-                    .then(() => console.log(decrypt(lastReceivedData)))
+                    .then(() => setFigures(decrypt(lastReceivedData)))
                     .catch((error) => console.error('Error:', error));
         });
 

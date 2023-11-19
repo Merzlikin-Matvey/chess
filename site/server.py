@@ -32,6 +32,10 @@ def uploaded_js(filename):
 def uploaded_css(filename):
     return send_from_directory('css', filename)
 
+@app.route('/site/res/<filename>')
+def uploaded_res(filename):
+    return send_from_directory('res', filename)
+
 
 @socketio.on('message_from_client')
 def handle_message(message):

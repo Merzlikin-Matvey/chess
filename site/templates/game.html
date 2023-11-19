@@ -20,6 +20,7 @@
         const startGameButton = document.getElementById("startGameButton")
         var socket = io.connect('http://' + document.domain + ':' + location.port);
         let lastReceivedData = null;
+        let attackPositions = [];
         
 
         socket.on('connect', function() {
@@ -34,7 +35,6 @@
 
         socket.on('message_from_server', function(message) {
             lastReceivedData = message
-            console.log('Message from server:', lastReceivedData);
         });
 
         function sendMessage(message) {
@@ -48,6 +48,14 @@
 
         function getLastReceivedData(){
             return lastReceivedData
+        }
+
+        function setAttackPositions(positions){
+            attackPositions = positions
+        }
+
+        function getAttackPositions(){
+            return attackPositions
         }
         
         startGameButton.addEventListener("click", function () {

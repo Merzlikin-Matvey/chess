@@ -20,12 +20,15 @@ class Figure:
     def __repr__(self):
         return f"{self.name}: {self.x}, {self.y}"
 
-    def move(self, x, y):
+    def move(self, x, y, user_friendly=True):
         if (x, y) in self.get_attack_positions():
             if self.is_opponent(x, y):
                 self.get_figure(x, y).kill()
             self.x, self.y = x, y
-            return f"{self.name}. Новая позиция - {x}, {y}"
+            if user_friendly:
+                return f"{self.color} {self.name}. Новая позиция - {x}, {y}"
+            else:
+                return f"{self.color}|{self.name}|{x}|{y}"
         else:
             raise CoordinateException(x, y)
 

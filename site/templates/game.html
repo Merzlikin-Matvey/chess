@@ -20,7 +20,8 @@
         const startGameButton = document.getElementById("startGameButton")
         var socket = io.connect('http://' + document.domain + ':' + location.port);
         let lastReceivedData = null;
-        let attackPositions = [];
+        let attackPositions = null;
+        let selectedPosition = null;
         
 
         socket.on('connect', function() {
@@ -29,6 +30,7 @@
                     .then(() => sendMessage('get_new_figures'))
                     .then(() => generateChessboard())
                     .then(() => setFigures(decrypt(lastReceivedData)))
+                    .then(() => lastReceivedData = null)
                     .catch((error) => console.error('Error:', error));
         });
 
@@ -56,6 +58,14 @@
 
         function getAttackPositions(){
             return attackPositions
+        }
+
+        function setSelectedPosition(positions){
+            selectedPosition = positions
+        }
+
+        function getSelectedPosition(){
+            return selectedPosition
         }
         
         startGameButton.addEventListener("click", function () {

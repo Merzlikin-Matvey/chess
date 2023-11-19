@@ -40,11 +40,12 @@ class Board:
     def get_figures(self):
         return self.figures 
     
-    def move(self, x1, y1, x2, y2):
+    def move(self, x1, y1, x2, y2, user_friendly=True):
+        print(self)
+        print(x1, y1)
         for figure in self.get_figures():
             if figure.get_coordinates() == (x1, y1):
-                
-                print(figure.move(x2, y2))
+                print(figure.move(x2, y2, user_friendly))
                 break 
         else:
             raise FigureNotFoundException(x1, y1)

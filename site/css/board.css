@@ -1,6 +1,8 @@
 #chessboard_div {
-    width: 50%; /* или любая другая ширина */
-    margin: auto;
+    position: absolute;
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
 }
 
 td {

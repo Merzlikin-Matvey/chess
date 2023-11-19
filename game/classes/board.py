@@ -1,5 +1,7 @@
 from .figure import *
-from .symbols import symbols
+from .symbols import *
+
+import base64
 
 
 class Board:
@@ -31,7 +33,7 @@ class Board:
         
         for figure in self.get_figures():
             if figure.is_alive():
-                board[8 - (figure.x)][figure.y - 1] = symbols[figure.color + '_' + figure.name.lower()]
+                board[8 - (figure.x)][figure.y - 1] = SYMBOLS[figure.color + '_' + figure.name.lower()]
 
         return '\n'.join([''.join(s) for s in board])
 
@@ -65,5 +67,18 @@ class Board:
             return None 
         else:
             return alive_kings[0]
+        
+    def encode(self):
+        s = ''
+        for figure in self.get_figures():
+            if figure.is_alive():
+                s += FIGURES_TO_NUMBERS[figure.name.lower()] 
+                s += figure.color.lower()[0]
+                s += str(figure.get_coordinates()[0]) + str(figure.get_coordinates()[1])
+        return s 
+    
+
+    
+
 
 

@@ -8,6 +8,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from game.classes.board import Board
 
+
 app = Flask(__name__)
 CORS(app) 
 
@@ -31,6 +32,7 @@ def uploaded_js(filename):
 def uploaded_css(filename):
     return send_from_directory('css', filename)
 
+
 @socketio.on('message_from_client')
 def handle_message(message):
     global board  
@@ -39,8 +41,9 @@ def handle_message(message):
     if message == 'start':
         board = Board()
         print(board)
-    else:
-        pass
+        socketio.emit('message_from_server', 'Доска создана')  
+    elif message == 'get_new_figures':
+        socketio.emit('message_from_server', board.encode())
        
 
 if __name__ == '__main__':

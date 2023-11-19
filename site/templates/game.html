@@ -17,22 +17,33 @@
     <script>
         const startGameButton = document.getElementById("startGameButton")
         var socket = io.connect('http://' + document.domain + ':' + location.port);
+        let lastReceivedData = null;
+        
 
         socket.on('connect', function() {
             console.log('Connected to server');
+            sendMessage('start')
+                    .then(() => sendMessage('get_new_figures'))
+                    .then(() => generateChessboard())
+                    .then(() => console.log(decrypt(lastReceivedData)))
+                    .catch((error) => console.error('Error:', error));
         });
+
 
         socket.on('message_from_server', function(message) {
-            console.log('Message from server:', message);
+            lastReceivedData = message
+            console.log('Message from server:', lastReceivedData);
         });
 
-        function sendMessage() {
-            let message = prompt('Enter a message:');
-            socket.emit('message_from_client', message);
+        function sendMessage(message) {
+            return new Promise((resolve, reject) => {
+                socket.emit('message_from_client', message);
+                setTimeout(() => {
+                    resolve();
+                }, 1000);
+            });
         }
-
-        generateChessboard();
-
+        
         startGameButton.addEventListener("click", function () {
             sendMessage();
         })  

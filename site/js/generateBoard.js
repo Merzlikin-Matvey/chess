@@ -1,3 +1,4 @@
+
 const FIGURES_TO_NUMBERS = {
     '0': 'pawn',
     '1': 'rook',
@@ -25,7 +26,7 @@ function generateChessboard() {
             cellElement.id = String(row + 1) + '_' + String(col + 1)
 
             cellElement.addEventListener("click", function () {
-                console.log(cellElement.id)
+                clickHandler(String(row + 1) + '_' + String(col + 1));
             })
 
             rowElement.appendChild(cellElement);

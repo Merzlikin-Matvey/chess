@@ -49,6 +49,11 @@ class Board:
         else:
             raise FigureNotFoundException(x1, y1)
         
+    def get_attack_positions(self, x, y):
+        for figure in self.get_figures():
+            if figure.get_coordinates() == (x, y):
+                return figure.get_attack_positions()
+        
     def game_is_going(self):
         for figure in self.get_figures():
             if isinstance(figure, King):
@@ -56,7 +61,7 @@ class Board:
                     return False 
         return True
     
-    def how_is_winner(self):
+    def who_is_winner(self):
         alive_kings = []
         for figure in self.get_figures():
             if isinstance(figure, King):

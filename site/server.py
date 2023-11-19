@@ -46,8 +46,14 @@ def handle_message(message):
         board = Board()
         print(board)
         socketio.emit('message_from_server', 'Доска создана')  
+
     elif message == 'get_new_figures':
         socketio.emit('message_from_server', board.encode())
+
+    elif 'get_attack_positions' in message:
+        id = list(map(int, message.split('|')[1].split('_')))
+        socketio.emit('message_from_server', board.get_attack_positions(*id))
+
        
 
 if __name__ == '__main__':

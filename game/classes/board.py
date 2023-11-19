@@ -45,8 +45,7 @@ class Board:
         print(x1, y1)
         for figure in self.get_figures():
             if figure.get_coordinates() == (x1, y1):
-                print(figure.move(x2, y2, user_friendly))
-                break 
+                return figure.move(x2, y2, user_friendly=user_friendly)
         else:
             raise FigureNotFoundException(x1, y1)
         

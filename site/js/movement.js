@@ -1,12 +1,13 @@
 function clickHandler(id) {
     previousReceivedData = getLastReceivedData()
-
-
     if (previousReceivedData != null){
+        console.log(previousReceivedData)
         if (previousReceivedData.some(
                 arr => arr[0] == Number(id[0]) && arr[1] == Number(id[2]))
             ){
+                console.log(getLastReceivedData())
                 sendMessage('move|' + getSelectedPosition() + '|' + id)
+                .then(() => move())
         }
     }
     else{
@@ -40,4 +41,36 @@ function removeHighlighPositions(){
             cage.classList.remove('attack_position')
         }
     }
+}
+
+function move(){
+    let x1 = getSelectedPosition()[0]
+    let y1 = getSelectedPosition()[2]
+    let x2 = getLastReceivedData().split('|')[2].split('_')[0]
+    let y2 = getLastReceivedData().split('|')[2].split('_')[1]
+
+    let oldCage = document.getElementById(x1 + '_' + y1)
+    let images = oldCage.getElementsByTagName('img');
+
+    if (oldCage.length != 0) {
+        oldCage.removeChild(images[0]);
+    }
+
+    let newCage = document.getElementById(x2 + '_' + y2)
+    images = newCage.getElementsByTagName('img');
+
+    if (images.length != 0) {
+        newCage.removeChild(images[0]);
+    }
+
+    let img = document.createElement('img')
+    let color = getLastReceivedData().split('|')[0].toLowerCase()
+    let name = getLastReceivedData().split('|')[1].toLowerCase()
+
+    img.src = 'site/res/' + color + '_' + name +'.png'
+    img.classList.add('figure-image');
+    newCage.appendChild(img)
+
+    removeHighlighPositions()
+    setLastReceivedData(null)
 }

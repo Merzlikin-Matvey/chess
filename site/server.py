@@ -52,6 +52,7 @@ def handle_message(message):
 
     elif 'get_attack_positions' in message:
         id = list(map(int, message.split('|')[1].split('_')))
+        print(board.get_attack_positions(*id))
         socketio.emit('message_from_server', board.get_attack_positions(*id))
 
     elif 'move' in message:

@@ -28,7 +28,7 @@ class Figure:
             if user_friendly:
                 return f"{self.color} {self.name}. Новая позиция - {x}, {y}"
             else:
-                return f"{self.color}|{self.name}|{x}|{y}"
+                return f"{self.color}|{self.name}|{x}_{y}"
         else:
             raise CoordinateException(x, y)
 

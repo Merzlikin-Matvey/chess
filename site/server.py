@@ -22,7 +22,11 @@ def mainPage():
 
 @app.route('/game')
 def game():
-    return render_template('game.html')
+    return render_template('gamePage.html')
+
+@app.route('/save')
+def save():
+    return render_template('savePage.html')
 
 @app.route('/site/js/<filename>')
 def uploaded_js(filename):
@@ -74,6 +78,9 @@ def handle_message(message):
 
     elif 'set_figures' in message:
         board.set_figures(message.split('|')[1])
+
+    elif 'encode' in message:
+        socketio.emit('message_from_server', board.encode())
        
 
 if __name__ == '__main__':

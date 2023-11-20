@@ -6,3 +6,10 @@
     left: 50vw;
     transform: translate(-50%, -50%);
 }
+
+#save {
+    position: absolute;
+    top: 50vh;
+    left: 80vw;
+    transform: translate(-50%, -50%);
+}

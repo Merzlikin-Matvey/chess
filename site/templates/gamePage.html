@@ -20,11 +20,12 @@
 
     <a id="nowMove"> Сейчас ход белых</a>
 
+    <button id="save">Сохранить</button>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
     <script src="/site/js/generateBoard.js"></script>
     <script src="/site/js/movement.js"></script>
     <script>
-        const startGameButton = document.getElementById("startGameButton")
         var socket = io.connect('http://' + document.domain + ':' + location.port);
         let lastReceivedData = null;
         let attackPositions = null;
@@ -108,6 +109,11 @@
             return nowMove
         }
         
+        document.getElementById('save').addEventListener("click", function () {
+            sendMessage('encode')
+            .then(() => window.location.href = "save?code=" + getLastReceivedData())
+    })
+
     </script>
 </body>
 </html>

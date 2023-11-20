@@ -7,6 +7,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from game.classes.board import Board
+from game.classes.exception import CodeException
 
 
 app = Flask(__name__)
@@ -27,6 +28,10 @@ def game():
 @app.route('/save')
 def save():
     return render_template('savePage.html')
+
+@app.route('/error')
+def error():
+    return render_template('errorPage.html')
 
 @app.route('/site/js/<filename>')
 def uploaded_js(filename):
@@ -77,7 +82,10 @@ def handle_message(message):
             socketio.emit('message_from_server', None)
 
     elif 'set_figures' in message:
-        board.set_figures(message.split('|')[1])
+        try:
+            board.set_figures(message.split('|')[1])
+        except CodeException:
+            socketio.emit('message_from_server', 'ERROR')
 
     elif 'encode' in message:
         socketio.emit('message_from_server', board.encode())

@@ -28,7 +28,11 @@ class Board:
             for figure in self.figures:
                 figure.set_other_figures(self.figures)
 
-    
+        else:
+            self.white_figures = []
+            self.black_figures = []
+            self.figures = []
+
     def __str__(self):
         board = [[' ' for _ in range(8)] for __ in range(8)] 
         
@@ -97,21 +101,24 @@ class Board:
         return m 
 
     def set_figures(self, code):
-        figures = self.decode(code)
+        try:
+            figures = self.decode(code)
 
-        self.white_figures = []
-        self.black_figures = []
+            self.white_figures = []
+            self.black_figures = []
 
-        for figure in figures:
-            if figure.color == 'white':
-                self.white_figures.append(figure)
-            else:
-                self.black_figures.append(figure)
-        
-        self.figures = self.white_figures + self.black_figures
+            for figure in figures:
+                if figure.color == 'white':
+                    self.white_figures.append(figure)
+                else:
+                    self.black_figures.append(figure)
+            
+            self.figures = self.white_figures + self.black_figures
 
-        for figure in self.figures:
-                figure.set_other_figures(self.figures)  
+            for figure in self.figures:
+                    figure.set_other_figures(self.figures)  
+        except:
+            raise CodeException()
         
 
     

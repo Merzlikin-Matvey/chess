@@ -10,3 +10,8 @@ class MoveException(Exception):
 class FigureNotFoundException(Exception):
     def __init__(self, x, y):
         super().__init__(self, f"There is not a figure in {x}, {y}")
+
+
+class CodeException(Exception):
+    def __init__(self):
+        super().__init__(self, f"Введен неверный код игры")

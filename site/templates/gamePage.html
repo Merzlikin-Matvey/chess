@@ -41,6 +41,7 @@
             if (code != null){
                 sendMessage('start|custom')
                     .then(() => sendMessage('set_figures|' + code))
+                    .then(() => checkFigureError())
                     .then(() => generateChessboard())
                     .then(() => setFigures(decrypt(code)))
                     .then(() => lastReceivedData = null)
@@ -109,6 +110,12 @@
             return nowMove
         }
         
+        function checkFigureError(){
+            if (getLastReceivedData() == "ERROR"){
+                window.href = ''
+            }
+        }
+
         document.getElementById('save').addEventListener("click", function () {
             sendMessage('encode')
             .then(() => window.location.href = "save?code=" + getLastReceivedData())

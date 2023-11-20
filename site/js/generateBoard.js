@@ -35,20 +35,25 @@ function generateChessboard() {
 }
 
 function setFigures(figures){
-    figures.forEach(figure => {
-        let cage = document.getElementById(
-            String(figure[2]) + '_' + String(figure[3]) 
-        )
-        let imgElement = document.createElement('img');
-        imgElement.src = 'site/res/' + figure[1] + '_' + figure[0].toLowerCase() +'.png';
-        imgElement.classList.add('figure-image');
-        cage.appendChild(imgElement);
+    try{
+        figures.forEach(figure => {
+            let cage = document.getElementById(
+                String(figure[2]) + '_' + String(figure[3]) 
+            )
+            let imgElement = document.createElement('img');
+            imgElement.src = 'site/res/' + figure[1] + '_' + figure[0].toLowerCase() +'.png';
+            imgElement.classList.add('figure-image');
+            cage.appendChild(imgElement);
+    
+        });
+    } catch (error){
+        window.location.href = 'error'
+    }
+    
 
-    });
 }
 
 function decrypt(s){
-    console.log(s)
     let decrypted = [];
     for (let i = 0; i < s.length; i += 4){
         decrypted.push([

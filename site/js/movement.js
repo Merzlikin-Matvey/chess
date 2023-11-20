@@ -9,6 +9,12 @@ function clickHandler(id) {
                 sendMessage('move|' + getSelectedPosition() + '|' + id)
                 .then(() => move())
         }
+        else{
+            setSelectedPosition(id)
+            sendMessage('get_attack_positions|' + id)
+            .then(() => highlighAttackPositions())
+            .catch((error) => console.error('Error:', error));
+        }
     }
     else{
         setSelectedPosition(id)
@@ -23,14 +29,12 @@ function highlighAttackPositions(){
     if (getLastReceivedData() != undefined){
         removeHighlighPositions()
         setAttackPositions(getLastReceivedData())
-        console.log('attack positions', getLastReceivedData())
         getLastReceivedData().forEach(array => {
             i = array[0]
             j = array[1]
             cage = document.getElementById(String(i) + '_' + String(j))
             cage.classList.add('attack_position')
         });
-        console.log('attack positions', getAttackPositions())
     }
 }
 
@@ -52,7 +56,7 @@ function move(){
     let oldCage = document.getElementById(x1 + '_' + y1)
     let images = oldCage.getElementsByTagName('img');
 
-    if (oldCage.length != 0) {
+    if (images.length != 0) {
         oldCage.removeChild(images[0]);
     }
 
@@ -72,5 +76,11 @@ function move(){
     newCage.appendChild(img)
 
     removeHighlighPositions()
+
+    if (getLastReceivedData().includes('checkmate')){
+        console.log('конец')
+        window.location.href = ""
+    }
+
     setLastReceivedData(null)
 }

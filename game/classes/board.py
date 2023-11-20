@@ -19,7 +19,7 @@ class Board:
             + [Rook(8, 1, color="black"), Rook(8, 8, color="black")]
             + [Knight(8, 2, color="black"), Knight(8, 7, color="black")]
             + [Bishop(8, 3, color="black"), Bishop(8, 6, color="black")]
-            + [Queen(8, 5, color="black"), King(8, 4, color="black")]
+            + [Queen(8, 4, color="black"), King(8, 5, color="black")]
         )
 
         self.figures = self.white_figures + self.black_figures
@@ -41,17 +41,16 @@ class Board:
         return self.figures 
     
     def move(self, x1, y1, x2, y2, user_friendly=True):
-        print(self)
-        print(x1, y1)
         for figure in self.get_figures():
-            if figure.get_coordinates() == (x1, y1):
+            if figure.get_coordinates() == (x1, y1) and figure.is_alive():
                 return figure.move(x2, y2, user_friendly=user_friendly)
         else:
             raise FigureNotFoundException(x1, y1)
         
+        
     def get_attack_positions(self, x, y):
         for figure in self.get_figures():
-            if figure.get_coordinates() == (x, y):
+            if figure.get_coordinates() == (x, y) and figure.is_alive():
                 return figure.get_attack_positions()
         
     def game_is_going(self):

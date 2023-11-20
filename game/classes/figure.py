@@ -23,12 +23,20 @@ class Figure:
     def move(self, x, y, user_friendly=True):
         if (x, y) in self.get_attack_positions():
             if self.is_opponent(x, y):
+                if isinstance(self.get_figure(x, y), King):
+                    self.get_figure(x, y).kill()
+                    if user_friendly:
+                        return f"{self.color} {self.name}. Мат {x}, {y}"
+                    else:
+                        return f"{self.color}|{self.name}|{x}_{y}|checkmate"
                 self.get_figure(x, y).kill()
             self.x, self.y = x, y
+
             if user_friendly:
                 return f"{self.color} {self.name}. Новая позиция - {x}, {y}"
             else:
                 return f"{self.color}|{self.name}|{x}_{y}"
+            
         else:
             raise CoordinateException(x, y)
 
@@ -48,7 +56,7 @@ class Figure:
         if not (isinstance(x, int) and isinstance(y, int)) or not (x in range(1, 9) and y in range(1, 9)):
             raise CoordinateException(x, y)
         for figure in self.other_figures:
-            if figure.get_coordinates() == (x, y):
+            if figure.get_coordinates() == (x, y) and figure.is_alive():
                 return False
         return True
 
@@ -62,6 +70,7 @@ class Figure:
             if (
                 figure.get_coordinates() == (x, y)
                 and figure.get_color() == self.get_color()
+                and figure.is_alive()
             ):
                 return True
         return False
@@ -75,6 +84,7 @@ class Figure:
             if (
                 figure.get_coordinates() == (x, y)
                 and figure.get_color() != self.get_color()
+                and figure.is_alive()
             ):
                 return True
         return False
@@ -85,7 +95,7 @@ class Figure:
         ):
             raise CoordinateException(x, y)
         for figure in self.other_figures:
-            if figure.get_coordinates() == (x, y):
+            if figure.get_coordinates() == (x, y) and figure.is_alive():
                 return figure
         return None
 
@@ -166,6 +176,8 @@ class Rook(Figure):
             elif self.is_opponent(self.x + i, self.y):
                 array.append((self.x + i, self.y))
                 break
+            else:
+                break
             i += 1
 
         i = 1
@@ -174,6 +186,8 @@ class Rook(Figure):
                 array.append((self.x - i, self.y))
             elif self.is_opponent(self.x - i, self.y):
                 array.append((self.x - i, self.y))
+                break
+            else:
                 break
             i += 1
 
@@ -184,6 +198,8 @@ class Rook(Figure):
             elif self.is_opponent(self.x, self.y + i):
                 array.append((self.x, self.y + i))
                 break
+            else:
+                break
             i += 1
 
         i = 1
@@ -192,6 +208,8 @@ class Rook(Figure):
                 array.append((self.x, self.y - i))
             elif self.is_opponent(self.x, self.y - i):
                 array.append((self.x, self.y - i))
+                break
+            else:
                 break
             i += 1
 
@@ -239,6 +257,8 @@ class Bishop(Figure):
             elif self.is_opponent(self.x + i, self.y + i):
                 array.append((self.x + i, self.y + i))
                 break
+            else:
+                break
             i += 1
 
         i = 1
@@ -247,6 +267,8 @@ class Bishop(Figure):
                 array.append((self.x - i, self.y - i))
             elif self.is_opponent(self.x - i, self.y - i):
                 array.append((self.x - i, self.y - i))
+                break
+            else:
                 break
             i += 1
 
@@ -257,6 +279,8 @@ class Bishop(Figure):
             elif self.is_opponent(self.x + i, self.y - i):
                 array.append((self.x + i, self.y - i))
                 break
+            else:
+                break
             i += 1
 
         i = 1
@@ -265,6 +289,8 @@ class Bishop(Figure):
                 array.append((self.x - i, self.y + i))
             elif self.is_opponent(self.x - i, self.y + i):
                 array.append((self.x - i, self.y + i))
+                break 
+            else:
                 break
             i += 1
 
@@ -285,6 +311,8 @@ class Queen(Figure):
             elif self.is_opponent(self.x + i, self.y + i):
                 array.append((self.x + i, self.y + i))
                 break
+            else:
+                break
             i += 1
 
         i = 1
@@ -293,6 +321,8 @@ class Queen(Figure):
                 array.append((self.x - i, self.y - i))
             elif self.is_opponent(self.x - i, self.y - i):
                 array.append((self.x - i, self.y - i))
+                break
+            else:
                 break
             i += 1
 
@@ -303,6 +333,8 @@ class Queen(Figure):
             elif self.is_opponent(self.x + i, self.y - i):
                 array.append((self.x + i, self.y - i))
                 break
+            else:
+                break
             i += 1
 
         i = 1
@@ -311,6 +343,8 @@ class Queen(Figure):
                 array.append((self.x - i, self.y + i))
             elif self.is_opponent(self.x - i, self.y + i):
                 array.append((self.x - i, self.y + i))
+                break
+            else:
                 break
             i += 1
         
@@ -321,6 +355,8 @@ class Queen(Figure):
             elif self.is_opponent(self.x + i, self.y):
                 array.append((self.x + i, self.y))
                 break
+            else:
+                break
             i += 1
 
         i = 1
@@ -329,6 +365,8 @@ class Queen(Figure):
                 array.append((self.x - i, self.y))
             elif self.is_opponent(self.x - i, self.y):
                 array.append((self.x - i, self.y))
+                break
+            else:
                 break
             i += 1
 
@@ -339,6 +377,8 @@ class Queen(Figure):
             elif self.is_opponent(self.x, self.y + i):
                 array.append((self.x, self.y + i))
                 break
+            else:
+                break
             i += 1
 
         i = 1
@@ -347,6 +387,8 @@ class Queen(Figure):
                 array.append((self.x, self.y - i))
             elif self.is_opponent(self.x, self.y - i):
                 array.append((self.x, self.y - i))
+                break
+            else:
                 break
             i += 1
 

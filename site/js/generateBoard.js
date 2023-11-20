@@ -1,4 +1,3 @@
-
 const FIGURES_TO_NUMBERS = {
     '0': 'pawn',
     '1': 'rook',

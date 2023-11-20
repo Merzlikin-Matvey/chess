@@ -5,27 +5,28 @@ import base64
 
 
 class Board:
-    def __init__(self):
-        self.white_figures = (
-            [Pawn(2, i) for i in range(1, 9)]
-            + [Rook(1, 1), Rook(1, 8)]
-            + [Knight(1, 2), Knight(1, 7)]
-            + [Bishop(1, 3), Bishop(1, 6)]
-            + [Queen(1, 4), King(1, 5)]
-        )
+    def __init__(self, default_positions=True):
+        if default_positions:
+            self.white_figures = (
+                [Pawn(2, i) for i in range(1, 9)]
+                + [Rook(1, 1), Rook(1, 8)]
+                + [Knight(1, 2), Knight(1, 7)]
+                + [Bishop(1, 3), Bishop(1, 6)]
+                + [Queen(1, 4), King(1, 5)]
+            )
 
-        self.black_figures = (
-            [Pawn(7, i, color="black") for i in range(1, 9)]
-            + [Rook(8, 1, color="black"), Rook(8, 8, color="black")]
-            + [Knight(8, 2, color="black"), Knight(8, 7, color="black")]
-            + [Bishop(8, 3, color="black"), Bishop(8, 6, color="black")]
-            + [Queen(8, 4, color="black"), King(8, 5, color="black")]
-        )
+            self.black_figures = (
+                [Pawn(7, i, color="black") for i in range(1, 9)]
+                + [Rook(8, 1, color="black"), Rook(8, 8, color="black")]
+                + [Knight(8, 2, color="black"), Knight(8, 7, color="black")]
+                + [Bishop(8, 3, color="black"), Bishop(8, 6, color="black")]
+                + [Queen(8, 4, color="black"), King(8, 5, color="black")]
+            )
 
-        self.figures = self.white_figures + self.black_figures
+            self.figures = self.white_figures + self.black_figures
 
-        for figure in self.figures:
-            figure.set_other_figures(self.figures)
+            for figure in self.figures:
+                figure.set_other_figures(self.figures)
 
     
     def __str__(self):
@@ -80,6 +81,40 @@ class Board:
                 s += figure.color.lower()[0]
                 s += str(figure.get_coordinates()[0]) + str(figure.get_coordinates()[1])
         return s 
+    
+    def get_figure_by_position(self, x, y):
+        for figure in self.get_figures():
+            if figure.get_coordinates() == (x, y) and figure.is_alive():
+                return figure 
+            
+    def decode(self, code):
+        m = []
+        for i in range(0, len(code), 4):
+            m.append(eval(
+                f'{NUMBERS_TO_FIGURES[code[i]].capitalize()}({code[i + 2]}, {code[i + 3]}, "{code[i + 1]}" )'
+                ))
+        
+        return m 
+
+    def set_figures(self, code):
+        figures = self.decode(code)
+
+        self.white_figures = []
+        self.black_figures = []
+
+        for figure in figures:
+            if figure.color == 'white':
+                self.white_figures.append(figure)
+            else:
+                self.black_figures.append(figure)
+        
+        self.figures = self.white_figures + self.black_figures
+
+        for figure in self.figures:
+                figure.set_other_figures(self.figures)  
+        
+
+    
     
 
     

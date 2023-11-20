@@ -8,6 +8,10 @@ class Figure:
         ):
             self.x = x
             self.y = y
+            if color == 'w':
+                color = 'white'
+            elif color == 'b':
+                color = 'black'
             self.color = color
             self.name = name
             self.alive = True

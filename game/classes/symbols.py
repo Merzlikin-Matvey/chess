@@ -22,3 +22,12 @@ FIGURES_TO_NUMBERS = {
     'queen': '4',
     'king': '5'
 }
+
+NUMBERS_TO_FIGURES = {
+    '0': 'pawn',
+    '1': 'rook',
+    '2': 'bishop',
+    '3': 'knight',
+    '4': 'queen',
+    '5': 'king',
+}

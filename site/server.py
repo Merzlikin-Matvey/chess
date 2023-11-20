@@ -42,10 +42,15 @@ def handle_message(message):
     global board  
     print('Message from client:', message)
     
-    if message == 'start':
-        board = Board()
-        print(board)
-        socketio.emit('message_from_server', 'Доска создана')  
+    if 'start' in message:
+        if message.split('|')[1] == 'default':
+            board = Board()
+            print(board)
+            socketio.emit('message_from_server', 'Доска создана')  
+        else:
+            board = Board(default_positions=False)
+            print(board)
+            socketio.emit('message_from_server', 'Доска создана')  
 
     elif message == 'get_new_figures':
         socketio.emit('message_from_server', board.encode())
@@ -58,6 +63,17 @@ def handle_message(message):
         x1, y1 = list(map(int, message.split('|')[1].split('_')))
         x2, y2 = list(map(int, message.split('|')[2].split('_')))
         socketio.emit('message_from_server', board.move(x1, y1, x2, y2, False))
+    
+    elif 'get_color' in message:
+        x, y = list(map(int, message.split('|')[1].split('_')))
+        figure = board.get_figure_by_position(x, y)
+        try:
+            socketio.emit('message_from_server', figure.get_color())
+        except AttributeError:
+            socketio.emit('message_from_server', None)
+
+    elif 'set_figures' in message:
+        board.set_figures(message.split('|')[1])
        
 
 if __name__ == '__main__':

@@ -1,0 +1,8 @@
+#nowMove {
+    color: black;
+    font-size: 52pt; 
+    position: absolute;
+    top: 90vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+}

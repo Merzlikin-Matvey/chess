@@ -141,3 +141,5 @@ class Board:
                 figure.set_other_figures(self.figures)
         except:
             raise CodeException()
+
+

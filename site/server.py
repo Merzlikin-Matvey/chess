@@ -125,6 +125,12 @@ def handle_message(message):
                 "message_from_server",
                 {"id": message["id"], "message": f"{color}, {name}"},
             )
+            
+        case 'save':
+            socketio.emit(
+                "message_from_server",
+                {"id": message["id"], "message": board.encode()},
+            )
 
 
 if __name__ == "__main__":

@@ -137,3 +137,7 @@ class Board:
 
     def get_move_color(self):
         return self.move_color
+    
+    def is_check_mate(self):
+        pass
+        # TODO проверка на мат 

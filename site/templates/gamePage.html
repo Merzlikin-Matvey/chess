@@ -44,6 +44,13 @@
         setFigures();
         sendMessage("start");
       });
+
+      document.getElementById("save").addEventListener("click", function () {
+        console.log("save");
+        sendMessage("save").then((message) => {
+          window.location.href = "save?code=" + message.message;
+        });
+      });
     </script>
   </body>
 </html>

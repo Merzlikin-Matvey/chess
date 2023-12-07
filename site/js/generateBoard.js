@@ -1,4 +1,5 @@
-import { NUMBER_TO_LETTER, decrypt } from '/site/js/chessNotation.js';
+import { NUMBER_TO_LETTER, decrypt } from "/site/js/chessNotation.js";
+import { clickHandler } from "/site/js/clickHandler.js";
 
 function generateBoard() {
   const chessboard = document.getElementById("chessboard");
@@ -9,9 +10,9 @@ function generateBoard() {
     for (let col = 1; col < 9; col++) {
       const cellElement = document.createElement("td");
       cellElement.className = colors[(row + col) % 2];
-      cellElement.id = NUMBER_TO_LETTER[row] + col
+      cellElement.id = NUMBER_TO_LETTER[col] + row;
       cellElement.addEventListener("click", function () {
-        clickHandler(NUMBER_TO_LETTER[row] + col);
+        clickHandler(cellElement.id);
       });
       rowElement.appendChild(cellElement);
     }
@@ -19,16 +20,16 @@ function generateBoard() {
   }
 }
 
-function setFigures(code){
-  if (code == null){
-    code = "0w210w220w230w240w250w260w270w281w111w183w123w172w132w164w155w140b710b720b730b740b750b760b770b781b811b883b823b872b832b864b855b84"
+function setFigures(code) {
+  if (code == null) {
+    code =
+      "0w210w220w230w240w250w260w270w281w111w183w123w172w132w164w155w140b710b720b730b740b750b760b770b781b811b883b823b872b832b864b855b84";
   }
-  const figures = decrypt(code)
-  console.log(figures)
+  const figures = decrypt(code);
+  console.log(figures);
 
   figures.forEach((figure) => {
-    let cage = document.getElementById(NUMBER_TO_LETTER[figure[2]] + figure[3]);
-    console.log(NUMBER_TO_LETTER[figure[2]] + figure[3])
+    let cage = document.getElementById(NUMBER_TO_LETTER[figure[3]] + figure[2]);
     let imgElement = document.createElement("img");
     imgElement.src =
       "site/res/" + figure[1] + "_" + figure[0].toLowerCase() + ".png";
@@ -39,7 +40,4 @@ function setFigures(code){
   });
 }
 
-export {
-  generateBoard,
-  setFigures,
-}
+export { generateBoard, setFigures };

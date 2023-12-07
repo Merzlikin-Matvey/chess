@@ -79,9 +79,12 @@ def handle_message(message):
 
             socketio.emit("message_from_server", {"id": message["id"], "message": "ok"})
         case "get_color":
-            color = board.get_figure_by_position(
-                *board.to_number_notation(message["message"])
-            ).get_color()
+            try:
+                color = board.get_figure_by_position(
+                    *board.to_number_notation(message["message"])
+                ).get_color()
+            except:
+                color = None
             socketio.emit(
                 "message_from_server", {"id": message["id"], "message": color}
             )

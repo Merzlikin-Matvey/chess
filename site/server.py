@@ -74,7 +74,8 @@ def handle_message(message):
 
     match message["type"]:
         case "start":
-            board = Board()
+            print(message['message'])
+            board = Board(code=message['message'])
             print(board)
 
             socketio.emit("message_from_server", {"id": message["id"], "message": "ok"})

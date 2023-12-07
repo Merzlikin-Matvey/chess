@@ -2,9 +2,6 @@ const socket = io.connect("http://" + document.domain + ":" + location.port);
 let numOfMessages = 1;
 
 async function sendMessage(type, message) {
-  if (message == null) {
-    message = "no message";
-  }
 
   return new Promise((resolve, reject) => {
     const messageId = numOfMessages++;

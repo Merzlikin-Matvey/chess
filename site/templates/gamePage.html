@@ -39,10 +39,13 @@
       import { generateBoard, setFigures } from "/site/js/generateBoard.js";
       import { socket, sendMessage } from "/site/js/connect.js";
 
+      const urlParams = new URLSearchParams(window.location.search); 
+      const code = urlParams.get("code"); 
+
       socket.on("connect", async function () {
         generateBoard();
-        setFigures();
-        sendMessage("start");
+        setFigures(code);
+        sendMessage("start", code);
       });
 
       document.getElementById("save").addEventListener("click", function () {

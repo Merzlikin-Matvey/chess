@@ -23,18 +23,17 @@ async function clickHandler(id) {
     if (highlighted.includes(id)) {
       move(selected, id);
     } else {
-      sendMessage("get_color", id)
-      .then((colorResult) => {
+      sendMessage("get_color", id).then((colorResult) => {
         sendMessage("get_move_color").then((moveColorResult) => {
           if (colorResult.message == moveColorResult.message) {
             selected = id;
-            removeHighlight()
+            removeHighlight();
             highlight(id);
           } else {
             console.log(moveColorResult, colorResult);
           }
         });
-      })
+      });
     }
   }
 }
@@ -89,7 +88,6 @@ function move(first, second) {
     document.getElementById(second).appendChild(img);
 
     selected = null;
-
   });
 }
 

@@ -1,5 +1,6 @@
 from .figure import *
 from .symbols import *
+import colorama
 
 NUMBERS_TO_LETTERS = {1: "a", 2: "b", 3: "c", 4: "d", 5: "e", 6: "f", 7: "g", 8: "h"}
 
@@ -21,6 +22,8 @@ COLORS = ["white", "black"]
 
 class Board:
     def __init__(self, code=DEFAULT_CODE):
+        if code == None:
+            code = DEFAULT_CODE
         figures = self.decode(code)
 
         self.move_color = "white"

@@ -1,17 +1,20 @@
-
-
 #startGameButton {
-  width: 100%; 
-  max-width: 410px; 
-  height: 67px; 
-  background-color: transparent; 
-  border: 2px solid rgb(104, 104, 104); 
-  border-radius: 100px; 
+  position: absolute;
+  top: 35vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 100%;
+  max-width: 410px;
+  height: 67px;
+  background-color: transparent;
+  border: 2px solid rgb(104, 104, 104);
+  border-radius: 100px;
   color: #e5e5e5;
-  padding: 10px 20px; 
-  cursor: pointer; 
-  font-size: 26pt; 
-  margin: 6px; 
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 26pt;
+  margin: 6px;
 }
 
 #inputCode {
@@ -20,6 +23,19 @@
   left: 50vw;
   transform: translate(-50%, -50%);
   text-align: center;
-  width: 20%;
-  font-size: 20pt;
+  width: 410px; /* Ширина поля ввода */
+  height: 60px; /* Высота поля ввода */
+  background-color: transparent; /* Прозрачный фон */
+  border: 2px solid rgb(104, 104, 104); /* Серая окантовка */
+  border-radius: 100px; /* Закругленные углы */
+  color: #e5e5e5; /* Белый цвет текста */
+  padding: 10px 20px; /* Отступы внутри поля ввода */
+  cursor: pointer; /* Курсор в виде указателя при наведении */
+  font-size: 24pt; /* Размер шрифта */
+  font-family: "Rubik"; /* Шрифт */
+  margin-bottom: 10px; /* Отступ снизу */
+}
+
+.div {
+
 }

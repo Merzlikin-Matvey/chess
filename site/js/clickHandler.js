@@ -1,18 +1,25 @@
 import { sendMessage } from "/site/js/connect.js";
-import { NUMBER_TO_LETTER } from "/site/js/chessNotation.js";
+import { NUMBER_TO_LETTER, toChessNotation } from "/site/js/chessNotation.js";
 let selected = null;
 let highlighted = [];
+let moveColor = "white";
+let numOfMoves = 0;
+
+function setMoveColor(color) {
+  moveColor = color;
+}
 
 async function clickHandler(id) {
-  if (selected == null) {
+  if (selected == id) {
+    selected = null;
+    removeHighlight();
+  } else if (selected == null) {
     sendMessage("get_color", id)
       .then((colorResult) => {
         sendMessage("get_move_color").then((moveColorResult) => {
           if (colorResult.message == moveColorResult.message) {
             selected = id;
             highlight(id);
-          } else {
-            console.log(moveColorResult, colorResult);
           }
         });
       })
@@ -29,8 +36,6 @@ async function clickHandler(id) {
             selected = id;
             removeHighlight();
             highlight(id);
-          } else {
-            console.log(moveColorResult, colorResult);
           }
         });
       });
@@ -80,15 +85,32 @@ function move(first, second) {
     let img = document.createElement("img");
     let color = moveResult.message.split(",")[0].toLowerCase();
     let name = moveResult.message.split(",")[1].toLowerCase().replace(" ", "");
-    console.log(color, name);
-    console.log("site/res/" + color + "_" + name + ".png");
+
     img.src = "site/res/" + color + "_" + name + ".png";
     img.classList.add("figure-image");
 
     document.getElementById(second).appendChild(img);
 
+    if (moveColor == "white") {
+      moveColor = "black";
+      document.getElementById("nowMove").innerHTML = "Сейчас ход черных";
+    } else if (moveColor == "black") {
+      moveColor = "white";
+      document.getElementById("nowMove").innerHTML = "Сейчас ход белых";
+    }
+
+    addMove(first + '-' + second)
+
     selected = null;
   });
 }
 
-export { clickHandler };
+function addMove(s) {
+  let moves = document.getElementById("moves");
+  let oneMove = document.createElement("text");
+  numOfMoves++;
+  oneMove.innerHTML = String(numOfMoves) + ". " + s + "<br>";
+  moves.appendChild(oneMove);
+}
+
+export { clickHandler, setMoveColor, addMove };

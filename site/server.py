@@ -1,10 +1,12 @@
-from flask import Flask, render_template, send_from_directory
+from flask import Flask, render_template, send_from_directory, jsonify
 from flask_socketio import SocketIO
 from flask_cors import CORS
 
+from werkzeug.middleware.proxy_fix import ProxyFix
+
 import sys
 import os
-import time
+from pathlib import Path
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from game.classes.board import Board
@@ -66,6 +68,18 @@ def uploaded_res(filename):
     return send_from_directory("res", filename)
 
 
+@app.route("/get_save/<id>", methods=["GET"])
+def upload_json_data(id):
+    if id == 'default':
+        data = open('default.json', 'r').read()
+    else:
+        try:
+            data = open(f'saves/{id}.json', 'r').read()
+        except:
+            raise CodeException()
+    
+    return jsonify(data)
+
 # Общение с клиентом
 @socketio.on("message_from_client")
 def handle_message(message):
@@ -74,10 +88,7 @@ def handle_message(message):
 
     match message["type"]:
         case "start":
-            print(message['message'])
-            board = Board(code=message['message'])
-            print(board)
-
+            board = Board(id=message["message"])
             socketio.emit("message_from_server", {"id": message["id"], "message": "ok"})
         case "get_color":
             try:
@@ -108,26 +119,25 @@ def handle_message(message):
             )
 
         case "move":
-            print("ДВИЖЕНИЕ")
             board.move(
                 *board.to_number_notation(message["message"][:2]),
                 *board.to_number_notation(message["message"][2:]),
             )
-            
+
             color = board.get_figure_by_position(
                 *board.to_number_notation(message["message"][2:])
             ).get_color()
-            
+
             name = board.get_figure_by_position(
                 *board.to_number_notation(message["message"][2:])
             ).get_name()
-            
+
             socketio.emit(
                 "message_from_server",
                 {"id": message["id"], "message": f"{color}, {name}"},
             )
-            
-        case 'save':
+
+        case "save":
             socketio.emit(
                 "message_from_server",
                 {"id": message["id"], "message": board.encode()},
@@ -135,4 +145,14 @@ def handle_message(message):
 
 
 if __name__ == "__main__":
-    socketio.run(app, debug=True)
+    PORT = 5000
+    ssl_context = (
+        "/etc/letsencrypt/live/chess.projectalpha.ru/fullchain.pem",
+        "/etc/letsencrypt/live/chess.projectalpha.ru/privkey.pem",
+    )
+    if Path(ssl_context[0]).is_file() and Path(ssl_context[1]).is_file():
+        app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
+        socketio.run(app, port=PORT, use_reloader=True, ssl_context=ssl_context)
+    else:
+        print("Нет SSL сертификатов")
+        socketio.run(app, port=PORT)

@@ -1,4 +1,4 @@
-from .exception import *
+from exception import *
 
 
 class Figure:
@@ -8,10 +8,6 @@ class Figure:
         ):
             self.x = x
             self.y = y
-            if color == "w":
-                color = "white"
-            elif color == "b":
-                color = "black"
             self.color = color
             self.name = name
             self.alive = True
@@ -19,35 +15,20 @@ class Figure:
             raise CoordinateException(x, y)
 
     def __str__(self):
-        return f"{self.name}, {self.color}: {self.x}, {self.y}"
+        return f"{self.name}: {self.x}, {self.y}"
 
     def __repr__(self):
-        return f"{self.name}, {self.color}: {self.x}, {self.y}"
-    
-    def get_name(self):
-        return self.name
+        return f"{self.name}: {self.x}, {self.y}"
 
-    def move(self, x, y, user_friendly=True):
+    def move(self, x, y):
         if (x, y) in self.get_attack_positions():
             if self.is_opponent(x, y):
-                if isinstance(self.get_figure(x, y), King):
-                    self.get_figure(x, y).kill()
-                    if user_friendly:
-                        return f"{self.color} {self.name}. Мат {x}, {y}"
-                    else:
-                        return f"{self.color}|{self.name}|{x}_{y}|checkmate"
                 self.get_figure(x, y).kill()
             self.x, self.y = x, y
-
-            if user_friendly:
-                return f"{self.color} {self.name}. Новая позиция - {x}, {y}"
-            else:
-                return f"{self.color}|{self.name}|{x}_{y}"
-
+            return f"{self.name}. Новая позиция - {x}, {y}"
         else:
             raise CoordinateException(x, y)
 
-    # При создании доски сюда добавляются все фигуры на ней
     def set_other_figures(self, array):
         self.other_figures = array
 
@@ -60,18 +41,16 @@ class Figure:
     def get_coordinates(self):
         return self.x, self.y
 
-    # Проверяет пуста ли ячейка с нужными координатами
     def is_empty(self, x: int, y: int):
-        if not (isinstance(x, int) and isinstance(y, int)) or not (
-            x in range(1, 9) and y in range(1, 9)
+        if not (x in range(1, 9) and y in range(1, 9)) and (
+            isinstance(x, int) and isinstance(y, int)
         ):
             raise CoordinateException(x, y)
         for figure in self.other_figures:
-            if figure.get_coordinates() == (x, y) and figure.is_alive():
+            if figure.get_coordinates() == (x, y):
                 return False
         return True
 
-    # Проверяет, находится ли союзник в нужных координатах
     def is_teammate(self, x: int, y: int):
         if not (x in range(1, 9) and y in range(1, 9)) and (
             isinstance(x, int) and isinstance(y, int)
@@ -81,12 +60,10 @@ class Figure:
             if (
                 figure.get_coordinates() == (x, y)
                 and figure.get_color() == self.get_color()
-                and figure.is_alive()
             ):
                 return True
         return False
 
-    # Проверяет, находится ли противник в нужных координатах
     def is_opponent(self, x: int, y: int):
         if not (x in range(1, 9) and y in range(1, 9)) and (
             isinstance(x, int) and isinstance(y, int)
@@ -96,31 +73,27 @@ class Figure:
             if (
                 figure.get_coordinates() == (x, y)
                 and figure.get_color() != self.get_color()
-                and figure.is_alive()
             ):
                 return True
         return False
 
-    # Возвращает фигуру с нужными координатами
     def get_figure(self, x: int, y: int):
         if not (x in range(1, 9) and y in range(1, 9)) and (
             isinstance(x, int) and isinstance(y, int)
         ):
             raise CoordinateException(x, y)
         for figure in self.other_figures:
-            if figure.get_coordinates() == (x, y) and figure.is_alive():
+            if figure.get_coordinates() == (x, y):
                 return figure
+        return None
 
-    # Умирает при поедании
     def kill(self):
         self.alive = False
 
-    # Жива или нет
     def is_alive(self):
         return self.alive
 
 
-# Пешка
 class Pawn(Figure):
     def __init__(self, x: int, y: int, color: str = "white"):
         super().__init__(x, y, color, "Pawn")
@@ -128,68 +101,34 @@ class Pawn(Figure):
     def get_attack_positions(self):
         array = []
         if self.color == "white":
-            if self.x == 8:
+            if self.y == 8:
                 return array
             else:
-                try:
-                    if self.x == 2:
-                        if self.is_empty(self.x + 2, self.y):
-                            array.append((self.x + 2, self.y))
-                except CoordinateException:
-                    pass
-                try:
-                    if self.is_empty(self.x + 1, self.y):
-                        array.append((self.x + 1, self.y))
-                except CoordinateException:
-                    pass
+                if self.is_empty(self.x + 1, self.y):
+                    array.append((self.x + 1, self.y))
+                if self.y != 0:
+                    if self.is_opponent(self.x + 1, self.y - 1):
+                        array.append((self.x + 1, self.y - 1))
 
-                try:
-                    if self.y != 0:
-                        if self.is_opponent(self.x + 1, self.y - 1):
-                            array.append((self.x + 1, self.y - 1))
-                except CoordinateException:
-                    pass
-
-                try:
-                    if self.y != 8:
-                        if self.is_opponent(self.x + 1, self.y + 1):
-                            array.append((self.x + 1, self.y + 1))
-                except CoordinateException:
-                    pass
-
+                if self.y != 8:
+                    if self.is_opponent(self.x + 1, self.y + 1):
+                        array.append((self.x + 1, self.y + 1))
         else:
-            if self.x == 0:
+            if self.y == 0:
                 return array
             else:
-                try:
-                    if self.x == 7:
-                        if self.is_empty(self.x - 2, self.y):
-                            array.append((self.x - 2, self.y))
-                except CoordinateException:
-                    pass
-                try:
-                    if self.is_empty(self.x - 1, self.y):
-                        array.append((self.x - 1, self.y))
-                except CoordinateException:
-                    pass
+                if self.is_empty(self.x - 1, self.y):
+                    array.append((self.x - 1, self.y))
+                if self.y != 0:
+                    if self.is_opponent(self.x - 1, self.y + 1):
+                        array.append((self.x - 1, self.y + 1))
 
-                try:
-                    if self.y != 0:
-                        if self.is_opponent(self.x - 1, self.y + 1):
-                            array.append((self.x - 1, self.y + 1))
-                except CoordinateException:
-                    pass
-
-                try:
-                    if self.y != 8:
-                        if self.is_opponent(self.x + 1, self.y + 1):
-                            array.append((self.x + 1, self.y + 1))
-                except CoordinateException:
-                    pass
+                if self.y != 8:
+                    if self.is_opponent(self.x + 1, self.y + 1):
+                        array.append((self.x + 1, self.y + 1))
         return array
 
 
-# Башенка
 class Rook(Figure):
     def __init__(self, x: int, y: int, color: str = "white"):
         super().__init__(x, y, color, "Rook")
@@ -204,8 +143,6 @@ class Rook(Figure):
             elif self.is_opponent(self.x + i, self.y):
                 array.append((self.x + i, self.y))
                 break
-            else:
-                break
             i += 1
 
         i = 1
@@ -215,18 +152,14 @@ class Rook(Figure):
             elif self.is_opponent(self.x - i, self.y):
                 array.append((self.x - i, self.y))
                 break
-            else:
-                break
             i += 1
 
         i = 1
-        while self.y + i <= 8:
+        while self.y + i >= 1:
             if self.is_empty(self.x, self.y + i):
                 array.append((self.x, self.y + i))
             elif self.is_opponent(self.x, self.y + i):
                 array.append((self.x, self.y + i))
-                break
-            else:
                 break
             i += 1
 
@@ -237,14 +170,11 @@ class Rook(Figure):
             elif self.is_opponent(self.x, self.y - i):
                 array.append((self.x, self.y - i))
                 break
-            else:
-                break
             i += 1
 
         return array
 
 
-# Пони
 class Knight(Figure):
     def __init__(self, x: int, y: int, color: str = "white"):
         super().__init__(x, y, color, "Knight")
@@ -272,7 +202,6 @@ class Knight(Figure):
         return array
 
 
-# Слон
 class Bishop(Figure):
     def __init__(self, x: int, y: int, color: str = "white"):
         super().__init__(x, y, color, "Bishop")
@@ -281,53 +210,40 @@ class Bishop(Figure):
         array = []
 
         i = 1
-        while self.x + i <= 8 and self.y + i <= 8:
-            if self.is_empty(self.x + i, self.y + i):
-                array.append((self.x + i, self.y + i))
-            elif self.is_opponent(self.x + i, self.y + i):
-                array.append((self.x + i, self.y + i))
+        while self.x + i <= 8:
+            if self.is_empty(self.x + i, self.y):
+                array.append((self.x + i, self.y))
+            elif self.is_opponent(self.x + i, self.y):
+                array.append((self.x + i, self.y))
                 break
-            else:
-                break
-            i += 1
 
         i = 1
-        while self.x - i >= 1 and self.y - i >= 1:
-            if self.is_empty(self.x - i, self.y - i):
-                array.append((self.x - i, self.y - i))
-            elif self.is_opponent(self.x - i, self.y - i):
-                array.append((self.x - i, self.y - i))
+        while self.x - i >= 1:
+            if self.is_empty(self.x - i, self.y):
+                array.append((self.x - i, self.y))
+            elif self.is_opponent(self.x - i, self.y):
+                array.append((self.x - i, self.y))
                 break
-            else:
-                break
-            i += 1
 
         i = 1
-        while self.x + i <= 8 and self.y - i >= 1:
-            if self.is_empty(self.x + i, self.y - i):
-                array.append((self.x + i, self.y - i))
-            elif self.is_opponent(self.x + i, self.y - i):
-                array.append((self.x + i, self.y - i))
+        while self.y + i <= 8:
+            if self.is_empty(self.x, self.y + i):
+                array.append((self.x, self.y + i))
+            elif self.is_opponent(self.x, self.y + i):
+                array.append((self.x, self.y + i))
                 break
-            else:
-                break
-            i += 1
 
         i = 1
-        while self.x - i >= 1 and self.y + i <= 8:
-            if self.is_empty(self.x - i, self.y + i):
-                array.append((self.x - i, self.y + i))
-            elif self.is_opponent(self.x - i, self.y + i):
-                array.append((self.x - i, self.y + i))
+        while self.y - i >= 1:
+            if self.is_empty(self.x, self.y - i):
+                array.append((self.x, self.y - i))
+            elif self.is_opponent(self.x, self.y - i):
+                array.append((self.x, self.y - i))
                 break
-            else:
-                break
-            i += 1
 
         return array
 
 
-# Королева
 class Queen(Figure):
     def __init__(self, x: int, y: int, color: str = "white"):
         super().__init__(x, y, color, "Queen")
@@ -336,57 +252,11 @@ class Queen(Figure):
         array = []
 
         i = 1
-        while self.x + i <= 8 and self.y + i <= 8:
-            if self.is_empty(self.x + i, self.y + i):
-                array.append((self.x + i, self.y + i))
-            elif self.is_opponent(self.x + i, self.y + i):
-                array.append((self.x + i, self.y + i))
-                break
-            else:
-                break
-            i += 1
-
-        i = 1
-        while self.x - i >= 1 and self.y - i >= 1:
-            if self.is_empty(self.x - i, self.y - i):
-                array.append((self.x - i, self.y - i))
-            elif self.is_opponent(self.x - i, self.y - i):
-                array.append((self.x - i, self.y - i))
-                break
-            else:
-                break
-            i += 1
-
-        i = 1
-        while self.x + i <= 8 and self.y - i >= 1:
-            if self.is_empty(self.x + i, self.y - i):
-                array.append((self.x + i, self.y - i))
-            elif self.is_opponent(self.x + i, self.y - i):
-                array.append((self.x + i, self.y - i))
-                break
-            else:
-                break
-            i += 1
-
-        i = 1
-        while self.x - i >= 1 and self.y + i <= 8:
-            if self.is_empty(self.x - i, self.y + i):
-                array.append((self.x - i, self.y + i))
-            elif self.is_opponent(self.x - i, self.y + i):
-                array.append((self.x - i, self.y + i))
-                break
-            else:
-                break
-            i += 1
-
-        i = 1
         while self.x + i <= 8:
             if self.is_empty(self.x + i, self.y):
                 array.append((self.x + i, self.y))
             elif self.is_opponent(self.x + i, self.y):
                 array.append((self.x + i, self.y))
-                break
-            else:
                 break
             i += 1
 
@@ -397,18 +267,14 @@ class Queen(Figure):
             elif self.is_opponent(self.x - i, self.y):
                 array.append((self.x - i, self.y))
                 break
-            else:
-                break
             i += 1
 
         i = 1
-        while self.y + i <= 8:
+        while self.y + i >= 1:
             if self.is_empty(self.x, self.y + i):
                 array.append((self.x, self.y + i))
             elif self.is_opponent(self.x, self.y + i):
                 array.append((self.x, self.y + i))
-                break
-            else:
                 break
             i += 1
 
@@ -419,19 +285,48 @@ class Queen(Figure):
             elif self.is_opponent(self.x, self.y - i):
                 array.append((self.x, self.y - i))
                 break
-            else:
-                break
             i += 1
+
+        i = 1
+        while self.x + i <= 8:
+            if self.is_empty(self.x + i, self.y):
+                array.append((self.x + i, self.y))
+            elif self.is_opponent(self.x + i, self.y):
+                array.append((self.x + i, self.y))
+                break
+
+        i = 1
+        while self.x - i >= 1:
+            if self.is_empty(self.x - i, self.y):
+                array.append((self.x - i, self.y))
+            elif self.is_opponent(self.x - i, self.y):
+                array.append((self.x - i, self.y))
+                break
+
+        i = 1
+        while self.y + i <= 8:
+            if self.is_empty(self.x, self.y + i):
+                array.append((self.x, self.y + i))
+            elif self.is_opponent(self.x, self.y + i):
+                array.append((self.x, self.y + i))
+                break
+
+        i = 1
+        while self.y - i >= 1:
+            if self.is_empty(self.x, self.y - i):
+                array.append((self.x, self.y - i))
+            elif self.is_opponent(self.x, self.y - i):
+                array.append((self.x, self.y - i))
+                break 
 
         return array
 
 
-# Король
 class King(Figure):
     def __init__(self, x: int, y: int, color: str = "white"):
         super().__init__(x, y, color, "King")
 
-    def get_attack_positions(self):
+    def get_attack_position(self):
         array = []
         coordinates_to_check = [
             (self.x + 1, self.y + 1),
@@ -441,7 +336,7 @@ class King(Figure):
             (self.x + 1, self.y),
             (self.x - 1, self.y),
             (self.x, self.y + 1),
-            (self.x, self.y - 1),
+            (self.x, self.y - 1)
         ]
 
         for x, y in coordinates_to_check:
@@ -449,6 +344,5 @@ class King(Figure):
                 if self.is_empty(x, y) or self.is_opponent(x, y):
                     array.append((x, y))
             except CoordinateException:
-                pass
-
+                pass 
         return array

@@ -1,6 +1,4 @@
-from classes.board import Board
-from classes.exception import *
-
+from classes.board import Board 
 
 board = Board()
-print(board.encode())
+print(board)

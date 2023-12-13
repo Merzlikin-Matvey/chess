@@ -41,6 +41,7 @@
 
       const urlParams = new URLSearchParams(window.location.search); 
       const id = urlParams.get("id"); 
+      console.log(id)
 
       setSocket();
       socket.on("connect", async function () {
@@ -51,7 +52,7 @@
 
       document.getElementById("save").addEventListener("click", function () {
         sendMessage("save").then((message) => {
-          window.location.href = "save?code=" + message.message;
+          window.location.href = "save?id=" + message.message;
         });
       });
     </script>

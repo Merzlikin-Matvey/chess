@@ -6,12 +6,15 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 
 import sys
 import os
+import time
+import colorama
 from pathlib import Path
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from game.classes.board import Board
 from game.classes.exception import CodeException
 
+colorama.init()
 
 app = Flask(__name__)
 CORS(app)
@@ -76,6 +79,7 @@ def upload_json_data(id):
         try:
             data = open(f'saves/{id}.json', 'r').read()
         except:
+            
             raise CodeException()
     
     return jsonify(data)
@@ -154,5 +158,6 @@ if __name__ == "__main__":
         app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
         socketio.run(app, port=PORT, use_reloader=True, ssl_context=ssl_context)
     else:
-        print("Нет SSL сертификатов")
+        print(colorama.Fore.YELLOW + "Нет SSL сертификатов")
+        time.sleep(1)
         socketio.run(app, port=PORT)

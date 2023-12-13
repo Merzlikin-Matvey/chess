@@ -160,6 +160,8 @@ class Board:
                 indent=2,
             )
 
+        return id
+
     # Возвращает фигуру на позиции x y
     def get_figure_by_position(self, x, y):
         for figure in self.get_figures():

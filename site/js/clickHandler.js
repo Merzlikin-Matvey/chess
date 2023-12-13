@@ -7,6 +7,12 @@ let numOfMoves = 0;
 
 function setMoveColor(color) {
   moveColor = color;
+  if (color == 'white'){
+    document.getElementById("nowMove").innerHTML = "Сейчас ход белых";
+  }
+  else if (color == "black"){
+    document.getElementById("nowMove").innerHTML = "Сейчас ход черных";
+  }
 }
 
 async function clickHandler(id) {
@@ -92,11 +98,9 @@ function move(first, second) {
     document.getElementById(second).appendChild(img);
 
     if (moveColor == "white") {
-      moveColor = "black";
-      document.getElementById("nowMove").innerHTML = "Сейчас ход черных";
+      setMoveColor("black")
     } else if (moveColor == "black") {
-      moveColor = "white";
-      document.getElementById("nowMove").innerHTML = "Сейчас ход белых";
+      setMoveColor("white")
     }
 
     addMove(first + '-' + second)

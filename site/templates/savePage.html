@@ -14,29 +14,33 @@
     <title>Шахматы - сохранение</title>
   </head>
   <body>
+    <button id="backButton" onclick="backTogame()">
+      <img src="site/res/backButton.png" alt="Назад" />
+    </button>
+
     <p id="title">Код для сохранения</p>
-    <p id="subTitle">Нажмите на него для сохранения</p>
-    <p id="code" onclick="copyText()"></p>
-    <!-- Сам код сохранения -->
+
+    <div id="textDiv">
+      <p id="id"></p>
+      <button id="copy">Скопировать</button>
+    </div>
+
+    <div id="qrDiv"></div>
   </body>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+  <script
+    type="text/javascript"
+    src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"
+  ></script>
+  <script type="module" src="/site/js/saveHandler.js"></script>
   <script>
     const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get("code");
-    const codeText = document.getElementById("code");
-    codeText.innerHTML = code;
-    // Вытаскиваем код из URL параметров
+    const id = urlParams.get("id");
+    const idText = document.getElementById("id");
+    idText.innerHTML = id;
 
-    // Копируем код при нажатии
-    function copyText() {
-      let text = document.getElementById("code");
-      let tmp = document.createElement("input");
-      tmp.value = text.textContent;
-
-      document.body.appendChild(tmp);
-      tmp.select();
-      document.execCommand("copy");
-      document.body.removeChild(tmp);
+    function backTogame() {
+      window.location.href = "game?id=" + id;
     }
   </script>
 </html>

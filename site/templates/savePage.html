@@ -14,7 +14,7 @@
     <title>Шахматы - сохранение</title>
   </head>
   <body>
-    <button id="backButton" onclick="backTogame()">
+    <button id="backButton" onclick="back()">
       <img src="site/res/backButton.png" alt="Назад" />
     </button>
 
@@ -22,7 +22,7 @@
 
     <div id="textDiv">
       <p id="id"></p>
-      <button id="copy">Скопировать</button>
+      <button id="copy" onclick="copyId()">Скопировать</button>
     </div>
 
     <div id="qrDiv"></div>
@@ -39,8 +39,19 @@
     const idText = document.getElementById("id");
     idText.innerHTML = id;
 
-    function backTogame() {
+    function back() {
       window.location.href = "game?id=" + id;
+    }
+
+    function copyId(){
+      let text = document.getElementById("id");
+      let tmp = document.createElement("input");
+      tmp.value = text.textContent;
+
+      document.body.appendChild(tmp);
+      tmp.select();
+      document.execCommand("copy");
+      document.body.removeChild(tmp);
     }
   </script>
 </html>

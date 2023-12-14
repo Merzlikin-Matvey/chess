@@ -1,4 +1,4 @@
-from flask import Flask, render_template, send_from_directory, jsonify
+from flask import Flask, render_template, send_from_directory, jsonify, session
 from flask_socketio import SocketIO
 from flask_cors import CORS
 
@@ -20,8 +20,6 @@ app = Flask(__name__)
 CORS(app)
 
 socketio = SocketIO(app)
-
-board = None
 
 
 # Доступ к mainPage.html через url /. Остальные страницы ниже аналогично
@@ -87,12 +85,13 @@ def upload_json_data(id):
 # Общение с клиентом
 @socketio.on("message_from_client")
 def handle_message(message):
-    global board
     print("Message from client:", message)
+
+    board = session.get("board")
 
     match message["type"]:
         case "start":
-            board = Board(id=message["message"])
+            session["board"] = Board(id=message["message"])
             socketio.emit("message_from_server", {"id": message["id"], "message": "ok"})
         case "get_color":
             try:

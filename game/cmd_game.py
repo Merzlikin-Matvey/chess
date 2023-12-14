@@ -1,4 +1,4 @@
-from classes.board import Board 
+from classes.board import Board
 
 board = Board()
 print(board)

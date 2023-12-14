@@ -7,10 +7,9 @@ let numOfMoves = 0;
 
 function setMoveColor(color) {
   moveColor = color;
-  if (color == 'white'){
+  if (color == "white") {
     document.getElementById("nowMove").innerHTML = "Сейчас ход белых";
-  }
-  else if (color == "black"){
+  } else if (color == "black") {
     document.getElementById("nowMove").innerHTML = "Сейчас ход черных";
   }
 }
@@ -98,12 +97,12 @@ function move(first, second) {
     document.getElementById(second).appendChild(img);
 
     if (moveColor == "white") {
-      setMoveColor("black")
+      setMoveColor("black");
     } else if (moveColor == "black") {
-      setMoveColor("white")
+      setMoveColor("white");
     }
 
-    addMove(first + '-' + second)
+    addMove(first + "-" + second);
 
     selected = null;
   });

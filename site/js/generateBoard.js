@@ -33,33 +33,32 @@ function loadData(code) {
     URLforRequest = "http://127.0.0.1:5000";
   }
 
-    fetch(URLforRequest + '/get_save/' + code)
-    .then(response => {
+  fetch(URLforRequest + "/get_save/" + code)
+    .then((response) => {
       if (!response.ok) {
         throw new Error(`Ошибка: ${response.status}`);
       }
-      
+
       return response.json();
-    })   
-    .then(data => { 
-      data = JSON.parse(data)
-      setMoveColor(data.move_color)
-      data.figures.forEach(figure => {
+    })
+    .then((data) => {
+      data = JSON.parse(data);
+      setMoveColor(data.move_color);
+      data.figures.forEach((figure) => {
         let cage = document.getElementById(figure.column + figure.row);
         let imgElement = document.createElement("img");
-        imgElement.src = "site/res/" + figure.color + "_" + figure.name.toLowerCase() + ".png";
+        imgElement.src =
+          "site/res/" + figure.color + "_" + figure.name.toLowerCase() + ".png";
         imgElement.classList.add("figure-image");
         cage.appendChild(imgElement);
       });
-      data.moves.forEach(element => {
-        addMove(element)
+      data.moves.forEach((element) => {
+        addMove(element);
       });
-      
     })
-  .catch(error => {
-    console.error('Ошибка при запросе данных:', error);
-  });
-
+    .catch((error) => {
+      console.error("Ошибка при запросе данных:", error);
+    });
 }
 
 export { generateBoard, loadData };

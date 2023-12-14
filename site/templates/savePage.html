@@ -26,6 +26,8 @@
     </div>
 
     <div id="qrDiv"></div>
+
+    <button id="toMainPageButton">На главную</button>
   </body>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
   <script
@@ -43,7 +45,7 @@
       window.location.href = "game?id=" + id;
     }
 
-    function copyId(){
+    function copyId() {
       let text = document.getElementById("id");
       let tmp = document.createElement("input");
       tmp.value = text.textContent;
@@ -53,5 +55,11 @@
       document.execCommand("copy");
       document.body.removeChild(tmp);
     }
+
+    document
+      .getElementById("toMainPageButton")
+      .addEventListener("click", function () {
+        window.location.href = "/";
+      });
   </script>
 </html>

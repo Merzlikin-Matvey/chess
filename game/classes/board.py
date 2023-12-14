@@ -57,10 +57,10 @@ class Board:
 
         self.moves = []
 
-        for move in data['moves']:
+        for move in data["moves"]:
             self.moves.append(move)
 
-     # Строковый вывод доски
+    # Строковый вывод доски
     def __str__(self):
         board = [[" " for _ in range(8)] for __ in range(8)]
 
@@ -167,23 +167,6 @@ class Board:
         for figure in self.get_figures():
             if figure.get_coordinates() == (x, y) and figure.is_alive():
                 return figure
-
-    # Декодирует состояние доски
-    def decode(self, code):
-        m = []
-        color = None
-        if code[0] == "w":
-            color = "white"
-        else:
-            color = "black"
-        for i in range(1, len(code), 4):
-            m.append(
-                eval(
-                    f'{NUMBERS_TO_FIGURES[code[i]].capitalize()}({code[i + 2]}, {code[i + 3]}, "{code[i + 1]}" )'
-                )
-            )
-
-        return color, m
 
     def to_chess_notation(self, x, y):
         return NUMBERS_TO_LETTERS[y] + str(x)

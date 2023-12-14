@@ -15,6 +15,11 @@
   font-family: "Rubik"; /* Шрифт */
 }
 
+#startGameButton:hover {
+  background-color: white; /* Белый фон при наведении */
+  color: black; /* Черный цвет текста при наведении */
+}
+
 #inputCode {
   position: absolute;
   top: 50vh;
@@ -31,5 +36,5 @@
   cursor: pointer;
   font-size: 24pt;
   font-family: "Rubik";
-  margin-bottom: 10px;
+  margin-top: 1vh;
 }

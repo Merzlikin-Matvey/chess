@@ -12,8 +12,8 @@ let options = {
 };
 
 const qrCode = new QRCodeStyling({
-  width: 420,
-  height: 420,
+  width: 400,
+  height: 400,
   type: "svg",
   data: data,
   dotsOptions: {

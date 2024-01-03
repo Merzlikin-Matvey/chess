@@ -8,9 +8,9 @@ let numOfMoves = 0;
 function setMoveColor(color) {
   moveColor = color;
   if (color == "white") {
-    document.getElementById("nowMove").innerHTML = "Сейчас ход белых";
+    document.getElementById("nowMove").innerHTML = "Сейчас Ваш ход";
   } else if (color == "black") {
-    document.getElementById("nowMove").innerHTML = "Сейчас ход черных";
+    document.getElementById("nowMove").innerHTML = "";
   }
 }
 
@@ -52,6 +52,7 @@ function highlight(id) {
   sendMessage("get_attack_positions", id).then((attackPositions) => {
     highlighted = attackPositions.message;
     attackPositions.message.forEach((position) => {
+      console.log(position);
       document.getElementById(position).classList.add("attack_position");
     });
   });
@@ -88,13 +89,101 @@ function move(first, second) {
     }
 
     let img = document.createElement("img");
-    let color = moveResult.message.split(",")[0].toLowerCase();
-    let name = moveResult.message.split(",")[1].toLowerCase().replace(" ", "");
+    console.log(moveResult);
+    if (moveResult.message == "mate") {
+      window.location.href = "/win";
+    } else {
+      let type = moveResult.message.split(",")[0];
+      let color = moveResult.message.split(",")[1].toLowerCase();
+      let name = moveResult.message
+        .split(",")[2]
+        .toLowerCase()
+        .replace(" ", "");
+
+      img.src = "site/res/" + color + "_" + name + ".png";
+      console.log("site/res/" + color + "_" + name + ".png");
+      img.classList.add("figure-image");
+
+      document.getElementById(second).appendChild(img);
+
+      console.log(moveResult);
+
+      if (moveColor == "white") {
+        setMoveColor("black");
+      } else if (moveColor == "black") {
+        setMoveColor("white");
+      }
+
+      addMove(first + "-" + second);
+
+      selected = null;
+
+      if (type == "castling") {
+        img = document.createElement("img");
+        let move_val = moveResult.message.split(",")[3];
+        color = moveResult.message.split(",")[4];
+        console.log(move_val[0] + move_val[1])
+        document
+          .getElementById(move_val[0] + move_val[1])
+          .removeChild(
+            document.getElementById(move_val[0] + move_val[1]).getElementsByTagName("img")[0]
+          );
+        img.src = "site/res/" + color + "_rook.png";
+        img.classList.add("figure-image");
+        document.getElementById(move_val[2] + move_val[3]).appendChild(img);
+      }
+
+      if (type == "mate") {
+        sendMessage("get_move_color").then((moveColorResult) => {
+          if (moveColorResult.message == 'black'){
+            window.location.href = "win?winner=white";
+          }else{
+            window.location.href = "win?winner=black";
+          }
+        })
+      } else {
+        ai_move();
+      }
+    }
+  });
+}
+
+function ai_move() {
+  sendMessage("ai_move").then((moveResult) => {
+    let img = document.createElement("img");
+    let type = moveResult.message.split(",")[0];
+    let color = moveResult.message.split(",")[1].toLowerCase();
+    let name = moveResult.message.split(",")[2].toLowerCase().replace(" ", "");
+    let move = moveResult.message.split(",")[3].toLowerCase();
+    console.log(move);
+    addMove(move);
+
+    if (
+      document.getElementById(move[2] + move[3]).getElementsByTagName("img")
+        .length > 0
+    ) {
+      document
+        .getElementById(move[2] + move[3])
+        .removeChild(
+          document
+            .getElementById(move[2] + move[3])
+            .getElementsByTagName("img")[0]
+        );
+    }
 
     img.src = "site/res/" + color + "_" + name + ".png";
+    console.log("site/res/" + color + "_" + name + ".png");
     img.classList.add("figure-image");
 
-    document.getElementById(second).appendChild(img);
+    document
+      .getElementById(move[0] + move[1])
+      .removeChild(
+        document
+          .getElementById(move[0] + move[1])
+          .getElementsByTagName("img")[0]
+      );
+
+    document.getElementById(move[2] + move[3]).appendChild(img);
 
     if (moveColor == "white") {
       setMoveColor("black");
@@ -102,9 +191,32 @@ function move(first, second) {
       setMoveColor("white");
     }
 
-    addMove(first + "-" + second);
+    if (type == "mate") {
+      sendMessage("get_move_color").then((moveColorResult) => {
+        if (moveColorResult.message == 'black'){
+          window.location.href = "win?winner=white";
+        }else{
+          window.location.href = "win?winner=black";
+        }
+      })
+    }
 
-    selected = null;
+    console.log(type);
+    if (type == "castling") {
+      img = document.createElement("img");
+      move = moveResult.split(",")[4];
+      color = moveResult
+        .split(",")[5]
+        .getElementById(move[0] + move[1])
+        .removeChild(
+          document
+            .getElementById(move[0] + move[1])
+            .getElementsByTagName("img")[0]
+        );
+      img.src = "site/res/" + color + "_rook.png";
+      img.classList.add("figure-image");
+      document.getElementById(move[2] + move[3]).appendChild(img);
+    }
   });
 }
 

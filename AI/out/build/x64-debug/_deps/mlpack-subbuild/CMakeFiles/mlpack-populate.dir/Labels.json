@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "C:/Users/User/source/repos/Merzlikin-Matvey/chess/AI/out/build/x64-debug/_deps/mlpack-subbuild/CMakeFiles/mlpack-populate"
+		},
+		{
+			"file" : "C:/Users/User/source/repos/Merzlikin-Matvey/chess/AI/out/build/x64-debug/_deps/mlpack-subbuild/CMakeFiles/mlpack-populate.rule"
+		},
+		{
+			"file" : "C:/Users/User/source/repos/Merzlikin-Matvey/chess/AI/out/build/x64-debug/_deps/mlpack-subbuild/CMakeFiles/mlpack-populate-complete.rule"
+		},
+		{
+			"file" : "C:/Users/User/source/repos/Merzlikin-Matvey/chess/AI/out/build/x64-debug/_deps/mlpack-subbuild/mlpack-populate-prefix/src/mlpack-populate-stamp/mlpack-populate-build.rule"
+		},
+		{
+			"file" : "C:/Users/User/source/repos/Merzlikin-Matvey/chess/AI/out/build/x64-debug/_deps/mlpack-subbuild/mlpack-populate-prefix/src/mlpack-populate-stamp/mlpack-populate-configure.rule"
+		},
+		{
+			"file" : "C:/Users/User/source/repos/Merzlikin-Matvey/chess/AI/out/build/x64-debug/_deps/mlpack-subbuild/mlpack-populate-prefix/src/mlpack-populate-stamp/mlpack-populate-download.rule"
+		},
+		{
+			"file" : "C:/Users/User/source/repos/Merzlikin-Matvey/chess/AI/out/build/x64-debug/_deps/mlpack-subbuild/mlpack-populate-prefix/src/mlpack-populate-stamp/mlpack-populate-install.rule"
+		},
+		{
+			"file" : "C:/Users/User/source/repos/Merzlikin-Matvey/chess/AI/out/build/x64-debug/_deps/mlpack-subbuild/mlpack-populate-prefix/src/mlpack-populate-stamp/mlpack-populate-mkdir.rule"
+		},
+		{
+			"file" : "C:/Users/User/source/repos/Merzlikin-Matvey/chess/AI/out/build/x64-debug/_deps/mlpack-subbuild/mlpack-populate-prefix/src/mlpack-populate-stamp/mlpack-populate-patch.rule"
+		},
+		{
+			"file" : "C:/Users/User/source/repos/Merzlikin-Matvey/chess/AI/out/build/x64-debug/_deps/mlpack-subbuild/mlpack-populate-prefix/src/mlpack-populate-stamp/mlpack-populate-test.rule"
+		},
+		{
+			"file" : "C:/Users/User/source/repos/Merzlikin-Matvey/chess/AI/out/build/x64-debug/_deps/mlpack-subbuild/mlpack-populate-prefix/src/mlpack-populate-stamp/mlpack-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"mlpack-populate"
+		],
+		"name" : "mlpack-populate"
+	}
+}

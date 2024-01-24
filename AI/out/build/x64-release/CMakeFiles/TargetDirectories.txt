@@ -1,0 +1,5 @@
+C:/Users/User/source/repos/Merzlikin-Matvey/chess/AI/out/build/x64-release/CMakeFiles/edit_cache.dir
+C:/Users/User/source/repos/Merzlikin-Matvey/chess/AI/out/build/x64-release/CMakeFiles/rebuild_cache.dir
+C:/Users/User/source/repos/Merzlikin-Matvey/chess/AI/out/build/x64-release/AI/CMakeFiles/AI.dir
+C:/Users/User/source/repos/Merzlikin-Matvey/chess/AI/out/build/x64-release/AI/CMakeFiles/edit_cache.dir
+C:/Users/User/source/repos/Merzlikin-Matvey/chess/AI/out/build/x64-release/AI/CMakeFiles/rebuild_cache.dir

@@ -55,7 +55,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "c:/Users/User/CLionProjects/chess1/engine/cmake-build-debug"
+			"value" : "c:/Users/User/CLionProjects/chess/engine/cmake-build-debug"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -659,7 +659,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/User/CLionProjects/chess1/engine/cmake-build-debug/CMakeFiles/pkgRedirects"
+			"value" : "C:/Users/User/CLionProjects/chess/engine/cmake-build-debug/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -731,7 +731,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "C:/Users/User/CLionProjects/chess1/engine"
+			"value" : "C:/Users/User/CLionProjects/chess/engine"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -1363,7 +1363,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/User/CLionProjects/chess1/engine/cmake-build-debug"
+			"value" : "C:/Users/User/CLionProjects/chess/engine/cmake-build-debug"
 		},
 		{
 			"name" : "chess_IS_TOP_LEVEL",
@@ -1387,7 +1387,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/User/CLionProjects/chess1/engine"
+			"value" : "C:/Users/User/CLionProjects/chess/engine"
 		}
 	],
 	"kind" : "cache",

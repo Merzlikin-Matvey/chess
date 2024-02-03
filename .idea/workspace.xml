@@ -3,9 +3,9 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
-  <component name="CMakePresetLoader"><![CDATA[{
-  "useNewFormat": true
-}]]></component>
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
   <component name="CMakeReloadState">
     <option name="reloaded" value="true" />
   </component>
@@ -20,192 +20,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8dd2bfea-f31c-440f-a102-de1c22e81600" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/engine/board.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/exceptions.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/exceptions.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/ProjectSettings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/VSWorkspaceState.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/chess/FileContentIndex/d9a8f817-4ec5-4bf0-8af8-9d7b99de433f.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/chess/FileContentIndex/read.lock" beforeDir="false" afterPath="$PROJECT_DIR$/engine/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/chess/v17/.wsuo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/chess/v17/Browse.VC.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/slnx.sqlite" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/.vs/AI/FileContentIndex/69e8d0d9-5fec-4b56-a897-514ba3b8e8b2.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/.vs/AI/FileContentIndex/read.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/.vs/AI/v17/.wsuo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/.vs/AI/v17/Browse.VC.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/.vs/AI/v17/ipch/AutoPCH/8669e0670a28147a/AI.ipch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/.vs/AI/v17/ipch/AutoPCH/970114bf017a15d1/AI.ipch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/.vs/AI/v17/ipch/AutoPCH/a9f0b61f7d2a589b/AI.ipch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/.vs/AI/v17/ipch/AutoPCH/b1a917e3a56394cf/MNIST_TEST.ipch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/.vs/AI/v17/ipch/AutoPCH/ed7e8713c0768330/MNIST.ipch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/.vs/CMake Overview" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/.vs/ProjectSettings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/.vs/VSWorkspaceState.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/.vs/cmake.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/.vs/slnx.sqlite" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/.vs/slnx.sqlite-journal" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/AI/AI.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/AI/AI.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/AI/CMakeLists.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/AI/mnist.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/AI/mnist.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/CMakeLists.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/CMakePresets.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/.cmake/api/v1/query/client-MicrosoftVS/query.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/.cmake/api/v1/reply/cache-v2-67fb72691e6d47a91754.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/.cmake/api/v1/reply/cmakeFiles-v1-71c58173226f9050b67a.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/.cmake/api/v1/reply/codemodel-v2-496a4a230689416ac412.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/.cmake/api/v1/reply/directory-.-Debug-d0094a50bb2071803777.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/.cmake/api/v1/reply/directory-AI-Debug-f6a2a4c551d0eb696c2c.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/.cmake/api/v1/reply/index-2024-01-24T21-34-00-0403.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/.cmake/api/v1/reply/target-AI-Debug-6a31fd0e4b222e4c7590.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/.cmake/api/v1/reply/toolchains-v1-252e16f03af3961dbf58.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/.ninja_deps" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/.ninja_log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/AI/AI.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/AI/AI.ilk" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/AI/AI.pdb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/AI/CMakeFiles/AI.dir/AI.cpp.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/AI/CMakeFiles/AI.dir/embed.manifest" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/AI/CMakeFiles/AI.dir/intermediate.manifest" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/AI/CMakeFiles/AI.dir/manifest.rc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/AI/CMakeFiles/AI.dir/manifest.res" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/AI/CMakeFiles/AI.dir/mnist.cpp.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/AI/CMakeFiles/AI.dir/mnist_test.cpp.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/AI/CMakeFiles/AI.dir/vc140.idb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/AI/CMakeFiles/AI.dir/vc140.pdb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/AI/cmake_install.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/CMakeCache.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/CMakeFiles/3.25.1-msvc1/CMakeCCompiler.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/CMakeFiles/3.25.1-msvc1/CMakeCXXCompiler.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/CMakeFiles/3.25.1-msvc1/CMakeDetermineCompilerABI_C.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/CMakeFiles/3.25.1-msvc1/CMakeDetermineCompilerABI_CXX.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/CMakeFiles/3.25.1-msvc1/CMakeRCCompiler.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/CMakeFiles/3.25.1-msvc1/CMakeSystem.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/CMakeFiles/3.25.1-msvc1/CompilerIdC/CMakeCCompilerId.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/CMakeFiles/3.25.1-msvc1/CompilerIdC/CMakeCCompilerId.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/CMakeFiles/3.25.1-msvc1/CompilerIdC/CMakeCCompilerId.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/CMakeFiles/3.25.1-msvc1/CompilerIdCXX/CMakeCXXCompilerId.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/CMakeFiles/3.25.1-msvc1/CompilerIdCXX/CMakeCXXCompilerId.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/CMakeFiles/3.25.1-msvc1/CompilerIdCXX/CMakeCXXCompilerId.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/CMakeFiles/ShowIncludes/foo.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/CMakeFiles/ShowIncludes/main.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/CMakeFiles/ShowIncludes/main.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/CMakeFiles/TargetDirectories.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/CMakeFiles/cmake.check_cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/CMakeFiles/rules.ninja" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/Testing/Temporary/LastTest.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/VSInheritEnvironments.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/_deps/mlpack-subbuild/.ninja_log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/_deps/mlpack-subbuild/CMakeCache.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/_deps/mlpack-subbuild/CMakeFiles/3.25.1-msvc1/CMakeSystem.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/_deps/mlpack-subbuild/CMakeFiles/CMakeOutput.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/_deps/mlpack-subbuild/CMakeFiles/TargetDirectories.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/_deps/mlpack-subbuild/CMakeFiles/cmake.check_cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/_deps/mlpack-subbuild/CMakeFiles/mlpack-populate.dir/Labels.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/_deps/mlpack-subbuild/CMakeFiles/mlpack-populate.dir/Labels.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/_deps/mlpack-subbuild/CMakeFiles/rules.ninja" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/_deps/mlpack-subbuild/CMakeLists.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/_deps/mlpack-subbuild/build.ninja" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/_deps/mlpack-subbuild/cmake_install.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/_deps/mlpack-subbuild/mlpack-populate-prefix/src/mlpack-populate-stamp/mlpack-populate-gitinfo.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/_deps/mlpack-subbuild/mlpack-populate-prefix/src/mlpack-populate-stamp/mlpack-populate-mkdir" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/_deps/mlpack-subbuild/mlpack-populate-prefix/tmp/mlpack-populate-cfgcmd.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/_deps/mlpack-subbuild/mlpack-populate-prefix/tmp/mlpack-populate-gitclone.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/_deps/mlpack-subbuild/mlpack-populate-prefix/tmp/mlpack-populate-gitupdate.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/_deps/mlpack-subbuild/mlpack-populate-prefix/tmp/mlpack-populate-mkdirs.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/build.ninja" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-debug/cmake_install.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/.cmake/api/v1/query/client-MicrosoftVS/query.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/.cmake/api/v1/reply/cache-v2-bb8feaea24eb31dbc972.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/.cmake/api/v1/reply/cmakeFiles-v1-eaa139dad450d1b947a5.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/.cmake/api/v1/reply/codemodel-v2-144294e24437a1b84179.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/.cmake/api/v1/reply/directory-.-Release-d0094a50bb2071803777.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/.cmake/api/v1/reply/directory-AI-Release-f6a2a4c551d0eb696c2c.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/.cmake/api/v1/reply/index-2024-01-24T21-55-24-0463.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/.cmake/api/v1/reply/target-AI-Release-ff5b8f19350f2c43a4c4.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/.cmake/api/v1/reply/toolchains-v1-252e16f03af3961dbf58.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/.ninja_deps" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/.ninja_log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/AI/AI.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/AI/AI.exe.manifest" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/AI/CMakeFiles/AI.dir/AI.cpp.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/AI/CMakeFiles/AI.dir/mnist.cpp.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/AI/cmake_install.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/CMakeCache.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/CMakeFiles/3.25.1-msvc1/CMakeCCompiler.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/CMakeFiles/3.25.1-msvc1/CMakeCXXCompiler.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/CMakeFiles/3.25.1-msvc1/CMakeDetermineCompilerABI_C.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/CMakeFiles/3.25.1-msvc1/CMakeDetermineCompilerABI_CXX.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/CMakeFiles/3.25.1-msvc1/CMakeRCCompiler.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/CMakeFiles/3.25.1-msvc1/CMakeSystem.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/CMakeFiles/3.25.1-msvc1/CompilerIdC/CMakeCCompilerId.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/CMakeFiles/3.25.1-msvc1/CompilerIdC/CMakeCCompilerId.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/CMakeFiles/3.25.1-msvc1/CompilerIdC/CMakeCCompilerId.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/CMakeFiles/3.25.1-msvc1/CompilerIdCXX/CMakeCXXCompilerId.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/CMakeFiles/3.25.1-msvc1/CompilerIdCXX/CMakeCXXCompilerId.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/CMakeFiles/3.25.1-msvc1/CompilerIdCXX/CMakeCXXCompilerId.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/CMakeFiles/CMakeOutput.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/CMakeFiles/ShowIncludes/foo.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/CMakeFiles/ShowIncludes/main.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/CMakeFiles/ShowIncludes/main.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/CMakeFiles/TargetDirectories.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/CMakeFiles/cmake.check_cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/CMakeFiles/rules.ninja" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/Testing/Temporary/LastTest.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/VSInheritEnvironments.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/catch2-subbuild/.ninja_log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/catch2-subbuild/CMakeCache.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/catch2-subbuild/CMakeFiles/3.25.1-msvc1/CMakeSystem.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/catch2-subbuild/CMakeFiles/CMakeOutput.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/catch2-subbuild/CMakeFiles/TargetDirectories.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/catch2-subbuild/CMakeFiles/catch2-populate.dir/Labels.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/catch2-subbuild/CMakeFiles/catch2-populate.dir/Labels.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/catch2-subbuild/CMakeFiles/cmake.check_cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/catch2-subbuild/CMakeFiles/rules.ninja" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/catch2-subbuild/CMakeLists.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/catch2-subbuild/build.ninja" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/catch2-subbuild/catch2-populate-prefix/src/catch2-populate-stamp/catch2-populate-gitinfo.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/catch2-subbuild/catch2-populate-prefix/src/catch2-populate-stamp/catch2-populate-mkdir" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/catch2-subbuild/catch2-populate-prefix/tmp/catch2-populate-cfgcmd.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/catch2-subbuild/catch2-populate-prefix/tmp/catch2-populate-gitclone.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/catch2-subbuild/catch2-populate-prefix/tmp/catch2-populate-gitupdate.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/catch2-subbuild/catch2-populate-prefix/tmp/catch2-populate-mkdirs.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/catch2-subbuild/cmake_install.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/mlpack-subbuild/.ninja_log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/mlpack-subbuild/CMakeCache.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/mlpack-subbuild/CMakeFiles/3.25.1-msvc1/CMakeSystem.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/mlpack-subbuild/CMakeFiles/CMakeOutput.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/mlpack-subbuild/CMakeFiles/TargetDirectories.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/mlpack-subbuild/CMakeFiles/cmake.check_cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/mlpack-subbuild/CMakeFiles/mlpack-populate-complete" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/mlpack-subbuild/CMakeFiles/mlpack-populate.dir/Labels.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/mlpack-subbuild/CMakeFiles/mlpack-populate.dir/Labels.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/mlpack-subbuild/CMakeFiles/rules.ninja" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/mlpack-subbuild/CMakeLists.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/mlpack-subbuild/build.ninja" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/mlpack-subbuild/cmake_install.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/mlpack-subbuild/mlpack-populate-prefix/src/mlpack-populate-stamp/mlpack-populate-build" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/mlpack-subbuild/mlpack-populate-prefix/src/mlpack-populate-stamp/mlpack-populate-configure" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/mlpack-subbuild/mlpack-populate-prefix/src/mlpack-populate-stamp/mlpack-populate-done" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/mlpack-subbuild/mlpack-populate-prefix/src/mlpack-populate-stamp/mlpack-populate-download" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/mlpack-subbuild/mlpack-populate-prefix/src/mlpack-populate-stamp/mlpack-populate-gitclone-lastrun.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/mlpack-subbuild/mlpack-populate-prefix/src/mlpack-populate-stamp/mlpack-populate-gitinfo.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/mlpack-subbuild/mlpack-populate-prefix/src/mlpack-populate-stamp/mlpack-populate-install" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/mlpack-subbuild/mlpack-populate-prefix/src/mlpack-populate-stamp/mlpack-populate-mkdir" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/mlpack-subbuild/mlpack-populate-prefix/src/mlpack-populate-stamp/mlpack-populate-patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/mlpack-subbuild/mlpack-populate-prefix/src/mlpack-populate-stamp/mlpack-populate-test" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/mlpack-subbuild/mlpack-populate-prefix/tmp/mlpack-populate-cfgcmd.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/mlpack-subbuild/mlpack-populate-prefix/tmp/mlpack-populate-gitclone.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/mlpack-subbuild/mlpack-populate-prefix/tmp/mlpack-populate-gitupdate.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/_deps/mlpack-subbuild/mlpack-populate-prefix/tmp/mlpack-populate-mkdirs.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/build.ninja" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI/out/build/x64-release/cmake_install.cmake" beforeDir="false" />
-    </list>
+    <list default="true" id="8dd2bfea-f31c-440f-a102-de1c22e81600" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -225,9 +40,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="2bjZgoXpBJMKQNrWsQcVS02c3LE" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -236,40 +51,40 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/User/CLionProjects/chess1/engine/cmake-build-debug/chess.cbp",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "CPPToolchains",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/User/CLionProjects/chess1/engine/cmake-build-debug/chess.cbp&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;CPPToolchains&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\User\CLionProjects\chess1\engine" />
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.MyExecutable">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="MyProject" type="CMakeListConfigurationType" factoryName="CMakeListConfigurationFactory" temporary="true">
       <method v="2" />
     </configuration>
     <configuration name="MyExecutable" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="chess" TARGET_NAME="MyExecutable" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="chess" RUN_TARGET_NAME="MyExecutable">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -300,6 +115,7 @@
       <option name="presentableId" value="Default" />
       <updated>1706730563333</updated>
       <workItem from="1706730564918" duration="6902000" />
+      <workItem from="1706964981309" duration="4000" />
     </task>
     <servers />
   </component>

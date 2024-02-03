@@ -164,8 +164,8 @@
 	"kind" : "cmakeFiles",
 	"paths" : 
 	{
-		"build" : "C:/Users/User/CLionProjects/chess1/engine/cmake-build-debug",
-		"source" : "C:/Users/User/CLionProjects/chess1/engine"
+		"build" : "C:/Users/User/CLionProjects/chess/engine/cmake-build-debug",
+		"source" : "C:/Users/User/CLionProjects/chess/engine"
 	},
 	"version" : 
 	{

@@ -56,10 +56,10 @@ RM = "D:\Program Files\CLion 2023.2.2\bin\cmake\win\x64\bin\cmake.exe" -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\User\CLionProjects\chess1\engine
+CMAKE_SOURCE_DIR = C:\Users\User\CLionProjects\chess\engine
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\User\CLionProjects\chess1\engine\cmake-build-debug
+CMAKE_BINARY_DIR = C:\Users\User\CLionProjects\chess\engine\cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -86,9 +86,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\User\CLionProjects\chess1\engine\cmake-build-debug\CMakeFiles C:\Users\User\CLionProjects\chess1\engine\cmake-build-debug\\CMakeFiles\progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\User\CLionProjects\chess\engine\cmake-build-debug\CMakeFiles C:\Users\User\CLionProjects\chess\engine\cmake-build-debug\\CMakeFiles\progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\User\CLionProjects\chess1\engine\cmake-build-debug\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\User\CLionProjects\chess\engine\cmake-build-debug\CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -128,77 +128,77 @@ MyExecutable/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\MyExecutable.dir\build.make CMakeFiles/MyExecutable.dir/build
 .PHONY : MyExecutable/fast
 
-board.obj: board.cpp.obj
-.PHONY : board.obj
+src/board.obj: src/board.cpp.obj
+.PHONY : src/board.obj
 
 # target to build an object file
-board.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MyExecutable.dir\build.make CMakeFiles/MyExecutable.dir/board.cpp.obj
-.PHONY : board.cpp.obj
+src/board.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\MyExecutable.dir\build.make CMakeFiles/MyExecutable.dir/src/board.cpp.obj
+.PHONY : src/board.cpp.obj
 
-board.i: board.cpp.i
-.PHONY : board.i
+src/board.i: src/board.cpp.i
+.PHONY : src/board.i
 
 # target to preprocess a source file
-board.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MyExecutable.dir\build.make CMakeFiles/MyExecutable.dir/board.cpp.i
-.PHONY : board.cpp.i
+src/board.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\MyExecutable.dir\build.make CMakeFiles/MyExecutable.dir/src/board.cpp.i
+.PHONY : src/board.cpp.i
 
-board.s: board.cpp.s
-.PHONY : board.s
+src/board.s: src/board.cpp.s
+.PHONY : src/board.s
 
 # target to generate assembly for a file
-board.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MyExecutable.dir\build.make CMakeFiles/MyExecutable.dir/board.cpp.s
-.PHONY : board.cpp.s
+src/board.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\MyExecutable.dir\build.make CMakeFiles/MyExecutable.dir/src/board.cpp.s
+.PHONY : src/board.cpp.s
 
-exceptions.obj: exceptions.cpp.obj
-.PHONY : exceptions.obj
+src/exceptions.obj: src/exceptions.cpp.obj
+.PHONY : src/exceptions.obj
 
 # target to build an object file
-exceptions.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MyExecutable.dir\build.make CMakeFiles/MyExecutable.dir/exceptions.cpp.obj
-.PHONY : exceptions.cpp.obj
+src/exceptions.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\MyExecutable.dir\build.make CMakeFiles/MyExecutable.dir/src/exceptions.cpp.obj
+.PHONY : src/exceptions.cpp.obj
 
-exceptions.i: exceptions.cpp.i
-.PHONY : exceptions.i
+src/exceptions.i: src/exceptions.cpp.i
+.PHONY : src/exceptions.i
 
 # target to preprocess a source file
-exceptions.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MyExecutable.dir\build.make CMakeFiles/MyExecutable.dir/exceptions.cpp.i
-.PHONY : exceptions.cpp.i
+src/exceptions.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\MyExecutable.dir\build.make CMakeFiles/MyExecutable.dir/src/exceptions.cpp.i
+.PHONY : src/exceptions.cpp.i
 
-exceptions.s: exceptions.cpp.s
-.PHONY : exceptions.s
+src/exceptions.s: src/exceptions.cpp.s
+.PHONY : src/exceptions.s
 
 # target to generate assembly for a file
-exceptions.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MyExecutable.dir\build.make CMakeFiles/MyExecutable.dir/exceptions.cpp.s
-.PHONY : exceptions.cpp.s
+src/exceptions.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\MyExecutable.dir\build.make CMakeFiles/MyExecutable.dir/src/exceptions.cpp.s
+.PHONY : src/exceptions.cpp.s
 
-main.obj: main.cpp.obj
-.PHONY : main.obj
+src/main.obj: src/main.cpp.obj
+.PHONY : src/main.obj
 
 # target to build an object file
-main.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MyExecutable.dir\build.make CMakeFiles/MyExecutable.dir/main.cpp.obj
-.PHONY : main.cpp.obj
+src/main.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\MyExecutable.dir\build.make CMakeFiles/MyExecutable.dir/src/main.cpp.obj
+.PHONY : src/main.cpp.obj
 
-main.i: main.cpp.i
-.PHONY : main.i
+src/main.i: src/main.cpp.i
+.PHONY : src/main.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MyExecutable.dir\build.make CMakeFiles/MyExecutable.dir/main.cpp.i
-.PHONY : main.cpp.i
+src/main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\MyExecutable.dir\build.make CMakeFiles/MyExecutable.dir/src/main.cpp.i
+.PHONY : src/main.cpp.i
 
-main.s: main.cpp.s
-.PHONY : main.s
+src/main.s: src/main.cpp.s
+.PHONY : src/main.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MyExecutable.dir\build.make CMakeFiles/MyExecutable.dir/main.cpp.s
-.PHONY : main.cpp.s
+src/main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\MyExecutable.dir\build.make CMakeFiles/MyExecutable.dir/src/main.cpp.s
+.PHONY : src/main.cpp.s
 
 # Help Target
 help:
@@ -209,15 +209,15 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... MyExecutable
-	@echo ... board.obj
-	@echo ... board.i
-	@echo ... board.s
-	@echo ... exceptions.obj
-	@echo ... exceptions.i
-	@echo ... exceptions.s
-	@echo ... main.obj
-	@echo ... main.i
-	@echo ... main.s
+	@echo ... src/board.obj
+	@echo ... src/board.i
+	@echo ... src/board.s
+	@echo ... src/exceptions.obj
+	@echo ... src/exceptions.i
+	@echo ... src/exceptions.s
+	@echo ... src/main.obj
+	@echo ... src/main.i
+	@echo ... src/main.s
 .PHONY : help
 
 

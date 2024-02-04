@@ -21,59 +21,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8dd2bfea-f31c-440f-a102-de1c22e81600" name="Changes" comment="Добавлена поддержка conan">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/engine/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/.cmake/api/v1/query/cache-v2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/.cmake/api/v1/query/cmakeFiles-v1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/.cmake/api/v1/query/codemodel-v2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/.cmake/api/v1/query/toolchains-v1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/.cmake/api/v1/reply/directory-.-Debug-d0094a50bb2071803777.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/.cmake/api/v1/reply/target-MyExecutable-Debug-72d25e7e3b601d1a3c6f.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/.cmake/api/v1/reply/toolchains-v1-c966953c01b61b3b683a.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeCache.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/3.27.8/CMakeCCompiler.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/3.27.8/CMakeCXXCompiler.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/3.27.8/CMakeDetermineCompilerABI_C.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/3.27.8/CMakeDetermineCompilerABI_CXX.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/3.27.8/CMakeRCCompiler.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/3.27.8/CMakeSystem.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/3.27.8/CompilerIdC/CMakeCCompilerId.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/3.27.8/CompilerIdC/a.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/3.27.8/CompilerIdCXX/CMakeCXXCompilerId.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/3.27.8/CompilerIdCXX/a.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/CMakeConfigureLog.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/DependInfo.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/build.make" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/cmake_clean.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/compiler_depend.internal" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/compiler_depend.make" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/compiler_depend.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/depend.make" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/flags.make" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/link.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/linkLibs.rsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/objects.a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/objects1.rsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/progress.make" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/src/board.cpp.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/src/board.cpp.obj.d" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/src/exceptions.cpp.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/src/exceptions.cpp.obj.d" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/src/main.cpp.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/src/main.cpp.obj.d" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/TargetDirectories.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/clion-environment.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/cmake.check_cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/progress.marks" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/Makefile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/MyExecutable.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/chess.cbp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/cmake_install.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/src/board.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/board.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/src/board.h" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/board.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/src/exceptions.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/exceptions.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/src/exceptions.h" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/exceptions.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,62 +61,77 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;CMake Application.Main_executable.executor&quot;: &quot;Run&quot;,
-    &quot;CMake Application.MyExecutable.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/User/CLionProjects/chess/CMakeLists.txt&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;CPPToolchains&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "C/C++ File.main.cpp.executor": "Run",
+    "CMake Application.Main_executable.executor": "Run",
+    "CMake Application.MyExecutable.executor": "Run",
+    "CMake Debug.chess.executor": "Debug",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/User/CLionProjects/chess/CMakeLists.txt",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "CPPToolchains",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\User\CLionProjects\chess1\engine" />
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.Main_executable">
-    <configuration name="MyProject" type="CMakeListConfigurationType" factoryName="CMakeListConfigurationFactory" temporary="true">
+    <configuration name="Unnamed" type="CLionExternalRunConfiguration" factoryName="Application" nameIsGenerated="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" RUN_PATH="$PROJECT_DIR$/CMakeLists.txt">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="chess" type="CMakeListConfigurationType" factoryName="CMakeListConfigurationFactory" temporary="true">
       <method v="2" />
+    </configuration>
+    <configuration name="Main" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" RUN_PATH="$PROJECT_DIR$/CMakeLists.txt" EXPLICIT_BUILD_TARGET_NAME="all">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
     </configuration>
     <configuration name="Main_executable" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="chess" TARGET_NAME="Main_executable" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="chess" RUN_TARGET_NAME="Main_executable">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="main.cpp" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="chess" TARGET_NAME="chess.cbp" CONFIG_NAME="main.cpp">
-      <option name="sourceFile" value="C:\Users\User\CLionProjects\chess1\engine\cmake-build-debug\chess.cbp" />
+    <configuration name="main.cpp" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="chess" TARGET_NAME="main.cpp" CONFIG_NAME="main.cpp">
+      <option name="sourceFile" value="main.cpp" />
       <method v="2">
         <option name="com.jetbrains.cidr.cpp.runfile.CppFileBuildBeforeRunTaskProvider$BasicBuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <list>
       <item itemvalue="C/C++ File.main.cpp" />
+      <item itemvalue="CMake Application.Main" />
       <item itemvalue="CMake Application.Main_executable" />
-      <item itemvalue="CMake Debug.MyProject" />
+      <item itemvalue="CMake Debug.chess" />
+      <item itemvalue="Custom Build Application.Unnamed" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="CMake Debug.MyProject" />
+        <item itemvalue="CMake Debug.chess" />
+        <item itemvalue="C/C++ File.main.cpp" />
       </list>
     </recent_temporary>
   </component>
@@ -179,6 +150,11 @@
       <workItem from="1707039163178" duration="48000" />
       <workItem from="1707039633113" duration="2522000" />
       <workItem from="1707058545046" duration="2874000" />
+      <workItem from="1707072974702" duration="96000" />
+      <workItem from="1707073084824" duration="320000" />
+      <workItem from="1707073514954" duration="306000" />
+      <workItem from="1707073896912" duration="4000" />
+      <workItem from="1707073908894" duration="177000" />
     </task>
     <task id="LOCAL-00001" summary="Добавлена поддержка conan">
       <option name="closed" value="true" />

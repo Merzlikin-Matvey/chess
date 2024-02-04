@@ -1,4 +1,0 @@
-#ifndef CHESS_EXCEPTIONS_H
-#define CHESS_EXCEPTIONS_H
-
-#endif

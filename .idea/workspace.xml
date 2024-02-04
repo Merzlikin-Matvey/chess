@@ -20,34 +20,60 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8dd2bfea-f31c-440f-a102-de1c22e81600" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/README.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/conanfile.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+    <list default="true" id="8dd2bfea-f31c-440f-a102-de1c22e81600" name="Changes" comment="Добавлена поддержка conan">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/chess.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/chess.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conandata.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/conanfile.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/engine/1.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/.cmake/api/v1/reply/cache-v2-d4a39491e652a8ffcb2a.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/.cmake/api/v1/reply/cmakeFiles-v1-48e76a57140688c26079.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/.cmake/api/v1/reply/codemodel-v2-be29ecfea8922a9b2ce3.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/.cmake/api/v1/reply/index-2024-02-03T18-02-57-0902.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeCache.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/3.27.8/CMakeDetermineCompilerABI_C.bin" beforeDir="false" afterPath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/3.27.8/CMakeDetermineCompilerABI_C.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/3.27.8/CMakeDetermineCompilerABI_CXX.bin" beforeDir="false" afterPath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/3.27.8/CMakeDetermineCompilerABI_CXX.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/3.27.8/CompilerIdC/a.exe" beforeDir="false" afterPath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/3.27.8/CompilerIdC/a.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/3.27.8/CompilerIdCXX/a.exe" beforeDir="false" afterPath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/3.27.8/CompilerIdCXX/a.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/CMakeConfigureLog.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/CMakeConfigureLog.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/clion-environment.txt" beforeDir="false" afterPath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/clion-environment.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/MyExecutable.exe" beforeDir="false" afterPath="$PROJECT_DIR$/engine/cmake-build-debug/MyExecutable.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/engine/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/.cmake/api/v1/query/cache-v2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/.cmake/api/v1/query/cmakeFiles-v1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/.cmake/api/v1/query/codemodel-v2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/.cmake/api/v1/query/toolchains-v1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/.cmake/api/v1/reply/directory-.-Debug-d0094a50bb2071803777.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/.cmake/api/v1/reply/target-MyExecutable-Debug-72d25e7e3b601d1a3c6f.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/.cmake/api/v1/reply/toolchains-v1-c966953c01b61b3b683a.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeCache.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/3.27.8/CMakeCCompiler.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/3.27.8/CMakeCXXCompiler.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/3.27.8/CMakeDetermineCompilerABI_C.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/3.27.8/CMakeDetermineCompilerABI_CXX.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/3.27.8/CMakeRCCompiler.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/3.27.8/CMakeSystem.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/3.27.8/CompilerIdC/CMakeCCompilerId.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/3.27.8/CompilerIdC/a.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/3.27.8/CompilerIdCXX/CMakeCXXCompilerId.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/3.27.8/CompilerIdCXX/a.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/CMakeConfigureLog.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/DependInfo.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/build.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/cmake_clean.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/compiler_depend.internal" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/compiler_depend.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/compiler_depend.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/depend.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/flags.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/link.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/linkLibs.rsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/objects.a" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/objects1.rsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/progress.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/src/board.cpp.obj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/src/board.cpp.obj.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/src/exceptions.cpp.obj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/src/exceptions.cpp.obj.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/src/main.cpp.obj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/MyExecutable.dir/src/main.cpp.obj.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/TargetDirectories.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/clion-environment.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/cmake.check_cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/CMakeFiles/progress.marks" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/Makefile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/MyExecutable.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/chess.cbp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/cmake-build-debug/cmake_install.cmake" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,8 +178,17 @@
       <workItem from="1707001318311" duration="1122000" />
       <workItem from="1707039163178" duration="48000" />
       <workItem from="1707039633113" duration="2522000" />
-      <workItem from="1707058545046" duration="2718000" />
+      <workItem from="1707058545046" duration="2874000" />
     </task>
+    <task id="LOCAL-00001" summary="Добавлена поддержка conan">
+      <option name="closed" value="true" />
+      <created>1707071230882</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1707071230882</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -174,5 +209,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Добавлена поддержка conan" />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавлена поддержка conan" />
   </component>
 </project>

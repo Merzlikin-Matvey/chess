@@ -1,1 +1,0 @@
-CMakeLists.txt not found in C:\Users\User\CLionProjects\chess\engine Select CMakeLists.txt

@@ -6,8 +6,8 @@ authors = ["Merzlikin-Matvey <merzlikinmatvey01@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
-conan = "^2.0.17"
+python = "^3.8"
+conan = "1.62"
 
 
 [build-system]

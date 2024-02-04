@@ -1,1 +1,4 @@
-venv/*
+venv/
+cmake-build-debug
+.idea/
+dependencies/*

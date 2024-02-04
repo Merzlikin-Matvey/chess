@@ -3,7 +3,7 @@
   <component name="Black">
     <option name="sdkName" value="Poetry (chess) (3)" />
   </component>
-  <component name="CMakeWorkspace" PROJECT_DIR="$PROJECT_DIR$/engine">
-    <contentRoot DIR="$PROJECT_DIR$" />
+  <component name="CMakeWorkspace" PROJECT_DIR="$PROJECT_DIR$">
+    <contentRoot DIR="$PROJECT_DIR$/engine" />
   </component>
 </project>

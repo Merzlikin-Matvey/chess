@@ -14,6 +14,7 @@ public:
     std::vector<Figure> figures;
 
     Figure figure_by_position(std::pair<int, int> position);
+    void kill(std::pair<int, int> position);
 };
 
 class Figure {
@@ -27,8 +28,15 @@ public:
 
 
     void move(pair<int, int> new_position);
+    void kill() const;
+    bool is_empty(pair<int, int> position);
+    bool is_teamate(pair<int, int> position);
+    bool is_opponent(pair<int, int> position);
+};
 
-    void kill();
+class NullFigure : public Figure{
+public:
+    explicit NullFigure(Board *initialBoard);
 };
 
 #endif

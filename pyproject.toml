@@ -7,7 +7,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-conan = "1.62"
+conan = "1.58"
 
 
 [build-system]

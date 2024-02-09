@@ -22,16 +22,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8dd2bfea-f31c-440f-a102-de1c22e81600" name="Changes" comment="Минор">
-      <change afterPath="$PROJECT_DIR$/engine/src/figure.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/src/main.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/chess.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/chess.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/engine/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/src/board.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/board.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/src/board.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/src/exceptions.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/src/exceptions.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/src/main.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +59,9 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
     "C/C++ File.main.cpp.executor": "Run",
+    "CMake Application.Main.executor": "Run",
     "CMake Application.Main_executable.executor": "Run",
     "CMake Application.MyExecutable.executor": "Run",
     "CMake Debug.chess.executor": "Debug",
@@ -163,6 +159,21 @@
       <workItem from="1707073514954" duration="306000" />
       <workItem from="1707073896912" duration="4000" />
       <workItem from="1707073908894" duration="4701000" />
+      <workItem from="1707123813351" duration="685000" />
+      <workItem from="1707124864117" duration="643000" />
+      <workItem from="1707125531616" duration="650000" />
+      <workItem from="1707128982783" duration="88000" />
+      <workItem from="1707129130071" duration="341000" />
+      <workItem from="1707199423349" duration="345000" />
+      <workItem from="1707216508197" duration="43000" />
+      <workItem from="1707216569657" duration="633000" />
+      <workItem from="1707379344256" duration="645000" />
+      <workItem from="1707380986069" duration="302000" />
+      <workItem from="1707381512930" duration="302000" />
+      <workItem from="1707465895297" duration="440000" />
+      <workItem from="1707466363908" duration="404000" />
+      <workItem from="1707467658537" duration="331000" />
+      <workItem from="1707468189906" duration="1976000" />
     </task>
     <task id="LOCAL-00001" summary="Добавлена поддержка conan">
       <option name="closed" value="true" />
@@ -203,6 +214,7 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Добавлена поддержка conan" />
     <MESSAGE value="Минор" />
     <option name="LAST_COMMIT_MESSAGE" value="Минор" />

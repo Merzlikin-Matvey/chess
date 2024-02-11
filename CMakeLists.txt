@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.12)
 project(chess)
 set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static-libgcc -static-libstdc++")
 
 add_subdirectory(engine)
-
 add_executable(Main_executable main.cpp)
 
 

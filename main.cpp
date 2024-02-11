@@ -7,8 +7,8 @@ using namespace std;
 
 int main() {
     Board board;
-    Figure figure(&board, "Figure", pair<int, int> {1, 1}, "white");
-
-    board.figures.push_back(figure);
-    cout << figure.is_empty(make_pair(1, 1));
+    Pawn pawn(&board, make_pair(1, 1), "white");
+    board.put_figure(pawn);
+    board.move(make_pair(1, 1), make_pair(2, 1), false);
+    board.print();
 }

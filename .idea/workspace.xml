@@ -21,8 +21,9 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8dd2bfea-f31c-440f-a102-de1c22e81600" name="Changes" comment="Минор">
+    <list default="true" id="8dd2bfea-f31c-440f-a102-de1c22e81600" name="Changes" comment="Проверка на своего/чужого. NullFigure">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.txt" beforeDir="false" afterPath="$PROJECT_DIR$/README.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/engine/src/board.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/board.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/engine/src/figure.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/figure.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/engine/src/main.h" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/main.h" afterDir="false" />
@@ -73,13 +74,14 @@
     &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/User/CLionProjects/chess/CMakeLists.txt&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;CPPToolchains&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;http.proxy&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -112,11 +114,6 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="main.cpp" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="chess" TARGET_NAME="main.cpp" CONFIG_NAME="main.cpp">
       <option name="sourceFile" value="main.cpp" />
       <method v="2">
@@ -124,12 +121,12 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="C/C++ File.main.cpp" />
+      <item itemvalue="Custom Build Application.Unnamed" />
+      <item itemvalue="CMake Debug.chess" />
+      <item itemvalue="CMake Application.Engine_executable" />
       <item itemvalue="CMake Application.Main" />
       <item itemvalue="CMake Application.Main_executable" />
-      <item itemvalue="CMake Application.Engine_executable" />
-      <item itemvalue="CMake Debug.chess" />
-      <item itemvalue="Custom Build Application.Unnamed" />
+      <item itemvalue="C/C++ File.main.cpp" />
     </list>
     <recent_temporary>
       <list>
@@ -158,7 +155,18 @@
       <workItem from="1707073514954" duration="306000" />
       <workItem from="1707073896912" duration="4000" />
       <workItem from="1707073908894" duration="4701000" />
-      <workItem from="1707150183674" duration="2618000" />
+      <workItem from="1707150183674" duration="7457000" />
+      <workItem from="1707233940048" duration="190000" />
+      <workItem from="1707577180439" duration="122000" />
+      <workItem from="1707577314017" duration="1339000" />
+      <workItem from="1707581925619" duration="829000" />
+      <workItem from="1707582770956" duration="108000" />
+      <workItem from="1707582890561" duration="436000" />
+      <workItem from="1707583338869" duration="1556000" />
+      <workItem from="1707588770345" duration="18000" />
+      <workItem from="1707588800025" duration="645000" />
+      <workItem from="1707589851429" duration="3933000" />
+      <workItem from="1707627444596" duration="3000" />
     </task>
     <task id="LOCAL-00001" summary="Добавлена поддержка conan">
       <option name="closed" value="true" />
@@ -176,7 +184,15 @@
       <option name="project" value="LOCAL" />
       <updated>1707074110184</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Проверка на своего/чужого. NullFigure">
+      <option name="closed" value="true" />
+      <created>1707152846905</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1707152846905</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -201,6 +217,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Добавлена поддержка conan" />
     <MESSAGE value="Минор" />
-    <option name="LAST_COMMIT_MESSAGE" value="Минор" />
+    <MESSAGE value="Проверка на своего/чужого. NullFigure" />
+    <option name="LAST_COMMIT_MESSAGE" value="Проверка на своего/чужого. NullFigure" />
   </component>
 </project>

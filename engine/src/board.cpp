@@ -7,19 +7,18 @@
 using namespace std;
 
 
-Figure* Board::figure_by_position(std::pair<int, int> position) {
-    for (Figure& figure : figures) {
-        if (figure.position == position) {
-            return &figure;
+Figure* Board::figure_by_position(pair<int, int> position) {
+    for (auto figure : figures) {
+        if (figure->position == position) {
+            return figure;
         }
     }
     return new NullFigure(this);
 }
-
 void Board::print(){
     vector<vector<string>> board(8, vector<string>(8, "."));
     for (auto figure : figures) {
-        board[figure.position.first][figure.position.second] = figure.symbol;
+        board[figure->position.first][figure->position.second] = figure->symbol;
     }
 
     for (auto row : board){
@@ -41,34 +40,35 @@ void Board::change_turn(){
 }
 
 void Board::kill(std::pair<int, int> position) {
-    auto it = find_if(figures.begin(), figures.end(), [position](const Figure& figure) {
-        return figure.position == position;
-    });
+    auto fig = figure_by_position(position);
 
-    if (it != figures.end()) {
-        figures.erase(it);
+    if (not fig->is_null()) {
+        auto it = std::find(figures.begin(), figures.end(), fig);
+        if (it != figures.end()) {
+            delete *it;
+            figures.erase(it);
+        }
     }
 }
 
 void Board::move(pair<int, int> pos1, pair<int, int> pos2, bool castling){
     if (turn == figure_by_position(pos1)->color){
-        auto available_moves = figure_by_position(pos1)->available_moves();
-        for (auto move : available_moves){
-            cout << move.first << ' ' << move.second << endl;
+        Figure* figure = figure_by_position(pos1);
+        Pawn* pawn = dynamic_cast<Pawn*>(figure);
+        auto available_moves = vector<pair<int, int>> {};
+
+        if (not pawn->is_null()) {
+            pawn->move(pos2);
+        } else {
+            cout << "Figure not found!" << endl;
         }
-        cout << endl;
-        if (find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()){
-            if (figure_by_position(pos2)->name != "null"){
-                figure_by_position(pos2)->kill();
-            }
-            figure_by_position(pos1)->move(pos2);
-        }
+
         this->change_turn();
     }
 }
 
-void Board::put_figure(Figure figure){
-    this->figures.push_back(figure);
+void Board::put_figure(Figure& figure){
+    figures.push_back(&figure);
 }
 
 bool Board::is_empty(pair<int, int> position) {

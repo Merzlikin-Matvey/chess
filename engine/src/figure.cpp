@@ -36,7 +36,7 @@ bool Figure::is_teammate(pair<int, int> position){
 
 bool Figure::is_opponent(pair<int, int> position) {
     auto figure = board->figure_by_position(position);
-    return (figure->color != this->color and figure->name != "null");
+    return (figure->color != this->color and not figure->is_null());
 }
 
 vector<pair<int, int>> Figure::available_moves() {
@@ -111,10 +111,72 @@ vector<pair<int, int>> Rook::available_moves(){
         moves.push_back(make_pair(position.first - i, position.second));
         i++;
     }
+    if (is_opponent(make_pair(position.first - i, position.second))){
+        moves.push_back(make_pair(position.first - i, position.second));
+    }
 
+    i = 1;
+    while (is_empty(make_pair(position.first, position.second + i))){
+        moves.push_back(make_pair(position.first, position.second + i));
+        i++;
+    }
+    if (is_opponent(make_pair(position.first, position.second + i))){
+        moves.push_back(make_pair(position.first, position.second + i));
+    }
 
-
+    i = 1;
+    while (is_empty(make_pair(position.first, position.second - i))){
+        moves.push_back(make_pair(position.first, position.second - i));
+        i++;
+    }
+    if (is_opponent(make_pair(position.first, position.second - i))){
+        moves.push_back(make_pair(position.first, position.second - i));
+    }
 
     return moves;
 
 }
+
+Knight::Knight(Board *initialBoard, pair<int, int> position, string color) :
+        Figure(initialBoard, "knight", position, color, (color == "white") ? "k" : "K") {}
+
+vector<pair<int, int>> Knight::available_moves(){
+    vector<pair<int, int>> moves {};
+    int i;
+
+    if (is_opponent(make_pair(position.first + 2, position.second + 1)) or
+        is_empty(make_pair(position.first + 2, position.second + 1))){
+        moves.push_back(make_pair(position.first + 2, position.second + 1));
+    }
+    if (is_opponent(make_pair(position.first + 2, position.second - 1)) or
+        is_empty(make_pair(position.first + 2, position.second - 1))){
+        moves.push_back(make_pair(position.first + 2, position.second - 1));
+    }
+    if (is_opponent(make_pair(position.first - 2, position.second + 1)) or
+        is_empty(make_pair(position.first - 2, position.second + 1))){
+        moves.push_back(make_pair(position.first - 2, position.second + 1));
+    }
+    if (is_opponent(make_pair(position.first - 2, position.second - 1)) or
+        is_empty(make_pair(position.first - 2, position.second - 1))){
+        moves.push_back(make_pair(position.first - 2, position.second - 1));
+    }
+    if (is_opponent(make_pair(position.first + 1, position.second + 2)) or
+        is_empty(make_pair(position.first + 1, position.second + 2))){
+        moves.push_back(make_pair(position.first + 1, position.second + 2));
+    }
+    if (is_opponent(make_pair(position.first + 1, position.second - 2)) or
+        is_empty(make_pair(position.first + 1, position.second - 2))){
+        moves.push_back(make_pair(position.first + 1, position.second - 2));
+    }
+    if (is_opponent(make_pair(position.first - 1, position.second + 2)) or
+        is_empty(make_pair(position.first - 1, position.second + 2))){
+        moves.push_back(make_pair(position.first - 1, position.second + 2));
+    }
+    if (is_opponent(make_pair(position.first - 1, position.second - 2)) or
+        is_empty(make_pair(position.first - 1, position.second - 2))){
+        moves.push_back(make_pair(position.first - 1, position.second - 2));
+    }
+
+    return moves;
+}
+

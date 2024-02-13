@@ -64,4 +64,10 @@ public:
     vector<pair<int, int>> available_moves() override;
 };
 
+class Knight : public Figure{
+public:
+    explicit Knight(Board *initialBoard, pair<int, int> position, string color);
+
+    vector<pair<int, int>> available_moves() override;
+};
 #endif

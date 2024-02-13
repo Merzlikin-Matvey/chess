@@ -7,17 +7,19 @@ using namespace std;
 
 int main() {
     Board board;
-    Pawn pawn1(&board, make_pair(4, 1), "white");
-    Pawn pawn2(&board, make_pair(2, 6), "black");
-    Rook rook(&board, make_pair(2, 1), "white");
-
-    board.put_figure(pawn1);
-    board.put_figure(pawn2);
+    Rook rook(&board, make_pair(1, 1), "black");
+    Knight knight (&board, make_pair(2, 3), "white");
     board.put_figure(rook);
+    board.put_figure(knight);
+
     board.print();
 
-    for (auto move : rook.available_moves()){
+    for (auto move : board.figure_by_position(make_pair(2, 3))->available_moves()){
         cout << move.first << '-' << move.second << ' ';
     }
+    cout << endl;
+
+    board.move(make_pair(2, 3), make_pair(1, 1), false);
+    board.print();
 
 }

@@ -54,18 +54,46 @@ void Board::kill(std::pair<int, int> position) {
 void Board::move(pair<int, int> pos1, pair<int, int> pos2, bool castling){
     if (turn == figure_by_position(pos1)->color){
         Figure* figure = figure_by_position(pos1);
-        Pawn* pawn = dynamic_cast<Pawn*>(figure);
-        auto available_moves = vector<pair<int, int>> {};
+        auto pawn = dynamic_cast<Pawn*>(figure);
+        auto rook = dynamic_cast<Rook*>(figure);
+        auto knight = dynamic_cast<Knight*>(figure);
 
-        if (not pawn->is_null()) {
-            pawn->move(pos2);
-        } else {
-            cout << "Figure not found!" << endl;
+        if (pawn) {
+            auto available_moves = pawn->available_moves();
+            if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
+                pawn->move(pos2);
+            } else {
+                cout << "Invalid move" << endl;
+                return;
+            }
+        }
+        else if (rook) {
+            auto available_moves = rook->available_moves();
+            if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
+                rook->move(pos2);
+            } else {
+                cout << "Invalid move" << endl;
+                return;
+            }
+        }
+        if (knight) {
+            auto available_moves = knight->available_moves();
+            if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
+                knight->move(pos2);
+            } else {
+                cout << "Invalid move" << endl;
+                return;
+            }
+        }
+        else {
+            cout << "Figure not found" << endl;
+            return;
         }
 
         this->change_turn();
     }
 }
+
 
 void Board::put_figure(Figure& figure){
     figures.push_back(&figure);

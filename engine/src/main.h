@@ -70,4 +70,25 @@ public:
 
     vector<pair<int, int>> available_moves() override;
 };
+
+class Bishop : public Figure{
+public:
+    explicit Bishop(Board *initialBoard, pair<int, int> position, string color);
+
+    vector<pair<int, int>> available_moves() override;
+};
+
+class Queen : public Figure{
+public:
+    explicit Queen(Board *initialBoard, pair<int, int> position, string color);
+
+    vector<pair<int, int>> available_moves() override;
+};
+
+class King : public Figure{
+public:
+    explicit King(Board *initialBoard, pair<int, int> position, string color);
+
+    vector<pair<int, int>> available_moves() override;
+};
 #endif

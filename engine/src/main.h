@@ -7,6 +7,7 @@
 
 using namespace std;
 
+
 class Figure;
 
 class Board {
@@ -20,6 +21,7 @@ public:
     void move(pair<int, int> pos1, pair<int, int> pos2, bool castling);
     void print();
     void put_figure(Figure& figure);
+    void encode_from_json(string path, Board& board);
     bool is_empty(pair<int, int> position);
 
 };

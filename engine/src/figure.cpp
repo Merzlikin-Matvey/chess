@@ -12,6 +12,8 @@ Figure::Figure(Board *initialBoard, string initialName, pair<int, int> initialPo
     position = initialPosition;
     color = initialColor;
     symbol = initialSymbol;
+
+    board->put_figure(*this);
 }
 
 void Figure::move(pair<int, int> new_position) {

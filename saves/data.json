@@ -1,0 +1,53 @@
+{
+  "turn": "white",
+  "figures": [
+    {
+      "color": "white",
+      "name": "pawn",
+      "x": 1,
+      "y": 0
+    },
+    {
+      "color": "white",
+      "name": "pawn",
+      "x": 1,
+      "y": 1
+    },
+    {
+      "color": "white",
+      "name": "pawn",
+      "x": 1,
+      "y": 2
+    },
+    {
+      "color": "white",
+      "name": "pawn",
+      "x": 1,
+      "y": 3
+    },
+    {
+      "color": "white",
+      "name": "pawn",
+      "x": 1,
+      "y": 4
+    },
+    {
+      "color": "white",
+      "name": "pawn",
+      "x": 1,
+      "y": 5
+    },
+    {
+      "color": "white",
+      "name": "pawn",
+      "x": 1,
+      "y": 6
+    },
+    {
+      "color": "white",
+      "name": "pawn",
+      "x": 1,
+      "y": 7
+    }
+  ]
+}

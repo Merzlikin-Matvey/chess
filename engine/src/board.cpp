@@ -16,12 +16,14 @@ Figure* Board::figure_by_position(pair<int, int> position) {
             return figure;
         }
     }
-    return new NullFigure(this);
+    return new NullFigure(*this);
 }
+
 void Board::print(){
     vector<vector<string>> board(8, vector<string>(8, "."));
-    for (auto figure : figures) {
-        cout << figure->color << endl;
+
+    for (auto figure : figures){
+        board[figure->position.first][figure->position.second] = figure->symbol;
     }
 
     for (auto row : board){
@@ -31,6 +33,15 @@ void Board::print(){
         cout << endl;
     }
 
+}
+
+void Board::info(){
+    cout << figures.size() << endl;
+    for (auto figure : figures){
+        cout << figure->name << endl;
+        cout << figure->position.first << '-' << figure->position.second << endl;
+        cout << endl;
+    }
 }
 
 void Board::change_turn(){
@@ -54,7 +65,7 @@ void Board::kill(std::pair<int, int> position) {
     }
 }
 
-void Board::move(pair<int, int> pos1, pair<int, int> pos2, bool castling){
+string Board::move(pair<int, int> pos1, pair<int, int> pos2, bool castling){
     if (turn == figure_by_position(pos1)->color){
         Figure* figure = figure_by_position(pos1);
         auto pawn = dynamic_cast<Pawn*>(figure);
@@ -69,8 +80,7 @@ void Board::move(pair<int, int> pos1, pair<int, int> pos2, bool castling){
             if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
                 pawn->move(pos2);
             } else {
-                cout << "Invalid move" << endl;
-                return;
+                return "Invalid move";
             }
         }
         else if (rook) {
@@ -78,8 +88,7 @@ void Board::move(pair<int, int> pos1, pair<int, int> pos2, bool castling){
             if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
                 rook->move(pos2);
             } else {
-                cout << "Invalid move" << endl;
-                return;
+                return "Invalid move";
             }
         }
         else if (knight) {
@@ -87,8 +96,7 @@ void Board::move(pair<int, int> pos1, pair<int, int> pos2, bool castling){
             if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
                 knight->move(pos2);
             } else {
-                cout << "Invalid move" << endl;
-                return;
+                return "Invalid move";
             }
         }
         else if (bishop) {
@@ -96,8 +104,7 @@ void Board::move(pair<int, int> pos1, pair<int, int> pos2, bool castling){
             if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
                 bishop->move(pos2);
             } else {
-                cout << "Invalid move" << endl;
-                return;
+                return "Invalid move";
             }
         }
         else if (queen) {
@@ -105,8 +112,7 @@ void Board::move(pair<int, int> pos1, pair<int, int> pos2, bool castling){
             if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
                 queen->move(pos2);
             } else {
-                cout << "Invalid move" << endl;
-                return;
+                return "Invalid move";
             }
         }
         else if (king) {
@@ -114,22 +120,20 @@ void Board::move(pair<int, int> pos1, pair<int, int> pos2, bool castling){
             if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
                 king->move(pos2);
             } else {
-                cout << "Invalid move" << endl;
-                return;
+                return "Invalid move";
             }
         }
         else {
-            cout << "Figure not found" << endl;
-            return;
+            return "Figure not found";
         }
 
         this->change_turn();
+        return "Move";
     }
 }
 
-
-void Board::put_figure(Figure& figure){
-    figures.push_back(&figure);
+void Board::put_figure(Figure* figure){
+    figures.push_back(figure);
 }
 
 void Board::encode_from_json(std::string path, Board& board) {
@@ -138,12 +142,15 @@ void Board::encode_from_json(std::string path, Board& board) {
     file >> data;
     file.close();
 
+    Pawn* pawn;
+
     for (auto figure : data["figures"]){
         if (figure["name"] == "pawn"){
-            cout << "abobaS" << endl;
-            Pawn(&board, make_pair(1, 1), "white");
+            pawn = new Pawn(board, make_pair(figure["x"], figure["y"]), figure["color"]);
+            put_figure(pawn);
         }
     }
+
 }
 
 bool Board::is_empty(pair<int, int> position) {

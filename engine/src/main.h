@@ -24,6 +24,10 @@ public:
     void info();
     bool is_empty(pair<int, int> position);
     string move(pair<int, int> pos1, pair<int, int> pos2, bool castling);
+    string to_chess_notation(pair<int, int> position);
+    string to_chess_notation(pair<int, int> position1, pair<int, int> position2);
+    pair<int, int> to_number_notation(string notation);
+    pair<pair<int, int>, pair<int, int>> to_number_notation(string notation1, string notation2);
 
 };
 

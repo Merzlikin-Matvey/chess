@@ -157,6 +157,25 @@ bool Board::is_empty(pair<int, int> position) {
     return figure_by_position(position)->name != "null";
 }
 
+string Board::to_chess_notation(pair<int, int> position) {
+    string letters = "abcdefgh";
+    string numbers = "87654321";
+    return to_string(letters[position.second]) + to_string(numbers[position.first]);
+}
+
+string Board::to_chess_notation(pair<int, int> position1, pair<int, int> position2) {
+    return to_chess_notation(position1) + to_chess_notation(position2);
+}
+
+pair<int, int> Board::to_number_notation(string notation) {
+    string letters = "abcdefgh";
+    string numbers = "87654321";
+    return make_pair(letters.find(notation[0]), numbers.find(notation[1]));
+}
+
+pair<pair<int, int>, pair<int, int>> Board::to_number_notation(string notation1, string notation2) {
+    return make_pair(to_number_notation(notation1), to_number_notation(notation2));
+}
 
 
 

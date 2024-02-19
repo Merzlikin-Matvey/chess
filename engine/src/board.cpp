@@ -28,12 +28,13 @@ void Board::print(){
         }
     }
 
-    for (int i = board.size() - 1; i >= 0; --i) {
-        cout << i + 1 << " ";
-        for (int j = 0; j < board[0].size(); ++j) {
-            std::cout << board[i][j] << " ";
+    int i = 8;
+    for (auto row : board) {
+        cout << i-- << " ";
+        for (auto elem : row) {
+            cout << elem << " ";
         }
-        std::cout << std::endl;
+        cout << endl;
     }
 
     cout << " ";
@@ -151,11 +152,36 @@ void Board::encode_from_json(std::string path, Board& board) {
     file.close();
 
     Pawn* pawn;
+    Rook* rook;
+    Knight* knight;
+    Bishop* bishop;
+    Queen* queen;
+    King* king;
 
     for (auto figure : data["figures"]){
         if (figure["name"] == "pawn"){
-            pawn = new Pawn(board, make_pair(figure["x"], figure["y"]), figure["color"]);
+            pawn = new Pawn(board, to_number_notation(figure["position"]), figure["color"]);
             put_figure(pawn);
+        }
+        else if (figure["name"] == "rook"){
+            rook = new Rook(board, to_number_notation(figure["position"]), figure["color"]);
+            put_figure(rook);
+        }
+        else if (figure["name"] == "knight"){
+            knight = new Knight(board, to_number_notation(figure["position"]), figure["color"]);
+            put_figure(knight);
+        }
+        else if (figure["name"] == "bishop"){
+            bishop = new Bishop(board, to_number_notation(figure["position"]), figure["color"]);
+            put_figure(bishop);
+        }
+        else if (figure["name"] == "queen"){
+            queen = new Queen(board, to_number_notation(figure["position"]), figure["color"]);
+            put_figure(queen);
+        }
+        else if (figure["name"] == "king"){
+            king = new King(board, to_number_notation(figure["position"]), figure["color"]);
+            put_figure(king);
         }
     }
 
@@ -168,7 +194,7 @@ bool Board::is_empty(pair<int, int> position) {
 string Board::to_chess_notation(pair<int, int> position) {
     string letters = "abcdefgh";
     string numbers = "87654321";
-    return to_string(letters[position.second]) + to_string(numbers[position.first]);
+    return string() + letters[position.second] + numbers[position.first];
 }
 
 string Board::to_chess_notation(pair<int, int> position1, pair<int, int> position2) {
@@ -178,7 +204,7 @@ string Board::to_chess_notation(pair<int, int> position1, pair<int, int> positio
 pair<int, int> Board::to_number_notation(string notation) {
     string letters = "abcdefgh";
     string numbers = "87654321";
-    return make_pair(letters.find(notation[0]), numbers.find(notation[1]));
+    return make_pair(numbers.find(notation[1]), letters.find(notation[0]));
 }
 
 pair<pair<int, int>, pair<int, int>> Board::to_number_notation(string notation1, string notation2) {

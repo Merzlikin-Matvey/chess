@@ -21,8 +21,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8dd2bfea-f31c-440f-a102-de1c22e81600" name="Changes" comment="Изменен вывод доски">
+    <list default="true" id="8dd2bfea-f31c-440f-a102-de1c22e81600" name="Changes" comment="Фикс перевода в численную нотацию">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/src/board.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/board.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/saves/data.json" beforeDir="false" afterPath="$PROJECT_DIR$/saves/data.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,12 +136,12 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Custom Build Application.Unnamed" />
-      <item itemvalue="CMake Debug.chess" />
+      <item itemvalue="C/C++ File.main.cpp" />
       <item itemvalue="CMake Application.Engine_executable" />
       <item itemvalue="CMake Application.Main" />
       <item itemvalue="CMake Application.Main_executable" />
-      <item itemvalue="C/C++ File.main.cpp" />
+      <item itemvalue="CMake Debug.chess" />
+      <item itemvalue="Custom Build Application.Unnamed" />
     </list>
     <recent_temporary>
       <list>
@@ -190,7 +192,7 @@
       <workItem from="1708291359290" duration="2240000" />
       <workItem from="1708331969274" duration="449000" />
       <workItem from="1708332432612" duration="3675000" />
-      <workItem from="1708363599903" duration="3000" />
+      <workItem from="1708363599903" duration="5147000" />
     </task>
     <task id="LOCAL-00001" summary="Добавлена поддержка conan">
       <option name="closed" value="true" />
@@ -240,7 +242,15 @@
       <option name="project" value="LOCAL" />
       <updated>1708336199384</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Фикс перевода в численную нотацию">
+      <option name="closed" value="true" />
+      <created>1708363802800</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1708363802800</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -269,7 +279,8 @@
     <MESSAGE value="Пешка (не работает)" />
     <MESSAGE value="Конвертация нотаций" />
     <MESSAGE value="Изменен вывод доски" />
-    <option name="LAST_COMMIT_MESSAGE" value="Изменен вывод доски" />
+    <MESSAGE value="Фикс перевода в численную нотацию" />
+    <option name="LAST_COMMIT_MESSAGE" value="Фикс перевода в численную нотацию" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

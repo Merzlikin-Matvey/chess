@@ -23,14 +23,22 @@ void Board::print(){
     vector<vector<string>> board(8, vector<string>(8, "."));
 
     for (auto figure : figures){
-        board[figure->position.first][figure->position.second] = figure->symbol;
+        if (figure->name != "null"){
+            board[figure->position.first][figure->position.second] = figure->symbol;
+        }
     }
 
-    for (auto row : board){
-        for (auto sym : row){
-            cout << sym << ' ';
+    for (int i = board.size() - 1; i >= 0; --i) {
+        cout << i + 1 << " ";
+        for (int j = 0; j < board[0].size(); ++j) {
+            std::cout << board[i][j] << " ";
         }
-        cout << endl;
+        std::cout << std::endl;
+    }
+
+    cout << " ";
+    for (auto letter : "abcdefgh") {
+        cout << " " << letter;
     }
 
 }
@@ -169,7 +177,7 @@ string Board::to_chess_notation(pair<int, int> position1, pair<int, int> positio
 
 pair<int, int> Board::to_number_notation(string notation) {
     string letters = "abcdefgh";
-    string numbers = "87654321";
+    string numbers = "12345678";
     return make_pair(letters.find(notation[0]), numbers.find(notation[1]));
 }
 

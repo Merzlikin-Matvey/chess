@@ -21,10 +21,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8dd2bfea-f31c-440f-a102-de1c22e81600" name="Changes" comment="Пешка (не работает)">
+    <list default="true" id="8dd2bfea-f31c-440f-a102-de1c22e81600" name="Changes" comment="Конвертация нотаций">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/engine/src/board.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/board.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/src/main.h" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/main.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -191,7 +191,7 @@
       <workItem from="1708285595572" duration="5074000" />
       <workItem from="1708291359290" duration="2240000" />
       <workItem from="1708331969274" duration="449000" />
-      <workItem from="1708332432612" duration="2526000" />
+      <workItem from="1708332432612" duration="3637000" />
     </task>
     <task id="LOCAL-00001" summary="Добавлена поддержка conan">
       <option name="closed" value="true" />
@@ -225,7 +225,15 @@
       <option name="project" value="LOCAL" />
       <updated>1707627463562</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Конвертация нотаций">
+      <option name="closed" value="true" />
+      <created>1708335124658</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1708335124658</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -252,7 +260,8 @@
     <MESSAGE value="Минор" />
     <MESSAGE value="Проверка на своего/чужого. NullFigure" />
     <MESSAGE value="Пешка (не работает)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Пешка (не работает)" />
+    <MESSAGE value="Конвертация нотаций" />
+    <option name="LAST_COMMIT_MESSAGE" value="Конвертация нотаций" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

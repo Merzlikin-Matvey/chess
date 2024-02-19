@@ -177,7 +177,7 @@ string Board::to_chess_notation(pair<int, int> position1, pair<int, int> positio
 
 pair<int, int> Board::to_number_notation(string notation) {
     string letters = "abcdefgh";
-    string numbers = "12345678";
+    string numbers = "87654321";
     return make_pair(letters.find(notation[0]), numbers.find(notation[1]));
 }
 

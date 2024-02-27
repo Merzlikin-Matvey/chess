@@ -21,15 +21,17 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8dd2bfea-f31c-440f-a102-de1c22e81600" name="Changes" comment="Слон, королева и король">
-      <change afterPath="$PROJECT_DIR$/saves/data.json" afterDir="false" />
+    <list default="true" id="8dd2bfea-f31c-440f-a102-de1c22e81600" name="Changes" comment="Самый странный баг в моей жизни лол">
+      <change afterPath="$PROJECT_DIR$/engine/src/json.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.txt" beforeDir="false" afterPath="$PROJECT_DIR$/README.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/conanfile.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/engine/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/engine/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/engine/src/board.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/board.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/src/figure.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/figure.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/src/main.h" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/main.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/poetry.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,45 +64,43 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "C/C++ File.main.cpp.executor": "Run",
-    "CMake Application.Main_executable.executor": "Run",
-    "CMake Application.MyExecutable.executor": "Run",
-    "CMake Debug.chess.executor": "Debug",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/User/CLionProjects/chess/CMakeLists.txt",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "structure.view.defaults.are.configured": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;C/C++ File.main.cpp.executor&quot;: &quot;Run&quot;,
+    &quot;CMake Application.Main_executable.executor&quot;: &quot;Run&quot;,
+    &quot;CMake Application.MyExecutable.executor&quot;: &quot;Run&quot;,
+    &quot;CMake Debug.chess.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/merzl/CLionProjects/chess/engine/src&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;structure.view.defaults.are.configured&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\merzl\CLionProjects\chess\engine\src" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\User\CLionProjects\chess1\engine" />
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.Main_executable">
     <configuration name="Unnamed" type="CLionExternalRunConfiguration" factoryName="Application" nameIsGenerated="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" RUN_PATH="$PROJECT_DIR$/CMakeLists.txt">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="CLION.EXTERNAL.BUILD" enabled="true" />
       </method>
@@ -177,7 +177,10 @@
       <workItem from="1707589851429" duration="3933000" />
       <workItem from="1707627444596" duration="80000" />
       <workItem from="1707724083412" duration="3761000" />
-      <workItem from="1707819404022" duration="10898000" />
+      <workItem from="1707819404022" duration="14059000" />
+      <workItem from="1708667796549" duration="3032000" />
+      <workItem from="1708868643166" duration="1120000" />
+      <workItem from="1709026395107" duration="5000" />
     </task>
     <task id="LOCAL-00001" summary="Добавлена поддержка conan">
       <option name="closed" value="true" />
@@ -235,7 +238,15 @@
       <option name="project" value="LOCAL" />
       <updated>1707823205739</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Самый странный баг в моей жизни лол">
+      <option name="closed" value="true" />
+      <created>1707995152578</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1707995152578</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -265,6 +276,7 @@
     <MESSAGE value="Пешка, башенка" />
     <MESSAGE value="Лошадь + баг фикс" />
     <MESSAGE value="Слон, королева и король" />
-    <option name="LAST_COMMIT_MESSAGE" value="Слон, королева и король" />
+    <MESSAGE value="Самый странный баг в моей жизни лол" />
+    <option name="LAST_COMMIT_MESSAGE" value="Самый странный баг в моей жизни лол" />
   </component>
 </project>

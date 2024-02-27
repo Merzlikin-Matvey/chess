@@ -4,7 +4,7 @@
 #include <vector>
 #include <algorithm>
 #include <fstream>
-#include <nlohmann/json.hpp>
+#include "../dependencies/json.hpp"
 
 using namespace std;
 using json = nlohmann::json;
@@ -19,6 +19,7 @@ Figure* Board::figure_by_position(pair<int, int> position) {
     return new NullFigure(this);
 }
 void Board::print(){
+    Pawn(this, make_pair(2, 2), "black");
     vector<vector<string>> board(8, vector<string>(8, "."));
     for (auto figure : figures) {
         cout << figure->color << endl;
@@ -140,8 +141,7 @@ void Board::encode_from_json(std::string path, Board& board) {
 
     for (auto figure : data["figures"]){
         if (figure["name"] == "pawn"){
-            cout << "abobaS" << endl;
-            Pawn(&board, make_pair(1, 1), "white");
+            Pawn(&board, make_pair(2, 2), "black");
         }
     }
 }

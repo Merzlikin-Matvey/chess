@@ -10,6 +10,3 @@ add_executable(Main_executable main.cpp)
 message("C Compiler: ${CMAKE_C_COMPILER}")
 message("C++ Compiler: ${CMAKE_CXX_COMPILER}")
 
-include(dependencies/conanbuildinfo.cmake)
-conan_basic_setup()
-target_link_libraries(Main_executable PUBLIC ${CONAN_LIBS})

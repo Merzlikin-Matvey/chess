@@ -20,7 +20,7 @@ public:
     void change_turn();
     void print();
     void put_figure(Figure* figure);
-    void encode_from_json(string path, Board& board);
+    void import_json(string path);
     bool is_empty(pair<int, int> position);
     string move(pair<int, int> pos1, pair<int, int> pos2);
     string position_to_chess_notation(pair<int, int> position);

@@ -21,10 +21,9 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8dd2bfea-f31c-440f-a102-de1c22e81600" name="Changes" comment="Я не понял, что произошло, но теперь хотя б не ломается">
+    <list default="true" id="8dd2bfea-f31c-440f-a102-de1c22e81600" name="Changes" comment="УРААА">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/engine/src/board.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/board.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/src/figure.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/figure.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/engine/src/main.h" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/main.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
@@ -182,7 +181,7 @@
       <workItem from="1708667796549" duration="3032000" />
       <workItem from="1708868643166" duration="1120000" />
       <workItem from="1709026395107" duration="268000" />
-      <workItem from="1709101848647" duration="3909000" />
+      <workItem from="1709101848647" duration="5883000" />
     </task>
     <task id="LOCAL-00001" summary="Добавлена поддержка conan">
       <option name="closed" value="true" />
@@ -272,7 +271,15 @@
       <option name="project" value="LOCAL" />
       <updated>1709105376285</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="УРААА">
+      <option name="closed" value="true" />
+      <created>1709113101967</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1709113101967</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -305,7 +312,8 @@
     <MESSAGE value="Самый странный баг в моей жизни лол" />
     <MESSAGE value="Вроде работает. Убрал conan" />
     <MESSAGE value="Я не понял, что произошло, но теперь хотя б не ломается" />
-    <option name="LAST_COMMIT_MESSAGE" value="Я не понял, что произошло, но теперь хотя б не ломается" />
+    <MESSAGE value="УРААА" />
+    <option name="LAST_COMMIT_MESSAGE" value="УРААА" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

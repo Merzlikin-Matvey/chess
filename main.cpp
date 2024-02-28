@@ -7,6 +7,6 @@ using namespace std;
 
 int main() {
     Board board;
-    cout << board.position_to_number_notation(board.position_to_chess_notation(make_pair(1, 1))).first;
-    cout << board.position_to_number_notation(board.position_to_chess_notation(make_pair(1, 1))).second;
+    board.import_json("C:\\Users\\merzl\\CLionProjects\\chess8\\saves\\data.json");
+    board.print();
 }

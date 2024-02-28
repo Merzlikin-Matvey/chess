@@ -18,22 +18,20 @@ Figure* Board::figure_by_position(pair<int, int> position) {
     }
     return new NullFigure(this);
 }
+
 void Board::print(){
-    Pawn(this, make_pair(2, 2), "black");
+
     vector<vector<string>> board(8, vector<string>(8, "."));
-    for (auto figure : figures) {
-        cout << figure->color << endl;
+    for (Figure* figure : figures) {
+        board[figure->position.first][figure->position.second] = figure->symbol;
     }
-
-    for (auto row : board){
-        for (auto sym : row){
-            cout << sym << ' ';
+    for (const auto &row : board) {
+        for (const auto &cell : row) {
+            cout << cell << ' ';
         }
-        cout << endl;
+        cout << '\n';
     }
-
 }
-
 void Board::change_turn(){
     if (this->turn == "white"){
         this->turn = "black";
@@ -127,16 +125,37 @@ void Board::put_figure(Figure* figure){
     figures.push_back(figure);
 }
 
-void Board::encode_from_json(std::string path, Board& board) {
+void Board::import_json(std::string path) {
     ifstream file(path);
     json data;
+    Board& board = *this;
     file >> data;
     file.close();
 
+
     for (auto figure : data["figures"]){
         if (figure["name"] == "pawn"){
-            Pawn(&board, make_pair(2, 2), "black");
+            Pawn pawn(&board, board.position_to_number_notation(figure["position"]), figure["color"]);
         }
+        else if (figure["name"] == "rook"){
+            Rook rook(&board, board.position_to_number_notation(figure["position"]), figure["color"]);
+        }
+        else if (figure["name"] == "knight"){
+            Knight knight(&board, board.position_to_number_notation(figure["position"]), figure["color"]);
+        }
+        else if (figure["name"] == "bishop"){
+            Bishop bishop(&board, board.position_to_number_notation(figure["position"]), figure["color"]);
+        }
+        else if (figure["name"] == "queen"){
+            Queen queen(&board, board.position_to_number_notation(figure["position"]), figure["color"]);
+        }
+        else if (figure["name"] == "king"){
+            King king(&board, board.position_to_number_notation(figure["position"]), figure["color"]);
+        }
+        else {
+            cout << "Invalid figure name" << endl;
+        }
+
     }
 }
 

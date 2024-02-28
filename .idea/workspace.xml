@@ -24,9 +24,6 @@
     <list default="true" id="8dd2bfea-f31c-440f-a102-de1c22e81600" name="Changes" comment="Обновил gitignore">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Main_executable.dir/compiler_depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Main_executable.dir/compiler_depend.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,12 +123,12 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Custom Build Application.Unnamed" />
-      <item itemvalue="CMake Debug.chess" />
+      <item itemvalue="C/C++ File.main.cpp" />
       <item itemvalue="CMake Application.Engine_executable" />
       <item itemvalue="CMake Application.Main" />
       <item itemvalue="CMake Application.Main_executable" />
-      <item itemvalue="C/C++ File.main.cpp" />
+      <item itemvalue="CMake Debug.chess" />
+      <item itemvalue="Custom Build Application.Unnamed" />
     </list>
     <recent_temporary>
       <list>
@@ -181,7 +178,7 @@
       <workItem from="1709145768117" duration="66000" />
       <workItem from="1709145845678" duration="188000" />
       <workItem from="1709146042241" duration="532000" />
-      <workItem from="1709154141475" duration="64000" />
+      <workItem from="1709154141475" duration="135000" />
     </task>
     <task id="LOCAL-00001" summary="Добавлена поддержка conan">
       <option name="closed" value="true" />
@@ -287,7 +284,23 @@
       <option name="project" value="LOCAL" />
       <updated>1709146470925</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Обновил gitignore">
+      <option name="closed" value="true" />
+      <created>1709154219403</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1709154219403</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Обновил gitignore">
+      <option name="closed" value="true" />
+      <created>1709154229496</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1709154229496</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

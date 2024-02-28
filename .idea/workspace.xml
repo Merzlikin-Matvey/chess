@@ -21,7 +21,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8dd2bfea-f31c-440f-a102-de1c22e81600" name="Changes" comment="Вроде работает. Убрал conan">
+    <list default="true" id="8dd2bfea-f31c-440f-a102-de1c22e81600" name="Changes" comment="Я не понял, что произошло, но теперь хотя б не ломается">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/engine/src/board.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/board.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/engine/src/figure.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/figure.cpp" afterDir="false" />
@@ -182,7 +182,7 @@
       <workItem from="1708667796549" duration="3032000" />
       <workItem from="1708868643166" duration="1120000" />
       <workItem from="1709026395107" duration="268000" />
-      <workItem from="1709101848647" duration="2259000" />
+      <workItem from="1709101848647" duration="3909000" />
     </task>
     <task id="LOCAL-00001" summary="Добавлена поддержка conan">
       <option name="closed" value="true" />
@@ -264,7 +264,15 @@
       <option name="project" value="LOCAL" />
       <updated>1709026625387</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Я не понял, что произошло, но теперь хотя б не ломается">
+      <option name="closed" value="true" />
+      <created>1709105376285</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1709105376285</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -296,7 +304,8 @@
     <MESSAGE value="Слон, королева и король" />
     <MESSAGE value="Самый странный баг в моей жизни лол" />
     <MESSAGE value="Вроде работает. Убрал conan" />
-    <option name="LAST_COMMIT_MESSAGE" value="Вроде работает. Убрал conan" />
+    <MESSAGE value="Я не понял, что произошло, но теперь хотя б не ломается" />
+    <option name="LAST_COMMIT_MESSAGE" value="Я не понял, что произошло, но теперь хотя б не ломается" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -1,7 +1,6 @@
 #include "main.h"
 
 #include <string>
-#include <iostream>
 
 using namespace std;
 
@@ -42,7 +41,6 @@ vector<pair<int, int>> Figure::available_moves() {
     return vector<pair<int, int>> {};
 }
 
-
 NullFigure::NullFigure(Board* initialBoard) :
 Figure(initialBoard, "null", make_pair(-1, -1), "null", "0") {}
 
@@ -50,39 +48,20 @@ Pawn::Pawn(Board* initialBoard, pair<int, int> position, string color) :
 Figure(initialBoard, "pawn", position, color, (color == "white") ? "p" : "P") {}
 
 vector<pair<int, int>> Pawn::available_moves(){
-    vector<pair<int, int>> moves;
-    if (color == "white"){
-        if (is_opponent(make_pair(this->position.first + 1, this->position.second + 1))){
-            moves.push_back(make_pair(this->position.first + 1, this->position.second + 1));
-        }
-        if (is_opponent(make_pair(this->position.first + 1, this->position.second - 1))){
-            moves.push_back(make_pair(this->position.first + 1, this->position.second + 1));
-        }
-        if (is_empty(make_pair(this->position.first + 1, this->position.second))){
-            moves.push_back(make_pair(this->position.first + 1, this->position.second));
-            if (not already_moved){
-                if (is_empty(make_pair(this->position.first + 2, this->position.second))){
-                    moves.push_back(make_pair(this->position.first + 2, this->position.second));
-                }
-            }
+    vector<pair<int, int>> moves {};
+    int direction = (color == "white") ? 1 : -1;
+
+    if (is_empty(make_pair(position.first + direction, position.second))){
+        moves.push_back(make_pair(position.first + direction, position.second));
+    }
+    if (position.first == 1 and color == "white" or position.first == 6 and color == "black"){
+        if (is_empty(make_pair(position.first + 2 * direction, position.second))){
+            moves.push_back(make_pair(position.first + 2 * direction, position.second));
         }
     }
 
-    else if (color == "black"){
-        if (is_opponent(make_pair(this->position.first - 1, this->position.second + 1))){
-            moves.push_back(make_pair(this->position.first - 1, this->position.second + 1));
-        }
-        if (is_opponent(make_pair(this->position.first - 1, this->position.second - 1))){
-            moves.push_back(make_pair(this->position.first - 1, this->position.second + 1));
-        }
-        if (is_empty(make_pair(this->position.first - 1, this->position.second))){
-            moves.push_back(make_pair(this->position.first - 1, this->position.second));
-            if (not already_moved){
-                if (is_empty(make_pair(this->position.first - 2, this->position.second))){
-                    moves.push_back(make_pair(this->position.first - 2, this->position.second));
-                }
-            }
-        }
+    if (is_opponent(make_pair(position.first + direction, position.second + 1))){
+        moves.push_back(make_pair(position.first + direction, position.second + 1));
     }
     return moves;
 }

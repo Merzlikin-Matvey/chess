@@ -55,7 +55,7 @@ void Board::kill(std::pair<int, int> position) {
     }
 }
 
-void Board::move(pair<int, int> pos1, pair<int, int> pos2, bool castling){
+string Board::move(pair<int, int> pos1, pair<int, int> pos2){
     if (turn == figure_by_position(pos1)->color){
         Figure* figure = figure_by_position(pos1);
         auto pawn = dynamic_cast<Pawn*>(figure);
@@ -71,7 +71,6 @@ void Board::move(pair<int, int> pos1, pair<int, int> pos2, bool castling){
                 pawn->move(pos2);
             } else {
                 cout << "Invalid move" << endl;
-                return;
             }
         }
         else if (rook) {
@@ -80,7 +79,6 @@ void Board::move(pair<int, int> pos1, pair<int, int> pos2, bool castling){
                 rook->move(pos2);
             } else {
                 cout << "Invalid move" << endl;
-                return;
             }
         }
         else if (knight) {
@@ -89,7 +87,6 @@ void Board::move(pair<int, int> pos1, pair<int, int> pos2, bool castling){
                 knight->move(pos2);
             } else {
                 cout << "Invalid move" << endl;
-                return;
             }
         }
         else if (bishop) {
@@ -98,7 +95,6 @@ void Board::move(pair<int, int> pos1, pair<int, int> pos2, bool castling){
                 bishop->move(pos2);
             } else {
                 cout << "Invalid move" << endl;
-                return;
             }
         }
         else if (queen) {
@@ -107,7 +103,6 @@ void Board::move(pair<int, int> pos1, pair<int, int> pos2, bool castling){
                 queen->move(pos2);
             } else {
                 cout << "Invalid move" << endl;
-                return;
             }
         }
         else if (king) {
@@ -116,21 +111,20 @@ void Board::move(pair<int, int> pos1, pair<int, int> pos2, bool castling){
                 king->move(pos2);
             } else {
                 cout << "Invalid move" << endl;
-                return;
             }
         }
         else {
             cout << "Figure not found" << endl;
-            return;
         }
 
         this->change_turn();
     }
+    return "moved";
 }
 
 
-void Board::put_figure(Figure& figure){
-    figures.push_back(&figure);
+void Board::put_figure(Figure* figure){
+    figures.push_back(figure);
 }
 
 void Board::encode_from_json(std::string path, Board& board) {

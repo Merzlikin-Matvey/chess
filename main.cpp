@@ -7,7 +7,6 @@ using namespace std;
 
 int main() {
     Board board;
-
-    board.print();
-    cout << board.figures[0]->position.second;
+    Figure give_me_a_name(&board, "name", make_pair(2, 2), "black", "f");
+    cout << board.figures[0]->position.first;
 }

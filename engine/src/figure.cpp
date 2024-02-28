@@ -6,8 +6,10 @@
 using namespace std;
 
 
-Figure::Figure(Board& initialBoard, string initialName, pair<int, int> initialPosition, string initialColor, string initialSymbol)
+Figure::Figure(Board* initialBoard, string initialName, pair<int, int> initialPosition, string initialColor,
+               string initialSymbol)
         : board(initialBoard), name(initialName), position(initialPosition), color(initialColor), symbol(initialSymbol) {
+    board->put_figure(this);
 }
 
 
@@ -24,28 +26,27 @@ bool Figure::is_empty(pair<int, int> position) {
     if (position.first > 7 or position.second > 7 or position.first < 0 or position.second < 0){
         return false;
     }
-    return (board.figure_by_position(position)->name == "null");
+    return (board->figure_by_position(position)->name == "null");
 }
 
 bool Figure::is_teammate(pair<int, int> position){
-    return (board.figure_by_position(position)->color == this->color);
+    return (this->color == board->figure_by_position(position)->color);
 }
 
 bool Figure::is_opponent(pair<int, int> position) {
-    auto figure = board.figure_by_position(position);
+    auto figure = board->figure_by_position(position);
     return (figure->color != this->color and not figure->is_null());
 }
 
 vector<pair<int, int>> Figure::available_moves() {
-    cout << "Bad" << endl;
     return vector<pair<int, int>> {};
 }
 
 
-NullFigure::NullFigure(Board& initialBoard) :
+NullFigure::NullFigure(Board* initialBoard) :
 Figure(initialBoard, "null", make_pair(-1, -1), "null", "0") {}
 
-Pawn::Pawn(Board& initialBoard, pair<int, int> position, string color) :
+Pawn::Pawn(Board* initialBoard, pair<int, int> position, string color) :
 Figure(initialBoard, "pawn", position, color, (color == "white") ? "p" : "P") {}
 
 vector<pair<int, int>> Pawn::available_moves(){
@@ -87,7 +88,7 @@ vector<pair<int, int>> Pawn::available_moves(){
 }
 
 
-Rook::Rook(Board& initialBoard, pair<int, int> position, string color) :
+Rook::Rook(Board* initialBoard, pair<int, int> position, string color) :
         Figure(initialBoard, "rook", position, color, (color == "white") ? "r" : "R") {}
 
 vector<pair<int, int>> Rook::available_moves(){
@@ -134,7 +135,7 @@ vector<pair<int, int>> Rook::available_moves(){
 
 }
 
-Knight::Knight(Board& initialBoard, pair<int, int> position, string color) :
+Knight::Knight(Board* initialBoard, pair<int, int> position, string color) :
         Figure(initialBoard, "knight", position, color, (color == "white") ? "n" : "N") {}
 
 vector<pair<int, int>> Knight::available_moves(){
@@ -176,7 +177,7 @@ vector<pair<int, int>> Knight::available_moves(){
     return moves;
 }
 
-Bishop::Bishop(Board& initialBoard, pair<int, int> position, string color) :
+Bishop::Bishop(Board* initialBoard, pair<int, int> position, string color) :
         Figure(initialBoard, "bishop", position, color, (color == "white") ? "b" : "B") {}
 
 vector<pair<int, int>> Bishop::available_moves(){
@@ -213,7 +214,7 @@ vector<pair<int, int>> Bishop::available_moves(){
     return moves;
 }
 
-Queen::Queen(Board& initialBoard, pair<int, int> position, string color) :
+Queen::Queen(Board* initialBoard, pair<int, int> position, string color) :
         Figure(initialBoard, "queen", position, color, (color == "white") ? "q" : "Q") {}
 
 
@@ -287,7 +288,7 @@ vector<pair<int, int>> Queen::available_moves(){
     return moves;
 }
 
-King::King(Board& initialBoard, pair<int, int> position, string color) :
+King::King(Board* initialBoard, pair<int, int> position, string color) :
         Figure(initialBoard, "king", position, color, (color == "white") ? "k" : "K") {}
 
 

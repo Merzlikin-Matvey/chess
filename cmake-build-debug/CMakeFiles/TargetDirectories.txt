@@ -1,6 +1,0 @@
-C:/Users/User/CLionProjects/chess6/cmake-build-debug/CMakeFiles/Main_executable.dir
-C:/Users/User/CLionProjects/chess6/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/User/CLionProjects/chess6/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-C:/Users/User/CLionProjects/chess6/cmake-build-debug/engine/CMakeFiles/Engine_executable.dir
-C:/Users/User/CLionProjects/chess6/cmake-build-debug/engine/CMakeFiles/edit_cache.dir
-C:/Users/User/CLionProjects/chess6/cmake-build-debug/engine/CMakeFiles/rebuild_cache.dir

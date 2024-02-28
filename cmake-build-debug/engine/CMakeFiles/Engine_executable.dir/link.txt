@@ -1,0 +1,3 @@
+"D:\Program Files\JetBrains\CLion 2023.3.4\bin\cmake\win\x64\bin\cmake.exe" -E rm -f CMakeFiles\Engine_executable.dir/objects.a
+"D:\Program Files\JetBrains\CLion 2023.3.4\bin\mingw\bin\ar.exe" qc CMakeFiles\Engine_executable.dir/objects.a @CMakeFiles\Engine_executable.dir\objects1.rsp
+"D:\Program Files\JetBrains\CLion 2023.3.4\bin\mingw\bin\g++.exe" -g  -static-libgcc -static-libstdc++ -Wl,--whole-archive CMakeFiles\Engine_executable.dir/objects.a -Wl,--no-whole-archive -o Engine_executable.exe -Wl,--out-implib,libEngine_executable.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\Engine_executable.dir\linkLibs.rsp

@@ -6,7 +6,6 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static-libgcc -static-lib
 add_subdirectory(engine)
 add_executable(Main_executable main.cpp)
 
-
 message("C Compiler: ${CMAKE_C_COMPILER}")
 message("C++ Compiler: ${CMAKE_CXX_COMPILER}")
 

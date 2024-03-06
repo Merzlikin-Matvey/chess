@@ -10,10 +10,7 @@
     <option name="reloaded" value="true" />
   </component>
   <component name="CMakeRunConfigurationManager">
-    <generated>
-      <config projectName="chess" targetName="Engine_executable" />
-      <config projectName="chess" targetName="Main_executable" />
-    </generated>
+    <generated />
   </component>
   <component name="CMakeSettings">
     <configurations>
@@ -21,9 +18,26 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8dd2bfea-f31c-440f-a102-de1c22e81600" name="Changes" comment="Обновил gitignore">
+    <list default="true" id="8dd2bfea-f31c-440f-a102-de1c22e81600" name="Changes" comment="Наконец-то!">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/src/board.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/board.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/query/cache-v2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/query/cmakeFiles-v1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/query/codemodel-v2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/query/toolchains-v1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/cache-v2-62175b60fc4d1b3133b6.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/cmakeFiles-v1-50db9f20188fbbf82ef7.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/codemodel-v2-02d3f71581b4b1c88b56.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/directory-.-Debug-d0094a50bb2071803777.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/directory-engine-Debug-776e2b00c6520ab49d05.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2024-03-06T20-18-57-0137.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-Engine_executable-Debug-8f53a45e49ff4dce0188.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-Main_executable-Debug-2580a9bbf660b70f88f2.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/toolchains-v1-b6ea868c4f5e078127c3.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/chess.cbp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/engine/engine.cbp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,7 +107,7 @@
       <recent name="C:\Users\User\CLionProjects\chess1\engine" />
     </key>
   </component>
-  <component name="RunManager" selected="CMake Application.Main_executable">
+  <component name="RunManager" selected="C/C++ File.main.cpp">
     <configuration name="Unnamed" type="CLionExternalRunConfiguration" factoryName="Application" nameIsGenerated="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" RUN_PATH="$PROJECT_DIR$/CMakeLists.txt">
       <method v="2">
         <option name="CLION.EXTERNAL.BUILD" enabled="true" />
@@ -102,22 +116,7 @@
     <configuration name="chess" type="CMakeListConfigurationType" factoryName="CMakeListConfigurationFactory" temporary="true">
       <method v="2" />
     </configuration>
-    <configuration name="Engine_executable" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="chess" TARGET_NAME="Engine_executable" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="chess" RUN_TARGET_NAME="Engine_executable">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="Main" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" RUN_PATH="$PROJECT_DIR$/CMakeLists.txt" EXPLICIT_BUILD_TARGET_NAME="all">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Main_executable" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="chess" TARGET_NAME="Main_executable" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="chess" RUN_TARGET_NAME="Main_executable">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -130,16 +129,14 @@
     </configuration>
     <list>
       <item itemvalue="C/C++ File.main.cpp" />
-      <item itemvalue="CMake Application.Engine_executable" />
       <item itemvalue="CMake Application.Main" />
-      <item itemvalue="CMake Application.Main_executable" />
       <item itemvalue="CMake Debug.chess" />
       <item itemvalue="Custom Build Application.Unnamed" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="CMake Debug.chess" />
         <item itemvalue="C/C++ File.main.cpp" />
+        <item itemvalue="CMake Debug.chess" />
       </list>
     </recent_temporary>
   </component>
@@ -185,6 +182,7 @@
       <workItem from="1709145845678" duration="188000" />
       <workItem from="1709146042241" duration="532000" />
       <workItem from="1709154141475" duration="135000" />
+      <workItem from="1709758143778" duration="162000" />
     </task>
     <task id="LOCAL-00001" summary="Добавлена поддержка conan">
       <option name="closed" value="true" />
@@ -306,7 +304,15 @@
       <option name="project" value="LOCAL" />
       <updated>1709154229496</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Наконец-то!">
+      <option name="closed" value="true" />
+      <created>1709758019595</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1709758019595</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -341,7 +347,8 @@
     <MESSAGE value="Я не понял, что произошло, но теперь хотя б не ломается" />
     <MESSAGE value="УРААА" />
     <MESSAGE value="Обновил gitignore" />
-    <option name="LAST_COMMIT_MESSAGE" value="Обновил gitignore" />
+    <MESSAGE value="Наконец-то!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Наконец-то!" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

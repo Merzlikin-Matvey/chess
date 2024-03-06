@@ -9,4 +9,6 @@ int main() {
     Board board;
     board.import_json("C:\\Users\\User\\CLionProjects\\chess6\\saves\\data.json");
     board.print();
+    int n;
+    cin >> n;
 }

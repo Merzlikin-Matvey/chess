@@ -44,3 +44,4 @@ CTestTestfile.cmake
 cmake-build-debug
 _deps
 .idea
+main.exe

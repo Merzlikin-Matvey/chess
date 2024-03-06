@@ -135,22 +135,22 @@ void Board::import_json(std::string path) {
 
     for (auto figure : data["figures"]){
         if (figure["name"] == "pawn"){
-            Pawn pawn(&board, board.position_to_number_notation(figure["position"]), figure["color"]);
+            Pawn* pawn = new Pawn(&board, board.position_to_number_notation(figure["position"]), figure["color"]);
         }
         else if (figure["name"] == "rook"){
-            Rook rook(&board, board.position_to_number_notation(figure["position"]), figure["color"]);
+            Rook* rook = new Rook(&board, board.position_to_number_notation(figure["position"]), figure["color"]);
         }
         else if (figure["name"] == "knight"){
-            Knight knight(&board, board.position_to_number_notation(figure["position"]), figure["color"]);
+            Knight* knight = new Knight(&board, board.position_to_number_notation(figure["position"]), figure["color"]);
         }
         else if (figure["name"] == "bishop"){
-            Bishop bishop(&board, board.position_to_number_notation(figure["position"]), figure["color"]);
+            Bishop* bishop = new Bishop(&board, board.position_to_number_notation(figure["position"]), figure["color"]);
         }
         else if (figure["name"] == "queen"){
-            Queen queen(&board, board.position_to_number_notation(figure["position"]), figure["color"]);
+            Queen* queen = new Queen(&board, board.position_to_number_notation(figure["position"]), figure["color"]);
         }
         else if (figure["name"] == "king"){
-            King king(&board, board.position_to_number_notation(figure["position"]), figure["color"]);
+            King* king = new King(&board, board.position_to_number_notation(figure["position"]), figure["color"]);
         }
         else {
             cout << "Invalid figure name" << endl;

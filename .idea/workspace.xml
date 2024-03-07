@@ -22,21 +22,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8dd2bfea-f31c-440f-a102-de1c22e81600" name="Changes" comment="Наконец-то!">
-      <change afterPath="$PROJECT_DIR$/engine/dependencies/olmallet81/GALGO-2.0/Chromosome.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/dependencies/olmallet81/GALGO-2.0/Converter.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/dependencies/olmallet81/GALGO-2.0/Evolution.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/dependencies/olmallet81/GALGO-2.0/Galgo.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/dependencies/olmallet81/GALGO-2.0/GeneticAlgorithm.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/dependencies/olmallet81/GALGO-2.0/Parameter.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/dependencies/olmallet81/GALGO-2.0/Population.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/dependencies/olmallet81/GALGO-2.0/Randomize.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/engine/dependencies/olmallet81/GALGO-2.0/example.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/engine/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/dependencies/json.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/engine/dependencies/nlohmann/json/json.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/src/board.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/board.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/src/figure.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/figure.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -131,8 +118,8 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="CMake Application.Main_executable" />
       <item itemvalue="CMake Application.Engine_executable" />
+      <item itemvalue="CMake Application.Main_executable" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -181,6 +168,8 @@
       <workItem from="1709804934346" duration="819000" />
       <workItem from="1709805851077" duration="1097000" />
       <workItem from="1709808313661" duration="2071000" />
+      <workItem from="1709838346447" duration="49000" />
+      <workItem from="1709838410263" duration="170000" />
     </task>
     <task id="LOCAL-00001" summary="Добавлена поддержка conan">
       <option name="closed" value="true" />

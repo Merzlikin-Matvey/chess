@@ -1,4 +1,5 @@
 #include "main.h"
+#include <iostream>
 
 #include <string>
 
@@ -49,12 +50,13 @@ Figure(initialBoard, "pawn", position, color, (color == "white") ? "P" : "p") {}
 
 vector<pair<int, int>> Pawn::available_moves(){
     vector<pair<int, int>> moves {};
-    int direction = (color == "white") ? 1 : -1;
+    int direction = (color == "white") ? -1 : 1;
 
     if (is_empty(make_pair(position.first + direction, position.second))){
         moves.push_back(make_pair(position.first + direction, position.second));
     }
-    if (position.first == 1 and color == "white" or position.first == 6 and color == "black"){
+
+    if ((position.first == 6 and color == "white") or (position.first == 1 and color == "black")){
         if (is_empty(make_pair(position.first + 2 * direction, position.second))){
             moves.push_back(make_pair(position.first + 2 * direction, position.second));
         }
@@ -62,6 +64,9 @@ vector<pair<int, int>> Pawn::available_moves(){
 
     if (is_opponent(make_pair(position.first + direction, position.second + 1))){
         moves.push_back(make_pair(position.first + direction, position.second + 1));
+    }
+    if (is_opponent(make_pair(position.first + direction, position.second - 1))){
+        moves.push_back(make_pair(position.first + direction, position.second - 1));
     }
     return moves;
 }

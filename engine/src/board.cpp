@@ -19,8 +19,12 @@ Figure* Board::figure_by_position(pair<int, int> position) {
     return new NullFigure(this);
 }
 
-void Board::print(){
+void Board::clear_null_figures() {
+    figures.erase(remove_if(figures.begin(), figures.end(), [](Figure* figure) { return figure->name == "null"; }), figures.end());
+}
 
+void Board::print(){
+    clear_null_figures();
     vector<vector<string>> board(8, vector<string>(8, "."));
     for (Figure* figure : figures) {
         board[figure->position.first][figure->position.second] = figure->symbol;
@@ -32,6 +36,14 @@ void Board::print(){
         cout << '\n';
     }
 }
+
+void Board::info() {
+    clear_null_figures();
+    for (auto figure : figures) {
+        cout << figure->name << " " << figure->color << " " << position_to_chess_notation(figure->position) << endl;
+    }
+}
+
 void Board::change_turn(){
     if (this->turn == "white"){
         this->turn = "black";
@@ -62,6 +74,7 @@ string Board::move(pair<int, int> pos1, pair<int, int> pos2){
         auto bishop = dynamic_cast<Bishop*>(figure);
         auto queen = dynamic_cast<Queen*>(figure);
         auto king = dynamic_cast<King*>(figure);
+
 
         if (pawn) {
             auto available_moves = pawn->available_moves();
@@ -114,8 +127,10 @@ string Board::move(pair<int, int> pos1, pair<int, int> pos2){
         else {
             cout << "Figure not found" << endl;
         }
-
         this->change_turn();
+    }
+    else{
+        cout << "Not your turn" << endl;
     }
     return "moved";
 }
@@ -164,7 +179,7 @@ void Board::load_default_positions() {
 }
 
 bool Board::is_empty(pair<int, int> position) {
-    return figure_by_position(position)->name != "null";
+    return figure_by_position(position)->name == "null";
 }
 
 string Board::position_to_chess_notation(pair<int, int> position) {
@@ -175,6 +190,10 @@ string Board::position_to_chess_notation(pair<int, int> position) {
 
 string Board::move_to_chess_notation(pair<int, int> position1, pair<int, int> position2) {
     return position_to_chess_notation(position1) + position_to_chess_notation(position2);
+}
+
+string Board::move_to_chess_notation(pair<pair<int, int>, pair<int, int>> move) {
+    return move_to_chess_notation(move.first, move.second);
 }
 
 pair<int, int> Board::position_to_number_notation(string notation) {

@@ -8,9 +8,13 @@ int main() {
     Board board;
     board.load_default_positions();
 
-    for (auto fig : board.figures) {
-        for (auto move : fig->available_moves()) {
-           cout << board.move_to_chess_notation(move) << endl;
+    string move;
+    while (true){
+        board.print();
+        cin >> move;
+        if (move == "exit") {
+            break;
         }
+        board.move(board.position_to_number_notation(move.substr(0, 2)), board.position_to_number_notation(move.substr(2, 2)));
     }
 }

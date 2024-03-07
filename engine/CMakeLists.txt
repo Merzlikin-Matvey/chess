@@ -6,5 +6,7 @@ add_executable(Engine_executable
         src/board.cpp
         src/main.h
         src/figure.cpp
-        dependencies/json.hpp)
+
+        dependencies/nlohmann/json/json.hpp
+        dependencies/olmallet81/GALGO-2.0/Galgo.hpp)
 

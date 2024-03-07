@@ -4,7 +4,7 @@
 #include <vector>
 #include <algorithm>
 #include <fstream>
-#include "../dependencies/json.hpp"
+#include "../dependencies/nlohmann/json/json.hpp"
 
 using namespace std;
 using json = nlohmann::json;

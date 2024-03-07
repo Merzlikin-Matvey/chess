@@ -21,6 +21,7 @@ public:
     void print();
     void put_figure(Figure* figure);
     void import_json(string path);
+    void load_default_positions();
     bool is_empty(pair<int, int> position);
     string move(pair<int, int> pos1, pair<int, int> pos2);
     string position_to_chess_notation(pair<int, int> position);

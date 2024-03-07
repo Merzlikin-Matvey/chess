@@ -4,9 +4,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_executable(Engine_executable
         src/board.cpp
-        src/main.h
         src/figure.cpp
-
+        src/main.h
         dependencies/nlohmann/json/json.hpp
         dependencies/olmallet81/GALGO-2.0/Galgo.hpp)
 

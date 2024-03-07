@@ -21,9 +21,14 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8dd2bfea-f31c-440f-a102-de1c22e81600" name="Changes" comment="Наконец-то!">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="8dd2bfea-f31c-440f-a102-de1c22e81600" name="Changes" comment="Изменения в gitignore">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/engine/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/src/board.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/board.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/src/main.h" beforeDir="false" afterPath="$PROJECT_DIR$/engine/src/main.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/saves/data.json" beforeDir="false" afterPath="$PROJECT_DIR$/default_positions.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +90,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;CPPToolchains&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.build&quot;,
     &quot;structure.view.defaults.are.configured&quot;: &quot;true&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -95,10 +100,11 @@
       <recent name="C:\Users\merzl\CLionProjects\chess\engine\src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\User\CLionProjects\chess56" />
+      <recent name="C:\Users\User\CLionProjects\chess56\engine" />
+      <recent name="C:\Users\User\CLionProjects\chess56\engine\src" />
       <recent name="C:\Users\merzl\CLionProjects\chess87\engine\dependencies" />
       <recent name="C:\Users\merzl\CLionProjects\chess87\engine\dependencies\nlohmann\json" />
-      <recent name="C:\Users\merzl\CLionProjects\chess\engine\dependencies" />
-      <recent name="C:\Users\User\CLionProjects\chess1\engine" />
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.Main_executable">
@@ -117,9 +123,16 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="main.cpp" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" nameIsGenerated="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="chess" TARGET_NAME="main.cpp" CONFIG_NAME="main.cpp">
+      <option name="sourceFile" value="C:\Users\User\CLionProjects\chess56\main.cpp" />
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.runfile.CppFileBuildBeforeRunTaskProvider$BasicBuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <list>
-      <item itemvalue="CMake Application.Engine_executable" />
+      <item itemvalue="C/C++ File.main.cpp" />
       <item itemvalue="CMake Application.Main_executable" />
+      <item itemvalue="CMake Application.Engine_executable" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -169,7 +182,11 @@
       <workItem from="1709805851077" duration="1097000" />
       <workItem from="1709808313661" duration="2071000" />
       <workItem from="1709838346447" duration="49000" />
-      <workItem from="1709838410263" duration="170000" />
+      <workItem from="1709838410263" duration="3524000" />
+      <workItem from="1709843997088" duration="7000" />
+      <workItem from="1709845918125" duration="44000" />
+      <workItem from="1709845967490" duration="707000" />
+      <workItem from="1709846871857" duration="717000" />
     </task>
     <task id="LOCAL-00001" summary="Добавлена поддержка conan">
       <option name="closed" value="true" />
@@ -299,7 +316,15 @@
       <option name="project" value="LOCAL" />
       <updated>1709758019595</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Изменения в gitignore">
+      <option name="closed" value="true" />
+      <created>1709838595861</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1709838595862</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -336,7 +361,8 @@
     <MESSAGE value="УРААА" />
     <MESSAGE value="Обновил gitignore" />
     <MESSAGE value="Наконец-то!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Наконец-то!" />
+    <MESSAGE value="Изменения в gitignore" />
+    <option name="LAST_COMMIT_MESSAGE" value="Изменения в gitignore" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -159,6 +159,10 @@ void Board::import_json(std::string path) {
     }
 }
 
+void Board::load_default_positions() {
+    this->import_json("default_positions.json");
+}
+
 bool Board::is_empty(pair<int, int> position) {
     return figure_by_position(position)->name != "null";
 }

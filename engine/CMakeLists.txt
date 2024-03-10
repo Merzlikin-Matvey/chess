@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.12)
 project(engine)
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(Engine_executable
+add_library(Engine_executable SHARED
         src/board.cpp
         src/figure.cpp
         src/main.h

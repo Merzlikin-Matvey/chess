@@ -1,0 +1,7 @@
+# ninja log v5
+12	1650	7318073719878493	engine/CMakeFiles/Engine_executable.dir/src/figure.cpp.obj	502fc490fadbbfdb
+8	6085	7318073764226319	engine/CMakeFiles/Engine_executable.dir/src/board.cpp.obj	eccc5f5d56bfd5e1
+6086	6284	7318073766176320	engine/libEngine_executable.dll	ad3121e328109199
+6086	6284	7318073766176320	engine/libEngine_executable.dll.a	ad3121e328109199
+1	6500	7318073768372510	CMakeFiles/Main_executable.dir/main.cpp.obj	1b0afc84b68b9c38
+6500	6732	7318073770162510	Main_executable.exe	2309f326e92045cf

@@ -5,6 +5,8 @@ set(CMAKE_CXX_STANDARD 17)
 add_subdirectory(engine)
 add_executable(Main_executable main.cpp)
 
+target_link_libraries(Main_executable Engine_executable)
+
 message("C Compiler: ${CMAKE_C_COMPILER}")
 message("C++ Compiler: ${CMAKE_CXX_COMPILER}")
 

@@ -1,11 +1,32 @@
 #!/bin/bash
 
-# Список репозиториев для клонирования
-# Формат: "author-name/repo-name/branch-name"
-repos=(
-    "nlohmann/json/master"
-    "Merzlikin-Matvey/Base-converter/main"
-)
+# Установим необходимые пакеты
+if ! command -v unzip &> /dev/null
+then
+    echo "Установка unzip"
+    sudo apt-get install unzip
+    if [ $? -eq 0 ]; then
+        echo "Установка unzip прошла успешно"
+    else
+        echo "Ошибка при установке unzip"
+        exit 1
+    fi
+fi
+
+if ! command -v jq &> /dev/null
+then
+    echo "Установка jq"
+    sudo apt-get install jq
+    if [ $? -eq 0 ]; then
+        echo "Установка jq прошла успешно"
+    else
+        echo "Ошибка при установке jq"
+        exit 1
+    fi
+fi
+
+# Чтение списка репозиториев из файла dependencies.json
+repos=($(jq -r '.repos[]' dependencies.json))
 
 # Массив для хранения установленных репозиториев
 installed_repos=()
@@ -22,18 +43,6 @@ if [ -d "dependencies" ]; then
     fi
 fi
 
-if ! command -v unzip &> /dev/null
-then
-    echo "Установка unzip"
-    sudo apt-get install unzip
-    if [ $? -eq 0 ]; then
-        echo "Установка unzip прошла успешно"
-    else
-        echo "Ошибка при установке unzip"
-        exit 1
-    fi
-fi
-
 for repo in "${repos[@]}"; do
     IFS='/' read -r -a array <<< "$repo"
     author_name="${array[0]}"
@@ -44,7 +53,7 @@ for repo in "${repos[@]}"; do
 
     mkdir -p $dir_path
     curl -L https://github.com/$author_name/$repo_name/archive/refs/heads/$branch_name.zip --output $dir_path/$branch_name.zip
-    unzip $dir_path/$branch_name.zip -d $dir_path
+    unzip -q $dir_path/$branch_name.zip -d $dir_path
     rm $dir_path/$branch_name.zip
 
     if [ $? -eq 0 ]; then

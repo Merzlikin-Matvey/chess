@@ -7,10 +7,31 @@ repos=(
     "Merzlikin-Matvey/Base-converter/main"
 )
 
+# Массив для хранения установленных репозиториев
+installed_repos=()
+
+if [ -d "dependencies" ]; then
+    echo "Удаление существующей директории dependencies"
+    rm -rf dependencies
+
+    if [ $? -eq 0 ]; then
+        echo "Удаление директории dependencies прошло успешно"
+    else
+        echo "Ошибка при удалении директории dependencies"
+        exit 1
+    fi
+fi
+
 if ! command -v unzip &> /dev/null
 then
     echo "Установка unzip"
     sudo apt-get install unzip
+    if [ $? -eq 0 ]; then
+        echo "Установка unzip прошла успешно"
+    else
+        echo "Ошибка при установке unzip"
+        exit 1
+    fi
 fi
 
 for repo in "${repos[@]}"; do
@@ -25,4 +46,17 @@ for repo in "${repos[@]}"; do
     curl -L https://github.com/$author_name/$repo_name/archive/refs/heads/$branch_name.zip --output $dir_path/$branch_name.zip
     unzip $dir_path/$branch_name.zip -d $dir_path
     rm $dir_path/$branch_name.zip
+
+    if [ $? -eq 0 ]; then
+        echo "Установка $repo_name прошла успешно"
+        installed_repos+=("$author_name/$repo_name")
+    else
+        echo "Ошибка при установке $repo_name"
+        exit 1
+    fi
+done
+
+echo "Установленные репозитории:"
+for repo in "${installed_repos[@]}"; do
+    echo $repo
 done

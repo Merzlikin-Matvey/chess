@@ -6,6 +6,6 @@ add_library(Engine_executable SHARED
         src/board.cpp
         src/figure.cpp
         src/main.h
-        dependencies/nlohmann/json/json.hpp
-        dependencies/olmallet81/GALGO-2.0/Galgo.hpp)
+        ../dependencies/nlohmann/json/json-master/single_include/nlohmann/json.hpp
+        ../dependencies/olmallet81/GALGO-2.0/GALGO-2.0-master/src/Galgo.hpp)
 

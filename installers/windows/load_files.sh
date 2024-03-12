@@ -1,5 +1,19 @@
 #!/bin/bash
 
+# Проверяем, установлен ли NSIS
+if ! command -v makensis &> /dev/null
+then
+    echo "Установка NSIS"
+    sudo apt-get update
+    sudo apt-get install nsis
+    if [ $? -eq 0 ]; then
+        echo "Установка NSIS прошла успешно"
+    else
+        echo "Ошибка при установке NSIS"
+        exit 1
+    fi
+fi
+
 echo "Введите абсолютный путь к директории, где находятся DLL:"
 read dll_path
 
@@ -25,6 +39,19 @@ if [ -d "src" ]; then
     fi
 fi
 
+# Если файл Chess_installer существует, то удалим его
+if [ -f "Chess_installer.exe" ]; then
+    echo "Удаление существующего файла Chess_installer.exe"
+    rm Chess_installer.exe
+
+    if [ $? -eq 0 ]; then
+        echo "Удаление файла Chess_installer.exe прошло успешно"
+    else
+        echo "Ошибка при удалении файла Chess_installer.exe"
+        exit 1
+    fi
+fi
+
 # Создадим директорию src
 mkdir src
 
@@ -46,5 +73,8 @@ do
     exit 1
   fi
 done
+
+# Переименуем src/Main_executable.exe в src/chess.exe
+mv src/Main_executable.exe src/chess.exe
 
 echo "Копирование файлов прошло успешно"

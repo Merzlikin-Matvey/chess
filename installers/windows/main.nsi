@@ -3,6 +3,6 @@ InstallDir "$PROGRAMFILES\chess"
 
 Section "chess"
     SetOutPath $INSTDIR
-    File /r "path\to\your\application\*.*"
-    CreateShortcut "$SMPROGRAMS\My Application.lnk" "$INSTDIR\your_application.exe"
+    File /r "src/*"
+    CreateShortcut "$SMPROGRAMS\Chess.lnk" "$INSTDIR\chess.exe"
 SectionEnd

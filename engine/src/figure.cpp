@@ -15,6 +15,9 @@ Figure::Figure(Board* initialBoard, string initialName, pair<int, int> initialPo
 
 void Figure::move(pair<int, int> new_position) {
     already_moved = true;
+    if (not is_empty(new_position)){
+        board->kill(new_position);
+    }
     position = new_position;
 }
 
@@ -191,6 +194,15 @@ vector<pair<int, int>> Bishop::available_moves(){
         moves.push_back(make_pair(position.first - i, position.second + i));
         i++;
     }
+    if (is_opponent(make_pair(position.first - i, position.second + i))){
+        moves.push_back(make_pair(position.first - i, position.second + i));
+    }
+
+    i = 1;
+    while (is_empty(make_pair(position.first - i, position.second - i))){
+        moves.push_back(make_pair(position.first - i, position.second - i));
+        i++;
+    }
     if (is_opponent(make_pair(position.first - i, position.second - i))){
         moves.push_back(make_pair(position.first - i, position.second - i));
     }
@@ -275,7 +287,6 @@ vector<pair<int, int>> Queen::available_moves(){
 King::King(Board* initialBoard, pair<int, int> position, string color) :
         Figure(initialBoard, "king", position, color, (color == "white") ? "K" : "k") {}
 
-
 vector<pair<int, int>> King::available_moves(){
     vector<pair<int, int>> moves {};
 
@@ -307,7 +318,5 @@ vector<pair<int, int>> King::available_moves(){
         is_empty(make_pair(position.first - 1, position.second - 1))){
         moves.push_back(make_pair(position.first - 1, position.second - 1));
     }
-
-
     return moves;
 }

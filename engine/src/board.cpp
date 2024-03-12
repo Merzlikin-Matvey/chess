@@ -4,7 +4,11 @@
 #include <vector>
 #include <algorithm>
 #include <fstream>
+#include <ctime>
+#include <string>
+#include <random>
 #include "../../dependencies/nlohmann/json/json-master/single_include/nlohmann/json.hpp"
+#include "../../dependencies/Merzlikin-Matvey/Base-converter/Base-converter-main/main.hpp"
 
 using namespace std;
 using json = nlohmann::json;
@@ -61,80 +65,13 @@ void Board::kill(std::pair<int, int> position) {
         if (it != figures.end()) {
             delete *it;
             figures.erase(it);
+            if (fig->name == "king") {
+                going = false;
+                winner = fig->color == "white" ? "black" : "white";
+            }
         }
     }
 }
-
-string Board::move(pair<int, int> pos1, pair<int, int> pos2){
-    if (turn == figure_by_position(pos1)->color){
-        Figure* figure = figure_by_position(pos1);
-        auto pawn = dynamic_cast<Pawn*>(figure);
-        auto rook = dynamic_cast<Rook*>(figure);
-        auto knight = dynamic_cast<Knight*>(figure);
-        auto bishop = dynamic_cast<Bishop*>(figure);
-        auto queen = dynamic_cast<Queen*>(figure);
-        auto king = dynamic_cast<King*>(figure);
-
-
-        if (pawn) {
-            auto available_moves = pawn->available_moves();
-            if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
-                pawn->move(pos2);
-            } else {
-                cout << "Invalid move" << endl;
-            }
-        }
-        else if (rook) {
-            auto available_moves = rook->available_moves();
-            if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
-                rook->move(pos2);
-            } else {
-                cout << "Invalid move" << endl;
-            }
-        }
-        else if (knight) {
-            auto available_moves = knight->available_moves();
-            if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
-                knight->move(pos2);
-            } else {
-                cout << "Invalid move" << endl;
-            }
-        }
-        else if (bishop) {
-            auto available_moves = bishop->available_moves();
-            if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
-                bishop->move(pos2);
-            } else {
-                cout << "Invalid move" << endl;
-            }
-        }
-        else if (queen) {
-            auto available_moves = queen->available_moves();
-            if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
-                queen->move(pos2);
-            } else {
-                cout << "Invalid move" << endl;
-            }
-        }
-        else if (king) {
-            auto available_moves = king->available_moves();
-            if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
-                king->move(pos2);
-            } else {
-                cout << "Invalid move" << endl;
-            }
-        }
-        else {
-            cout << "Figure not found" << endl;
-        }
-        this->change_turn();
-    }
-    else{
-        cout << "Not your turn" << endl;
-    }
-    return "moved";
-}
-
 
 void Board::put_figure(Figure* figure){
     figures.push_back(figure);
@@ -175,11 +112,124 @@ void Board::import_json(std::string path) {
 }
 
 void Board::load_default_positions() {
-    this->import_json("default_positions.json");
+    // Вытащим из файла settings.json путь к файлу с позициями по умолчанию
+    ifstream file("settings.json");
+    json settings;
+    file >> settings;
+    file.close();
+    this->import_json(settings["default_positions"]);
+}
+
+void Board::save_json(string name) {
+    json data;
+    this->clear_null_figures();
+    for (auto figure : figures){
+        data["figures"].push_back({
+            {"name", figure->name},
+            {"color", figure->color},
+            {"position", position_to_chess_notation(figure->position)}
+        });
+    }
+
+    // Загружаем настройки
+    ifstream settings_file("settings.json");
+    json settings;
+    settings_file >> settings;
+    settings_file.close();
+
+    // Получаем путь к директории для сохранения
+    string save_path = settings["saves"];
+
+    // Создаем полный путь к файлу
+    string full_path = save_path + "/" + name + ".json";
+    cout << "Game saved as " << name << endl;
+
+    // Сохраняем файл
+    ofstream file(full_path);
+    file << data.dump(4);
+    file.close();
 }
 
 bool Board::is_empty(pair<int, int> position) {
     return figure_by_position(position)->name == "null";
+}
+
+string Board::move(pair<int, int> pos1, pair<int, int> pos2){
+    if (turn == figure_by_position(pos1)->color){
+        Figure* figure = figure_by_position(pos1);
+        auto pawn = dynamic_cast<Pawn*>(figure);
+        auto rook = dynamic_cast<Rook*>(figure);
+        auto knight = dynamic_cast<Knight*>(figure);
+        auto bishop = dynamic_cast<Bishop*>(figure);
+        auto queen = dynamic_cast<Queen*>(figure);
+        auto king = dynamic_cast<King*>(figure);
+
+
+        if (pawn) {
+            auto available_moves = pawn->available_moves();
+            if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
+                pawn->move(pos2);
+            } else {
+                cout << "Invalid move" << endl;
+                return "invalid";
+            }
+        }
+        else if (rook) {
+            auto available_moves = rook->available_moves();
+            if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
+                rook->move(pos2);
+            } else {
+                cout << "Invalid move" << endl;
+                return "invalid";
+            }
+        }
+        else if (knight) {
+            auto available_moves = knight->available_moves();
+            if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
+                knight->move(pos2);
+            } else {
+                cout << "Invalid move" << endl;
+                return "invalid";
+            }
+        }
+        else if (bishop) {
+            auto available_moves = bishop->available_moves();
+            if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
+                bishop->move(pos2);
+            } else {
+                cout << "Invalid move" << endl;
+                return "invalid";
+            }
+        }
+        else if (queen) {
+            auto available_moves = queen->available_moves();
+            if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
+                queen->move(pos2);
+            } else {
+                cout << "Invalid move" << endl;
+                return "invalid";
+            }
+        }
+        else if (king) {
+            auto available_moves = king->available_moves();
+            if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
+                king->move(pos2);
+            } else {
+                cout << "Invalid move" << endl;
+                return "invalid";
+            }
+        }
+        else {
+            cout << "Figure not found" << endl;
+            return "not found";
+        }
+        this->change_turn();
+    }
+    else{
+        cout << "Not your turn" << endl;
+        return "not your turn";
+    }
+    return "moved";
 }
 
 string Board::position_to_chess_notation(pair<int, int> position) {
@@ -194,6 +244,22 @@ string Board::move_to_chess_notation(pair<int, int> position1, pair<int, int> po
 
 string Board::move_to_chess_notation(pair<pair<int, int>, pair<int, int>> move) {
     return move_to_chess_notation(move.first, move.second);
+}
+
+string Board::generate_id() {
+    string number, id;
+    time_t unix_time = time(0);
+    number = to_string(unix_time).substr(to_string(unix_time).size() - 7);
+
+    mt19937 generator(time(0));
+    uniform_int_distribution<int> distribution(0, 999);
+    number += to_string(distribution(generator));
+
+    id = base_converter(number, 10, 62);
+    if (id.size() < 6) {
+        id = string(6 - id.size(), '0') + id;
+    }
+    return id;
 }
 
 pair<int, int> Board::position_to_number_notation(string notation) {

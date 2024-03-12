@@ -12,8 +12,10 @@ class Figure;
 
 class Board {
 public:
-    std::vector<Figure*> figures;
+    vector<Figure*> figures;
     string turn = "white";
+    bool going = true;
+    string winner = "none";
 
     Figure* figure_by_position(std::pair<int, int> position);
     void kill(std::pair<int, int> position);
@@ -23,8 +25,10 @@ public:
     void put_figure(Figure* figure);
     void import_json(string path);
     void load_default_positions();
+    void save_json(string name);
     void clear_null_figures();
     bool is_empty(pair<int, int> position);
+    string generate_id();
     string move(pair<int, int> pos1, pair<int, int> pos2);
     string position_to_chess_notation(pair<int, int> position);
     string move_to_chess_notation(pair<int, int> position1, pair<int, int> position2);

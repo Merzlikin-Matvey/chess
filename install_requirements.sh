@@ -69,3 +69,24 @@ echo "Установленные репозитории:"
 for repo in "${installed_repos[@]}"; do
     echo $repo
 done
+
+# Запуск скрипта installer_requirements.sh в каждой из установленных директорий, если он существует
+for repo in "${installed_repos[@]}"; do
+    IFS='/' read -r -a array <<< "$repo"
+    author_name="${array[0]}"
+    repo_name="${array[1]}"
+
+    dir_path="dependencies/$author_name/$repo_name"
+
+    if [ -f "$dir_path/requirements.sh" ]; then
+        echo "Запуск requirements.sh в $repo_name"
+        chmod +x $dir_path/requirements.sh
+        $dir_path/requirements.sh
+        if [ $? -eq 0 ]; then
+            echo "Скрипт requirements.sh в $repo_name успешно выполнен"
+        else
+            echo "Ошибка при выполнении requirements.sh в $repo_name"
+            exit 1
+        fi
+    fi
+done

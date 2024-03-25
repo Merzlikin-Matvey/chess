@@ -1,6 +1,6 @@
 #include <iostream>
-#include "engine/src/board.cpp"
-#include "engine/src/figure.cpp"
+#include "board.cpp"
+#include "figure.cpp"
 
 using namespace std;
 

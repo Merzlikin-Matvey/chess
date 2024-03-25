@@ -1,4 +1,4 @@
-#include "main.h"
+#include "chess-engine.h"
 #include <iostream>
 
 #include <string>

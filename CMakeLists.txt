@@ -5,6 +5,6 @@ set(CMAKE_CXX_STANDARD 17)
 add_library(chess-engine SHARED
         board.cpp
         figure.cpp
-        main.h
+        chess-engine.h
         dependencies/nlohmann/json/json-master/single_include/nlohmann/json.hpp)
 

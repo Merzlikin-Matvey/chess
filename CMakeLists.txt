@@ -10,5 +10,5 @@ add_library(chess-engine SHARED
 
 add_custom_command(TARGET chess-engine POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy
-        ${CMAKE_SOURCE_DIR}/settings.json
+        ${CMAKE_SOURCE_DIR}/default_positions.json
         $<TARGET_FILE_DIR:chess-engine>)

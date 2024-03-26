@@ -8,3 +8,7 @@ add_library(chess-engine SHARED
         src/chess-engine.h
         dependencies/nlohmann/json/json-master/single_include/nlohmann/json.hpp)
 
+add_custom_command(TARGET Chess_AI POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy
+        ${CMAKE_SOURCE_DIR}/settings.json
+        $<TARGET_FILE_DIR:Chess_AI>)

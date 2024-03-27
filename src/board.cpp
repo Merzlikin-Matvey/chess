@@ -205,3 +205,15 @@ pair<int, int> Board::position_to_number_notation(string notation) {
 pair<pair<int, int>, pair<int, int>> Board::move_to_number_notation(string notation1, string notation2) {
     return make_pair(position_to_number_notation(notation1), position_to_number_notation(notation2));
 }
+
+vector<string> Board::available_moves() {
+    vector<string> moves;
+    for (auto figure : figures) {
+        if (figure->color == turn) {
+            for (auto move : figure->available_moves()) {
+                moves.push_back(move_to_chess_notation(figure->position, move));
+            }
+        }
+    }
+    return moves;
+}

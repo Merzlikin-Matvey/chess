@@ -32,6 +32,8 @@ public:
     pair<int, int> position_to_number_notation(string notation);
     pair<pair<int, int>, pair<int, int>> move_to_number_notation(string notation1, string notation2);
 
+    vector<string> available_moves();
+
 };
 
 class Figure {

@@ -8,19 +8,19 @@
 using namespace std;
 
 
-class Figure;
+class chessFigure;
 
-class Board {
+class chessBoard {
 public:
-    std::vector<Figure*> figures;
+    std::vector<chessFigure*> figures;
     string turn = "white";
 
-    Figure* figure_by_position(std::pair<int, int> position);
+    chessFigure* figure_by_position(std::pair<int, int> position);
     void kill(std::pair<int, int> position);
     void change_turn();
     void print();
     void info();
-    void put_figure(Figure* figure);
+    void put_figure(chessFigure figure);
     void import_json(string path);
     void load_default_positions();
     void clear_null_figures();
@@ -36,13 +36,13 @@ public:
 
 };
 
-class Figure {
+class chessFigure {
 public:
-    Figure(Board* initialBoard, string initialName, pair<int, int> initialPosition, string initialColor,
+    chessFigure(chessBoard* initialBoard, string initialName, pair<int, int> initialPosition, string initialColor,
            string initialSymbol);
 
 
-    Board* board;
+    chessBoard* board;
     bool already_moved = false;
     string name;
     string color;
@@ -57,49 +57,49 @@ public:
     virtual vector<pair<int, int>> available_moves();
 };
 
-class NullFigure : public Figure{
+class NullFigure : public chessFigure{
 public:
-    explicit NullFigure(Board* initialBoard);
+    explicit NullFigure(chessBoard* initialBoard);
 };
 
-class Pawn : public Figure{
+class Pawn : public chessFigure{
 public:
-    explicit Pawn(Board* initialBoard, pair<int, int> position, string color);
+    explicit Pawn(chessBoard* initialBoard, pair<int, int> position, string color);
 
     vector<pair<int, int>> available_moves() override;
 };
 
-class Rook : public Figure{
+class Rook : public chessFigure{
 public:
-    explicit Rook(Board* initialBoard, pair<int, int> position, string color);
+    explicit Rook(chessBoard* initialBoard, pair<int, int> position, string color);
 
     vector<pair<int, int>> available_moves() override;
 };
 
-class Knight : public Figure{
+class Knight : public chessFigure{
 public:
-    explicit Knight(Board* initialBoard, pair<int, int> position, string color);
+    explicit Knight(chessBoard* initialBoard, pair<int, int> position, string color);
 
     vector<pair<int, int>> available_moves() override;
 };
 
-class Bishop : public Figure{
+class Bishop : public chessFigure{
 public:
-    explicit Bishop(Board* initialBoard, pair<int, int> position, string color);
+    explicit Bishop(chessBoard* initialBoard, pair<int, int> position, string color);
 
     vector<pair<int, int>> available_moves() override;
 };
 
-class Queen : public Figure{
+class Queen : public chessFigure{
 public:
-    explicit Queen(Board* initialBoard, pair<int, int> position, string color);
+    explicit Queen(chessBoard* initialBoard, pair<int, int> position, string color);
 
     vector<pair<int, int>> available_moves() override;
 };
 
-class King : public Figure{
+class King : public chessFigure{
 public:
-    explicit King(Board* initialBoard, pair<int, int> position, string color);
+    explicit King(chessBoard* initialBoard, pair<int, int> position, string color);
 
     vector<pair<int, int>> available_moves() override;
 };

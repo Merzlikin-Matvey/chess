@@ -2,6 +2,13 @@ cmake_minimum_required(VERSION 3.12)
 project(chess-engine)
 set(CMAKE_CXX_STANDARD 17)
 
+message(STATUS "C Compiler Version: ${CMAKE_C_COMPILER_VERSION}")
+message(STATUS "C++ Compiler Version: ${CMAKE_CXX_COMPILER_VERSION}")
+
+if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/dependencies)
+    message(FATAL_ERROR "Dependencies folder not found")
+endif()
+
 add_library(chess-engine SHARED
         src/board.cpp
         src/figure.cpp

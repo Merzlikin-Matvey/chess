@@ -17,15 +17,15 @@ string(COMPARE EQUAL "${CMAKE_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}"
 include(cmake/utils.cmake)
 include(GNUInstallDirs)
 
-option(CHESS-ENGINE_BUILD_TESTS "Build chess-engine tests" OFF)
-option(CHESS-ENGINE_BUILD_EXAMPLES "Build chess-engine examples" OFF)
-option(CHESS-ENGINE_INSTALL "Generate target for installing chess-engine" ${is_top_level})
-set_if_undefined(CHESS-ENGINE_INSTALL_CMAKEDIR
+option(CHESS_ENGINE_BUILD_TESTS "Build chess-engine tests" OFF)
+option(CHESS_ENGINE_BUILD_EXAMPLES "Build chess-engine examples" OFF)
+option(CHESS_ENGINE_INSTALL "Generate target for installing chess-engine" ${is_top_level})
+set_if_undefined(CHESS_ENGINE_INSTALL_CMAKEDIR
         "${CMAKE_INSTALL_LIBDIR}/cmake/chess-engine-${PROJECT_VERSION}" CACHE STRING
         "Install path for chess-engine package-related CMake files")
 
-if(DEFINED CHESS-ENGINE_SHARED_LIBS)
-    set(BUILD_SHARED_LIBS ${CHESS-ENGINE_SHARED_LIBS})
+if(DEFINED CHESS_ENGINE_SHARED_LIBS)
+    set(BUILD_SHARED_LIBS ${CHESS_ENGINE_SHARED_LIBS})
 endif()
 
 #------------------------------#
@@ -45,11 +45,11 @@ if(NOT BUILD_SHARED_LIBS)
     set(export_file_name "export_static.h")
 endif()
 
-generate_export_header(chess-engine EXPORT_FILE_NAME include/${export_file_name})
+generate_export_header(chess-engine EXPORT_FILE_NAME include/chess-engine/${export_file_name})
 
 set(public_headers
-        include/export.h
-        include/chess-engine.h)
+        include/chess-engine/export.h
+        include/chess-engine/chess-engine.h)
 set(sources
         ${public_headers}
         src/board.cpp
@@ -57,12 +57,12 @@ set(sources
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${sources})
 
 list(APPEND public_headers
-        "${CMAKE_CURRENT_BINARY_DIR}/include/${export_file_name}")
+        "${CMAKE_CURRENT_BINARY_DIR}/include/chess-engine/${export_file_name}")
 list(APPEND sources
-        "${CMAKE_CURRENT_BINARY_DIR}/include/${export_file_name}")
+        "${CMAKE_CURRENT_BINARY_DIR}/include/chess-engine/${export_file_name}")
 
 #------------------------------#
-#         Target settings      #
+#        Target settings       #
 #------------------------------#
 
 include(CMakePackageConfigHelpers)
@@ -86,3 +86,46 @@ set_target_properties(chess-engine PROPERTIES
         PUBLIC_HEADER "${public_headers}"
         SOVERSION ${PROJECT_VERSION_MAJOR}
         VERSION ${PROJECT_VERSION})
+
+#------------------------------#
+#         Installation         #
+#------------------------------#
+
+if(CHESS_ENGINE_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
+    configure_package_config_file(cmake/chess-engine-config.cmake.in chess-engine-config.cmake
+            INSTALL_DESTINATION "${CHESS_ENGINE_INSTALL_CMAKEDIR}")
+
+    write_basic_package_version_file(chess-engine-config-version.cmake
+            COMPATIBILITY SameMajorVersion)
+
+    install(TARGETS chess-engine EXPORT chess-engine_export
+            RUNTIME COMPONENT chess-engine
+            LIBRARY COMPONENT chess-engine NAMELINK_COMPONENT chess-engine-dev
+            ARCHIVE COMPONENT chess-engine-dev
+            INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}")
+    install(DIRECTORY include/
+            TYPE INCLUDE
+            COMPONENT chess-engine-dev)
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/include/chess-engine/${export_file_name}"
+            COMPONENT chess-engine-dev
+            DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/chess-engine")
+
+    set(targets_file "chess-engine-shared-targets.cmake")
+
+    if(NOT BUILD_SHARED_LIBS)
+        set(targets_file "chess-engine-static-targets.cmake")
+    endif()
+
+    install(EXPORT chess-engine_export
+            COMPONENT chess-engine-dev
+            FILE "${targets_file}"
+            DESTINATION "${CHESS_ENGINE_INSTALL_CMAKEDIR}"
+            NAMESPACE chess-engine::)
+
+    install(FILES
+            "${CMAKE_CURRENT_BINARY_DIR}/chess-engine-config.cmake"
+            "${CMAKE_CURRENT_BINARY_DIR}/chess-engine-config-version.cmake"
+            COMPONENT chess-engine-dev
+            DESTINATION "${CHESS_ENGINE_INSTALL_CMAKEDIR}")
+endif()
+

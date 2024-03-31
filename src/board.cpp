@@ -1,4 +1,4 @@
-#include "../include/chess-engine.h"
+#include "chess-engine/chess-engine.h"
 
 #include <iostream>
 #include <vector>

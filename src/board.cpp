@@ -1,4 +1,4 @@
-#include "chess-engine.h"
+#include "../include/chess-engine.h"
 
 #include <iostream>
 #include <vector>
@@ -10,8 +10,9 @@
 using namespace std;
 using json = nlohmann::json;
 namespace fs = std::filesystem;
+using namespace chess;
 
-chessFigure* chessBoard::figure_by_position(pair<int, int> position) {
+Figure* Board::figure_by_position(pair<int, int> position) {
     for (auto figure : figures) {
         if (figure->position == position) {
             return figure;
@@ -20,14 +21,14 @@ chessFigure* chessBoard::figure_by_position(pair<int, int> position) {
     return new NullFigure(this);
 }
 
-void chessBoard::clear_null_figures() {
-    figures.erase(remove_if(figures.begin(), figures.end(), [](chessFigure* figure) { return figure->name == "null"; }), figures.end());
+void Board::clear_null_figures() {
+    figures.erase(remove_if(figures.begin(), figures.end(), [](Figure* figure) { return figure->name == "null"; }), figures.end());
 }
 
-void chessBoard::print(){
+void Board::print(){
     clear_null_figures();
     vector<vector<string>> board(8, vector<string>(8, "."));
-    for (chessFigure* figure : figures) {
+    for (Figure* figure : figures) {
         board[figure->position.first][figure->position.second] = figure->symbol;
     }
     for (const auto &row : board) {
@@ -38,14 +39,14 @@ void chessBoard::print(){
     }
 }
 
-void chessBoard::info() {
+void Board::info() {
     clear_null_figures();
     for (auto figure : figures) {
         cout << figure->name << " " << figure->color << " " << position_to_chess_notation(figure->position) << endl;
     }
 }
 
-void chessBoard::change_turn(){
+void Board::change_turn(){
     if (this->turn == "white"){
         this->turn = "black";
     }
@@ -54,7 +55,7 @@ void chessBoard::change_turn(){
     }
 }
 
-void chessBoard::kill(std::pair<int, int> position) {
+void Board::kill(std::pair<int, int> position) {
     auto fig = figure_by_position(position);
 
     if (not fig->is_null()) {
@@ -66,9 +67,9 @@ void chessBoard::kill(std::pair<int, int> position) {
     }
 }
 
-string chessBoard::move(pair<int, int> pos1, pair<int, int> pos2){
+string Board::move(pair<int, int> pos1, pair<int, int> pos2){
     if (turn == figure_by_position(pos1)->color){
-        chessFigure* figure = figure_by_position(pos1);
+        Figure* figure = figure_by_position(pos1);
         auto pawn = dynamic_cast<Pawn*>(figure);
         auto rook = dynamic_cast<Rook*>(figure);
         auto knight = dynamic_cast<Knight*>(figure);
@@ -126,7 +127,7 @@ string chessBoard::move(pair<int, int> pos1, pair<int, int> pos2){
             }
         }
         else {
-            cout << "chessFigure not found" << endl;
+            cout << "figure not found" << endl;
         }
         this->change_turn();
     }
@@ -138,33 +139,33 @@ string chessBoard::move(pair<int, int> pos1, pair<int, int> pos2){
 
 
 
-void chessBoard::import_json(std::string path) {
+void Board::import_json(std::string path) {
     auto abs_path = fs::absolute(path);
     cout << abs_path << endl;
     ifstream file(abs_path);
     json data;
-    chessBoard& board = *this;
+    Board& Board = *this;
     file >> data;
     file.close();
 
     for (auto figure : data["figures"]){
         if (figure["name"] == "pawn"){
-            this->figures.push_back(new Pawn(&board, board.position_to_number_notation(figure["position"]), figure["color"]));
+            this->figures.push_back(new Pawn(&Board, position_to_number_notation(figure["position"]), figure["color"]));
         }
         else if (figure["name"] == "rook"){
-            this->figures.push_back(new Rook(&board, board.position_to_number_notation(figure["position"]), figure["color"]));
+            this->figures.push_back(new Rook(&Board, position_to_number_notation(figure["position"]), figure["color"]));
         }
         else if (figure["name"] == "knight"){
-            this->figures.push_back(new Knight(&board, board.position_to_number_notation(figure["position"]), figure["color"]));
+            this->figures.push_back(new Knight(&Board, position_to_number_notation(figure["position"]), figure["color"]));
         }
         else if (figure["name"] == "bishop"){
-            this->figures.push_back(new Bishop(&board, board.position_to_number_notation(figure["position"]), figure["color"]));
+            this->figures.push_back(new Bishop(&Board, position_to_number_notation(figure["position"]), figure["color"]));
         }
         else if (figure["name"] == "queen"){
-            this->figures.push_back(new Queen(&board, board.position_to_number_notation(figure["position"]), figure["color"]));
+            this->figures.push_back(new Queen(&Board, position_to_number_notation(figure["position"]), figure["color"]));
         }
         else if (figure["name"] == "king"){
-            this->figures.push_back(new King(&board, board.position_to_number_notation(figure["position"]), figure["color"]));
+            this->figures.push_back(new King(&Board, position_to_number_notation(figure["position"]), figure["color"]));
         }
         else {
             cout << "Invalid figure name" << endl;
@@ -173,39 +174,39 @@ void chessBoard::import_json(std::string path) {
     }
 }
 
-void chessBoard::load_default_positions() {
+void Board::load_default_positions() {
     this->import_json("default_positions.json");
 }
 
-bool chessBoard::is_empty(pair<int, int> position) {
+bool Board::is_empty(pair<int, int> position) {
     return figure_by_position(position)->name == "null";
 }
 
-string chessBoard::position_to_chess_notation(pair<int, int> position) {
+string Board::position_to_chess_notation(pair<int, int> position) {
     string letters = "abcdefgh";
     string numbers = "87654321";
     return string(1, letters[position.second]) + string(1, numbers[position.first]);
 }
 
-string chessBoard::move_to_chess_notation(pair<int, int> position1, pair<int, int> position2) {
+string Board::move_to_chess_notation(pair<int, int> position1, pair<int, int> position2) {
     return position_to_chess_notation(position1) + position_to_chess_notation(position2);
 }
 
-string chessBoard::move_to_chess_notation(pair<pair<int, int>, pair<int, int>> move) {
+string Board::move_to_chess_notation(pair<pair<int, int>, pair<int, int>> move) {
     return move_to_chess_notation(move.first, move.second);
 }
 
-pair<int, int> chessBoard::position_to_number_notation(string notation) {
+pair<int, int> Board::position_to_number_notation(string notation) {
     string letters = "abcdefgh";
     string numbers = "87654321";
     return make_pair(numbers.find(notation[1]), letters.find(notation[0]));
 }
 
-pair<pair<int, int>, pair<int, int>> chessBoard::move_to_number_notation(string notation1, string notation2) {
+pair<pair<int, int>, pair<int, int>> Board::move_to_number_notation(string notation1, string notation2) {
     return make_pair(position_to_number_notation(notation1), position_to_number_notation(notation2));
 }
 
-vector<string> chessBoard::available_moves() {
+vector<string> Board::available_moves() {
     vector<string> moves;
     for (auto figure : figures) {
         if (figure->color == turn) {

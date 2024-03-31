@@ -1,51 +1,51 @@
-#include "chess-engine.h"
+#include "../include/chess-engine.h"
 #include <iostream>
 
 #include <string>
 
 using namespace std;
+using namespace chess;
 
-
-chessFigure::chessFigure(chessBoard* initialBoard, string initialName, pair<int, int> initialPosition, string initialColor,
+Figure::Figure(Board* initialBoard, string initialName, pair<int, int> initialPosition, string initialColor,
                string initialSymbol)
         : board(initialBoard), name(initialName), position(initialPosition), color(initialColor), symbol(initialSymbol) {
 }
 
 
-void chessFigure::move(pair<int, int> new_position) {
+void Figure::move(pair<int, int> new_position) {
     already_moved = true;
     position = new_position;
 }
 
-bool chessFigure::is_null(){
+bool Figure::is_null(){
     return this->name == "null";
 }
 
-bool chessFigure::is_empty(pair<int, int> position) {
+bool Figure::is_empty(pair<int, int> position) {
     if (position.first > 7 or position.second > 7 or position.first < 0 or position.second < 0){
         return false;
     }
     return (board->figure_by_position(position)->name == "null");
 }
 
-bool chessFigure::is_teammate(pair<int, int> position){
+bool Figure::is_teammate(pair<int, int> position){
     return (this->color == board->figure_by_position(position)->color);
 }
 
-bool chessFigure::is_opponent(pair<int, int> position) {
+bool Figure::is_opponent(pair<int, int> position) {
     auto figure = board->figure_by_position(position);
     return (figure->color != this->color and not figure->is_null());
 }
 
-vector<pair<int, int>> chessFigure::available_moves() {
+vector<pair<int, int>> Figure::available_moves() {
     return vector<pair<int, int>> {};
 }
 
-NullFigure::NullFigure(chessBoard* initialBoard) :
-chessFigure(initialBoard, "null", make_pair(-1, -1), "null", "0") {}
+NullFigure::NullFigure(Board* initialBoard) :
+Figure(initialBoard, "null", make_pair(-1, -1), "null", "0") {}
 
-Pawn::Pawn(chessBoard* initialBoard, pair<int, int> position, string color) :
-chessFigure(initialBoard, "pawn", position, color, (color == "white") ? "P" : "p") {}
+Pawn::Pawn(Board* initialBoard, pair<int, int> position, string color) :
+Figure(initialBoard, "pawn", position, color, (color == "white") ? "P" : "p") {}
 
 vector<pair<int, int>> Pawn::available_moves(){
     vector<pair<int, int>> moves {};
@@ -71,8 +71,8 @@ vector<pair<int, int>> Pawn::available_moves(){
 }
 
 
-Rook::Rook(chessBoard* initialBoard, pair<int, int> position, string color) :
-        chessFigure(initialBoard, "rook", position, color, (color == "white") ? "R" : "r") {}
+Rook::Rook(Board* initialBoard, pair<int, int> position, string color) :
+        Figure(initialBoard, "rook", position, color, (color == "white") ? "R" : "r") {}
 
 vector<pair<int, int>> Rook::available_moves(){
     vector<pair<int, int>> moves {};
@@ -118,8 +118,8 @@ vector<pair<int, int>> Rook::available_moves(){
 
 }
 
-Knight::Knight(chessBoard* initialBoard, pair<int, int> position, string color) :
-        chessFigure(initialBoard, "knight", position, color, (color == "white") ? "N" : "n") {}
+Knight::Knight(Board* initialBoard, pair<int, int> position, string color) :
+        Figure(initialBoard, "knight", position, color, (color == "white") ? "N" : "n") {}
 
 vector<pair<int, int>> Knight::available_moves(){
     vector<pair<int, int>> moves {};
@@ -160,8 +160,8 @@ vector<pair<int, int>> Knight::available_moves(){
     return moves;
 }
 
-Bishop::Bishop(chessBoard* initialBoard, pair<int, int> position, string color) :
-        chessFigure(initialBoard, "bishop", position, color, (color == "white") ? "B" : "b") {}
+Bishop::Bishop(Board* initialBoard, pair<int, int> position, string color) :
+        Figure(initialBoard, "bishop", position, color, (color == "white") ? "B" : "b") {}
 
 vector<pair<int, int>> Bishop::available_moves(){
     vector<pair<int, int>> moves {};
@@ -197,8 +197,8 @@ vector<pair<int, int>> Bishop::available_moves(){
     return moves;
 }
 
-Queen::Queen(chessBoard* initialBoard, pair<int, int> position, string color) :
-        chessFigure(initialBoard, "queen", position, color, (color == "white") ? "Q" : "q") {}
+Queen::Queen(Board* initialBoard, pair<int, int> position, string color) :
+        Figure(initialBoard, "queen", position, color, (color == "white") ? "Q" : "q") {}
 
 
 vector<pair<int, int>> Queen::available_moves(){
@@ -271,8 +271,8 @@ vector<pair<int, int>> Queen::available_moves(){
     return moves;
 }
 
-King::King(chessBoard* initialBoard, pair<int, int> position, string color) :
-        chessFigure(initialBoard, "king", position, color, (color == "white") ? "K" : "k") {}
+King::King(Board* initialBoard, pair<int, int> position, string color) :
+        Figure(initialBoard, "king", position, color, (color == "white") ? "K" : "k") {}
 
 
 vector<pair<int, int>> King::available_moves(){

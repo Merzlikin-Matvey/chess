@@ -1,25 +1,88 @@
-cmake_minimum_required(VERSION 3.12)
-project(chess-engine)
-set(CMAKE_CXX_STANDARD 17)
+cmake_minimum_required(VERSION 3.14)
+project(chess=engine
+        VERSION 1.0.0
+        DESCRIPTION "Chess engine"
+        LANGUAGES CXX)
 
-message(STATUS "C Compiler Version: ${CMAKE_C_COMPILER_VERSION}")
-message(STATUS "C++ Compiler Version: ${CMAKE_CXX_COMPILER_VERSION}")
+#------------------------------#
+# General settings and options #
+#------------------------------#
 
-if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/dependencies)
-    message(FATAL_ERROR "Dependencies folder not found")
+add_library(chess-engine)
+add_library(chess-engine::chess-engine ALIAS chess-engine)
+
+string(COMPARE EQUAL "${CMAKE_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}"
+        is_top_level)
+
+include(cmake/utils.cmake)
+include(GNUInstallDirs)
+
+option(CHESS-ENGINE_BUILD_TESTS "Build chess-engine tests" OFF)
+option(CHESS-ENGINE_BUILD_EXAMPLES "Build chess-engine examples" OFF)
+option(CHESS-ENGINE_INSTALL "Generate target for installing chess-engine" ${is_top_level})
+set_if_undefined(CHESS-ENGINE_INSTALL_CMAKEDIR
+        "${CMAKE_INSTALL_LIBDIR}/cmake/chess-engine-${PROJECT_VERSION}" CACHE STRING
+        "Install path for chess-engine package-related CMake files")
+
+if(DEFINED CHESS-ENGINE_SHARED_LIBS)
+    set(BUILD_SHARED_LIBS ${CHESS-ENGINE_SHARED_LIBS})
 endif()
 
-add_library(chess-engine SHARED
+#------------------------------#
+#         Dependencies         #
+#------------------------------#
+
+#TODO: Add dependencies
+
+#------------------------------#
+#         Source files         #
+#------------------------------#
+
+include(GenerateExportHeader)
+set(export_file_name "export_shared.h")
+
+if(NOT BUILD_SHARED_LIBS)
+    set(export_file_name "export_static.h")
+endif()
+
+generate_export_header(chess-engine EXPORT_FILE_NAME include/${export_file_name})
+
+set(public_headers
+        include/export.h
+        include/chess-engine.h)
+set(sources
+        ${public_headers}
         src/board.cpp
-        src/figure.cpp
-        src/chess-engine.h
-        dependencies/nlohmann/json/json-master/single_include/nlohmann/json.hpp)
+        src/figure.cpp)
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${sources})
 
-add_custom_command(TARGET chess-engine POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy
-        ${CMAKE_CURRENT_SOURCE_DIR}/default_positions.json
-        $<TARGET_FILE_DIR:chess-engine>)
+list(APPEND public_headers
+        "${CMAKE_CURRENT_BINARY_DIR}/include/${export_file_name}")
+list(APPEND sources
+        "${CMAKE_CURRENT_BINARY_DIR}/include/${export_file_name}")
 
-add_executable(chess-engine-app main.cpp)
+#------------------------------#
+#         Target settings      #
+#------------------------------#
 
-target_link_libraries(chess-engine-app chess-engine)
+include(CMakePackageConfigHelpers)
+
+target_sources(chess-engine PRIVATE ${sources})
+if(NOT BUILD_SHARED_LIBS)
+    target_compile_definitions(chess-engine
+            PUBLIC
+            CHESS_ENGINE_STATIC_DEFINE)
+endif()
+
+target_include_directories(chess-engine
+        PUBLIC
+        "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
+        "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>"
+        "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
+        PRIVATE
+        "${CMAKE_CURRENT_SOURCE_DIR}/src")
+
+set_target_properties(chess-engine PROPERTIES
+        PUBLIC_HEADER "${public_headers}"
+        SOVERSION ${PROJECT_VERSION_MAJOR}
+        VERSION ${PROJECT_VERSION})

@@ -129,3 +129,16 @@ if(CHESS_ENGINE_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
             DESTINATION "${CHESS_ENGINE_INSTALL_CMAKEDIR}")
 endif()
 
+#------------------------------#
+#         Testing              #
+#------------------------------#
+
+# TODO: Add tests
+
+#------------------------------#
+#        Other targets         #
+#------------------------------#
+
+if(CHESS_ENGINE_EXAMPLES)
+    add_subdirectory(example)
+endif()

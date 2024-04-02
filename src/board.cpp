@@ -90,6 +90,7 @@ string Board::move(pair<int, int> pos1, pair<int, int> pos2){
             auto available_moves = pawn->available_moves();
             if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
                 pawn->move(pos2);
+                // TODO: Добавить изменение фигуры
             } else {
                 cout << "Invalid move" << endl;
             }

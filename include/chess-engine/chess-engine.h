@@ -87,6 +87,7 @@ using namespace std;
         public:
             explicit Pawn(Board *initialBoard, pair<int, int> position, string color);
 
+            void change_figure(string new_name);
             vector <pair<int, int>> available_moves() override;
         };
 

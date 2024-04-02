@@ -47,6 +47,22 @@ Figure(initialBoard, "null", make_pair(-1, -1), "null", "0") {}
 Pawn::Pawn(Board* initialBoard, pair<int, int> position, string color) :
 Figure(initialBoard, "pawn", position, color, (color == "white") ? "P" : "p") {}
 
+void Pawn::change_figure(string new_name) {
+    if (new_name == "queen"){
+        board->figures.push_back(new Queen(board, position, color));
+    }
+    if (new_name == "rook"){
+        board->figures.push_back(new Rook(board, position, color));
+    }
+    if (new_name == "bishop"){
+        board->figures.push_back(new Bishop(board, position, color));
+    }
+    if (new_name == "knight"){
+        board->figures.push_back(new Knight(board, position, color));
+    }
+    board->kill(position);
+}
+
 vector<pair<int, int>> Pawn::available_moves(){
     vector<pair<int, int>> moves {};
     int direction = (color == "white") ? -1 : 1;

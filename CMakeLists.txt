@@ -32,7 +32,7 @@ endif()
 #         Dependencies         #
 #------------------------------#
 
-#TODO: Add dependencies
+# TODO: Add dependencies
 
 #------------------------------#
 #         Source files         #
@@ -109,6 +109,8 @@ if(CHESS_ENGINE_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
     install(FILES "${CMAKE_CURRENT_BINARY_DIR}/include/chess-engine/${export_file_name}"
             COMPONENT chess-engine-dev
             DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/chess-engine")
+    install(FILES chess_default_positions.json
+            DESTINATION ${CMAKE_INSTALL_DATADIR}/chess-engine)
 
     set(targets_file "chess-engine-shared-targets.cmake")
 

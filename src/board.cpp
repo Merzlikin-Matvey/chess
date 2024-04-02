@@ -67,6 +67,14 @@ void Board::kill(std::pair<int, int> position) {
     }
 }
 
+bool Board::is_сastling(pair<int, int> pos1, pair<int, int> pos2) {
+    auto king = dynamic_cast<King*>(figure_by_position(pos1));
+    if (king) {
+        return abs(pos1.second - pos2.second) == 2;
+    }
+    return false;
+}
+
 string Board::move(pair<int, int> pos1, pair<int, int> pos2){
     if (turn == figure_by_position(pos1)->color){
         Figure* figure = figure_by_position(pos1);
@@ -77,7 +85,7 @@ string Board::move(pair<int, int> pos1, pair<int, int> pos2){
         auto queen = dynamic_cast<Queen*>(figure);
         auto king = dynamic_cast<King*>(figure);
 
-
+        // Поймем, какой фигурой ходим и сделаем ход
         if (pawn) {
             auto available_moves = pawn->available_moves();
             if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
@@ -122,6 +130,19 @@ string Board::move(pair<int, int> pos1, pair<int, int> pos2){
             auto available_moves = king->available_moves();
             if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
                 king->move(pos2);
+                // Если рокировка, то двинем и башенку
+                if (is_сastling(pos1, pos2)) {
+                    if (pos2.first == 0) {
+                        auto rook = dynamic_cast<Rook*>(figure_by_position(make_pair(0, 0)));
+                        rook->move(make_pair(0, 3));
+                    } else {
+                        auto rook = dynamic_cast<Rook*>(figure_by_position(make_pair(7, 0)));
+                        rook->move(make_pair(7, 3));
+                    }
+                }
+
+
+
             } else {
                 cout << "Invalid move" << endl;
             }
@@ -138,7 +159,7 @@ string Board::move(pair<int, int> pos1, pair<int, int> pos2){
 }
 
 
-
+// Импортируем JSON файл с позициями фигур
 void Board::import_json(std::string path) {
     auto abs_path = fs::absolute(path);
     cout << abs_path << endl;
@@ -174,14 +195,17 @@ void Board::import_json(std::string path) {
     }
 }
 
+// Дефолтные позиции фигур
 void Board::load_default_positions() {
-    this->import_json("default_positions.json");
+    this->import_json("chess_default_positions.json");
 }
 
+// Является ли позиция пустой
 bool Board::is_empty(pair<int, int> position) {
     return figure_by_position(position)->name == "null";
 }
 
+// Перевод в шахматную нотацию
 string Board::position_to_chess_notation(pair<int, int> position) {
     string letters = "abcdefgh";
     string numbers = "87654321";
@@ -202,6 +226,7 @@ pair<int, int> Board::position_to_number_notation(string notation) {
     return make_pair(numbers.find(notation[1]), letters.find(notation[0]));
 }
 
+// Перевод в численную нотацию
 pair<pair<int, int>, pair<int, int>> Board::move_to_number_notation(string notation1, string notation2) {
     return make_pair(position_to_number_notation(notation1), position_to_number_notation(notation2));
 }

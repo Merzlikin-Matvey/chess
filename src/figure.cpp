@@ -307,6 +307,24 @@ vector<pair<int, int>> King::available_moves(){
         moves.push_back(make_pair(position.first - 1, position.second - 1));
     }
 
+    // Рокировки
+
+    if (not already_moved){
+        if (is_empty(make_pair(position.first, position.second + 1)) and
+            is_empty(make_pair(position.first, position.second + 2)) and
+            board->figure_by_position(make_pair(position.first, position.second + 3))->name == "rook" and
+            not board->figure_by_position(make_pair(position.first, position.second + 3))->already_moved){
+            moves.push_back(make_pair(position.first, position.second + 2));
+        }
+        if (is_empty(make_pair(position.first, position.second - 1)) and
+            is_empty(make_pair(position.first, position.second - 2)) and
+            is_empty(make_pair(position.first, position.second - 3)) and
+            board->figure_by_position(make_pair(position.first, position.second - 4))->name == "rook" and
+            not board->figure_by_position(make_pair(position.first, position.second - 4))->already_moved){
+            moves.push_back(make_pair(position.first, position.second - 2));
+        }
+    }
+
 
     return moves;
 }

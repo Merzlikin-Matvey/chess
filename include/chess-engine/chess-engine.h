@@ -34,6 +34,8 @@ using namespace std;
 
             bool is_empty(pair<int, int> position);
 
+            bool is_сastling(pair<int, int> pos1, pair<int, int> pos2);
+
             string move(pair<int, int> pos1, pair<int, int> pos2);
 
             string position_to_chess_notation(pair<int, int> position);

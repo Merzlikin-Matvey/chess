@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <fstream>
 #include <filesystem>
-#include "../dependencies/nlohmann/json/json-master/single_include/nlohmann/json.hpp"
+#include <json/json.hpp>
 
 using namespace std;
 using json = nlohmann::json;
@@ -161,43 +161,41 @@ string Board::move(pair<int, int> pos1, pair<int, int> pos2){
 
 
 // Импортируем JSON файл с позициями фигур
-void Board::import_json(std::string path) {
-    auto abs_path = fs::absolute(path);
-    cout << abs_path << endl;
-    ifstream file(abs_path);
+void Board::import_json(string path) {
+    ifstream file(path);
     json data;
-    Board& Board = *this;
+    Board& board = *this;
     file >> data;
     file.close();
 
     for (auto figure : data["figures"]){
         if (figure["name"] == "pawn"){
-            this->figures.push_back(new Pawn(&Board, position_to_number_notation(figure["position"]), figure["color"]));
+            this->figures.push_back(new Pawn(&board, board.position_to_number_notation(figure["position"]), figure["color"]));
         }
         else if (figure["name"] == "rook"){
-            this->figures.push_back(new Rook(&Board, position_to_number_notation(figure["position"]), figure["color"]));
+            this->figures.push_back(new Rook(&board, board.position_to_number_notation(figure["position"]), figure["color"]));
         }
         else if (figure["name"] == "knight"){
-            this->figures.push_back(new Knight(&Board, position_to_number_notation(figure["position"]), figure["color"]));
+            this->figures.push_back(new Knight(&board, board.position_to_number_notation(figure["position"]), figure["color"]));
         }
         else if (figure["name"] == "bishop"){
-            this->figures.push_back(new Bishop(&Board, position_to_number_notation(figure["position"]), figure["color"]));
+            this->figures.push_back(new Bishop(&board, board.position_to_number_notation(figure["position"]), figure["color"]));
         }
         else if (figure["name"] == "queen"){
-            this->figures.push_back(new Queen(&Board, position_to_number_notation(figure["position"]), figure["color"]));
+            this->figures.push_back(new Queen(&board, board.position_to_number_notation(figure["position"]), figure["color"]));
         }
         else if (figure["name"] == "king"){
-            this->figures.push_back(new King(&Board, position_to_number_notation(figure["position"]), figure["color"]));
+            this->figures.push_back(new King(&board, board.position_to_number_notation(figure["position"]), figure["color"]));
         }
         else {
             cout << "Invalid figure name" << endl;
         }
-
-    }
 }
 
 // Дефолтные позиции фигур
 void Board::load_default_positions() {
+
+    }
     this->import_json("chess_default_positions.json");
 }
 

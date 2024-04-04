@@ -1,6 +1,5 @@
 {
-  "repos": [
-    "nlohmann/json/master",
-    "Merzlikin-Matvey/Base-converter/main"
+  "dependencies": [
+    "nlohmann/json/develop/single_include/nlohmann/json.hpp"
   ]
 }

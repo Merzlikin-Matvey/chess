@@ -8,7 +8,7 @@ project(chess=engine
 # General settings and options #
 #------------------------------#
 
-add_library(chess-engine)
+add_library(chess-engine SHARED)
 add_library(chess-engine::chess-engine ALIAS chess-engine)
 
 string(COMPARE EQUAL "${CMAKE_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}"
@@ -49,11 +49,17 @@ generate_export_header(chess-engine EXPORT_FILE_NAME include/chess-engine/${expo
 
 set(public_headers
         include/chess-engine/export.h
-        include/chess-engine/chess-engine.h)
+        include/chess-engine/chess-engine.h
+        include/json/json.hpp
+)
 set(sources
         ${public_headers}
         src/board.cpp
         src/figure.cpp)
+
+set(data
+    chess_default_positions.json)
+
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${sources})
 
 list(APPEND public_headers
@@ -109,8 +115,12 @@ if(CHESS_ENGINE_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
     install(FILES "${CMAKE_CURRENT_BINARY_DIR}/include/chess-engine/${export_file_name}"
             COMPONENT chess-engine-dev
             DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/chess-engine")
-    install(FILES chess_default_positions.json
-            DESTINATION ${CMAKE_INSTALL_DATADIR}/chess-engine)
+
+    foreach(file ${data})
+        install(FILES ${file}
+                DESTINATION ${CMAKE_INSTALL_DATADIR}/chess-engine)
+    endforeach()
+
 
     set(targets_file "chess-engine-shared-targets.cmake")
 

@@ -80,6 +80,7 @@ if(NOT BUILD_SHARED_LIBS)
             CHESS_ENGINE_STATIC_DEFINE)
 endif()
 
+
 target_include_directories(chess-engine
         PUBLIC
         "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"

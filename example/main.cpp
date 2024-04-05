@@ -1,11 +1,13 @@
+#include <cstdlib>
 #include <iostream>
-#include <chess-engine/chess-engine.h>
 
 using namespace std;
-using namespace chess;
 
 int main() {
-    Board b;
-    b.load_default_positions();
-    b.print();
+    const char* path = getenv("CHESS_ENGINE_RESOURCE_PATH");
+    if (path) {
+        cout << "CHESS_ENGINE_RESOURCE_PATH: " << path << endl;
+    } else {
+        cout << "CHESS_ENGINE_RESOURCE_PATH is not set" << endl;
+    }
 }

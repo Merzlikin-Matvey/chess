@@ -67,6 +67,13 @@ list(APPEND public_headers
 list(APPEND sources
         "${CMAKE_CURRENT_BINARY_DIR}/include/chess-engine/${export_file_name}")
 
+message(${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}/chess-engine)
+
+add_custom_target(set_paths_script ALL
+        COMMAND bash ${CMAKE_SOURCE_DIR}/scripts/install_paths.sh ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}/chess-engine
+)
+
+
 #------------------------------#
 #        Target settings       #
 #------------------------------#
@@ -93,6 +100,8 @@ set_target_properties(chess-engine PROPERTIES
         PUBLIC_HEADER "${public_headers}"
         SOVERSION ${PROJECT_VERSION_MAJOR}
         VERSION ${PROJECT_VERSION})
+
+file(COPY ${data} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 #------------------------------#
 #         Installation         #
@@ -152,6 +161,6 @@ endif()
 #        Other targets         #
 #------------------------------#
 
-if(CHESS_ENGINE_EXAMPLES)
+if(CHESS_ENGINE_BUILD_EXAMPLES)
     add_subdirectory(example)
 endif()

@@ -8,9 +8,7 @@ project(chess-engine
 # General settings and options #
 #------------------------------#
 
-add_library(chess-engine SHARED
-        include/chess-engine/utils.h
-        src/path_to_res.cpp)
+add_library(chess-engine SHARED)
 add_library(chess-engine::chess-engine ALIAS chess-engine)
 
 string(COMPARE EQUAL "${CMAKE_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}"
@@ -102,12 +100,18 @@ set_target_properties(chess-engine PROPERTIES
         SOVERSION ${PROJECT_VERSION_MAJOR}
         VERSION ${PROJECT_VERSION})
 
+file(COPY ${data} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/res)
+message(STATUS "Local resource path: ${CMAKE_CURRENT_BINARY_DIR}/res ..")
 
 #------------------------------#
 #         Installation         #
 #------------------------------#
 if(CHESS_ENGINE_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
+    set(RESOURCE_PATH ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}/chess-engine)
+
     message(STATUS "Library will be installed to: ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
+    message(STATUS "Resource path: ${RESOURCE_PATH}")
+
 
     configure_package_config_file(cmake/chess-engine-config.cmake.in chess-engine-config.cmake
             INSTALL_DESTINATION "${CHESS_ENGINE_INSTALL_CMAKEDIR}")
@@ -126,6 +130,8 @@ if(CHESS_ENGINE_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
     install(FILES "${CMAKE_CURRENT_BINARY_DIR}/include/chess-engine/${export_file_name}"
             COMPONENT chess-engine-dev
             DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/chess-engine")
+    install(FILES ${data}
+            DESTINATION ${RESOURCE_PATH})
 
 
     set(targets_file "chess-engine-shared-targets.cmake")
@@ -147,30 +153,7 @@ if(CHESS_ENGINE_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
             DESTINATION "${CHESS_ENGINE_INSTALL_CMAKEDIR}")
 endif()
 
-#------------------------------#
-#      Resource variables      #
-#------------------------------#
 
-if(CHESS_ENGINE_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
-    set(resources res/chess_default_positions.json)
-    set(RESOURCE_PATH ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}/chess-engine)
-    file(COPY ${resources} DESTINATION ${RESOURCE_PATH})
-
-    message(STATUS "Resource path: ${RESOURCE_PATH}")
-
-    if(WIN32)
-        add_custom_target(run_script ALL
-                COMMAND cmd /c ${CMAKE_SOURCE_DIR}/scripts/install_paths.bat ${RESOURCE_PATH}
-        )
-    else()
-        add_custom_target(run_script ALL
-                COMMAND bash ${CMAKE_SOURCE_DIR}/scripts/install_paths.sh ${RESOURCE_PATH}
-        )
-    endif()
-else()
-    set(RESOURCE_PATH ${CMAKE_CURRENT_BINARY_DIR}/res)
-    file(COPY ${data} DESTINATION ${RESOURCE_PATH})
-endif()
 
 #------------------------------#
 #         Testing              #

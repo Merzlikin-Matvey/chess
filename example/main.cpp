@@ -1,13 +1,9 @@
-#include <cstdlib>
 #include <iostream>
-
-using namespace std;
+#include <chess-engine/chess-engine.hpp>
 
 int main() {
-    const char* path = getenv("CHESS_ENGINE_RESOURCE_PATH");
-    if (path) {
-        cout << "CHESS_ENGINE_RESOURCE_PATH: " << path << endl;
-    } else {
-        cout << "CHESS_ENGINE_RESOURCE_PATH is not set" << endl;
-    }
+    char path[1024];
+    _get_resource_path(path);
+    std::cout << "The path is: " << path << std::endl;
+    return 0;
 }

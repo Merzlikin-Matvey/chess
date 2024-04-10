@@ -15,6 +15,12 @@ add_executable(chess-engine-example)
 target_sources(chess-engine-example PRIVATE ${sources})
 target_link_libraries(chess-engine-example PRIVATE chess-engine::chess-engine)
 
-if(NOT is_top_level)
-    win_copy_deps_to_target_dir(chess-engine chess-engine::chess-engine)
-endif()
+add_custom_command(TARGET chess-engine-example POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        $<TARGET_FILE:chess-engine>
+        $<TARGET_FILE_DIR:chess-engine-example>)
+
+add_custom_command(TARGET chess-engine-example POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_BINARY_DIR}/res
+        $<TARGET_FILE_DIR:chess-engine-example>/res)

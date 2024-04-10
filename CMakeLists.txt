@@ -1,14 +1,15 @@
 cmake_minimum_required(VERSION 3.14)
-project(chess=engine
+project(chess-engine
         VERSION 1.0.0
         DESCRIPTION "Chess engine"
-        LANGUAGES CXX)
+        LANGUAGES C CXX)
 
 #------------------------------#
 # General settings and options #
 #------------------------------#
 
-add_library(chess-engine SHARED)
+add_library(chess-engine SHARED
+        include/chess-engine/utils.h)
 add_library(chess-engine::chess-engine ALIAS chess-engine)
 
 string(COMPARE EQUAL "${CMAKE_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}"
@@ -19,7 +20,7 @@ include(GNUInstallDirs)
 
 option(CHESS_ENGINE_BUILD_TESTS "Build chess-engine tests" OFF)
 option(CHESS_ENGINE_BUILD_EXAMPLES "Build chess-engine examples" OFF)
-option(CHESS_ENGINE_INSTALL "Generate target for installing chess-engine" ${is_top_level})
+option(CHESS_ENGINE_INSTALL "Generate target for installing chess-engine" OFF)
 set_if_undefined(CHESS_ENGINE_INSTALL_CMAKEDIR
         "${CMAKE_INSTALL_LIBDIR}/cmake/chess-engine-${PROJECT_VERSION}" CACHE STRING
         "Install path for chess-engine package-related CMake files")
@@ -49,16 +50,18 @@ generate_export_header(chess-engine EXPORT_FILE_NAME include/chess-engine/${expo
 
 set(public_headers
         include/chess-engine/export.h
-        include/chess-engine/chess-engine.h
+        include/chess-engine/chess-engine.hpp
+        include/chess-engine/utils.h
         include/json/json.hpp
 )
 set(sources
         ${public_headers}
         src/board.cpp
-        src/figure.cpp)
+        src/figure.cpp
+        src/utils.c)
 
 set(data
-    chess_default_positions.json)
+        res/chess_default_positions.json)
 
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${sources})
 
@@ -66,13 +69,6 @@ list(APPEND public_headers
         "${CMAKE_CURRENT_BINARY_DIR}/include/chess-engine/${export_file_name}")
 list(APPEND sources
         "${CMAKE_CURRENT_BINARY_DIR}/include/chess-engine/${export_file_name}")
-
-message(${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}/chess-engine)
-
-add_custom_target(set_paths_script ALL
-        COMMAND bash ${CMAKE_SOURCE_DIR}/scripts/install_paths.sh ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}/chess-engine
-)
-
 
 #------------------------------#
 #        Target settings       #
@@ -101,13 +97,12 @@ set_target_properties(chess-engine PROPERTIES
         SOVERSION ${PROJECT_VERSION_MAJOR}
         VERSION ${PROJECT_VERSION})
 
-file(COPY ${data} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 #------------------------------#
 #         Installation         #
 #------------------------------#
-
-if(CHESS_ENGINE_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
+if(CHESS_ENGINE_INSTALL)
+    message(STATUS "Installing chess-engine to ${CMAKE_INSTALL_PREFIX}")
     configure_package_config_file(cmake/chess-engine-config.cmake.in chess-engine-config.cmake
             INSTALL_DESTINATION "${CHESS_ENGINE_INSTALL_CMAKEDIR}")
 
@@ -125,11 +120,6 @@ if(CHESS_ENGINE_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
     install(FILES "${CMAKE_CURRENT_BINARY_DIR}/include/chess-engine/${export_file_name}"
             COMPONENT chess-engine-dev
             DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/chess-engine")
-
-    foreach(file ${data})
-        install(FILES ${file}
-                DESTINATION ${CMAKE_INSTALL_DATADIR}/chess-engine)
-    endforeach()
 
 
     set(targets_file "chess-engine-shared-targets.cmake")
@@ -149,6 +139,31 @@ if(CHESS_ENGINE_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
             "${CMAKE_CURRENT_BINARY_DIR}/chess-engine-config-version.cmake"
             COMPONENT chess-engine-dev
             DESTINATION "${CHESS_ENGINE_INSTALL_CMAKEDIR}")
+endif()
+
+#------------------------------#
+#      Resource variables      #
+#------------------------------#
+
+if(CHESS_ENGINE_INSTALL)
+    set(resources res/chess_default_positions.json)
+    set(RESOURCE_PATH ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}/chess-engine)
+    file(COPY ${resources} DESTINATION ${RESOURCE_PATH})
+
+    message(STATUS "Resource path: ${RESOURCE_PATH}")
+
+    if(WIN32)
+        add_custom_target(run_script ALL
+                COMMAND cmd /c ${CMAKE_SOURCE_DIR}/scripts/install_paths.bat ${RESOURCE_PATH}
+        )
+    else()
+        add_custom_target(run_script ALL
+                COMMAND bash ${CMAKE_SOURCE_DIR}/scripts/install_paths.sh ${RESOURCE_PATH}
+        )
+    endif()
+else()
+    set(RESOURCE_PATH ${CMAKE_CURRENT_BINARY_DIR}/res)
+    file(COPY ${data} DESTINATION ${RESOURCE_PATH})
 endif()
 
 #------------------------------#

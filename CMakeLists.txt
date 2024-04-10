@@ -108,7 +108,12 @@ message(STATUS "Local resource path: ${CMAKE_CURRENT_BINARY_DIR}/res ..")
 #         Installation         #
 #------------------------------#
 if(CHESS_ENGINE_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
+    if (WIN32)
+        set(CMAKE_INSTALL_PREFIX $ENV{USERPROFILE})
+    endif ()
+
     set(RESOURCE_PATH ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}/chess-engine)
+
 
     message(STATUS "Library will be installed to: ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
     message(STATUS "Resource path: ${RESOURCE_PATH}")

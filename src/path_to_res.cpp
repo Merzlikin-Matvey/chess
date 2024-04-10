@@ -1,5 +1,5 @@
-#include <chess-engine/utils.h>
-#include <chess-engine/chess-engine.hpp>
+#include <utils.h>
+#include <chess-engine.hpp>
 #include <string>
 #include <filesystem>
 

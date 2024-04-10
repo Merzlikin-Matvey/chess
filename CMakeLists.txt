@@ -47,13 +47,13 @@ if(NOT BUILD_SHARED_LIBS)
     set(export_file_name "export_static.h")
 endif()
 
-generate_export_header(chess-engine EXPORT_FILE_NAME include/chess-engine/${export_file_name})
+generate_export_header(chess-engine EXPORT_FILE_NAME include/${export_file_name})
 
 set(public_headers
-        include/chess-engine/export.h
-        include/chess-engine/chess-engine.hpp
-        include/chess-engine/utils.h
-        include/json/json.hpp
+        include/export.h
+        include/chess-engine.hpp
+        include/utils.h
+        dependencies/json/json.hpp
 )
 set(sources
         ${public_headers}
@@ -69,9 +69,9 @@ set(data
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${sources})
 
 list(APPEND public_headers
-        "${CMAKE_CURRENT_BINARY_DIR}/include/chess-engine/${export_file_name}")
+        "${CMAKE_CURRENT_BINARY_DIR}/include/${export_file_name}")
 list(APPEND sources
-        "${CMAKE_CURRENT_BINARY_DIR}/include/chess-engine/${export_file_name}")
+        "${CMAKE_CURRENT_BINARY_DIR}/include/${export_file_name}")
 
 #------------------------------#
 #        Target settings       #
@@ -90,6 +90,7 @@ endif()
 target_include_directories(chess-engine
         PUBLIC
         "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
+        "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/dependencies>"
         "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>"
         "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
         PRIVATE
@@ -127,7 +128,7 @@ if(CHESS_ENGINE_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
     install(DIRECTORY include/
             TYPE INCLUDE
             COMPONENT chess-engine-dev)
-    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/include/chess-engine/${export_file_name}"
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/include/${export_file_name}"
             COMPONENT chess-engine-dev
             DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/chess-engine")
     install(FILES ${data}

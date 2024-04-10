@@ -1,5 +1,5 @@
 #include <iostream>
-#include <chess-engine/chess-engine.hpp>
+#include <chess-engine.hpp>
 
 int main() {
     chess::Board board;

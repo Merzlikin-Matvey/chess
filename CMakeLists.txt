@@ -157,6 +157,13 @@ if(CHESS_ENGINE_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
             "${CMAKE_CURRENT_BINARY_DIR}/chess-engine-config-version.cmake"
             COMPONENT chess-engine-dev
             DESTINATION "${CHESS_ENGINE_INSTALL_CMAKEDIR}")
+
+    if(WIN32)
+        execute_process(COMMAND cmd /c ${CMAKE_SOURCE_DIR}/scripts/install_paths.bat ${RESOURCE_PATH})
+    else()
+        execute_process(COMMAND cmd /c ${CMAKE_SOURCE_DIR}/scripts/install_paths.sh ${RESOURCE_PATH})
+    endif()
+
 endif()
 
 

@@ -5,7 +5,8 @@
 extern "C" {
 #endif
 
-void _get_resource_path(char* buffer);
+void _get_resource_dir(char* buffer);
+
 
 #ifdef __cplusplus
 }

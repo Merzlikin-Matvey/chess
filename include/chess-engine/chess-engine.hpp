@@ -3,11 +3,12 @@
 #include <string>
 #include <vector>
 #include <utility>
-#include "utils.h"
 
 using namespace std;
 
 namespace chess {
+    string get_path_to_res(string file_name);
+
     class Figure;
 
     class Board {

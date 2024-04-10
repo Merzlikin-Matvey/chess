@@ -196,7 +196,7 @@ void Board::import_json(string path) {
 
 // Дефолтные позиции фигур
 void Board::load_default_positions() {
-    this->import_json("chess_default_positions.json");
+    this->import_json(get_path_to_res("chess_default_positions.json"));
 }
 
 // Является ли позиция пустой

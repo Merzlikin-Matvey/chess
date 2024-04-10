@@ -9,7 +9,8 @@ project(chess-engine
 #------------------------------#
 
 add_library(chess-engine SHARED
-        include/chess-engine/utils.h)
+        include/chess-engine/utils.h
+        src/path_to_res.cpp)
 add_library(chess-engine::chess-engine ALIAS chess-engine)
 
 string(COMPARE EQUAL "${CMAKE_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}"
@@ -18,9 +19,11 @@ string(COMPARE EQUAL "${CMAKE_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}"
 include(cmake/utils.cmake)
 include(GNUInstallDirs)
 
+string(COMPARE EQUAL "${CMAKE_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}" is_top_level)
+
 option(CHESS_ENGINE_BUILD_TESTS "Build chess-engine tests" OFF)
 option(CHESS_ENGINE_BUILD_EXAMPLES "Build chess-engine examples" OFF)
-option(CHESS_ENGINE_INSTALL "Generate target for installing chess-engine" OFF)
+option(CHESS_ENGINE_INSTALL "Generate target for installing chess-engine" ${is_top_level})
 set_if_undefined(CHESS_ENGINE_INSTALL_CMAKEDIR
         "${CMAKE_INSTALL_LIBDIR}/cmake/chess-engine-${PROJECT_VERSION}" CACHE STRING
         "Install path for chess-engine package-related CMake files")
@@ -58,7 +61,9 @@ set(sources
         ${public_headers}
         src/board.cpp
         src/figure.cpp
-        src/utils.c)
+        src/resource_dir.c
+        src/path_to_res.cpp
+)
 
 set(data
         res/chess_default_positions.json)
@@ -101,8 +106,9 @@ set_target_properties(chess-engine PROPERTIES
 #------------------------------#
 #         Installation         #
 #------------------------------#
-if(CHESS_ENGINE_INSTALL)
-    message(STATUS "Installing chess-engine to ${CMAKE_INSTALL_PREFIX}")
+if(CHESS_ENGINE_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
+    message(STATUS "Library will be installed to: ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
+
     configure_package_config_file(cmake/chess-engine-config.cmake.in chess-engine-config.cmake
             INSTALL_DESTINATION "${CHESS_ENGINE_INSTALL_CMAKEDIR}")
 
@@ -145,7 +151,7 @@ endif()
 #      Resource variables      #
 #------------------------------#
 
-if(CHESS_ENGINE_INSTALL)
+if(CHESS_ENGINE_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
     set(resources res/chess_default_positions.json)
     set(RESOURCE_PATH ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}/chess-engine)
     file(COPY ${resources} DESTINATION ${RESOURCE_PATH})

@@ -31,23 +31,13 @@
 *.out
 *.app
 
-CMakeLists.txt.user
-CMakeCache.txt
-CMakeFiles
-CMakeScripts
-Testing
-Makefile
-cmake_install.cmake
-install_manifest.txt
-compile_commands.json
-CTestTestfile.cmake
-
+# Debug files
 cmake-build-debug
 cmake-build-release
+
+# Dependency files
 dependencies
-_deps
+
+# Extra files
 .idea/
-main.exe
-installer/windows/src/*
-installer/windows/Chess_Installer.exe
 build/

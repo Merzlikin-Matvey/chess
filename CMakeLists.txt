@@ -108,14 +108,22 @@ message(STATUS "Local resource path: ${CMAKE_CURRENT_BINARY_DIR}/res ..")
 #         Installation         #
 #------------------------------#
 if(CHESS_ENGINE_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
-    if (WIN32)
-        set(CMAKE_INSTALL_PREFIX $ENV{USERPROFILE})
-    endif ()
+    if(WIN32)
+        message(STATUS "Windows detected")
+        set(CMAKE_INSTALL_PREFIX "C:/Users/$ENV{USERNAME}/chess-engine")
+    elseif (UNIX)
+        message(STATUS "Unix detected")
+        set(CMAKE_INSTALL_PREFIX "/home/$ENV{USER}/chess-engine")
+    endif()
 
-    set(RESOURCE_PATH ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}/chess-engine)
+    if(NOT EXISTS ${CMAKE_INSTALL_PREFIX})
+        file(MAKE_DIRECTORY ${CMAKE_INSTALL_PREFIX})
+    endif()
+
+    set(RESOURCE_PATH ${CMAKE_INSTALL_PREFIX}/res)
 
 
-    message(STATUS "Library will be installed to: ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
+    message(STATUS "Library will be installed to: ${CMAKE_INSTALL_PREFIX}/bin")
     message(STATUS "Resource path: ${RESOURCE_PATH}")
 
 
@@ -159,9 +167,17 @@ if(CHESS_ENGINE_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
             DESTINATION "${CHESS_ENGINE_INSTALL_CMAKEDIR}")
 
     if(WIN32)
-        execute_process(COMMAND cmd /c ${CMAKE_SOURCE_DIR}/scripts/install_paths.bat ${RESOURCE_PATH})
+        execute_process(COMMAND net session
+                RESULT_VARIABLE IS_ADMIN)
+        if(NOT IS_ADMIN EQUAL 0)
+            message(WARNING "Administrator rights are required to set paths on the system. Please run CMake as administrator")
+        else()
+            message(STATUS "Setting paths on the system")
+            execute_process(COMMAND powershell -File ${CMAKE_SOURCE_DIR}/scripts/install_paths.ps1 ${CMAKE_INSTALL_PREFIX})
+        endif()
+
     else()
-        execute_process(COMMAND cmd /c ${CMAKE_SOURCE_DIR}/scripts/install_paths.sh ${RESOURCE_PATH})
+        execute_process(COMMAND cmd /c ${CMAKE_SOURCE_DIR}/scripts/install_paths.sh ${CMAKE_INSTALL_PREFIX})
     endif()
 
 endif()

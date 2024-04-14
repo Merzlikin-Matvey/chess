@@ -23,7 +23,13 @@ void _get_resource_dir(char* buffer) {
     strcat(buffer, PATH_SEPARATOR "res");
 
     if (access(buffer, F_OK) != 0) {
-        char* env_path = getenv("CHESS_ENGINE_RESOURCE_PATH");
+        char* env_path = getenv("CHESS_ENGINE_PATH");
+        if (env_path != NULL) {
+            strncat(env_path, PATH_SEPARATOR "res", 1024);
+            strncpy(buffer, env_path, 1024);
+        } else {
+            strncpy(buffer, "", 1024);
+        }
         if (env_path != NULL) {
             strncpy(buffer, env_path, 1024);
         } else {

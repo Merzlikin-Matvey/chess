@@ -166,18 +166,18 @@ if(CHESS_ENGINE_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
             COMPONENT chess-engine-dev
             DESTINATION "${CHESS_ENGINE_INSTALL_CMAKEDIR}")
 
+    message(STATUS "Setting paths on the system")
     if(WIN32)
         execute_process(COMMAND net session
                 RESULT_VARIABLE IS_ADMIN)
         if(NOT IS_ADMIN EQUAL 0)
             message(WARNING "Administrator rights are required to set paths on the system. Please run CMake as administrator")
         else()
-            message(STATUS "Setting paths on the system")
             execute_process(COMMAND powershell -File ${CMAKE_SOURCE_DIR}/scripts/install_paths.ps1 ${CMAKE_INSTALL_PREFIX})
         endif()
 
     else()
-        execute_process(COMMAND cmd /c ${CMAKE_SOURCE_DIR}/scripts/install_paths.sh ${CMAKE_INSTALL_PREFIX})
+        execute_process(COMMAND bash ${CMAKE_SOURCE_DIR}/scripts/install_paths.sh ${CMAKE_INSTALL_PREFIX})
     endif()
 
 endif()

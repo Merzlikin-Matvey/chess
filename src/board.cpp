@@ -247,3 +247,17 @@ vector<string> Board::available_moves() {
     }
     return moves;
 }
+
+void Board::save() {
+    json data;
+    for (auto figure : figures) {
+        data["figures"].push_back({
+            {"name", figure->name},
+            {"color", figure->color},
+            {"position", position_to_chess_notation(figure->position)}
+        });
+    }
+    ofstream file(get_path_to_res("save.json"));
+    file << data.dump(4);
+    file.close();
+}

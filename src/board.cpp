@@ -89,6 +89,12 @@ string Board::move(pair<int, int> pos1, pair<int, int> pos2){
         if (pawn) {
             auto available_moves = pawn->available_moves();
             if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
+                if (abs(pos1.first - pos2.first) == 2) {
+                    pawn->double_moved = true;
+                }
+                if (pos1.second != pos2.second and is_empty(pos2)) {
+                    kill(make_pair(pos1.first, pos2.second));
+                }
                 pawn->move(pos2);
                 // TODO: Добавить изменение фигуры
             } else {

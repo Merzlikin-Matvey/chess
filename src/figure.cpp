@@ -83,6 +83,21 @@ vector<pair<int, int>> Pawn::available_moves(){
     if (is_opponent(make_pair(position.first + direction, position.second - 1))){
         moves.push_back(make_pair(position.first + direction, position.second - 1));
     }
+
+    // Взятие в проходе
+    if (is_opponent(make_pair(position.first, position.second + 1)) and
+        board->figure_by_position(make_pair(position.first, position.second + 1))->name == "pawn" and
+        dynamic_cast<Pawn*>(board->figure_by_position(make_pair(position.first, position.second + 1)))->double_moved and
+            (this->position.first == 3 and this->color == "white") or (this->position.first == 4 and this->color == "black")){
+        moves.push_back(make_pair(position.first + direction, position.second + 1));
+    }
+
+    if (is_opponent(make_pair(position.first, position.second - 1)) and
+        board->figure_by_position(make_pair(position.first, position.second - 1))->name == "pawn" and
+        dynamic_cast<Pawn*>(board->figure_by_position(make_pair(position.first, position.second - 1)))->double_moved and
+            (this->position.first == 3 and this->color == "white") or (this->position.first == 4 and this->color == "black")){
+        moves.push_back(make_pair(position.first + direction, position.second - 1));
+    }
     return moves;
 }
 

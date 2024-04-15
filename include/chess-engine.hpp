@@ -16,41 +16,25 @@ namespace chess {
         std::vector<Figure *> figures;
         string turn = "white";
 
-        Figure *figure_by_position(std::pair<int, int> position);
-
-        void kill(std::pair<int, int> position);
-
-        void change_turn();
-
-        void print();
 
         void info();
-
-        void put_figure(Figure figure);
-
-        void import_json(string path);
-
-        void load_default_positions();
-
+        void save();
+        void print();
+        void change_turn();
         void clear_null_figures();
-
-        bool is_empty(pair<int, int> position);
-
-        bool is_сastling(pair<int, int> pos1, pair<int, int> pos2);
-
-        string move(pair<int, int> pos1, pair<int, int> pos2);
-
-        string position_to_chess_notation(pair<int, int> position);
-
-        string move_to_chess_notation(pair<int, int> position1, pair<int, int> position2);
-
-        string move_to_chess_notation(pair <pair<int, int>, pair<int, int>> move);
-
-        pair<int, int> position_to_number_notation(string notation);
-
-        pair <pair<int, int>, pair<int, int>> move_to_number_notation(string notation1, string notation2);
-
+        void import_json(string path);
+        void load_default_positions();
         vector <string> available_moves();
+        bool is_empty(pair<int, int> position);
+        void kill(std::pair<int, int> position);
+        string move(pair<int, int> pos1, pair<int, int> pos2);
+        Figure *figure_by_position(std::pair<int, int> position);
+        string position_to_chess_notation(pair<int, int> position);
+        bool is_сastling(pair<int, int> pos1, pair<int, int> pos2);
+        pair<int, int> position_to_number_notation(string notation);
+        string move_to_chess_notation(pair <pair<int, int>, pair<int, int>> move);
+        string move_to_chess_notation(pair<int, int> position1, pair<int, int> position2);
+        pair <pair<int, int>, pair<int, int>> move_to_number_notation(string notation1, string notation2);
 
     };
 
@@ -62,6 +46,7 @@ namespace chess {
 
         Board *board;
         bool already_moved = false;
+        bool double_moved = false;
         string name;
         string color;
         string symbol;
@@ -91,6 +76,7 @@ namespace chess {
 
         void change_figure(string new_name);
         vector <pair<int, int>> available_moves() override;
+
     };
 
     class Rook : public Figure {

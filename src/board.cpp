@@ -165,6 +165,11 @@ string Board::move(pair<int, int> pos1, pair<int, int> pos2){
     return "moved";
 }
 
+string Board::move(string chess_notation){
+    return move(position_to_number_notation(chess_notation.substr(0, 2)),
+                position_to_number_notation(chess_notation.substr(2, 4)));
+}
+
 
 // Импортируем JSON файл с позициями фигур
 void Board::import_json(string path) {

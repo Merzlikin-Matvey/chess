@@ -26,6 +26,7 @@ namespace chess {
         Board copy();
         void change_turn();
         void update_history();
+        string move(string move);
         void clear_null_figures();
         void import_json(string path);
         void load_default_positions();
@@ -37,9 +38,7 @@ namespace chess {
         string position_to_chess_notation(pair<int, int> position);
         bool is_сastling(pair<int, int> pos1, pair<int, int> pos2);
         pair<int, int> position_to_number_notation(string notation);
-        string move_to_chess_notation(pair <pair<int, int>, pair<int, int>> move);
         string move_to_chess_notation(pair<int, int> position1, pair<int, int> position2);
-        pair <pair<int, int>, pair<int, int>> move_to_number_notation(string notation1, string notation2);
 
     };
 

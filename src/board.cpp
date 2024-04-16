@@ -261,3 +261,51 @@ void Board::save() {
     file << data.dump(4);
     file.close();
 }
+
+Board Board::copy(){
+    Board new_board;
+    for (auto figure : figures) {
+        if (figure->name == "pawn") {
+            auto new_figure = new Pawn(&new_board, figure->position, figure->color);
+            new_figure->already_moved = figure->already_moved;
+            new_figure->double_moved = figure->double_moved;
+            new_board.figures.push_back(new_figure);
+        } else if (figure->name == "rook") {
+            auto new_figure = new Rook(&new_board, figure->position, figure->color);
+            new_figure->already_moved = figure->already_moved;
+            new_figure->double_moved = figure->double_moved;
+            new_board.figures.push_back(new_figure);
+        } else if (figure->name == "knight") {
+            auto new_figure = new Knight(&new_board, figure->position, figure->color);
+            new_figure->already_moved = figure->already_moved;
+            new_figure->double_moved = figure->double_moved;
+            new_board.figures.push_back(new_figure);
+        } else if (figure->name == "bishop") {
+            auto new_figure = new Bishop(&new_board, figure->position, figure->color);
+            new_figure->already_moved = figure->already_moved;
+            new_figure->double_moved = figure->double_moved;
+            new_board.figures.push_back(new_figure);
+        } else if (figure->name == "queen") {
+            auto new_figure = new Queen(&new_board, figure->position, figure->color);
+            new_figure->already_moved = figure->already_moved;
+            new_figure->double_moved = figure->double_moved;
+            new_board.figures.push_back(new_figure);
+        } else if (figure->name == "king") {
+            auto new_figure = new King(&new_board, figure->position, figure->color);
+            new_figure->already_moved = figure->already_moved;
+            new_figure->double_moved = figure->double_moved;
+            new_board.figures.push_back(new_figure);
+        } else {
+            cout << "Invalid figure name" << endl;
+        }
+    }
+    return new_board;
+}
+
+void Board::update_history() {
+    if (history.size() == num_of_history) {
+        history.erase(history.begin());
+    }
+    history.push_back(copy());
+
+}

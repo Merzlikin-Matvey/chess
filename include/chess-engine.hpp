@@ -15,12 +15,17 @@ namespace chess {
     public:
         std::vector<Figure *> figures;
         string turn = "white";
+        int num_of_history = 7;
+
+        vector<Board> history;
 
 
         void info();
         void save();
         void print();
+        Board copy();
         void change_turn();
+        void update_history();
         void clear_null_figures();
         void import_json(string path);
         void load_default_positions();

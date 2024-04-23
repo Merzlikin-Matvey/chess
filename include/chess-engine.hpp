@@ -16,6 +16,8 @@ namespace chess {
         std::vector<Figure *> figures;
         string turn = "white";
         int num_of_history = 7;
+        int max_num_of_moves = 100;
+        int num_of_moves = 0;
 
         vector<Board> history;
 
@@ -24,7 +26,12 @@ namespace chess {
         void save();
         void print();
         Board copy();
+        bool is_draw();
+        string winner();
+        bool is_check();
         void change_turn();
+        bool is_checkmate();
+        bool is_game_going();
         void update_history();
         string move(string move);
         void clear_null_figures();

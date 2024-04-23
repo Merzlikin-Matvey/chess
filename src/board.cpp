@@ -96,6 +96,7 @@ string Board::move(pair<int, int> pos1, pair<int, int> pos2){
                     kill(make_pair(pos1.first, pos2.second));
                 }
                 pawn->move(pos2);
+                this->num_of_moves += 1;
                 // TODO: Добавить изменение фигуры
             } else {
                 cout << "Invalid move" << endl;
@@ -105,6 +106,7 @@ string Board::move(pair<int, int> pos1, pair<int, int> pos2){
             auto available_moves = rook->available_moves();
             if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
                 rook->move(pos2);
+                this->num_of_moves += 1;
             } else {
                 cout << "Invalid move" << endl;
             }
@@ -113,6 +115,7 @@ string Board::move(pair<int, int> pos1, pair<int, int> pos2){
             auto available_moves = knight->available_moves();
             if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
                 knight->move(pos2);
+                this->num_of_moves += 1;
             } else {
                 cout << "Invalid move" << endl;
             }
@@ -121,6 +124,7 @@ string Board::move(pair<int, int> pos1, pair<int, int> pos2){
             auto available_moves = bishop->available_moves();
             if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
                 bishop->move(pos2);
+                this->num_of_moves += 1;
             } else {
                 cout << "Invalid move" << endl;
             }
@@ -129,6 +133,7 @@ string Board::move(pair<int, int> pos1, pair<int, int> pos2){
             auto available_moves = queen->available_moves();
             if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
                 queen->move(pos2);
+                this->num_of_moves += 1;
             } else {
                 cout << "Invalid move" << endl;
             }
@@ -137,6 +142,7 @@ string Board::move(pair<int, int> pos1, pair<int, int> pos2){
             auto available_moves = king->available_moves();
             if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
                 king->move(pos2);
+                this->num_of_moves += 1;
                 // Если рокировка, то двинем и башенку
                 if (is_сastling(pos1, pos2)) {
                     if (pos2.first == 0) {
@@ -313,4 +319,81 @@ void Board::update_history() {
     }
     history.push_back(copy());
 
+}
+
+bool Board::is_check() {
+    for (auto figure : figures) {
+        if (figure->color != turn) {
+            for (auto move : figure->available_moves()) {
+                if (figure->name == "king" and is_сastling(figure->position, move.substr(2, 4)) {
+                    continue;
+                }
+                if (figure_by_position(move.second)->name == "king") {
+                    return true;
+                }
+            }
+        }
+    }
+}
+
+bool Board::is_checkmate() {
+    if (not is_check()) {
+        return false;
+    }
+    for (auto figure : figures) {
+        if (figure->color == turn) {
+            for (auto move : figure->available_moves()) {
+                auto new_board = copy();
+                new_board.move(figure->position, move.second);
+                if (not new_board.is_check()) {
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
+}
+
+bool Board::is_draw() {
+    if (this->num_of_moves >= this->max_num_of_moves) {
+        return true;
+    }
+
+
+    if (figures.size() == 2) {
+        return true;
+    }
+
+
+    if (figures.size() == 3) {
+        for (auto figure : figures) {
+            if (figure->name == "knight" or figure->name == "bishop") {
+                return true;
+            }
+        }
+    }
+
+    if (figures.size() == 4) {
+        for (auto figure : figures) {
+            if (figure->name == "knight" or figure->name == "bishop") {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+string Board::winner() {
+    if (is_checkmate()) {
+        return turn == "white" ? "black" : "white";
+    }
+    if (is_draw()) {
+        return "draw";
+    }
+    return "none";
+}
+
+
+bool Board::is_game_going() {
+    return winner() == "none";
 }

@@ -53,7 +53,6 @@ void chess::Board::change_turn(){
     else {
         this->turn = "white";
     }
-    std::cout << "Turn changed to " << this->turn << std::endl;
 }
 
 void chess::Board::kill(std::pair<int, int> position) {
@@ -114,7 +113,6 @@ std::string chess::Board::move(std::pair<int, int> pos1, std::pair<int, int> pos
 
         // Поймем, какой фигурой ходим и сделаем ход
         if (pawn) {
-            std::cout << "Pawn" << std::endl;
             auto available_moves = pawn->available_moves();
             if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
                 if (abs(pos1.first - pos2.first) == 2) {
@@ -219,6 +217,8 @@ std::string chess::Board::move(std::pair<int, int> pos1, std::pair<int, int> pos
         std::cout << "Not your turn" << std::endl;
         std::cout << "Current turn: " << this->turn << std::endl;
         std::cout << "Figure color: " << figure_by_position(pos1)->color << std::endl;
+        std::cout << "Move: " << move_to_chess_notation(pos1, pos2) << std::endl;
+
     }
     return "moved";
 }
@@ -369,6 +369,15 @@ chess::Board chess::Board::copy(){
             std::cout << "Invalid figure name" << std::endl;
         }
     }
+
+    new_board.turn = turn;
+    new_board.num_of_moves = num_of_moves;
+    new_board.max_num_of_moves = max_num_of_moves;
+    new_board.moves = moves;
+    new_board.num_of_history = num_of_history;
+    new_board.history = history;
+
+
     return new_board;
 }
 

@@ -14,6 +14,7 @@ using json = nlohmann::json;
 
 chess::Figure* chess::Board::figure_by_position(std::pair<int, int> position) {
     for (auto figure : figures) {
+        cout << figure->position.first << " " << figure->position.second << endl;
         if (figure->position == position) {
             return figure;
         }
@@ -332,60 +333,43 @@ void chess::Board::save() {
     file.close();
 }
 
-chess::Board chess::Board::copy(){
-    Board new_board;
-    for (auto figure : figures) {
+void chess::Board::copy(Board *board) {
+    this->turn = board->turn;
+    this->num_of_moves = board->num_of_moves;
+    this->max_num_of_moves = board->max_num_of_moves;
+
+    for (auto figure : board->figures) {
         if (figure->name == "pawn") {
-            auto new_figure = new Pawn(&new_board, figure->position, figure->color);
-            new_figure->already_moved = figure->already_moved;
-            new_figure->double_moved = figure->double_moved;
-            new_board.figures.push_back(new_figure);
+            this->figures.push_back(
+                    new Pawn(this, figure->position, figure->color));
         } else if (figure->name == "rook") {
-            auto new_figure = new Rook(&new_board, figure->position, figure->color);
-            new_figure->already_moved = figure->already_moved;
-            new_figure->double_moved = figure->double_moved;
-            new_board.figures.push_back(new_figure);
+            this->figures.push_back(
+                    new Rook(this, figure->position, figure->color));
         } else if (figure->name == "knight") {
-            auto new_figure = new Knight(&new_board, figure->position, figure->color);
-            new_figure->already_moved = figure->already_moved;
-            new_figure->double_moved = figure->double_moved;
-            new_board.figures.push_back(new_figure);
+            this->figures.push_back(
+                    new Knight(this, figure->position, figure->color));
         } else if (figure->name == "bishop") {
-            auto new_figure = new Bishop(&new_board, figure->position, figure->color);
-            new_figure->already_moved = figure->already_moved;
-            new_figure->double_moved = figure->double_moved;
-            new_board.figures.push_back(new_figure);
+            this->figures.push_back(
+                    new Bishop(this, figure->position, figure->color));
         } else if (figure->name == "queen") {
-            auto new_figure = new Queen(&new_board, figure->position, figure->color);
-            new_figure->already_moved = figure->already_moved;
-            new_figure->double_moved = figure->double_moved;
-            new_board.figures.push_back(new_figure);
+            this->figures.push_back(
+                    new Queen(this, figure->position, figure->color));
         } else if (figure->name == "king") {
-            auto new_figure = new King(&new_board, figure->position, figure->color);
-            new_figure->already_moved = figure->already_moved;
-            new_figure->double_moved = figure->double_moved;
-            new_board.figures.push_back(new_figure);
+            this->figures.push_back(
+                    new King(this, figure->position, figure->color));
         } else {
             std::cout << "Invalid figure name" << std::endl;
         }
     }
-
-    new_board.turn = turn;
-    new_board.num_of_moves = num_of_moves;
-    new_board.max_num_of_moves = max_num_of_moves;
-    new_board.moves = moves;
-    new_board.num_of_history = num_of_history;
-    new_board.history = history;
-
-
-    return new_board;
 }
 
 void chess::Board::update_history() {
     if (history.size() == num_of_history) {
         history.erase(history.begin());
     }
-    history.push_back(copy());
+    Board copy;
+    copy.copy(this);
+    history.push_back(copy);
 
 }
 
@@ -412,7 +396,8 @@ bool chess::Board::is_checkmate() {
     for (auto figure : figures) {
         if (figure->color == turn) {
             for (auto move : figure->available_moves()) {
-                auto new_board = copy();
+                Board new_board;
+                new_board.copy(this);
                 new_board.move(figure->position, move);
                 if (not new_board.is_check()) {
                     return false;

@@ -7,12 +7,12 @@
 #include <filesystem>
 #include <json/json.hpp>
 
+namespace fs = std::filesystem;
 using namespace std;
 using json = nlohmann::json;
-namespace fs = std::filesystem;
-using namespace chess;
 
-Figure* Board::figure_by_position(pair<int, int> position) {
+
+chess::Figure* chess::Board::figure_by_position(std::pair<int, int> position) {
     for (auto figure : figures) {
         if (figure->position == position) {
             return figure;
@@ -21,41 +21,42 @@ Figure* Board::figure_by_position(pair<int, int> position) {
     return new NullFigure(this);
 }
 
-void Board::clear_null_figures() {
+void chess::Board::clear_null_figures() {
     figures.erase(remove_if(figures.begin(), figures.end(), [](Figure* figure) { return figure->name == "null"; }), figures.end());
 }
 
-void Board::print(){
+void chess::Board::print(){
     clear_null_figures();
-    vector<vector<string>> board(8, vector<string>(8, "."));
+    std::vector<std::vector<std::string>> board(8, std::vector<std::string>(8, "."));
     for (Figure* figure : figures) {
         board[figure->position.first][figure->position.second] = figure->symbol;
     }
     for (const auto &row : board) {
         for (const auto &cell : row) {
-            cout << cell << ' ';
+            std::cout << cell << ' ';
         }
-        cout << '\n';
+        std::cout << '\n';
     }
 }
 
-void Board::info() {
+void chess::Board::info() {
     clear_null_figures();
     for (auto figure : figures) {
-        cout << figure->name << " " << figure->color << " " << position_to_chess_notation(figure->position) << endl;
+        std::cout << figure->name << " " << figure->color << " " << position_to_chess_notation(figure->position) << std::endl;
     }
 }
 
-void Board::change_turn(){
+void chess::Board::change_turn(){
     if (this->turn == "white"){
         this->turn = "black";
     }
     else {
         this->turn = "white";
     }
+    std::cout << "Turn changed to " << this->turn << std::endl;
 }
 
-void Board::kill(std::pair<int, int> position) {
+void chess::Board::kill(std::pair<int, int> position) {
     auto fig = figure_by_position(position);
 
     if (not fig->is_null()) {
@@ -67,15 +68,41 @@ void Board::kill(std::pair<int, int> position) {
     }
 }
 
-bool Board::is_сastling(pair<int, int> pos1, pair<int, int> pos2) {
+bool chess::Board::is_castling(std::pair<int, int> pos1, std::pair<int, int> pos2) {
     auto king = dynamic_cast<King*>(figure_by_position(pos1));
-    if (king) {
-        return abs(pos1.second - pos2.second) == 2;
+    if (king){
+        if (king->already_moved) {
+            return false;
+        }
+        if (pos1.first == 0 and pos1.second == 4 and pos2.first == 0 and pos2.second == 2) {
+            auto rook = dynamic_cast<Rook*>(figure_by_position(std::make_pair(0, 0)));
+            if (rook and not rook->already_moved) {
+                return true;
+            }
+        }
+        if (pos1.first == 0 and pos1.second == 4 and pos2.first == 0 and pos2.second == 6) {
+            auto rook = dynamic_cast<Rook*>(figure_by_position(std::make_pair(0, 7)));
+            if (rook and not rook->already_moved) {
+                return true;
+            }
+        }
+        if (pos1.first == 7 and pos1.second == 4 and pos2.first == 7 and pos2.second == 2) {
+            auto rook = dynamic_cast<Rook*>(figure_by_position(std::make_pair(7, 0)));
+            if (rook and not rook->already_moved) {
+                return true;
+            }
+        }
+        if (pos1.first == 7 and pos1.second == 4 and pos2.first == 7 and pos2.second == 6) {
+            auto rook = dynamic_cast<Rook*>(figure_by_position(std::make_pair(7, 7)));
+            if (rook and not rook->already_moved) {
+                return true;
+            }
+        }
     }
     return false;
 }
 
-string Board::move(pair<int, int> pos1, pair<int, int> pos2){
+std::string chess::Board::move(std::pair<int, int> pos1, std::pair<int, int> pos2){
     if (turn == figure_by_position(pos1)->color){
         Figure* figure = figure_by_position(pos1);
         auto pawn = dynamic_cast<Pawn*>(figure);
@@ -87,168 +114,195 @@ string Board::move(pair<int, int> pos1, pair<int, int> pos2){
 
         // Поймем, какой фигурой ходим и сделаем ход
         if (pawn) {
+            std::cout << "Pawn" << std::endl;
             auto available_moves = pawn->available_moves();
             if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
                 if (abs(pos1.first - pos2.first) == 2) {
                     pawn->double_moved = true;
                 }
                 if (pos1.second != pos2.second and is_empty(pos2)) {
-                    kill(make_pair(pos1.first, pos2.second));
+                    kill(std::make_pair(pos1.first, pos2.second));
                 }
                 pawn->move(pos2);
+                moves.push_back(move_to_chess_notation(pos1, pos2));
                 this->num_of_moves += 1;
                 // TODO: Добавить изменение фигуры
             } else {
-                cout << "Invalid move" << endl;
+                std::cout << "Invalid move" << std::endl;
+                for (auto move : available_moves) {
+                    std::cout << move_to_chess_notation(pos1, move) << std::endl;
+                }
+                return "invalid";
             }
         }
         else if (rook) {
             auto available_moves = rook->available_moves();
             if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
                 rook->move(pos2);
+                moves.push_back(move_to_chess_notation(pos1, pos2));
                 this->num_of_moves += 1;
             } else {
-                cout << "Invalid move" << endl;
+                std::cout << "Invalid move" << std::endl;
+                return "invalid";
             }
         }
         else if (knight) {
             auto available_moves = knight->available_moves();
             if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
                 knight->move(pos2);
+                moves.push_back(move_to_chess_notation(pos1, pos2));
                 this->num_of_moves += 1;
             } else {
-                cout << "Invalid move" << endl;
+                std::cout << "Invalid move" << std::endl;
+                return "invalid";
             }
         }
         else if (bishop) {
             auto available_moves = bishop->available_moves();
             if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
                 bishop->move(pos2);
+                moves.push_back(move_to_chess_notation(pos1, pos2));
                 this->num_of_moves += 1;
             } else {
-                cout << "Invalid move" << endl;
+                std::cout << "Invalid move" << std::endl;
+                return "invalid";
             }
         }
         else if (queen) {
             auto available_moves = queen->available_moves();
             if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
                 queen->move(pos2);
+                moves.push_back(move_to_chess_notation(pos1, pos2));
                 this->num_of_moves += 1;
             } else {
-                cout << "Invalid move" << endl;
+                std::cout << "Invalid move" << std::endl;
+                return "invalid";
             }
         }
         else if (king) {
             auto available_moves = king->available_moves();
             if (not available_moves.empty() and find(available_moves.begin(), available_moves.end(), pos2) != available_moves.end()) {
-                king->move(pos2);
                 this->num_of_moves += 1;
-                // Если рокировка, то двинем и башенку
-                if (is_сastling(pos1, pos2)) {
-                    if (pos2.first == 0) {
-                        auto rook = dynamic_cast<Rook*>(figure_by_position(make_pair(0, 0)));
-                        rook->move(make_pair(0, 3));
-                    } else {
-                        auto rook = dynamic_cast<Rook*>(figure_by_position(make_pair(7, 0)));
-                        rook->move(make_pair(7, 3));
+
+                if (is_castling(pos1, pos2)) {
+                    if (pos1.first == 0 and pos1.second == 4 and pos2.first == 0 and pos2.second == 2) {
+                        auto rook = dynamic_cast<Rook*>(figure_by_position(std::make_pair(0, 0)));
+                        rook->move(std::make_pair(0, 3));
+                    }
+                    else if (pos1.first == 0 and pos1.second == 4 and pos2.first == 0 and pos2.second == 6) {
+                        auto rook = dynamic_cast<Rook*>(figure_by_position(std::make_pair(0, 7)));
+                        rook->move(std::make_pair(0, 5));
+                    }
+                    else if (pos1.first == 7 and pos1.second == 4 and pos2.first == 7 and pos2.second == 2) {
+                        auto rook = dynamic_cast<Rook*>(figure_by_position(std::make_pair(7, 0)));
+                        rook->move(std::make_pair(7, 3));
+                    }
+                    else if (pos1.first == 7 and pos1.second == 4 and pos2.first == 7 and pos2.second == 6) {
+                        auto rook = dynamic_cast<Rook*>(figure_by_position(std::make_pair(7, 7)));
+                        rook->move(std::make_pair(7, 5));
                     }
                 }
-
-
-
+                king->move(pos2);
+                moves.push_back(move_to_chess_notation(pos1, pos2));
             } else {
-                cout << "Invalid move" << endl;
+                std::cout << "Invalid move" << std::endl;
+                return "invalid";
+
             }
         }
         else {
-            cout << "figure not found" << endl;
+            std::cout << "figure not found" << std::endl;
         }
         this->change_turn();
     }
     else{
-        cout << "Not your turn" << endl;
+        std::cout << "Not your turn" << std::endl;
+        std::cout << "Current turn: " << this->turn << std::endl;
+        std::cout << "Figure color: " << figure_by_position(pos1)->color << std::endl;
     }
     return "moved";
 }
 
-string Board::move(string chess_notation){
+std::string chess::Board::move(std::string chess_notation){
     return move(position_to_number_notation(chess_notation.substr(0, 2)),
                 position_to_number_notation(chess_notation.substr(2, 4)));
 }
 
 
 // Импортируем JSON файл с позициями фигур
-void Board::import_json(string path) {
-    ifstream file(path);
+void chess::Board::import_json(std::string path) {
+    std::ifstream file(path);
+    if (!file.is_open()) {
+        std::cout << "Failed to open file: " << path << std::endl;
+        return;
+    }
     json data;
-    Board& board = *this;
     file >> data;
     file.close();
 
     for (auto figure : data["figures"]) {
         if (figure["name"] == "pawn") {
             this->figures.push_back(
-                    new Pawn(&board, board.position_to_number_notation(figure["position"]), figure["color"]));
+                    new Pawn(this, this->position_to_number_notation(figure["position"]), figure["color"]));
         } else if (figure["name"] == "rook") {
             this->figures.push_back(
-                    new Rook(&board, board.position_to_number_notation(figure["position"]), figure["color"]));
+                    new Rook(this, this->position_to_number_notation(figure["position"]), figure["color"]));
         } else if (figure["name"] == "knight") {
             this->figures.push_back(
-                    new Knight(&board, board.position_to_number_notation(figure["position"]), figure["color"]));
+                    new Knight(this, this->position_to_number_notation(figure["position"]), figure["color"]));
         } else if (figure["name"] == "bishop") {
             this->figures.push_back(
-                    new Bishop(&board, board.position_to_number_notation(figure["position"]), figure["color"]));
+                    new Bishop(this, this->position_to_number_notation(figure["position"]), figure["color"]));
         } else if (figure["name"] == "queen") {
             this->figures.push_back(
-                    new Queen(&board, board.position_to_number_notation(figure["position"]), figure["color"]));
+                    new Queen(this, this->position_to_number_notation(figure["position"]), figure["color"]));
         } else if (figure["name"] == "king") {
             this->figures.push_back(
-                    new King(&board, board.position_to_number_notation(figure["position"]), figure["color"]));
+                    new King(this, this->position_to_number_notation(figure["position"]), figure["color"]));
         } else {
-            cout << "Invalid figure name" << endl;
+            std::cout << "Invalid figure name" << std::endl;
         }
     }
-
 }
 
 // Дефолтные позиции фигур
-void Board::load_default_positions() {
+void chess::Board::load_default_positions() {
     this->import_json(get_path_to_res("chess_default_positions.json"));
 }
 
 // Является ли позиция пустой
-bool Board::is_empty(pair<int, int> position) {
+bool chess::Board::is_empty(pair<int, int> position) {
     return figure_by_position(position)->name == "null";
 }
 
 // Перевод в шахматную нотацию
-string Board::position_to_chess_notation(pair<int, int> position) {
-    string letters = "abcdefgh";
-    string numbers = "87654321";
-    return string(1, letters[position.second]) + string(1, numbers[position.first]);
+std::string chess::Board::position_to_chess_notation(std::pair<int, int> position) {
+    std::string letters = "abcdefgh";
+    std::string numbers = "87654321";
+    return std::string(1, letters[position.second]) + std::string(1, numbers[position.first]);
 }
 
-string Board::move_to_chess_notation(pair<int, int> position1, pair<int, int> position2) {
+std::string chess::Board::move_to_chess_notation(std::pair<int, int> position1, std::pair<int, int> position2) {
     return position_to_chess_notation(position1) + position_to_chess_notation(position2);
 }
 
-string Board::move_to_chess_notation(pair<pair<int, int>, pair<int, int>> move) {
+std::string chess::Board::move_to_chess_notation(std::pair<std::pair<int, int>, std::pair<int, int>> move) {
     return move_to_chess_notation(move.first, move.second);
 }
 
-pair<int, int> Board::position_to_number_notation(string notation) {
-    string letters = "abcdefgh";
-    string numbers = "87654321";
-    return make_pair(numbers.find(notation[1]), letters.find(notation[0]));
+std::pair<int, int> chess::Board::position_to_number_notation(std::string notation) {
+    std::string letters = "abcdefgh";
+    std::string numbers = "87654321";
+    return std::make_pair(numbers.find(notation[1]), letters.find(notation[0]));
 }
 
 // Перевод в численную нотацию
-pair<pair<int, int>, pair<int, int>> Board::move_to_number_notation(string notation1, string notation2) {
-    return make_pair(position_to_number_notation(notation1), position_to_number_notation(notation2));
+std::pair<std::pair<int, int>, std::pair<int, int>> chess::Board::move_to_number_notation(std::string notation1, std::string notation2) {
+    return std::make_pair(position_to_number_notation(notation1), position_to_number_notation(notation2));
 }
 
-vector<string> Board::available_moves() {
-    vector<string> moves;
+std::vector<std::string> chess::Board::available_moves() {
+    std::vector<std::string> moves;
     for (auto figure : figures) {
         if (figure->color == turn) {
             for (auto move : figure->available_moves()) {
@@ -259,8 +313,9 @@ vector<string> Board::available_moves() {
     return moves;
 }
 
-void Board::save() {
+void chess::Board::save() {
     json data;
+    data["turn"] = turn;
     for (auto figure : figures) {
         data["figures"].push_back({
             {"name", figure->name},
@@ -268,12 +323,16 @@ void Board::save() {
             {"position", position_to_chess_notation(figure->position)}
         });
     }
+    data["num_of_moves"] = num_of_moves;
+    data["max_num_of_moves"] = max_num_of_moves;
+    data["moves"] = moves;
+
     ofstream file(get_path_to_res("save.json"));
     file << data.dump(4);
     file.close();
 }
 
-Board Board::copy(){
+chess::Board chess::Board::copy(){
     Board new_board;
     for (auto figure : figures) {
         if (figure->name == "pawn") {
@@ -307,13 +366,13 @@ Board Board::copy(){
             new_figure->double_moved = figure->double_moved;
             new_board.figures.push_back(new_figure);
         } else {
-            cout << "Invalid figure name" << endl;
+            std::cout << "Invalid figure name" << std::endl;
         }
     }
     return new_board;
 }
 
-void Board::update_history() {
+void chess::Board::update_history() {
     if (history.size() == num_of_history) {
         history.erase(history.begin());
     }
@@ -321,22 +380,23 @@ void Board::update_history() {
 
 }
 
-bool Board::is_check() {
+bool chess::Board::is_check() {
     for (auto figure : figures) {
         if (figure->color != turn) {
             for (auto move : figure->available_moves()) {
-                if (figure->name == "king" and is_сastling(figure->position, move.substr(2, 4)) {
+                if (figure->name == "king" and is_castling(figure->position, move)) {
                     continue;
                 }
-                if (figure_by_position(move.second)->name == "king") {
+                if (figure_by_position(move)->name == "king") {
                     return true;
                 }
             }
         }
     }
+    return false;
 }
 
-bool Board::is_checkmate() {
+bool chess::Board::is_checkmate() {
     if (not is_check()) {
         return false;
     }
@@ -344,7 +404,7 @@ bool Board::is_checkmate() {
         if (figure->color == turn) {
             for (auto move : figure->available_moves()) {
                 auto new_board = copy();
-                new_board.move(figure->position, move.second);
+                new_board.move(figure->position, move);
                 if (not new_board.is_check()) {
                     return false;
                 }
@@ -354,7 +414,7 @@ bool Board::is_checkmate() {
     return true;
 }
 
-bool Board::is_draw() {
+bool chess::Board::is_draw() {
     if (this->num_of_moves >= this->max_num_of_moves) {
         return true;
     }
@@ -383,7 +443,7 @@ bool Board::is_draw() {
     return false;
 }
 
-string Board::winner() {
+std::string chess::Board::winner() {
     if (is_checkmate()) {
         return turn == "white" ? "black" : "white";
     }
@@ -394,6 +454,7 @@ string Board::winner() {
 }
 
 
-bool Board::is_game_going() {
+bool chess::Board::is_game_going() {
     return winner() == "none";
 }
+

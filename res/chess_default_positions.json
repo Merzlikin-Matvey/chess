@@ -161,5 +161,9 @@
       "name": "rook",
       "position": "h8"
     }
-  ]
+  ],
+  "num_of_moves": 0,
+  "max_num_of_moves": 100,
+  "moves": []
+
 }

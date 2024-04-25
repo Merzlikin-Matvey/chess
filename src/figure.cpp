@@ -1,53 +1,49 @@
 #include <chess-engine.hpp>
-#include <iostream>
-
 #include <string>
 
-using namespace std;
-using namespace chess;
 
-Figure::Figure(Board* initialBoard, string initialName, pair<int, int> initialPosition, string initialColor,
-               string initialSymbol)
+chess::Figure::Figure(Board* initialBoard, std::string initialName, std::pair<int, int> initialPosition, std::string initialColor,
+                      std::string initialSymbol)
         : board(initialBoard), name(initialName), position(initialPosition), color(initialColor), symbol(initialSymbol) {
 }
 
 
-void Figure::move(pair<int, int> new_position) {
+void chess::Figure::move(std::pair<int, int> new_position) {
     already_moved = true;
     position = new_position;
 }
 
-bool Figure::is_null(){
+bool chess::Figure::is_null(){
     return this->name == "null";
 }
 
-bool Figure::is_empty(pair<int, int> position) {
+bool chess::Figure::is_empty(std::pair<int, int> position) {
     if (position.first > 7 or position.second > 7 or position.first < 0 or position.second < 0){
         return false;
     }
     return (board->figure_by_position(position)->name == "null");
 }
 
-bool Figure::is_teammate(pair<int, int> position){
+bool chess::Figure::is_teammate(std::pair<int, int> position){
     return (this->color == board->figure_by_position(position)->color);
 }
 
-bool Figure::is_opponent(pair<int, int> position) {
+bool chess::Figure::is_opponent(std::pair<int, int> position) {
     auto figure = board->figure_by_position(position);
     return (figure->color != this->color and not figure->is_null());
 }
 
-vector<pair<int, int>> Figure::available_moves() {
-    return vector<pair<int, int>> {};
+std::vector<std::pair<int, int>> chess::Figure::available_moves() {
+    return std::vector<std::pair<int, int>> {};
 }
 
-NullFigure::NullFigure(Board* initialBoard) :
-Figure(initialBoard, "null", make_pair(-1, -1), "null", "0") {}
+chess::NullFigure::NullFigure(Board* initialBoard) :
+Figure(initialBoard, "null", std::make_pair(-1, -1), "null", "0") {}
 
-Pawn::Pawn(Board* initialBoard, pair<int, int> position, string color) :
+chess::Pawn::Pawn(Board* initialBoard, std::pair<int, int> position, std::string color) :
 Figure(initialBoard, "pawn", position, color, (color == "white") ? "P" : "p") {}
 
-void Pawn::change_figure(string new_name) {
+void chess::Pawn::change_figure(std::string new_name) {
     if (new_name == "queen"){
         board->figures.push_back(new Queen(board, position, color));
     }
@@ -63,299 +59,312 @@ void Pawn::change_figure(string new_name) {
     board->kill(position);
 }
 
-vector<pair<int, int>> Pawn::available_moves(){
-    vector<pair<int, int>> moves {};
+std::vector<std::pair<int, int>> chess::Pawn::available_moves(){
+    std::vector<std::pair<int, int>> moves {};
     int direction = (color == "white") ? -1 : 1;
 
-    if (is_empty(make_pair(position.first + direction, position.second))){
-        moves.push_back(make_pair(position.first + direction, position.second));
+    if (is_empty(std::make_pair(position.first + direction, position.second))){
+        moves.push_back(std::make_pair(position.first + direction, position.second));
     }
 
     if ((position.first == 6 and color == "white") or (position.first == 1 and color == "black")){
-        if (is_empty(make_pair(position.first + 2 * direction, position.second))){
-            moves.push_back(make_pair(position.first + 2 * direction, position.second));
+        if (is_empty(std::make_pair(position.first + 2 * direction, position.second))){
+            moves.push_back(std::make_pair(position.first + 2 * direction, position.second));
         }
     }
 
-    if (is_opponent(make_pair(position.first + direction, position.second + 1))){
-        moves.push_back(make_pair(position.first + direction, position.second + 1));
+    if (is_opponent(std::make_pair(position.first + direction, position.second + 1))){
+        moves.push_back(std::make_pair(position.first + direction, position.second + 1));
     }
-    if (is_opponent(make_pair(position.first + direction, position.second - 1))){
-        moves.push_back(make_pair(position.first + direction, position.second - 1));
+    if (is_opponent(std::make_pair(position.first + direction, position.second - 1))){
+        moves.push_back(std::make_pair(position.first + direction, position.second - 1));
     }
 
     // Взятие в проходе
-    if (is_opponent(make_pair(position.first, position.second + 1)) and
-        board->figure_by_position(make_pair(position.first, position.second + 1))->name == "pawn" and
-        dynamic_cast<Pawn*>(board->figure_by_position(make_pair(position.first, position.second + 1)))->double_moved and
+    if (is_opponent(std::make_pair(position.first, position.second + 1)) and
+        board->figure_by_position(std::make_pair(position.first, position.second + 1))->name == "pawn" and
+        dynamic_cast<Pawn*>(board->figure_by_position(std::make_pair(position.first, position.second + 1)))->double_moved and
             (this->position.first == 3 and this->color == "white") or (this->position.first == 4 and this->color == "black")){
-        moves.push_back(make_pair(position.first + direction, position.second + 1));
+        moves.push_back(std::make_pair(position.first + direction, position.second + 1));
     }
 
-    if (is_opponent(make_pair(position.first, position.second - 1)) and
-        board->figure_by_position(make_pair(position.first, position.second - 1))->name == "pawn" and
-        dynamic_cast<Pawn*>(board->figure_by_position(make_pair(position.first, position.second - 1)))->double_moved and
+    if (is_opponent(std::make_pair(position.first, position.second - 1)) and
+        board->figure_by_position(std::make_pair(position.first, position.second - 1))->name == "pawn" and
+        dynamic_cast<Pawn*>(board->figure_by_position(std::make_pair(position.first, position.second - 1)))->double_moved and
             (this->position.first == 3 and this->color == "white") or (this->position.first == 4 and this->color == "black")){
-        moves.push_back(make_pair(position.first + direction, position.second - 1));
+        moves.push_back(std::make_pair(position.first + direction, position.second - 1));
     }
     return moves;
 }
 
 
-Rook::Rook(Board* initialBoard, pair<int, int> position, string color) :
+chess::Rook::Rook(Board* initialBoard, std::pair<int, int> position, std::string color) :
         Figure(initialBoard, "rook", position, color, (color == "white") ? "R" : "r") {}
 
-vector<pair<int, int>> Rook::available_moves(){
-    vector<pair<int, int>> moves {};
+std::vector<std::pair<int, int>> chess::Rook::available_moves(){
+    std::vector<std::pair<int, int>> moves {};
     int i;
 
     i = 1;
-    while (is_empty(make_pair(position.first + i, position.second))){
-        moves.push_back(make_pair(position.first + i, position.second));
+    while (is_empty(std::make_pair(position.first + i, position.second))){
+        moves.push_back(std::make_pair(position.first + i, position.second));
         i++;
     }
-    if (is_opponent(make_pair(position.first + i, position.second))){
-        moves.push_back(make_pair(position.first + i, position.second));
+    if (is_opponent(std::make_pair(position.first + i, position.second))){
+        moves.push_back(std::make_pair(position.first + i, position.second));
     }
 
     i = 1;
-    while (is_empty(make_pair(position.first - i, position.second))){
-        moves.push_back(make_pair(position.first - i, position.second));
+    while (is_empty(std::make_pair(position.first - i, position.second))){
+        moves.push_back(std::make_pair(position.first - i, position.second));
         i++;
     }
-    if (is_opponent(make_pair(position.first - i, position.second))){
-        moves.push_back(make_pair(position.first - i, position.second));
+    if (is_opponent(std::make_pair(position.first - i, position.second))){
+        moves.push_back(std::make_pair(position.first - i, position.second));
     }
 
     i = 1;
-    while (is_empty(make_pair(position.first, position.second + i))){
-        moves.push_back(make_pair(position.first, position.second + i));
+    while (is_empty(std::make_pair(position.first, position.second + i))){
+        moves.push_back(std::make_pair(position.first, position.second + i));
         i++;
     }
-    if (is_opponent(make_pair(position.first, position.second + i))){
-        moves.push_back(make_pair(position.first, position.second + i));
+    if (is_opponent(std::make_pair(position.first, position.second + i))){
+        moves.push_back(std::make_pair(position.first, position.second + i));
     }
 
     i = 1;
-    while (is_empty(make_pair(position.first, position.second - i))){
-        moves.push_back(make_pair(position.first, position.second - i));
+    while (is_empty(std::make_pair(position.first, position.second - i))){
+        moves.push_back(std::make_pair(position.first, position.second - i));
         i++;
     }
-    if (is_opponent(make_pair(position.first, position.second - i))){
-        moves.push_back(make_pair(position.first, position.second - i));
+    if (is_opponent(std::make_pair(position.first, position.second - i))){
+        moves.push_back(std::make_pair(position.first, position.second - i));
     }
 
     return moves;
 
 }
 
-Knight::Knight(Board* initialBoard, pair<int, int> position, string color) :
+chess::Knight::Knight(Board* initialBoard, std::pair<int, int> position, std::string color) :
         Figure(initialBoard, "knight", position, color, (color == "white") ? "N" : "n") {}
 
-vector<pair<int, int>> Knight::available_moves(){
-    vector<pair<int, int>> moves {};
+std::vector<std::pair<int, int>> chess::Knight::available_moves(){
+    std::vector<std::pair<int, int>> moves {};
 
-    if (is_opponent(make_pair(position.first + 2, position.second + 1)) or
-        is_empty(make_pair(position.first + 2, position.second + 1))){
-        moves.push_back(make_pair(position.first + 2, position.second + 1));
+    if (is_opponent(std::make_pair(position.first + 2, position.second + 1)) or
+        is_empty(std::make_pair(position.first + 2, position.second + 1))){
+        moves.push_back(std::make_pair(position.first + 2, position.second + 1));
     }
-    if (is_opponent(make_pair(position.first + 2, position.second - 1)) or
-        is_empty(make_pair(position.first + 2, position.second - 1))){
-        moves.push_back(make_pair(position.first + 2, position.second - 1));
+    if (is_opponent(std::make_pair(position.first + 2, position.second - 1)) or
+        is_empty(std::make_pair(position.first + 2, position.second - 1))){
+        moves.push_back(std::make_pair(position.first + 2, position.second - 1));
     }
-    if (is_opponent(make_pair(position.first - 2, position.second + 1)) or
-        is_empty(make_pair(position.first - 2, position.second + 1))){
-        moves.push_back(make_pair(position.first - 2, position.second + 1));
+    if (is_opponent(std::make_pair(position.first - 2, position.second + 1)) or
+        is_empty(std::make_pair(position.first - 2, position.second + 1))){
+        moves.push_back(std::make_pair(position.first - 2, position.second + 1));
     }
-    if (is_opponent(make_pair(position.first - 2, position.second - 1)) or
-        is_empty(make_pair(position.first - 2, position.second - 1))){
-        moves.push_back(make_pair(position.first - 2, position.second - 1));
+    if (is_opponent(std::make_pair(position.first - 2, position.second - 1)) or
+        is_empty(std::make_pair(position.first - 2, position.second - 1))){
+        moves.push_back(std::make_pair(position.first - 2, position.second - 1));
     }
-    if (is_opponent(make_pair(position.first + 1, position.second + 2)) or
-        is_empty(make_pair(position.first + 1, position.second + 2))){
-        moves.push_back(make_pair(position.first + 1, position.second + 2));
+    if (is_opponent(std::make_pair(position.first + 1, position.second + 2)) or
+        is_empty(std::make_pair(position.first + 1, position.second + 2))){
+        moves.push_back(std::make_pair(position.first + 1, position.second + 2));
     }
-    if (is_opponent(make_pair(position.first + 1, position.second - 2)) or
-        is_empty(make_pair(position.first + 1, position.second - 2))){
-        moves.push_back(make_pair(position.first + 1, position.second - 2));
+    if (is_opponent(std::make_pair(position.first + 1, position.second - 2)) or
+        is_empty(std::make_pair(position.first + 1, position.second - 2))){
+        moves.push_back(std::make_pair(position.first + 1, position.second - 2));
     }
-    if (is_opponent(make_pair(position.first - 1, position.second + 2)) or
-        is_empty(make_pair(position.first - 1, position.second + 2))){
-        moves.push_back(make_pair(position.first - 1, position.second + 2));
+    if (is_opponent(std::make_pair(position.first - 1, position.second + 2)) or
+        is_empty(std::make_pair(position.first - 1, position.second + 2))){
+        moves.push_back(std::make_pair(position.first - 1, position.second + 2));
     }
-    if (is_opponent(make_pair(position.first - 1, position.second - 2)) or
-        is_empty(make_pair(position.first - 1, position.second - 2))){
-        moves.push_back(make_pair(position.first - 1, position.second - 2));
+    if (is_opponent(std::make_pair(position.first - 1, position.second - 2)) or
+        is_empty(std::make_pair(position.first - 1, position.second - 2))){
+        moves.push_back(std::make_pair(position.first - 1, position.second - 2));
     }
 
     return moves;
 }
 
-Bishop::Bishop(Board* initialBoard, pair<int, int> position, string color) :
+chess::Bishop::Bishop(Board* initialBoard, std::pair<int, int> position, std::string color) :
         Figure(initialBoard, "bishop", position, color, (color == "white") ? "B" : "b") {}
 
-vector<pair<int, int>> Bishop::available_moves(){
-    vector<pair<int, int>> moves {};
+std::vector<std::pair<int, int>> chess::Bishop::available_moves(){
+    std::vector<std::pair<int, int>> moves {};
     int i;
 
     i = 1;
-    while (is_empty(make_pair(position.first + i, position.second + i))){
-        moves.push_back(make_pair(position.first + i, position.second + i));
+    while (is_empty(std::make_pair(position.first + i, position.second + i))){
+        moves.push_back(std::make_pair(position.first + i, position.second + i));
         i++;
     }
-    if (is_opponent(make_pair(position.first + i, position.second + i))){
-        moves.push_back(make_pair(position.first + i, position.second + i));
+    if (is_opponent(std::make_pair(position.first + i, position.second + i))){
+        moves.push_back(std::make_pair(position.first + i, position.second + i));
     }
 
     i = 1;
-    while (is_empty(make_pair(position.first + i, position.second - i))){
-        moves.push_back(make_pair(position.first + i, position.second - i));
+    while (is_empty(std::make_pair(position.first + i, position.second - i))){
+        moves.push_back(std::make_pair(position.first + i, position.second - i));
         i++;
     }
-    if (is_opponent(make_pair(position.first + i, position.second - i))){
-        moves.push_back(make_pair(position.first + i, position.second - i));
+    if (is_opponent(std::make_pair(position.first + i, position.second - i))){
+        moves.push_back(std::make_pair(position.first + i, position.second - i));
     }
 
     i = 1;
-    while (is_empty(make_pair(position.first - i, position.second + i))){
-        moves.push_back(make_pair(position.first - i, position.second + i));
+    while (is_empty(std::make_pair(position.first - i, position.second + i))){
+        moves.push_back(std::make_pair(position.first - i, position.second + i));
         i++;
     }
-    if (is_opponent(make_pair(position.first - i, position.second - i))){
-        moves.push_back(make_pair(position.first - i, position.second - i));
+    if (is_opponent(std::make_pair(position.first - i, position.second + i))){
+        moves.push_back(std::make_pair(position.first - i, position.second + i));
     }
+
+    i = 1;
+    while (is_empty(std::make_pair(position.first - i, position.second - i))){
+        moves.push_back(std::make_pair(position.first - i, position.second - i));
+        i++;
+    }
+    if (is_opponent(std::make_pair(position.first - i, position.second - i))){
+        moves.push_back(std::make_pair(position.first - i, position.second - i));
+    }
+
 
     return moves;
 }
 
-Queen::Queen(Board* initialBoard, pair<int, int> position, string color) :
+chess::Queen::Queen(Board* initialBoard, std::pair<int, int> position, std::string color) :
         Figure(initialBoard, "queen", position, color, (color == "white") ? "Q" : "q") {}
 
 
-vector<pair<int, int>> Queen::available_moves(){
-    vector<pair<int, int>> moves {};
+std::vector<std::pair<int, int>> chess::Queen::available_moves(){
+    std::vector<std::pair<int, int>> moves {};
     int i;
 
     i = 1;
-    while (is_empty(make_pair(position.first + i, position.second))){
-        moves.push_back(make_pair(position.first + i, position.second));
+    while (is_empty(std::make_pair(position.first + i, position.second))){
+        moves.push_back(std::make_pair(position.first + i, position.second));
         i++;
     }
-    if (is_opponent(make_pair(position.first + i, position.second))){
-        moves.push_back(make_pair(position.first + i, position.second));
+    if (is_opponent(std::make_pair(position.first + i, position.second))){
+        moves.push_back(std::make_pair(position.first + i, position.second));
     }
 
     i = 1;
-    while (is_empty(make_pair(position.first - i, position.second))){
-        moves.push_back(make_pair(position.first - i, position.second));
+    while (is_empty(std::make_pair(position.first - i, position.second))){
+        moves.push_back(std::make_pair(position.first - i, position.second));
         i++;
     }
-    if (is_opponent(make_pair(position.first - i, position.second))){
-        moves.push_back(make_pair(position.first - i, position.second));
+    if (is_opponent(std::make_pair(position.first - i, position.second))){
+        moves.push_back(std::make_pair(position.first - i, position.second));
     }
 
     i = 1;
-    while (is_empty(make_pair(position.first, position.second + i))){
-        moves.push_back(make_pair(position.first, position.second + i));
+    while (is_empty(std::make_pair(position.first, position.second + i))){
+        moves.push_back(std::make_pair(position.first, position.second + i));
         i++;
     }
-    if (is_opponent(make_pair(position.first, position.second + i))){
-        moves.push_back(make_pair(position.first, position.second + i));
+    if (is_opponent(std::make_pair(position.first, position.second + i))){
+        moves.push_back(std::make_pair(position.first, position.second + i));
     }
 
     i = 1;
-    while (is_empty(make_pair(position.first, position.second - i))){
-        moves.push_back(make_pair(position.first, position.second - i));
+    while (is_empty(std::make_pair(position.first, position.second - i))){
+        moves.push_back(std::make_pair(position.first, position.second - i));
         i++;
     }
-    if (is_opponent(make_pair(position.first, position.second - i))){
-        moves.push_back(make_pair(position.first, position.second - i));
+    if (is_opponent(std::make_pair(position.first, position.second - i))){
+        moves.push_back(std::make_pair(position.first, position.second - i));
     }
 
     i = 1;
-    while (is_empty(make_pair(position.first + i, position.second + i))){
-        moves.push_back(make_pair(position.first + i, position.second + i));
+    while (is_empty(std::make_pair(position.first + i, position.second + i))){
+        moves.push_back(std::make_pair(position.first + i, position.second + i));
         i++;
     }
-    if (is_opponent(make_pair(position.first + i, position.second + i))){
-        moves.push_back(make_pair(position.first + i, position.second + i));
+    if (is_opponent(std::make_pair(position.first + i, position.second + i))){
+        moves.push_back(std::make_pair(position.first + i, position.second + i));
     }
 
     i = 1;
-    while (is_empty(make_pair(position.first + i, position.second - i))){
-        moves.push_back(make_pair(position.first + i, position.second - i));
+    while (is_empty(std::make_pair(position.first + i, position.second - i))){
+        moves.push_back(std::make_pair(position.first + i, position.second - i));
         i++;
     }
-    if (is_opponent(make_pair(position.first + i, position.second - i))){
-        moves.push_back(make_pair(position.first + i, position.second - i));
+    if (is_opponent(std::make_pair(position.first + i, position.second - i))){
+        moves.push_back(std::make_pair(position.first + i, position.second - i));
     }
 
     i = 1;
-    while (is_empty(make_pair(position.first - i, position.second + i))){
-        moves.push_back(make_pair(position.first - i, position.second + i));
+    while (is_empty(std::make_pair(position.first - i, position.second + i))){
+        moves.push_back(std::make_pair(position.first - i, position.second + i));
         i++;
     }
-    if (is_opponent(make_pair(position.first - i, position.second - i))){
-        moves.push_back(make_pair(position.first - i, position.second - i));
+    if (is_opponent(std::make_pair(position.first - i, position.second - i))){
+        moves.push_back(std::make_pair(position.first - i, position.second - i));
     }
 
     return moves;
 }
 
-King::King(Board* initialBoard, pair<int, int> position, string color) :
+chess::King::King(Board* initialBoard,std:: pair<int, int> position, std::string color) :
         Figure(initialBoard, "king", position, color, (color == "white") ? "K" : "k") {}
 
 
-vector<pair<int, int>> King::available_moves(){
-    vector<pair<int, int>> moves {};
+std::vector<std::pair<int, int>> chess::King::available_moves(){
+    std::vector<std::pair<int, int>> moves {};
 
-    if (is_opponent(make_pair(position.first + 1, position.second)) or
-        is_empty(make_pair(position.first + 1, position.second))){
-        moves.push_back(make_pair(position.first + 1, position.second));
+    if (is_opponent(std::make_pair(position.first + 1, position.second)) or
+        is_empty(std::make_pair(position.first + 1, position.second))){
+        moves.push_back(std::make_pair(position.first + 1, position.second));
     }
-    if (is_opponent(make_pair(position.first - 1, position.second)) or
-        is_empty(make_pair(position.first - 1, position.second))){
-        moves.push_back(make_pair(position.first - 1, position.second));
+    if (is_opponent(std::make_pair(position.first - 1, position.second)) or
+        is_empty(std::make_pair(position.first - 1, position.second))){
+        moves.push_back(std::make_pair(position.first - 1, position.second));
     }
-    if (is_opponent(make_pair(position.first, position.second + 1)) or
-        is_empty(make_pair(position.first, position.second + 1))){
-        moves.push_back(make_pair(position.first, position.second + 1));
+    if (is_opponent(std::make_pair(position.first, position.second + 1)) or
+        is_empty(std::make_pair(position.first, position.second + 1))){
+        moves.push_back(std::make_pair(position.first, position.second + 1));
     }
-    if (is_opponent(make_pair(position.first + 1, position.second + 1)) or
-        is_empty(make_pair(position.first + 1, position.second + 1))){
-        moves.push_back(make_pair(position.first + 1, position.second + 1));
+    if (is_opponent(std::make_pair(position.first + 1, position.second + 1)) or
+        is_empty(std::make_pair(position.first + 1, position.second + 1))){
+        moves.push_back(std::make_pair(position.first + 1, position.second + 1));
     }
-    if (is_opponent(make_pair(position.first + 1, position.second - 1)) or
-        is_empty(make_pair(position.first + 1, position.second - 1))){
-        moves.push_back(make_pair(position.first + 1, position.second - 1));
+    if (is_opponent(std::make_pair(position.first + 1, position.second - 1)) or
+        is_empty(std::make_pair(position.first + 1, position.second - 1))){
+        moves.push_back(std::make_pair(position.first + 1, position.second - 1));
     }
-    if (is_opponent(make_pair(position.first - 1, position.second + 1)) or
-        is_empty(make_pair(position.first - 1, position.second + 1))){
-        moves.push_back(make_pair(position.first - 1, position.second + 1));
+    if (is_opponent(std::make_pair(position.first - 1, position.second + 1)) or
+        is_empty(std::make_pair(position.first - 1, position.second + 1))){
+        moves.push_back(std::make_pair(position.first - 1, position.second + 1));
     }
-    if (is_opponent(make_pair(position.first - 1, position.second - 1)) or
-        is_empty(make_pair(position.first - 1, position.second - 1))){
-        moves.push_back(make_pair(position.first - 1, position.second - 1));
+    if (is_opponent(std::make_pair(position.first - 1, position.second - 1)) or
+        is_empty(std::make_pair(position.first - 1, position.second - 1))){
+        moves.push_back(std::make_pair(position.first - 1, position.second - 1));
+    }
+    if (is_opponent(std::make_pair(position.first, position.second - 1)) or
+        is_empty(std::make_pair(position.first, position.second - 1))){
+        moves.push_back(std::make_pair(position.first, position.second - 1));
     }
 
     // Рокировки
 
     if (not already_moved){
-        if (is_empty(make_pair(position.first, position.second + 1)) and
-            is_empty(make_pair(position.first, position.second + 2)) and
-            board->figure_by_position(make_pair(position.first, position.second + 3))->name == "rook" and
-            not board->figure_by_position(make_pair(position.first, position.second + 3))->already_moved){
-            moves.push_back(make_pair(position.first, position.second + 2));
+        if (is_empty(std::make_pair(position.first, position.second + 1)) and
+            is_empty(std::make_pair(position.first, position.second + 2)) and
+            board->figure_by_position(std::make_pair(position.first, position.second + 3))->name == "rook" and
+            not board->figure_by_position(std::make_pair(position.first, position.second + 3))->already_moved){
+            moves.push_back(std::make_pair(position.first, position.second + 2));
         }
-        if (is_empty(make_pair(position.first, position.second - 1)) and
-            is_empty(make_pair(position.first, position.second - 2)) and
-            is_empty(make_pair(position.first, position.second - 3)) and
-            board->figure_by_position(make_pair(position.first, position.second - 4))->name == "rook" and
-            not board->figure_by_position(make_pair(position.first, position.second - 4))->already_moved){
-            moves.push_back(make_pair(position.first, position.second - 2));
+        if (is_empty(std::make_pair(position.first, position.second - 1)) and
+            is_empty(std::make_pair(position.first, position.second - 2)) and
+            is_empty(std::make_pair(position.first, position.second - 3)) and
+            board->figure_by_position(std::make_pair(position.first, position.second - 4))->name == "rook" and
+            not board->figure_by_position(std::make_pair(position.first, position.second - 4))->already_moved){
+            moves.push_back(std::make_pair(position.first, position.second - 2));
         }
     }
-
 
     return moves;
 }

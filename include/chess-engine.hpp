@@ -9,7 +9,6 @@ namespace chess {
 
     class Figure;
 
-
     class Board {
     public:
         std::vector<Figure *> figures;

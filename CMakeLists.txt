@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 project(chess-engine
-        VERSION 0.1.0
+        VERSION 0.1.1
         DESCRIPTION "Chess engine"
         LANGUAGES C CXX)
 
@@ -20,7 +20,7 @@ include(GNUInstallDirs)
 string(COMPARE EQUAL "${CMAKE_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}" is_top_level)
 
 option(CHESS_ENGINE_BUILD_TESTS "Build chess-engine tests" OFF)
-option(CHESS_ENGINE_BUILD_EXAMPLES "Build chess-engine examples" OFF)
+option(CHESS_ENGINE_BUILD_EXAMPLES "Build chess-engine examples" ON)
 option(CHESS_ENGINE_INSTALL "Generate target for installing chess-engine" ${is_top_level})
 set_if_undefined(CHESS_ENGINE_INSTALL_CMAKEDIR
         "${CMAKE_INSTALL_LIBDIR}/cmake/chess-engine-${PROJECT_VERSION}" CACHE STRING

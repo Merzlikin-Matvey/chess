@@ -125,10 +125,7 @@ std::string chess::Board::move(std::pair<int, int> pos1, std::pair<int, int> pos
                 this->num_of_moves += 1;
                 // TODO: Добавить изменение фигуры
             } else {
-                std::cout << "Invalid move" << std::endl;
-                for (auto move : available_moves) {
-                    std::cout << move_to_chess_notation(pos1, move) << std::endl;
-                }
+                std::cerr << "Invalid move" << std::endl;
                 return "invalid";
             }
         }
@@ -139,7 +136,7 @@ std::string chess::Board::move(std::pair<int, int> pos1, std::pair<int, int> pos
                 moves.push_back(move_to_chess_notation(pos1, pos2));
                 this->num_of_moves += 1;
             } else {
-                std::cout << "Invalid move" << std::endl;
+                std::cerr << "Invalid move" << std::endl;
                 return "invalid";
             }
         }
@@ -150,7 +147,7 @@ std::string chess::Board::move(std::pair<int, int> pos1, std::pair<int, int> pos
                 moves.push_back(move_to_chess_notation(pos1, pos2));
                 this->num_of_moves += 1;
             } else {
-                std::cout << "Invalid move" << std::endl;
+                std::cerr << "Invalid move" << std::endl;
                 return "invalid";
             }
         }
@@ -161,7 +158,7 @@ std::string chess::Board::move(std::pair<int, int> pos1, std::pair<int, int> pos
                 moves.push_back(move_to_chess_notation(pos1, pos2));
                 this->num_of_moves += 1;
             } else {
-                std::cout << "Invalid move" << std::endl;
+                std::cerr << "Invalid move" << std::endl;
                 return "invalid";
             }
         }
@@ -172,7 +169,7 @@ std::string chess::Board::move(std::pair<int, int> pos1, std::pair<int, int> pos
                 moves.push_back(move_to_chess_notation(pos1, pos2));
                 this->num_of_moves += 1;
             } else {
-                std::cout << "Invalid move" << std::endl;
+                std::cerr << "Invalid move" << std::endl;
                 return "invalid";
             }
         }
@@ -202,21 +199,21 @@ std::string chess::Board::move(std::pair<int, int> pos1, std::pair<int, int> pos
                 king->move(pos2);
                 moves.push_back(move_to_chess_notation(pos1, pos2));
             } else {
-                std::cout << "Invalid move" << std::endl;
+                std::cerr << "Invalid move" << std::endl;
                 return "invalid";
 
             }
         }
         else {
-            std::cout << "figure not found" << std::endl;
+            std::cerr << "figure not found" << std::endl;
         }
         this->change_turn();
     }
     else{
-        std::cout << "Not your turn" << std::endl;
-        std::cout << "Current turn: " << this->turn << std::endl;
-        std::cout << "Figure color: " << figure_by_position(pos1)->color << std::endl;
-        std::cout << "Move: " << move_to_chess_notation(pos1, pos2) << std::endl;
+        std::cerr << "Not your turn" << std::endl;
+        std::cerr << "Current turn: " << this->turn << std::endl;
+        std::cerr << "Figure color: " << figure_by_position(pos1)->color << std::endl;
+        std::cerr << "Move: " << move_to_chess_notation(pos1, pos2) << std::endl;
 
     }
     return "moved";
@@ -232,7 +229,7 @@ std::string chess::Board::move(std::string chess_notation){
 void chess::Board::import_json(std::string path) {
     std::ifstream file(path);
     if (!file.is_open()) {
-        std::cout << "Failed to open file: " << path << std::endl;
+        std::cerr << "Failed to open file: " << path << std::endl;
         return;
     }
     json data;
@@ -259,7 +256,7 @@ void chess::Board::import_json(std::string path) {
             this->figures.push_back(
                     new King(this, this->position_to_number_notation(figure["position"]), figure["color"]));
         } else {
-            std::cout << "Invalid figure name" << std::endl;
+            std::cerr << "Invalid figure name" << std::endl;
         }
     }
 }
@@ -342,18 +339,21 @@ void chess::Board::clear(){
 }
 
 void chess::Board::copy(Board *board_to_copy) {
+    if (this == board_to_copy) {
+        std::cerr << "Can't copy the same board" << std::endl;
+        return;
+    }
+    else{
+        this->clear();
+    }
     this->turn = board_to_copy->turn;
     this->num_of_moves = board_to_copy->num_of_moves;
     this->max_num_of_moves = board_to_copy->max_num_of_moves;
 
-    std::cout << board_to_copy->figures.size() << std::endl;
-
-    clear_null_figures();
     for (auto figure : board_to_copy->figures) {
         if (!figure){
             continue;
         }
-        std::cout << figure->name << std::endl;
         if (figure->name == "pawn") {
             this->figures.push_back(
                     new Pawn(this, figure->position, figure->color));
@@ -373,8 +373,7 @@ void chess::Board::copy(Board *board_to_copy) {
             this->figures.push_back(
                     new King(this, figure->position, figure->color));
         } else {
-            std::cout << "Invalid figure name" << std::endl;
-            std::cout << figure->name << std::endl;
+            std::cerr << "Invalid figure name" << std::endl;
         }
     }
 }

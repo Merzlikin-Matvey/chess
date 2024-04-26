@@ -11,6 +11,8 @@ namespace chess {
 
     class Board {
     public:
+        Board();
+
         std::vector<Figure *> figures;
         std::string turn = "white";
         int num_of_history = 2;
@@ -23,7 +25,7 @@ namespace chess {
 
         void info();
         void clear();
-        void copy(Board *board);
+        void copy(Board* board);
         void save();
         void print();
 

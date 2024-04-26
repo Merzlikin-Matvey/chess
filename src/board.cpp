@@ -125,7 +125,12 @@ std::string chess::Board::move(std::pair<int, int> pos1, std::pair<int, int> pos
                 this->num_of_moves += 1;
                 // TODO: Добавить изменение фигуры
             } else {
-                std::cerr << "Invalid move" << std::endl;
+                std::cerr << "Invalid move " <<  move_to_chess_notation(pos1, pos2) <<std::endl;
+                auto moves = this->available_moves();
+                for (auto move : moves) {
+                    std::cerr << move << std::endl;
+                }
+                this->print();
                 return "invalid";
             }
         }
@@ -136,7 +141,8 @@ std::string chess::Board::move(std::pair<int, int> pos1, std::pair<int, int> pos
                 moves.push_back(move_to_chess_notation(pos1, pos2));
                 this->num_of_moves += 1;
             } else {
-                std::cerr << "Invalid move" << std::endl;
+                std::cerr << "Invalid move " <<  move_to_chess_notation(pos1, pos2) <<std::endl;
+                this->print();
                 return "invalid";
             }
         }
@@ -147,7 +153,8 @@ std::string chess::Board::move(std::pair<int, int> pos1, std::pair<int, int> pos
                 moves.push_back(move_to_chess_notation(pos1, pos2));
                 this->num_of_moves += 1;
             } else {
-                std::cerr << "Invalid move" << std::endl;
+                std::cerr << "Invalid move " <<  move_to_chess_notation(pos1, pos2) <<std::endl;
+                this->print();
                 return "invalid";
             }
         }
@@ -158,7 +165,8 @@ std::string chess::Board::move(std::pair<int, int> pos1, std::pair<int, int> pos
                 moves.push_back(move_to_chess_notation(pos1, pos2));
                 this->num_of_moves += 1;
             } else {
-                std::cerr << "Invalid move" << std::endl;
+                std::cerr << "Invalid move " <<  move_to_chess_notation(pos1, pos2) <<std::endl;
+                this->print();
                 return "invalid";
             }
         }
@@ -169,7 +177,8 @@ std::string chess::Board::move(std::pair<int, int> pos1, std::pair<int, int> pos
                 moves.push_back(move_to_chess_notation(pos1, pos2));
                 this->num_of_moves += 1;
             } else {
-                std::cerr << "Invalid move" << std::endl;
+                std::cerr << "Invalid move " <<  move_to_chess_notation(pos1, pos2) <<std::endl;
+                this->print();
                 return "invalid";
             }
         }
@@ -199,7 +208,8 @@ std::string chess::Board::move(std::pair<int, int> pos1, std::pair<int, int> pos
                 king->move(pos2);
                 moves.push_back(move_to_chess_notation(pos1, pos2));
             } else {
-                std::cerr << "Invalid move" << std::endl;
+                std::cerr << "Invalid move " <<  move_to_chess_notation(pos1, pos2) <<std::endl;
+                this->print();
                 return "invalid";
 
             }
@@ -338,14 +348,8 @@ void chess::Board::clear(){
     this->num_of_moves = 0;
 }
 
-void chess::Board::copy(Board *board_to_copy) {
-    if (this == board_to_copy) {
-        std::cerr << "Can't copy the same board" << std::endl;
-        return;
-    }
-    else{
-        this->clear();
-    }
+void chess::Board::copy(Board* board_to_copy) {
+    this->clear();
     this->turn = board_to_copy->turn;
     this->num_of_moves = board_to_copy->num_of_moves;
     this->max_num_of_moves = board_to_copy->max_num_of_moves;
@@ -467,3 +471,6 @@ bool chess::Board::is_game_going() {
     return winner() == "none";
 }
 
+chess::Board::Board() {
+    clear();
+}

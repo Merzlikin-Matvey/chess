@@ -22,6 +22,7 @@ namespace chess {
 
 
         void info();
+        void clear();
         void copy(Board *board);
         void save();
         void print();

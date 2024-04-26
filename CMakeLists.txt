@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 project(chess-engine
-        VERSION 0.1.3
+        VERSION 0.1.4
         DESCRIPTION "Chess engine"
         LANGUAGES C CXX)
 

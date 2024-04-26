@@ -14,7 +14,6 @@ using json = nlohmann::json;
 
 chess::Figure* chess::Board::figure_by_position(std::pair<int, int> position) {
     for (auto figure : figures) {
-        cout << figure->position.first << " " << figure->position.second << endl;
         if (figure->position == position) {
             return figure;
         }
@@ -41,7 +40,6 @@ void chess::Board::print(){
 }
 
 void chess::Board::info() {
-    clear_null_figures();
     for (auto figure : figures) {
         std::cout << figure->name << " " << figure->color << " " << position_to_chess_notation(figure->position) << std::endl;
     }
@@ -333,12 +331,29 @@ void chess::Board::save() {
     file.close();
 }
 
-void chess::Board::copy(Board *board) {
-    this->turn = board->turn;
-    this->num_of_moves = board->num_of_moves;
-    this->max_num_of_moves = board->max_num_of_moves;
+void chess::Board::clear(){
+    for (auto figure : figures) {
+        delete figure;
+    }
+    this->figures.clear();
+    this->moves.clear();
+    this->turn = "white";
+    this->num_of_moves = 0;
+}
 
-    for (auto figure : board->figures) {
+void chess::Board::copy(Board *board_to_copy) {
+    this->turn = board_to_copy->turn;
+    this->num_of_moves = board_to_copy->num_of_moves;
+    this->max_num_of_moves = board_to_copy->max_num_of_moves;
+
+    std::cout << board_to_copy->figures.size() << std::endl;
+
+    clear_null_figures();
+    for (auto figure : board_to_copy->figures) {
+        if (!figure){
+            continue;
+        }
+        std::cout << figure->name << std::endl;
         if (figure->name == "pawn") {
             this->figures.push_back(
                     new Pawn(this, figure->position, figure->color));
@@ -359,6 +374,7 @@ void chess::Board::copy(Board *board) {
                     new King(this, figure->position, figure->color));
         } else {
             std::cout << "Invalid figure name" << std::endl;
+            std::cout << figure->name << std::endl;
         }
     }
 }

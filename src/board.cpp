@@ -4,7 +4,7 @@
 #include <vector>
 #include <algorithm>
 #include <fstream>
-#include <filesystem>
+#include <thread>
 #include <json/json.hpp>
 
 namespace fs = std::filesystem;
@@ -13,6 +13,7 @@ using json = nlohmann::json;
 
 
 chess::Figure* chess::Board::figure_by_position(std::pair<int, int> position) {
+    clear_null_figures();
     for (auto figure : figures) {
         if (figure->position == position) {
             return figure;
@@ -125,12 +126,11 @@ std::string chess::Board::move(std::pair<int, int> pos1, std::pair<int, int> pos
                 this->num_of_moves += 1;
                 // TODO: Добавить изменение фигуры
             } else {
-                std::cerr << "Invalid move " <<  move_to_chess_notation(pos1, pos2) <<std::endl;
+                std::cerr << "Invalid move " <<  move_to_chess_notation(pos1, pos2) << std::endl;
                 auto moves = this->available_moves();
                 for (auto move : moves) {
                     std::cerr << move << std::endl;
                 }
-                this->print();
                 return "invalid";
             }
         }
@@ -141,8 +141,7 @@ std::string chess::Board::move(std::pair<int, int> pos1, std::pair<int, int> pos
                 moves.push_back(move_to_chess_notation(pos1, pos2));
                 this->num_of_moves += 1;
             } else {
-                std::cerr << "Invalid move " <<  move_to_chess_notation(pos1, pos2) <<std::endl;
-                this->print();
+                std::cerr << "Invalid move " <<  move_to_chess_notation(pos1, pos2) << std::endl;
                 return "invalid";
             }
         }
@@ -154,7 +153,6 @@ std::string chess::Board::move(std::pair<int, int> pos1, std::pair<int, int> pos
                 this->num_of_moves += 1;
             } else {
                 std::cerr << "Invalid move " <<  move_to_chess_notation(pos1, pos2) <<std::endl;
-                this->print();
                 return "invalid";
             }
         }
@@ -178,7 +176,6 @@ std::string chess::Board::move(std::pair<int, int> pos1, std::pair<int, int> pos
                 this->num_of_moves += 1;
             } else {
                 std::cerr << "Invalid move " <<  move_to_chess_notation(pos1, pos2) <<std::endl;
-                this->print();
                 return "invalid";
             }
         }
@@ -208,8 +205,7 @@ std::string chess::Board::move(std::pair<int, int> pos1, std::pair<int, int> pos
                 king->move(pos2);
                 moves.push_back(move_to_chess_notation(pos1, pos2));
             } else {
-                std::cerr << "Invalid move " <<  move_to_chess_notation(pos1, pos2) <<std::endl;
-                this->print();
+                std::cerr << "Invalid move " <<  move_to_chess_notation(pos1, pos2) << std::endl;
                 return "invalid";
 
             }
@@ -217,6 +213,7 @@ std::string chess::Board::move(std::pair<int, int> pos1, std::pair<int, int> pos
         else {
             std::cerr << "figure not found" << std::endl;
         }
+        update_history();
         this->change_turn();
     }
     else{
@@ -224,6 +221,10 @@ std::string chess::Board::move(std::pair<int, int> pos1, std::pair<int, int> pos
         std::cerr << "Current turn: " << this->turn << std::endl;
         std::cerr << "Figure color: " << figure_by_position(pos1)->color << std::endl;
         std::cerr << "Move: " << move_to_chess_notation(pos1, pos2) << std::endl;
+        this->print();
+        this->info();
+
+        return "invalid";
 
     }
     return "moved";
@@ -316,6 +317,20 @@ std::vector<std::string> chess::Board::available_moves() {
             }
         }
     }
+
+    if (is_check()){
+        std::vector<std::string> new_moves;
+        for (auto move : moves){
+            Board new_board;
+            new_board.copy(this);
+            new_board.move(move);
+            new_board.change_turn();
+            if (not new_board.is_check()){
+                new_moves.push_back(move);
+            }
+        }
+        moves = new_moves;
+    }
     return moves;
 }
 
@@ -335,6 +350,7 @@ void chess::Board::save() {
 
     ofstream file(get_path_to_res("save.json"));
     file << data.dump(4);
+    file << data.dump(4);
     file.close();
 }
 
@@ -353,6 +369,8 @@ void chess::Board::copy(Board* board_to_copy) {
     this->turn = board_to_copy->turn;
     this->num_of_moves = board_to_copy->num_of_moves;
     this->max_num_of_moves = board_to_copy->max_num_of_moves;
+    this->moves = board_to_copy->moves;
+
 
     for (auto figure : board_to_copy->figures) {
         if (!figure){

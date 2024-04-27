@@ -10,6 +10,11 @@ chess::Figure::Figure(Board* initialBoard, std::string initialName, std::pair<in
 
 void chess::Figure::move(std::pair<int, int> new_position) {
     already_moved = true;
+    auto fig = board->figure_by_position(new_position);
+    if (not fig->is_null()){
+        board->kill(new_position);
+    }
+
     position = new_position;
 }
 

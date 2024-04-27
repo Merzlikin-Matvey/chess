@@ -64,7 +64,7 @@
     {
       "color": "white",
       "name": "king",
-      "position": "e1"
+      "position": "e4"
     },
     {
       "color": "white",
@@ -99,7 +99,7 @@
     {
       "color": "black",
       "name": "pawn",
-      "position": "d7"
+      "position": "d5"
     },
     {
       "color": "black",

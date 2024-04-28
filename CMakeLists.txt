@@ -52,19 +52,15 @@ generate_export_header(chess-engine EXPORT_FILE_NAME include/${export_file_name}
 set(public_headers
         include/export.h
         include/chess-engine.hpp
-        include/utils.h
         dependencies/json/json.hpp
 )
 set(sources
         ${public_headers}
         src/board.cpp
-        src/figure.cpp
-        src/resource_dir.c
-        src/path_to_res.cpp
+        src/fen.cpp
+        src/output.cpp
 )
 
-set(data
-        res/chess_default_positions.json)
 
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${sources})
 
@@ -101,8 +97,6 @@ set_target_properties(chess-engine PROPERTIES
         SOVERSION ${PROJECT_VERSION_MAJOR}
         VERSION ${PROJECT_VERSION})
 
-file(COPY ${data} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/res)
-message(STATUS "Local resource path: ${CMAKE_CURRENT_BINARY_DIR}/res ..")
 
 #------------------------------#
 #         Installation         #
@@ -120,11 +114,8 @@ if(CHESS_ENGINE_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
         file(MAKE_DIRECTORY ${CMAKE_INSTALL_PREFIX})
     endif()
 
-    set(RESOURCE_PATH ${CMAKE_INSTALL_PREFIX}/res)
-
 
     message(STATUS "Library will be installed to: ${CMAKE_INSTALL_PREFIX}/bin")
-    message(STATUS "Resource path: ${RESOURCE_PATH}")
 
 
     configure_package_config_file(cmake/chess-engine-config.cmake.in chess-engine-config.cmake
@@ -144,9 +135,6 @@ if(CHESS_ENGINE_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
     install(FILES "${CMAKE_CURRENT_BINARY_DIR}/include/${export_file_name}"
             COMPONENT chess-engine-dev
             DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/chess-engine")
-    install(FILES ${data}
-            DESTINATION ${RESOURCE_PATH})
-
 
     set(targets_file "chess-engine-shared-targets.cmake")
 

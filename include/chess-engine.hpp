@@ -3,138 +3,59 @@
 #include <string>
 #include <vector>
 #include <utility>
+#include <memory>
+#include <array>
+
+typedef uint64_t Bitboard;
+
+namespace chess_operations {
+    static constexpr void set_1(Bitboard &bb, uint8_t square) {
+        bb = bb | (1ull << square);
+    }
+    static constexpr void set_0(Bitboard &bb, uint8_t square) {
+        bb = bb & (~(1ull << square));
+    }
+
+    static constexpr bool get_bit(Bitboard bb, uint8_t square) {
+        return (bb & (1ull << square));
+    }
+}
 
 namespace chess {
-    std::string get_path_to_res(std::string file_name);
-
-    class Figure;
 
     class Board {
     public:
-        Board();
+        Board(std::array<std::array<Bitboard, 6>, 2> board);
+        std::array<std::array<Bitboard, 6>, 2> _piece_bitboards{};
+        std::array<Bitboard, 2> _side_bitboards{};
+        std::array<Bitboard, 2> _inversion_side_bitboards{};
+        Bitboard _all;
 
-        std::vector<Figure *> figures;
-        std::string turn = "white";
-        int num_of_history = 2;
-        int max_num_of_moves = 100;
-        int num_of_moves = 0;
-
-        std::vector<Board> history;
-        std::vector<std::string> moves;
-
-
-        void info();
-        void clear();
-        void copy(Board* board);
-        void save();
-        void print();
-
-        bool is_draw();
-        std::string winner();
-        bool is_check();
-        bool is_checkmate();
-        bool is_game_going();
-        bool is_castling(std::pair<int, int> pos1, std::pair<int, int> pos2);
-
-        void change_turn();
-        void update_history();
-        void clear_null_figures();
-
-        std::string save_to_json(std::string path);
-        void import_json(std::string path);
-        void load_default_positions();
-
-        std::string move(std::string move);
-        std::vector <std::string> available_moves();
-        void kill(std::pair<int, int> position);
-
-        bool is_empty(std::pair<int, int> position);
-        std::string move(std::pair<int, int> pos1, std::pair<int, int> pos2);
-
-        Figure *figure_by_position(std::pair<int, int> position);
-
-        std::string position_to_chess_notation(std::pair<int, int> position);
-        std::pair<int, int> position_to_number_notation(std::string notation);
-        std::string move_to_chess_notation(std::pair<std::pair<int, int>, std::pair<int, int>> move);
-        std::string move_to_chess_notation(std::pair<int, int> position1, std::pair<int, int> position2);
-        std::pair<std::pair<int, int>, std::pair<int, int>> move_to_number_notation(std::string notation1, std::string notation2);
-
+        bool operator == (const Board &board) const;
+        bool operator != (const Board &board) const;
     };
 
-    class Figure {
-    public:
-        Figure(Board *initialBoard, std::string initialName, std::pair<int, int> initialPosition, std::string initialColor,
-               std::string initialSymbol);
+    // Вывод доски в поток
+    std::ostream& operator<<(std::ostream &ostream, const chess::Board& board);
+
+    std::array<std::array<Bitboard, 6>, 2> convert_fen_to_bitboards(std::string fen);
+
+    static constexpr uint8_t Pawn = 0;
+    static constexpr uint8_t Knight = 1;
+    static constexpr uint8_t Bishop = 2;
+    static constexpr uint8_t Rook = 3;
+    static constexpr uint8_t Queen = 4;
+    static constexpr uint8_t King = 5;
+
+    static constexpr uint8_t White = 0;
+    static constexpr uint8_t Black = 1;
 
 
-        Board *board;
-        bool already_moved = false;
-        bool double_moved = false;
-        std::string name;
-        std::string color;
-        std::string symbol;
-        std::pair<int, int> position;
 
-        void move(std::pair<int, int> new_position);
 
-        bool is_empty(std::pair<int, int> position);
 
-        bool is_teammate(std::pair<int, int> position);
+    std::string get_path_to_res(std::string file_name);
 
-        bool is_opponent(std::pair<int, int> position);
 
-        bool is_null();
-
-        virtual std::vector<std::pair<int, int>> available_moves();
-    };
-
-    class NullFigure : public Figure {
-    public:
-        explicit NullFigure(Board *initialBoard);
-    };
-
-    class Pawn : public Figure {
-    public:
-        explicit Pawn(Board *initialBoard, std::pair<int, int> position, std::string color);
-
-        void change_figure(std::string new_name);
-        std::vector<std::pair<int, int>> available_moves() override;
-
-    };
-
-    class Rook : public Figure {
-    public:
-        explicit Rook(Board *initialBoard, std::pair<int, int> position, std::string color);
-
-        std::vector<std::pair<int, int>> available_moves() override;
-    };
-
-    class Knight : public Figure {
-    public:
-        explicit Knight(Board *initialBoard, std::pair<int, int> position, std::string color);
-
-        std::vector<std::pair<int, int>> available_moves() override;
-    };
-
-    class Bishop : public Figure {
-    public:
-        explicit Bishop(Board *initialBoard, std::pair<int, int> position, std::string color);
-
-        std::vector<std::pair<int, int>> available_moves() override;
-    };
-
-    class Queen : public Figure {
-    public:
-        explicit Queen(Board *initialBoard, std::pair<int, int> position, std::string color);
-
-        std::vector<std::pair<int, int>> available_moves() override;
-    };
-
-    class King : public Figure {
-    public:
-        explicit King(Board *initialBoard, std::pair<int, int> position, std::string color);
-
-        std::vector<std::pair<int, int>> available_moves() override;
-    };
 
 }

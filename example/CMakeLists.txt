@@ -20,7 +20,3 @@ add_custom_command(TARGET chess-engine-example POST_BUILD
         $<TARGET_FILE:chess-engine>
         $<TARGET_FILE_DIR:chess-engine-example>)
 
-add_custom_command(TARGET chess-engine-example POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_directory
-        ${CMAKE_BINARY_DIR}/res
-        $<TARGET_FILE_DIR:chess-engine-example>/res)

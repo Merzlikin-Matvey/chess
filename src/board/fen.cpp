@@ -1,4 +1,10 @@
-#include <chess-engine.hpp>
+#include "headers/fen.hpp"
+#include "headers/constants.hpp"
+#include "headers/bitboard_operations.hpp"
+
+#include <string>
+
+
 
 std::array<std::array<Bitboard, 6>, 2> chess::convert_fen_to_bitboards(std::string fen){
     std::array<std::array<Bitboard, 6>, 2> piece_bitboards = {{{0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0}}};
@@ -24,21 +30,27 @@ std::array<std::array<Bitboard, 6>, 2> chess::convert_fen_to_bitboards(std::stri
                 switch (symbol){
                     case 'P':
                         piece = Pawn;
+                        side = White;
                         break;
                     case 'N':
                         piece = Knight;
+                        side = White;
                         break;
                     case 'B':
                         piece = Bishop;
+                        side = White;
                         break;
                     case 'R':
                         piece = Rook;
+                        side = White;
                         break;
                     case 'Q':
                         piece = Queen;
+                        side = White;
                         break;
                     case 'K':
                         piece = King;
+                        side = White;
                         break;
                     case 'p':
                         piece = Pawn;
@@ -65,7 +77,7 @@ std::array<std::array<Bitboard, 6>, 2> chess::convert_fen_to_bitboards(std::stri
                         side = Black;
                         break;
                 }
-                chess_operations::set_1(piece_bitboards[side][piece], y * 8 + x);
+                bitboard_operations::set_1(piece_bitboards[side][piece], y * 8 + x);
                 x++;
             }
         }
@@ -79,5 +91,10 @@ std::array<std::array<Bitboard, 6>, 2> chess::convert_fen_to_bitboards(std::stri
     }
 
     return piece_bitboards;
+}
 
+std::array<std::array<Bitboard, 6>, 2> chess::convert_default_positions(){
+    std::array<std::array<Bitboard, 6>, 2> piece_bitboards = {{{0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0}}};
+    std::string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -";
+    return convert_fen_to_bitboards(fen);
 }

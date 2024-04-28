@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 project(chess-engine
-        VERSION 0.1.8
+        VERSION 0.2.0
         DESCRIPTION "Chess engine"
         LANGUAGES C CXX)
 
@@ -9,8 +9,8 @@ project(chess-engine
 #------------------------------#
 
 add_library(chess-engine SHARED
-        include/headers/chess_operation.shpp
-        include/headers/Board.hpp)
+        src/zobrist.cpp
+        include/headers/fen.hpp)
 
 add_library(chess-engine::chess-engine ALIAS chess-engine)
 
@@ -56,12 +56,17 @@ set(public_headers
         include/export.h
         include/chess-engine.hpp
         dependencies/json/json.hpp
+        include/headers/bitboard_operations.hpp
+        include/headers/board.hpp
+        include/headers/constants.hpp
+        include/headers/zobrist.hpp
 )
 set(sources
         ${public_headers}
-        src/board.cpp
-        src/fen.cpp
-        src/output.cpp
+        src/board/board.cpp
+        src/board/fen.cpp
+        src/board/output.cpp
+
 )
 
 

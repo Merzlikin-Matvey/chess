@@ -4,7 +4,7 @@
 
 typedef uint64_t Bitboard;
 
-namespace chess_operations {
+namespace bitboard_operations {
     static constexpr void set_1(Bitboard &bb, uint8_t square) {
         bb = bb | (1ull << square);
     }

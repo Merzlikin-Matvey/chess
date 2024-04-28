@@ -8,7 +8,10 @@ project(chess-engine
 # General settings and options #
 #------------------------------#
 
-add_library(chess-engine SHARED)
+add_library(chess-engine SHARED
+        include/headers/chess_operation.shpp
+        include/headers/Board.hpp)
+
 add_library(chess-engine::chess-engine ALIAS chess-engine)
 
 string(COMPARE EQUAL "${CMAKE_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}"

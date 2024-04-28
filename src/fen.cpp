@@ -6,18 +6,17 @@ std::array<std::array<Bitboard, 6>, 2> chess::convert_fen_to_bitboards(std::stri
     uint8_t y = 7;
 
     uint8_t side;
+    bool still_figures = true;
 
     for (auto symbol : fen){
         if (symbol == '/'){
             y--;
             x = 0;
-        } else if (symbol == ' '){
-            break;
-        } else if (symbol == 'w'){
-            side = White;
-        } else if (symbol == 'b'){
-            side = Black;
-        } else {
+        }
+        else if (symbol == ' '){
+            still_figures = false;
+        }
+        else if (still_figures){
             if (isdigit(symbol)){
                 x += symbol - '0';
             } else {
@@ -68,6 +67,13 @@ std::array<std::array<Bitboard, 6>, 2> chess::convert_fen_to_bitboards(std::stri
                 }
                 chess_operations::set_1(piece_bitboards[side][piece], y * 8 + x);
                 x++;
+            }
+        }
+        else{
+            if (symbol == 'w'){
+                side = White;
+            } else if (symbol == 'b'){
+                side = Black;
             }
         }
     }

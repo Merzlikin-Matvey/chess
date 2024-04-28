@@ -31,3 +31,12 @@ bool chess::Board::operator == (const Board &board) const {
 bool chess::Board::operator != (const Board &board) const {
     return !(*this == board);
 }
+
+
+int8_t chess::Board::getPieceType(const chess::Board& board, uint8_t x, uint8_t y) {
+    for (int i = 0; i < 6; i++) {
+        if (chess_operations::get_bit(board._piece_bitboards[chess::White][i], y * 8 + x)) return i;
+        if (chess_operations::get_bit(board._piece_bitboards[chess::Black][i], y * 8 + x)) return i + 6;
+    }
+    return -1;
+}

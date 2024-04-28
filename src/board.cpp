@@ -127,6 +127,9 @@ std::string chess::Board::move(std::pair<int, int> pos1, std::pair<int, int> pos
                 // TODO: Добавить изменение фигуры
             } else {
                 std::cerr << "Invalid move " <<  move_to_chess_notation(pos1, pos2) << std::endl;
+                std::this_thread::sleep_for(std::chrono::milliseconds(100));
+                this->print();
+                std::this_thread::sleep_for(std::chrono::milliseconds(100));
                 auto moves = this->available_moves();
                 for (auto move : moves) {
                     std::cerr << move << std::endl;
@@ -290,6 +293,9 @@ std::string chess::Board::position_to_chess_notation(std::pair<int, int> positio
 }
 
 std::string chess::Board::move_to_chess_notation(std::pair<int, int> position1, std::pair<int, int> position2) {
+    if (position_to_chess_notation(position2) == " 3"){
+        std::cerr << "ERROR" << std::endl;
+    }
     return position_to_chess_notation(position1) + position_to_chess_notation(position2);
 }
 
@@ -309,29 +315,17 @@ std::pair<std::pair<int, int>, std::pair<int, int>> chess::Board::move_to_number
 }
 
 std::vector<std::string> chess::Board::available_moves() {
-    std::vector<std::string> moves;
+    std::vector<std::string> current_available_moves;
     for (auto figure : figures) {
         if (figure->color == turn) {
             for (auto move : figure->available_moves()) {
-                moves.push_back(move_to_chess_notation(figure->position, move));
+                current_available_moves.push_back(move_to_chess_notation(figure->position, move));
             }
         }
     }
 
-    if (is_check()){
-        std::vector<std::string> new_moves;
-        for (auto move : moves){
-            Board new_board;
-            new_board.copy(this);
-            new_board.move(move);
-            new_board.change_turn();
-            if (not new_board.is_check()){
-                new_moves.push_back(move);
-            }
-        }
-        moves = new_moves;
-    }
-    return moves;
+
+    return current_available_moves;
 }
 
 void chess::Board::save() {

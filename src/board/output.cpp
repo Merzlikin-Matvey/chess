@@ -6,7 +6,7 @@
 std::ostream& chess::operator<<(std::ostream &ostream, chess::Board board) {
     for (int8_t y = 7; y >= 0; y = y - 1) {
         for (uint8_t x = 0; x < 8; x = x + 1) {
-            int8_t piece = board.getPieceType(board, x, y);
+            int8_t piece = board.get_piece_type(board, x, y);
             switch (piece) {
                 case 0:
                     ostream << "P";

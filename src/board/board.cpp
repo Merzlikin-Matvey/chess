@@ -52,7 +52,7 @@ bool chess::Board::operator != (const Board &board) const {
 }
 
 
-int8_t chess::Board::getPieceType(const chess::Board& board, uint8_t x, uint8_t y) {
+int8_t chess::Board::get_piece_type(const chess::Board& board, uint8_t x, uint8_t y) {
     for (int i = 0; i < 6; i++) {
         if (bitboard_operations::get_bit(board._piece_bitboards[chess::White][i], y * 8 + x)) return i;
         if (bitboard_operations::get_bit(board._piece_bitboards[chess::Black][i], y * 8 + x)) return i + 6;

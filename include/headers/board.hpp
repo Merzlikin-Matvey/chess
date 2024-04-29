@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "headers/zobrist.hpp"
+#include "headers/move.hpp"
 
 typedef uint64_t Bitboard;
 
@@ -34,10 +35,12 @@ namespace chess {
         void clear_history();
         uint8_t get_num_of_repetitions();
 
+        void move(Move move);
+
         bool operator==(const Board &board) const;
         bool operator!=(const Board &board) const;
 
-        int8_t getPieceType(const chess::Board &board, uint8_t x, uint8_t y);
+        int8_t get_piece_type(const chess::Board &board, uint8_t x, uint8_t y);
 
     };
 

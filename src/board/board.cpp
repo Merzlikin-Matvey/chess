@@ -78,3 +78,11 @@ int8_t chess::Board::get_piece_type(const chess::Board& board, uint8_t x, uint8_
     }
     return -1;
 }
+
+int8_t chess::Board::get_piece_type(const chess::Board& board, uint8_t x) {
+    for (int i = 0; i < 6; i++) {
+        if (bitboard_operations::get_bit(board._piece_bitboards[chess::White][i], x)) return i;
+        if (bitboard_operations::get_bit(board._piece_bitboards[chess::Black][i], x)) return i + 6;
+    }
+    return -1;
+}

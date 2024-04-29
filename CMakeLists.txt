@@ -4,6 +4,12 @@ project(chess-engine
         DESCRIPTION "Chess engine"
         LANGUAGES C CXX)
 
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
+set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -flto")
+set(CMAKE_CXX_STANDARD 20)
+
+
+
 #------------------------------#
 # General settings and options #
 #------------------------------#
@@ -16,6 +22,8 @@ add_library(chess-engine SHARED
         include/headers/move.hpp
         include/headers/notations.hpp
         src/notations.cpp
+        src/board/get_legal_moves.cpp
+        include/headers/masks.h
 )
 
 add_library(chess-engine::chess-engine ALIAS chess-engine)
@@ -34,7 +42,10 @@ option(CHESS_ENGINE_INSTALL "Generate target for installing chess-engine" ${is_t
 set_if_undefined(CHESS_ENGINE_INSTALL_CMAKEDIR
         "${CMAKE_INSTALL_LIBDIR}/cmake/chess-engine-${PROJECT_VERSION}" CACHE STRING
         "Install path for chess-engine package-related CMake files")
-
+find_package(OpenMP)
+if(OpenMP_CXX_FOUND)
+    target_link_libraries(chess-engine PUBLIC OpenMP::OpenMP_CXX)
+endif()
 if(DEFINED CHESS_ENGINE_SHARED_LIBS)
     set(BUILD_SHARED_LIBS ${CHESS_ENGINE_SHARED_LIBS})
 endif()

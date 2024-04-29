@@ -25,5 +25,6 @@ namespace bitboard_operations {
     #error "Unsupported compiler"
     #endif
     }
+
 }
 

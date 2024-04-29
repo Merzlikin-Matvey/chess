@@ -4,7 +4,9 @@
 #include <array>
 #include <cstdint>
 
-#include "board.hpp"
+namespace chess {
+    class Board;
+}
 
 namespace zobrist {
     static constexpr uint64_t Seed = 0x98f107;
@@ -38,12 +40,7 @@ namespace zobrist {
 
     class ZobristHash{
     public:
-        ZobristHash(chess::Board board, 
-                     bool black_move,  
-                     bool w_l_castling,
-                     bool w_s_castling,
-                     bool b_l_castling,
-                     bool b_s_castling);
+        ZobristHash(chess::Board board);
 
         uint64_t hash;
 

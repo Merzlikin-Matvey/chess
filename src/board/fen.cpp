@@ -5,7 +5,6 @@
 #include <string>
 
 
-
 std::array<std::array<Bitboard, 6>, 2> chess::convert_fen_to_bitboards(std::string fen){
     std::array<std::array<Bitboard, 6>, 2> piece_bitboards = {{{0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0}}};
     uint8_t x = 0;

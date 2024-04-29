@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 project(chess-engine
-        VERSION 0.2.0
+        VERSION 0.2.1
         DESCRIPTION "Chess engine"
         LANGUAGES C CXX)
 
@@ -10,7 +10,11 @@ project(chess-engine
 
 add_library(chess-engine SHARED
         src/zobrist.cpp
-        include/headers/fen.hpp)
+        include/headers/fen.hpp
+        src/board/history.cpp
+        src/move.cpp
+        include/headers/move.hpp
+)
 
 add_library(chess-engine::chess-engine ALIAS chess-engine)
 

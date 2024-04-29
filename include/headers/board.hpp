@@ -14,6 +14,7 @@ namespace chess {
     class Board {
     public:
         Board(std::array<std::array<Bitboard, 6>, 2> board);
+        Board(std::string fen);
         Board();
 
         Bitboard _all;

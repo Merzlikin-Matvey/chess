@@ -14,6 +14,8 @@ add_library(chess-engine SHARED
         src/board/history.cpp
         src/move.cpp
         include/headers/move.hpp
+        include/headers/notations.hpp
+        src/notations.cpp
 )
 
 add_library(chess-engine::chess-engine ALIAS chess-engine)

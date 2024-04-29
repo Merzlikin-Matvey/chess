@@ -2,7 +2,9 @@
 #include "headers/bitboard_operations.hpp"
 #include "headers/fen.hpp"
 #include "headers/constants.hpp"
+#include "headers/fen.hpp"
 
+#include <string>
 
 chess::Board::Board(std::array<std::array<Bitboard, 6>, 2> board) {
     _piece_bitboards = board;
@@ -18,6 +20,23 @@ chess::Board::Board(std::array<std::array<Bitboard, 6>, 2> board) {
     _all = _side_bitboards[0] | _side_bitboards[1];
 
 }
+
+chess::Board::Board(std::string fen){
+    std::array<std::array<Bitboard, 6>, 2> board = chess::convert_fen_to_bitboards(fen);
+    _piece_bitboards = board;
+    _side_bitboards = {0, 0};
+    _inversion_side_bitboards = {0, 0};
+    _all = 0;
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 6; j++) {
+            _side_bitboards[i] |= board[i][j];
+            _inversion_side_bitboards[i] |= ~board[i][j];
+        }
+    }
+    _all = _side_bitboards[0] | _side_bitboards[1];
+}
+
+
 
 chess::Board::Board() {
     std::array<std::array<Bitboard, 6>, 2> board = chess::convert_default_positions();

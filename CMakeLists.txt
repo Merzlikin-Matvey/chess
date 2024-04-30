@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 project(chess-engine
-        VERSION 0.2.2
+        VERSION 0.2.3
         DESCRIPTION "Chess engine"
         LANGUAGES C CXX)
 
@@ -25,6 +25,8 @@ add_library(chess-engine SHARED
         src/board/get_legal_moves.cpp
         include/headers/masks.hpp
         src/pawn_masks.cpp
+        src/check_mask.cpp
+        include/headers/bitboard_lines.hpp
 )
 
 add_library(chess-engine::chess-engine ALIAS chess-engine)
@@ -78,6 +80,7 @@ set(public_headers
         include/headers/board.hpp
         include/headers/constants.hpp
         include/headers/zobrist.hpp
+        include/headers/bitboard_lines.hpp
 )
 set(sources
         ${public_headers}

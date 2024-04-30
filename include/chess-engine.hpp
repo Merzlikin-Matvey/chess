@@ -9,4 +9,5 @@
 #include "headers/move.hpp"
 #include "headers/notations.hpp"
 #include "headers/masks.hpp"
+#include "headers/bitboard_lines.hpp"
 

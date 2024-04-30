@@ -17,10 +17,9 @@ namespace chess {
         Board(std::string fen);
         Board();
 
-        Bitboard _all;
-        std::array<std::array<Bitboard, 6>, 2> _piece_bitboards{};
-        Bitboard _side_bitboard{};
-        Bitboard _inversion_side_bitboard{};
+        Bitboard all;
+        std::array<std::array<Bitboard, 6>, 2> piece_bitboards{};
+        std::array<Bitboard, 2> side_bitboard;
 
         std::vector<zobrist::ZobristHash> _hashes;
 

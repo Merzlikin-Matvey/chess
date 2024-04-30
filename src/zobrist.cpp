@@ -26,10 +26,10 @@ zobrist::ZobristHash::ZobristHash(chess::Board board) {
 
     uint8_t side;
     for (uint8_t square = 0; square < 64; square = square + 1) {
-        if (bitboard_operations::get_bit(board._side_bitboards[chess::White], square)) {
+        if (bitboard_operations::get_bit(board.side_bitboard[chess::White], square)) {
             side = chess::White;
         }
-        else if (bitboard_operations::get_bit(board._side_bitboards[chess::Black], square)) {
+        else if (bitboard_operations::get_bit(board.side_bitboard[chess::Black], square)) {
             side = chess::Black;
         }
         else {
@@ -37,7 +37,7 @@ zobrist::ZobristHash::ZobristHash(chess::Board board) {
         }
 
         for (uint8_t type = 0; type < 6; type = type + 1) {
-            if (bitboard_operations::get_bit(board._piece_bitboards[side][type], square)) {
+            if (bitboard_operations::get_bit(board.piece_bitboards[side][type], square)) {
                 this->hash = this->hash ^ zobrist::Constants[square][side][type];
                 break;
             }

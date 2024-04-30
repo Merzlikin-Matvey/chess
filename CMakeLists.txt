@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 project(chess-engine
-        VERSION 0.2.1
+        VERSION 0.2.2
         DESCRIPTION "Chess engine"
         LANGUAGES C CXX)
 
@@ -23,7 +23,8 @@ add_library(chess-engine SHARED
         include/headers/notations.hpp
         src/notations.cpp
         src/board/get_legal_moves.cpp
-        include/headers/masks.h
+        include/headers/masks.hpp
+        src/pawn_masks.cpp
 )
 
 add_library(chess-engine::chess-engine ALIAS chess-engine)

@@ -8,5 +8,5 @@
 #include "headers/fen.hpp"
 #include "headers/move.hpp"
 #include "headers/notations.hpp"
-#include "headers/masks.h"
+#include "headers/masks.hpp"
 

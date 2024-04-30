@@ -5,6 +5,26 @@
 
 #include <iostream>
 
+
+chess::Move::Move(){
+    first = 0;
+    first_side = 0;
+    first_type = 0;
+
+    second = 0;
+    second_side = 255;
+    second_type = 255;
+
+    w_l_castling = false;
+    w_s_castling = false;
+    b_l_castling = false;
+    b_s_castling = false;
+
+    pawn_double_move = false;
+    en_passant = false;
+    pawn_change_type = 255;
+}
+
 chess::Move::Move(uint8_t first,
            uint8_t first_side,
            uint8_t first_type,
@@ -80,4 +100,17 @@ void chess::Board::move(chess::Move move){
         bitboard_operations::set_0(_piece_bitboards[chess::Black][chess::Rook], 63);
         bitboard_operations::set_1(_piece_bitboards[chess::Black][chess::Rook], 61);
     }
+}
+
+chess::MoveArray::MoveArray(){
+    size = 0;
+}
+
+chess::Move chess::MoveArray::operator[](int index) const {
+    return this->moves[index];
+}
+
+void chess::MoveArray::push_back(const Move move){
+    this->moves[size] = move;
+    size++;
 }

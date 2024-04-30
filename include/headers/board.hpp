@@ -19,8 +19,8 @@ namespace chess {
 
         Bitboard _all;
         std::array<std::array<Bitboard, 6>, 2> _piece_bitboards{};
-        std::array<Bitboard, 2> _side_bitboards{};
-        std::array<Bitboard, 2> _inversion_side_bitboards{};
+        Bitboard _side_bitboard{};
+        Bitboard _inversion_side_bitboard{};
 
         std::vector<zobrist::ZobristHash> _hashes;
 

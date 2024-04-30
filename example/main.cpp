@@ -9,10 +9,7 @@ using namespace std;
 using namespace chess;
 
 int main() {
-
-
-
-
-
+    Board board = Board();
+    print_bitboard(board._all);
 
 }

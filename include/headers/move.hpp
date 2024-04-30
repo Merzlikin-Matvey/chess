@@ -1,10 +1,12 @@
 #pragma once
 
 #include <memory>
+#include <array>
 
 namespace chess {
     class Move {
     public:
+        Move();
         Move(uint8_t first,
              uint8_t first_side,
              uint8_t first_type,
@@ -36,5 +38,15 @@ namespace chess {
         bool pawn_double_move = false;
         bool en_passant = false;
         uint8_t pawn_change_type = 255;
+    };
+
+    class MoveArray {
+    public:
+        std::array<chess::Move, 218> moves{};
+        uint8_t size;
+        MoveArray();
+
+        Move operator[](int index) const;
+        void push_back(const Move move);
     };
 }

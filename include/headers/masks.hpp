@@ -5,6 +5,8 @@
 #include <string>
 #include <map>
 
+#include "headers/board.hpp"
+
 typedef uint64_t Bitboard;
 
 namespace masks {
@@ -86,6 +88,29 @@ namespace masks {
         return masks;
     }
 
+    static consteval std::array<Bitboard, 64> get_rook_masks(){
+        std::array<Bitboard, 64> masks{};
+        for (int i = 0; i < 64; i++) {
+            Bitboard up = get_directions_masks()[0][i];
+            Bitboard down = get_directions_masks()[1][i];
+            Bitboard right = get_directions_masks()[2][i];
+            Bitboard left = get_directions_masks()[3][i];
+            masks[i] = up | down | right | left;
+        }
+        return masks;
+    }
+
+    static consteval std::array<Bitboard, 64> get_bishop_masks(){
+        std::array<Bitboard, 64> masks{};
+        for (int i = 0; i < 64; i++) {
+            Bitboard up_right = get_directions_masks()[4][i];
+            Bitboard up_left = get_directions_masks()[5][i];
+            Bitboard down_right = get_directions_masks()[6][i];
+            Bitboard down_left = get_directions_masks()[7][i];
+            masks[i] = up_right | up_left | down_right | down_left;
+        }
+        return masks;
+    }
 
     static consteval std::array<Bitboard, 64> get_knight_masks() {
         std::array<Bitboard, 64> masks{};
@@ -128,6 +153,14 @@ namespace masks {
         return masks;
     }
 
+    static consteval std::array<Bitboard, 64> get_queen_masks() {
+        std::array<Bitboard, 64> masks{};
+        for (int i = 0; i < 64; i++) {
+            masks[i] = get_rook_masks()[i] | get_bishop_masks()[i];
+        }
+        return masks;
+    }
+
     static consteval std::array<Bitboard, 64> get_king_masks() {
         std::array<Bitboard, 64> masks{};
         for (int i = 0; i < 64; i++) {
@@ -160,5 +193,15 @@ namespace masks {
         }
         return masks;
     }
+
+    Bitboard get_pawn_short_mask(chess::Board board, uint8_t side);
+    Bitboard get_pawn_long_mask(chess::Board board, uint8_t side);
+    Bitboard get_pawn_right_mask(chess::Board board, uint8_t side);
+    Bitboard get_pawn_left_mask(chess::Board board, uint8_t side);
+
+
+
 }
+
+
 

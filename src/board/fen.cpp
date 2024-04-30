@@ -80,7 +80,7 @@ std::array<std::array<Bitboard, 6>, 2> chess::convert_fen_to_bitboards(std::stri
                 x++;
             }
         }
-        else{
+        else }
             if (symbol == 'w'){
                 side = White;
             } else if (symbol == 'b'){

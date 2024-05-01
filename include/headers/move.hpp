@@ -3,6 +3,8 @@
 #include <memory>
 #include <array>
 
+typedef uint64_t Bitboard;
+
 namespace chess {
     class Move {
     public:
@@ -43,10 +45,8 @@ namespace chess {
     class MoveArray {
     public:
         std::array<chess::Move, 218> moves{};
-        uint8_t size;
-        MoveArray();
 
-        Move operator[](int index) const;
-        void push_back(const Move move);
     };
+
+    MoveArray mask_to_moves(uint8_t piece, Bitboard mask);
 }

@@ -2,14 +2,14 @@
 #include "headers/constants.hpp"
 #include "headers/move.hpp"
 #include "headers/bitboard_operations.hpp"
+#include "headers/masks.hpp"
 
 #include <vector>
-
-std::vector<chess::Move> chess::Board::get_legal_moves() {
-
+#include <iostream>
 
 
 
-    std::vector<chess::Move> moves;
+chess::MoveArray chess::Board::get_legal_moves() {
+    MoveArray moves;
     return moves;
 }

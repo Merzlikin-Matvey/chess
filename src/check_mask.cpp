@@ -7,75 +7,101 @@
 
 #include <iostream>
 
-Bitboard masks::get_check_mask(chess::Board board, uint8_t side) {
-    Bitboard mask = 0;
+std::pair<Bitboard, Bitboard> masks::get_check_mask(chess::Board& board, uint8_t side) {
+    Bitboard hv_mask = 0, d_mask = 0, direction = 0, line;
+    int first, last, opponent, count;
+    uint8_t king_index = bitboard_operations::bitScanForward(board.piece_bitboards[side][chess::King]);
+    Bitboard queen_rook = board.piece_bitboards[!side][chess::Queen] | board.piece_bitboards[!side][chess::Rook];
+    Bitboard queen_bishop = board.piece_bitboards[!side][chess::Bishop] | board.piece_bitboards[!side][chess::Queen];
 
-    Bitboard pawns = board.piece_bitboards[!side][chess::Pawn];
-    Bitboard rooks = board.piece_bitboards[!side][chess::Rook];
-    Bitboard knights = board.piece_bitboards[!side][chess::Knight];
-    Bitboard bishops = board.piece_bitboards[!side][chess::Bishop];
-    Bitboard queens = board.piece_bitboards[!side][chess::Queen];
-
-    Bitboard king = board.piece_bitboards[side][chess::King];
-    uint8_t king_index = bitboard_operations::bitScanForward(king);
-
-
-
-
-    if (get_pawns_left_masks(board, !side) & king) {
-        if (side == chess::White){
-            bitboard_operations::set_1(mask, king_index + 9);
-        }
-        else {
-            bitboard_operations::set_1(mask, king_index - 7);
+    direction = masks::get_up_masks()[king_index];
+    opponent = bitboard_operations::bitScanForward(direction & queen_rook);
+    if (opponent != -1) {
+        line = masks::_get_line(opponent, king_index);
+        count = bitboard_operations::count_1(line & board.side_bitboards[side]);
+        if (count == 1) {
+            hv_mask |= line;
         }
     }
 
-    if (get_pawns_right_masks(board, !side) & king) {
-        if (side == chess::White){
-            bitboard_operations::set_1(mask, king_index + 7);
-        }
-        else {
-            bitboard_operations::set_1(mask, king_index - 9);
-        }
-    }
-
-    uint8_t index;
-
-    while (knights){
-        index = bitboard_operations::bitScanForward(knights);
-        bitboard_operations::set_0(knights, index);
-        if (get_knight_masks()[index] & king){
-            mask |= masks::get_lines()[index][king_index];
+    // Down
+    direction = masks::get_down_masks()[king_index];
+    opponent = bitboard_operations::bitScanReverse(direction & queen_rook);
+    if (opponent != -1) {
+        line = masks::_get_line(opponent, king_index);
+        count = bitboard_operations::count_1(line & board.side_bitboards[side]);
+        if (count == 1) {
+            hv_mask |= line;
         }
     }
 
-    while (rooks){
-        index = bitboard_operations::bitScanForward(rooks);
-        bitboard_operations::set_0(rooks, index);
-        if (get_rook_masks()[index] & king){
-            mask |= masks::get_lines()[index][king_index];
+    // Left
+    direction = masks::get_left_masks()[king_index];
+    opponent = bitboard_operations::bitScanReverse(direction & queen_rook);
+    if (opponent != -1) {
+        line = masks::_get_line(opponent, king_index);
+        count = bitboard_operations::count_1(line & board.side_bitboards[side]);
+        if (count == 1) {
+            hv_mask |= line;
         }
     }
 
-    while (bishops){
-        index = bitboard_operations::bitScanForward(bishops);
-        bitboard_operations::set_0(bishops, index);
-        if (get_bishop_masks()[index] & king){
-            mask |= masks::get_lines()[index][king_index];
+    // Right
+    direction = masks::get_right_masks()[king_index];
+    opponent = bitboard_operations::bitScanForward(direction & queen_rook);
+    if (opponent != -1) {
+        line = masks::_get_line(opponent, king_index);
+        count = bitboard_operations::count_1(line & board.side_bitboards[side]);
+        if (count == 1) {
+            hv_mask |= line;
         }
     }
 
-    while (queens){
-        index = bitboard_operations::bitScanForward(queens);
-        bitboard_operations::set_0(queens, index);
-        if (get_queen_masks()[index] & king){
-            mask |= masks::get_lines()[index][king_index];
+    // Up left
+    direction = masks::get_up_left_masks()[king_index];
+    opponent = bitboard_operations::bitScanReverse(direction & queen_bishop);
+    if (opponent != -1) {
+        line = masks::_get_line(opponent, king_index);
+        count = bitboard_operations::count_1(line & board.side_bitboards[side]);
+        if (count == 1) {
+            d_mask |= line;
+        }
+    }
+
+    // Up right
+    direction = masks::get_up_right_masks()[king_index];
+    opponent = bitboard_operations::bitScanForward(direction & queen_bishop);
+    if (opponent != -1) {
+        line = masks::_get_line(opponent, king_index);
+        count = bitboard_operations::count_1(line & board.side_bitboards[side]);
+        if (count == 1) {
+            d_mask |= line;
+        }
+    }
+
+    // Down left
+    direction = masks::get_down_left_masks()[king_index];
+    opponent = bitboard_operations::bitScanReverse(direction & queen_bishop);
+    if (opponent != -1) {
+        line = masks::_get_line(opponent, king_index);
+        count = bitboard_operations::count_1(line & board.side_bitboards[side]);
+        if (count == 1) {
+            d_mask |= line;
+        }
+    }
+
+    // Down right
+    direction = masks::get_down_right_masks()[king_index];
+    opponent = bitboard_operations::bitScanForward(direction & queen_bishop);
+    if (opponent != -1) {
+        line = masks::_get_line(opponent, king_index);
+        count = bitboard_operations::count_1(line & board.side_bitboards[side]);
+        if (count == 1) {
+            d_mask |= line;
         }
     }
 
 
-    return mask;
-
+    return {hv_mask, d_mask};
 
 }

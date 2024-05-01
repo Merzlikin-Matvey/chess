@@ -102,15 +102,3 @@ void chess::Board::move(chess::Move move){
     }
 }
 
-chess::MoveArray::MoveArray(){
-    size = 0;
-}
-
-chess::Move chess::MoveArray::operator[](int index) const {
-    return this->moves[index];
-}
-
-void chess::MoveArray::push_back(const Move move){
-    this->moves[size] = move;
-    size++;
-}

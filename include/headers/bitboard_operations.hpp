@@ -27,7 +27,7 @@ namespace bitboard_operations {
     #endif
     }
 
-    static constexpr uint8_t bitScanForward(Bitboard bb) {
+    static constexpr int bitScanForward(Bitboard bb) {
     #if defined(__GNUC__) || defined(__clang__)
             return __builtin_ffsll(bb) - 1;
     #elif defined(_MSC_VER)
@@ -39,7 +39,7 @@ namespace bitboard_operations {
     #endif
     }
 
-    static constexpr uint8_t bitScanReverse(Bitboard bb) {
+    static constexpr int bitScanReverse(Bitboard bb) {
     #if defined(__GNUC__) || defined(__clang__)
             return 63 - __builtin_clzll(bb);
     #elif defined(_MSC_VER)

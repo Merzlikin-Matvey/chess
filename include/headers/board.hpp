@@ -19,7 +19,7 @@ namespace chess {
 
         Bitboard all;
         std::array<std::array<Bitboard, 6>, 2> piece_bitboards{};
-        std::array<Bitboard, 2> side_bitboard;
+        std::array<Bitboard, 2> side_bitboards;
 
         std::vector<zobrist::ZobristHash> _hashes;
 
@@ -37,7 +37,7 @@ namespace chess {
 
         void move(Move move);
 
-        std::vector<Move> get_legal_moves();
+        static MoveArray get_legal_moves();
 
         bool operator==(const Board &board) const;
         bool operator!=(const Board &board) const;

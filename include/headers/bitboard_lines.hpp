@@ -57,18 +57,18 @@ namespace masks {
         } else {
             bitboard_operations::set_1(mask, x);
             return mask;
-
-            return mask;
         }
     }
 
-    static consteval std::array<std::array<Bitboard, 64>, 64> get_lines(){
+    static consteval std::array<std::array<Bitboard, 64>, 64> calcMasks() {
         std::array<std::array<Bitboard, 64>, 64> masks{};
-        for (int i = 0; i < 64; i++) {
-            for (int j = 0; j < 64; j++) {
-                masks[i][j] = _get_line(i, j);
+        for (uint8_t i = 0; i < 64; i = i + 1) {
+            for (uint8_t j = 0; j < 64; j = j + 1) {
+                masks[i][j] = masks::_get_line(i, j);
             }
         }
         return masks;
     }
+    static constexpr std::array<std::array<Bitboard, 64>, 64> lines = calcMasks();
+
 }

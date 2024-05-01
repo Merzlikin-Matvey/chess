@@ -6,16 +6,115 @@
 #include <map>
 #include <iostream>
 
+
 #include "headers/board.hpp"
 
 
 typedef uint64_t Bitboard;
 
 namespace masks {
-    static consteval std::array<Bitboard, 64> get_rook_masks(){
+
+    static consteval std::array<Bitboard, 64> get_up_masks(){
         std::array<Bitboard, 64> masks{};
         for (int i = 0; i < 64; i++) {
+            Bitboard mask = 0;
+            for (int j = i + 8; j < 64; j += 8) {
+                mask |= (1ull << j);
+            }
+            masks[i] = mask;
+        }
+        return masks;
+    }
+
+    static consteval std::array<Bitboard, 64> get_down_masks(){
+        std::array<Bitboard, 64> masks{};
+        for (int i = 0; i < 64; i++) {
+            Bitboard mask = 0;
+            for (int j = i - 8; j >= 0; j -= 8) {
+                mask |= (1ull << j);
+            }
+            masks[i] = mask;
+        }
+        return masks;
+    }
+
+    static consteval std::array<Bitboard, 64> get_right_masks(){
+        std::array<Bitboard, 64> masks{};
+        for (int i = 0; i < 64; i++) {
+            Bitboard mask = 0;
+            for (int j = i + 1; j % 8 != 0 and j < 64; j++) {
+                mask |= (1ull << j);
+            }
+            masks[i] = mask;
+        }
+        return masks;
+    }
+
+    static consteval std::array<Bitboard, 64> get_left_masks(){
+        std::array<Bitboard, 64> masks{};
+        for (int i = 0; i < 64; i++) {
+            Bitboard mask = 0;
+            for (int j = i - 1; j % 8 != 7 and j > 0; j--) {
+                mask |= (1ull << j);
+            }
+            masks[i] = mask;
+        }
+        return masks;
+    }
+
+    static consteval std::array<Bitboard, 64> get_up_right_masks(){
+        std::array<Bitboard, 64> masks{};
+        for (int i = 0; i < 64; i++) {
+            Bitboard mask = 0;
+            for (int j = i + 9; j % 8 != 0 and j < 64; j += 9) {
+                mask |= (1ull << j);
+            }
+            masks[i] = mask;
+        }
+        return masks;
+    }
+
+    static consteval std::array<Bitboard, 64> get_up_left_masks(){
+        std::array<Bitboard, 64> masks{};
+        for (int i = 0; i < 64; i++) {
+            Bitboard mask = 0;
+            for (int j = i + 7; j % 8 != 7 and j < 64; j += 7) {
+                mask |= (1ull << j);
+            }
+            masks[i] = mask;
+        }
+        return masks;
+    }
+
+    static consteval std::array<Bitboard, 64> get_down_right_masks(){
+        std::array<Bitboard, 64> masks{};
+        for (int i = 0; i < 64; i++) {
+            Bitboard mask = 0;
+            for (int j = i - 7; j % 8 != 0 and j > 0; j -= 7) {
+                mask |= (1ull << j);
+            }
+            masks[i] = mask;
+        }
+        return masks;
+    }
+
+    static consteval std::array<Bitboard, 64> get_down_left_masks(){
+        std::array<Bitboard, 64> masks{};
+        for (int i = 0; i < 64; i++) {
+            Bitboard mask = 0;
+            for (int j = i - 9; j % 8 != 7 and j > 0; j -= 9) {
+                mask |= (1ull << j);
+            }
+            masks[i] = mask;
+        }
+        return masks;
+    }
+
+    static consteval std::array<std::array<Bitboard, 64>, 8> get_directional_masks(){
+        std::array<std::array<Bitboard, 64>, 8> masks{};
+        for (int i = 0; i < 64; i++) {
             Bitboard up = 0, down = 0, right = 0, left = 0;
+            Bitboard up_right = 0, up_left = 0, down_right = 0, down_left = 0;
             for (int j = i + 8; j < 64; j += 8) {
                 up |= (1ull << j);
             }
@@ -28,16 +127,6 @@ namespace masks {
             for (int j = i - 1; j % 8 != 7 and j > 0; j--) {
                 left |= (1ull << j);
             }
-
-            masks[i] = up | down | right | left;
-        }
-        return masks;
-    }
-
-    static consteval std::array<Bitboard, 64> get_bishop_masks(){
-        std::array<Bitboard, 64> masks{};
-        for (int i = 0; i < 64; i++) {
-            Bitboard up_right = 0, up_left = 0, down_right = 0, down_left = 0;
             for (int j = i + 9; j % 8 != 0 and j < 64; j += 9) {
                 up_right |= (1ull << j);
             }
@@ -50,8 +139,20 @@ namespace masks {
             for (int j = i - 9; j % 8 != 7 and j > 0; j -= 9) {
                 down_left |= (1ull << j);
             }
-            masks[i] = up_right | up_left | down_right | down_left;
+            masks[0][i] = up;
+            masks[1][i] = down;
+            masks[2][i] = right;
+            masks[3][i] = left;
+            masks[4][i] = up_right;
+            masks[5][i] = up_left;
+            masks[6][i] = down_right;
+            masks[7][i] = down_left;
         }
+        return masks;
+    }
+
+    static consteval std::array<std::array<Bitboard, 1024>, 64> generate_rook_masks(){
+        std::array<std::array<Bitboard, 1024>, 64> masks{};
         return masks;
     }
 
@@ -112,14 +213,6 @@ namespace masks {
         return masks;
     }
 
-    static consteval std::array<Bitboard, 64> get_queen_masks() {
-        std::array<Bitboard, 64> masks{};
-        for (int i = 0; i < 64; i++) {
-            masks[i] = get_rook_masks()[i] | get_bishop_masks()[i];
-        }
-        return masks;
-    }
-
     static consteval std::array<Bitboard, 64> get_king_masks() {
         std::array<Bitboard, 64> masks{};
         for (int i = 0; i < 64; i++) {
@@ -153,16 +246,7 @@ namespace masks {
         return masks;
     }
 
-
-    Bitboard get_pawns_short_masks(chess::Board board, uint8_t side);
-    Bitboard get_pawns_long_masks(chess::Board board, uint8_t side);
-    Bitboard get_pawns_right_masks(chess::Board board, uint8_t side);
-    Bitboard get_pawns_left_masks(chess::Board board, uint8_t side);
-
-
-    // TODO: взятия на проходе и рокировки
-
-    Bitboard get_check_mask(chess::Board board, uint8_t side);
+    std::pair<Bitboard, Bitboard> get_check_mask(chess::Board& board, uint8_t side);
 
 }
 

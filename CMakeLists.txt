@@ -1,33 +1,21 @@
 cmake_minimum_required(VERSION 3.14)
 project(chess-engine
-        VERSION 0.2.3
+        VERSION 0.2.4
         DESCRIPTION "Chess engine"
         LANGUAGES C CXX)
 
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
 set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -flto")
-set(CMAKE_CXX_STANDARD 20)
-
-
+set(CMAKE_CXX_STANDARD 23)
 
 #------------------------------#
 # General settings and options #
 #------------------------------#
 
 add_library(chess-engine SHARED
-        src/zobrist.cpp
-        include/headers/fen.hpp
-        src/board/history.cpp
-        src/move.cpp
-        include/headers/move.hpp
-        include/headers/notations.hpp
-        src/notations.cpp
-        src/board/get_legal_moves.cpp
-        include/headers/masks.hpp
-        src/pawn_masks.cpp
-        src/check_mask.cpp
-        include/headers/bitboard_lines.hpp
-)
+        src/magic_numbers/generate_rook_magic_number.c
+        src/magic_numbers/generate_bishop_magic_number.c
+        src/magic_numbers/random_generator.cpp)
 
 add_library(chess-engine::chess-engine ALIAS chess-engine)
 
@@ -45,10 +33,7 @@ option(CHESS_ENGINE_INSTALL "Generate target for installing chess-engine" ${is_t
 set_if_undefined(CHESS_ENGINE_INSTALL_CMAKEDIR
         "${CMAKE_INSTALL_LIBDIR}/cmake/chess-engine-${PROJECT_VERSION}" CACHE STRING
         "Install path for chess-engine package-related CMake files")
-find_package(OpenMP)
-if(OpenMP_CXX_FOUND)
-    target_link_libraries(chess-engine PUBLIC OpenMP::OpenMP_CXX)
-endif()
+
 if(DEFINED CHESS_ENGINE_SHARED_LIBS)
     set(BUILD_SHARED_LIBS ${CHESS_ENGINE_SHARED_LIBS})
 endif()
@@ -57,7 +42,10 @@ endif()
 #         Dependencies         #
 #------------------------------#
 
-# TODO: Add dependencies
+find_package(OpenMP)
+if(OpenMP_CXX_FOUND)
+    target_link_libraries(chess-engine PUBLIC OpenMP::OpenMP_CXX)
+endif()
 
 #------------------------------#
 #         Source files         #
@@ -72,6 +60,7 @@ endif()
 
 generate_export_header(chess-engine EXPORT_FILE_NAME include/${export_file_name})
 
+
 set(public_headers
         include/export.h
         include/chess-engine.hpp
@@ -81,13 +70,24 @@ set(public_headers
         include/headers/constants.hpp
         include/headers/zobrist.hpp
         include/headers/bitboard_lines.hpp
+        include/headers/fen.hpp
+        include/headers/move.hpp
+        include/headers/notations.hpp
+        include/headers/masks.hpp
+        include/headers/bitboard_lines.hpp
 )
+
 set(sources
         ${public_headers}
         src/board/board.cpp
         src/board/fen.cpp
         src/board/output.cpp
-
+        src/zobrist.cpp
+        src/board/history.cpp
+        src/move.cpp
+        src/notations.cpp
+        src/board/get_legal_moves.cpp
+        src/check_mask.cpp
 )
 
 

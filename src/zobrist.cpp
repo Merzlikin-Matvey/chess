@@ -26,10 +26,10 @@ zobrist::ZobristHash::ZobristHash(chess::Board board) {
 
     uint8_t side;
     for (uint8_t square = 0; square < 64; square = square + 1) {
-        if (bitboard_operations::get_bit(board.side_bitboard[chess::White], square)) {
+        if (bitboard_operations::get_bit(board.side_bitboards[chess::White], square)) {
             side = chess::White;
         }
-        else if (bitboard_operations::get_bit(board.side_bitboard[chess::Black], square)) {
+        else if (bitboard_operations::get_bit(board.side_bitboards[chess::Black], square)) {
             side = chess::Black;
         }
         else {

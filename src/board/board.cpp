@@ -8,27 +8,27 @@
 
 chess::Board::Board(std::array<std::array<Bitboard, 6>, 2> board) {
     piece_bitboards = board;
-    side_bitboard = {0, 0};
+    side_bitboards = {0, 0};
     all = 0;
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 6; j++) {
-            side_bitboard[i] |= board[i][j];
+            side_bitboards[i] |= board[i][j];
         }
     }
-    all = side_bitboard[0] | side_bitboard[1];
+    all = side_bitboards[0] | side_bitboards[1];
 
 }
 
 chess::Board::Board(std::string fen){
     piece_bitboards = chess::convert_fen_to_bitboards(fen);
-    side_bitboard = {0, 0};
+    side_bitboards = {0, 0};
     all = 0;
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 6; j++) {
-            side_bitboard[i] |= piece_bitboards[i][j];
+            side_bitboards[i] |= piece_bitboards[i][j];
         }
     }
-    all = side_bitboard[0] | side_bitboard[1];
+    all = side_bitboards[0] | side_bitboards[1];
 }
 
 
@@ -36,14 +36,14 @@ chess::Board::Board(std::string fen){
 chess::Board::Board() {
     std::array<std::array<Bitboard, 6>, 2> board = chess::convert_default_positions();
     piece_bitboards = board;
-    side_bitboard = {0, 0};
+    side_bitboards = {0, 0};
     all = 0;
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 6; j++) {
-            side_bitboard[i] |= board[i][j];
+            side_bitboards[i] |= board[i][j];
         }
     }
-    all = side_bitboard[0] | side_bitboard[1];
+    all = side_bitboards[0] | side_bitboards[1];
 
 
 }

@@ -10,4 +10,5 @@
 #include "headers/notations.hpp"
 #include "headers/masks.hpp"
 #include "headers/bitboard_lines.hpp"
+#include "headers/magic_numbers.hpp"
 

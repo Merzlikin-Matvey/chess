@@ -31,13 +31,13 @@ std::ostream& chess::operator<<(std::ostream &ostream, chess::Board board) {
                     ostream << "p";
                     break;
                 case 7:
-                    ostream << "n";
+                    ostream << "r";
                     break;
                 case 8:
                     ostream << "b";
                     break;
                 case 9:
-                    ostream << "r";
+                    ostream << "n";
                     break;
                 case 10:
                     ostream << "q";

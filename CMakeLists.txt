@@ -7,6 +7,7 @@ project(chess-engine
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
 set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -flto")
 set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fconstexpr-ops-limit=1000000000 -fconstexpr-loop-limit=1000000000")
 
 #------------------------------#
 # General settings and options #
@@ -87,7 +88,6 @@ set(sources
         src/move.cpp
         src/notations.cpp
         src/board/get_legal_moves.cpp
-        src/check_mask.cpp
 )
 
 

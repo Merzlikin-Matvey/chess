@@ -34,7 +34,7 @@ namespace chess::magic_numbers{
         }
     }
 
-    std::array<Bitboard, 64> rook_magic_numbers = {
+    static constexpr std::array<Bitboard, 64> rook_magic_numbers = {
             0x7dca766d50180000, 0xbfcd1c2002fe0200, 0x751266262c018110, 0xe5c145c0f10a0014,
             0x7049675360954212, 0x1d724a807d170020, 0x700a0e8361820000, 0x7ed40c3930a11000,
             0x18450121a60002, 0x544451af3a093008, 0x1a8428a80d620108, 0x353676c04d881000,

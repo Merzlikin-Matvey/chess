@@ -5,7 +5,7 @@
 
 typedef uint64_t Bitboard;
 
-namespace masks {
+namespace chess::masks {
     static constexpr Bitboard _get_line(uint8_t x, uint8_t y) {
         Bitboard mask = 0;
         if (x == y) {

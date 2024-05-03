@@ -2,7 +2,6 @@
 #include "headers/constants.hpp"
 #include "headers/move.hpp"
 #include "headers/bitboard_operations.hpp"
-#include "headers/masks.hpp"
 
 #include <vector>
 #include <iostream>

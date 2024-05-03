@@ -24,7 +24,16 @@ void test(){
 }
 
 int main() {
-    test();
+    std::array<std::array<Bitboard, 1024>, 64> masks{};
+    std::array<Bitboard, 64> magic_numbers = magic_numbers::rook_magic_numbers;
+    Bitboard magic;
+    Bitboard mask = 0;
+    Bitboard board;
+
+    magic = magic_numbers[0];
+    board = board >> 54;
+    board /= magic;
+    print_bitboard(board);
 
 
 

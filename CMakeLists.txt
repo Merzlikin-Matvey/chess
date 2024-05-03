@@ -73,7 +73,7 @@ set(public_headers
         include/headers/fen.hpp
         include/headers/move.hpp
         include/headers/notations.hpp
-        include/headers/masks.hpp
+        include/headers/rook_masks.hpp
         include/headers/bitboard_lines.hpp
 )
 

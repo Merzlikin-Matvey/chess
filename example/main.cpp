@@ -10,7 +10,6 @@ using namespace chess;
 
 
 int main() {
-    chess::magic_numbers::fancy_print_bishop_magic_numbers();
-
-
+    auto masks = masks::bishop_masks;
+    print_bitboard(masks[0][0]);
 }

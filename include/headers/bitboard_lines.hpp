@@ -60,7 +60,7 @@ namespace chess::masks {
         }
     }
 
-    static consteval std::array<std::array<Bitboard, 64>, 64> calcMasks() {
+    static consteval std::array<std::array<Bitboard, 64>, 64> _get_lines() {
         std::array<std::array<Bitboard, 64>, 64> masks{};
         for (uint8_t i = 0; i < 64; i = i + 1) {
             for (uint8_t j = 0; j < 64; j = j + 1) {
@@ -69,6 +69,6 @@ namespace chess::masks {
         }
         return masks;
     }
-    static constexpr std::array<std::array<Bitboard, 64>, 64> lines = calcMasks();
+    constexpr std::array<std::array<Bitboard, 64>, 64> lines = _get_lines();
 
 }

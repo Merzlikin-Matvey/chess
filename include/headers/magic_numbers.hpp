@@ -5,14 +5,14 @@
 
 typedef uint64_t Bitboard;
 
+
 extern "C" {
-    uint64_t generate_rook_magic_number(uint8_t square);
-    uint64_t generate_bishop_magic_number(uint8_t square);
+    #include "C functions/magic_numbers.h"
 }
 
 namespace chess::magic_numbers{
     Bitboard generate_rook_magic_number(uint8_t square) {
-        return ::generate_rook_magic_number(square);
+        return ::_c_generate_rook_magic_number(square);
     }
 
     std::array<Bitboard, 64> generate_rook_magic_numbers() {
@@ -23,7 +23,6 @@ namespace chess::magic_numbers{
         return magic_numbers;
     }
 
-    // Можно вставить результат как константу в код ниже
     void fancy_print_rook_magic_numbers() {
         std::array<Bitboard, 64> magic_numbers = generate_rook_magic_numbers();
         for (uint8_t square = 0; square < 64; square += 4) {
@@ -34,7 +33,30 @@ namespace chess::magic_numbers{
         }
     }
 
-    static constexpr std::array<Bitboard, 64> rook_magic_numbers = {
+    Bitboard generate_bishop_magic_number(uint8_t square) {
+        return ::_c_generate_bishop_magic_number(square);
+    }
+
+    std::array<Bitboard, 64> generate_bishop_magic_numbers() {
+        std::array<Bitboard, 64> magic_numbers{};
+        for (uint8_t square = 0; square < 64; square++) {
+            magic_numbers[square] = generate_bishop_magic_number(square);
+        }
+        return magic_numbers;
+    }
+
+    void fancy_print_bishop_magic_numbers() {
+        std::array<Bitboard, 64> magic_numbers = generate_bishop_magic_numbers();
+        for (uint8_t square = 0; square < 64; square += 4) {
+            std::cout << "0x" << std::hex << magic_numbers[square] << ", "
+                      << "0x"<< std::hex << magic_numbers[square + 1] << ", "
+                      << "0x"<< std::hex << magic_numbers[square + 2] << ", "
+                      << "0x"<< std::hex << magic_numbers[square + 3] << "," << std::endl;
+        }
+    }
+
+    // Constants
+    const std::array<Bitboard, 64> rook_magic_numbers = {
             0x7dca766d50180000, 0x1a49239548d70068, 0x751266262c018110, 0x8261742f33246085,
             0x1f50155248e40420, 0x6af0210d0b842000, 0x84ea509625310000, 0x6f9068a544d48284,
             0x5389cc3179a21404, 0x108b73d9716b1011, 0x652a087401000080, 0x96a2cd1350c8250,
@@ -51,37 +73,9 @@ namespace chess::magic_numbers{
             0x6a94439078a11000, 0x565925539deb4040, 0xa3081b7241ba8204, 0x45381b296d460008,
             0x58072ec028d90800, 0x3eea11c802b1204c, 0x57a3321893a00001, 0x30946dd84e268201,
             0x6c88089e3ccc1040, 0x85e28a91c200101, 0x394e240444530040, 0x5dc416262a990000,
-
-
-
-
     };
 
-
-    Bitboard generate_bishop_magic_number(uint8_t square) {
-        return ::generate_bishop_magic_number(square);
-    }
-
-    std::array<Bitboard, 64> generate_bishop_magic_numbers() {
-        std::array<Bitboard, 64> magic_numbers{};
-        for (uint8_t square = 0; square < 64; square++) {
-            magic_numbers[square] = generate_bishop_magic_number(square);
-        }
-        return magic_numbers;
-    }
-
-    // Можно вставить результат как константу в код ниже
-    void fancy_print_bishop_magic_numbers() {
-        std::array<Bitboard, 64> magic_numbers = generate_bishop_magic_numbers();
-        for (uint8_t square = 0; square < 64; square += 4) {
-            std::cout << "0x" << std::hex << magic_numbers[square] << ", "
-                      << "0x"<< std::hex << magic_numbers[square + 1] << ", "
-                      << "0x"<< std::hex << magic_numbers[square + 2] << ", "
-                      << "0x"<< std::hex << magic_numbers[square + 3] << "," << std::endl;
-        }
-    }
-
-    std::array<Bitboard, 64> bishop_magic_numbers = {
+    const std::array<Bitboard, 64> bishop_magic_numbers = {
             0x1f165d9a51400a00, 0x7e48ffae265f0880, 0x69fd16f15a390060, 0x138c1f8e5f4b0023,
             0x215362b49550304, 0x270710a86a625040, 0x5be60bb257290032, 0x6fb82dd0480c0080,
             0x3e87ebd315504021, 0x2412196b38d50600, 0x96a5b8a4d720080, 0x2ad1524341091020,
@@ -100,6 +94,7 @@ namespace chess::magic_numbers{
             0x6517e2004d584008, 0x2f4486a540a41000, 0x54811b8916a80086, 0xb0940a400493008,
 
     };
+
 
 }
 

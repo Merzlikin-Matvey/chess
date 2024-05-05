@@ -1,5 +1,10 @@
 #pragma once
 
+#include <array>
+#include <memory>
+
+typedef uint64_t Bitboard;
+
 namespace chess::masks {
     static consteval std::array<Bitboard, 64> get_knight_masks() {
         std::array<Bitboard, 64> masks{};

@@ -13,9 +13,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fconstexpr-ops-limit=1000000000 -fconst
 # General settings and options #
 #------------------------------#
 
-add_library(chess-engine SHARED
-        include/headers/masks_utils.hpp
-        include/headers/bishop_masks.hpp)
+add_library(chess-engine SHARED)
 
 add_library(chess-engine::chess-engine ALIAS chess-engine)
 
@@ -76,6 +74,9 @@ set(public_headers
         include/headers/rook_masks.hpp
         include/headers/bitboard_lines.hpp
         include/headers/magic_numbers.hpp
+        include/headers/masks_utils.hpp
+        include/headers/bishop_masks.hpp
+        include/headers/king_knight_masks.hpp
 )
 
 set(sources
@@ -88,11 +89,8 @@ set(sources
         src/move.cpp
         src/notations.cpp
         src/board/get_legal_moves.cpp
-        src/magic_numbers/set_rook_board.c
         src/magic_numbers/random_generator.c
-        src/magic_numbers/generate_magic_number.c
-        src/magic_numbers/set_bishop_board.c
-        src/magic_numbers/generate_magics.c
+        src/magic_numbers/generate_bishop_magic_numbers.c
 )
 
 

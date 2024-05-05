@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <array>
+#include <iostream>
 
 typedef uint64_t Bitboard;
 
@@ -11,30 +12,8 @@ extern "C" {
 }
 
 namespace chess::magic_numbers{
-    Bitboard generate_rook_magic_number(uint8_t square) {
-        return ::_c_generate_rook_magic_number(square);
-    }
-
-    std::array<Bitboard, 64> generate_rook_magic_numbers() {
-        std::array<Bitboard, 64> magic_numbers{};
-        for (uint8_t square = 0; square < 64; square++) {
-            magic_numbers[square] = generate_rook_magic_number(square);
-        }
-        return magic_numbers;
-    }
-
-    void fancy_print_rook_magic_numbers() {
-        std::array<Bitboard, 64> magic_numbers = generate_rook_magic_numbers();
-        for (uint8_t square = 0; square < 64; square += 4) {
-            std::cout << "0x" << std::hex << magic_numbers[square] << ", "
-                      << "0x"<< std::hex << magic_numbers[square + 1] << ", "
-                      << "0x"<< std::hex << magic_numbers[square + 2] << ", "
-                      << "0x"<< std::hex << magic_numbers[square + 3] << "," << std::endl;
-        }
-    }
-
     Bitboard generate_bishop_magic_number(uint8_t square) {
-        return ::_c_generate_bishop_magic_number(square);
+        return ::_generate_bishop_magic_number(square);
     }
 
     std::array<Bitboard, 64> generate_bishop_magic_numbers() {
@@ -76,23 +55,22 @@ namespace chess::magic_numbers{
     };
 
     constexpr std::array<Bitboard, 64> bishop_magic_numbers = {
-            0x448a0f9308448000, 0x40156045e44d600, 0xf4417f0240de0000, 0x132344d454330600,
-            0x1973634a1d1b4010, 0x2a2103f6c420020, 0x38dd09eb5bf70012, 0x40140926680e0800,
-            0x434b450f08872402, 0x834411204810000, 0x20be12d60bd58400, 0x515a4a43c0c50001,
-            0x17661d0ec2080008, 0x2a6ef96a201c0104, 0x7616781914ad0810, 0x4cab80725ec50510,
-            0x29cc2670ec8a2800, 0x328643050d522200, 0x587e11aa6eac0000, 0x7dca766d50180000,
-            0x37eb189f4e4a0004, 0x28e45e5760930100, 0xd53215d135044840, 0x7378522085240202,
-            0x210b91713c4d0008, 0x155b60481d44008c, 0x3f3b1d3e20ca0200, 0x49ef118b253c0000,
-            0x1d903a0156260800, 0x4b907b0450964a0e, 0x6245930023400c8, 0x50dc7d253e860380,
-            0x130f0c7400350004, 0x75f23c292d309200, 0x483402c860230200, 0x6ec002d1511d0008,
-            0x424b6976146f2411, 0x31b1094759820080, 0x48c0d8dc44630800, 0x54704a50725a1001,
-            0x141e522ce8880000, 0x62c92b58574b0080, 0xd580666415660020, 0x443750e45e420100,
-            0x3198222a4f740082, 0x42c2b504a4982d03, 0x5141393c09530204, 0x1a103f8868d02100,
-            0x276312a8048e0000, 0x50391a6511243000, 0x12e50dc431a8102, 0x447e1252ac2c0412,
-            0xc28849a10100010, 0x549ccfb640102c4, 0xc46235551113080, 0xfaae14f1a4200000,
-            0x46cc403bfc120000, 0x488d69a80a361008, 0x588742b0009e0103, 0x483d208272820100,
-            0x65251a1208922090, 0x9c0cf584ebe84000, 0xa34678342111000, 0x774acb52830008
-
+            0x777f67fefe7b4873, 0xdd597efff65f58ec, 0x5fe97ddf58fed7ab, 0x41f77ffbfde7e146,
+            0x5bfc72e24df527f8, 0x3f1ff9f8efef438d, 0x3f7635defdef7263, 0xdbffd7bfefe9079a,
+            0xffe65dbb531fd7b7, 0xfeb3e57972bbd95a, 0x63adbb7ff31da317, 0xad5d7febf5fea8d4,
+            0xfdabcff3dbcfe0c6, 0x76fffff72cfc8611, 0xc69e3f97f8778641, 0xfd3dff7fedfef087,
+            0x5f76fdefe97fd4a1, 0xd777fcebadff2367, 0xf77e7f25de7e2a97, 0xffea5bfeff7b7796,
+            0xd7bfbc7d78fe4e2a, 0x6aec7dfef67b06fb, 0xdff6feefcf7c8f54, 0xeded3b5b7fdfa45c,
+            0xf94a5f9e7cfebb43, 0x5bfb7ffbffeec33a, 0xf5fff72fffdb3fe6, 0xf3fde5bfb77ec794,
+            0x7df51fd937ffa861, 0xbdcffdfdff5e26bb, 0xb6ab3ffbf75f4095, 0x77bf77fbf5fd50b3,
+            0x7f357def1fffbf00, 0x9fe9fba1dfbf0ae5, 0xefda750b5fdf7fd0, 0x79dd06ff47e696bd,
+            0x1ebf7f3f7fdf9ea8, 0x7fdffffbe57efdc5, 0x3b547bf73e5b82c5, 0xbb7e3b4ffbfb2f63,
+            0xe1bfdff5fe770624, 0xda3771fe110f59dc, 0xe6eb7ffdd9ee11f2, 0x7e3f6d14bfbf703b,
+            0x7e33f7df6eebc550, 0xd6ffde6ffbff015c, 0x4ffb43ffe4ef0119, 0x7fbb5fdb707da5f5,
+            0x778b1ee9ffba011c, 0xff7fffe77aff7029, 0x5ffd77a5ffff7713, 0x7fb73efeef7fd3e8,
+            0x1bdaf73b9fbfe8e0, 0xdf7d5dedeabf1a34, 0x5dbf6f7f5b4e8277, 0xd7fa4bdf7c7cfd05,
+            0x6feedc96fe7ffa2b, 0xdbfa79df7bf7aaa2, 0xedbefffe21fde373, 0x5fbb6ba7bffc29d3,
+            0xfff77db437bbc9af, 0xbffffff7e7ff0a9e, 0x7b5fff73dd9f3149, 0x5ffdfdf77e4eb5a9,
     };
 
 

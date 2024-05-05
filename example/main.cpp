@@ -10,6 +10,7 @@ using namespace chess;
 
 
 int main() {
-    auto masks = masks::bishop_masks;
-    print_bitboard(masks[0][0]);
+    Board board = Board("8/8/8/8/8/8/8/2b5");
+    print_bitboard(masks::get_bishop_mask(board, 2, 0));
+
 }

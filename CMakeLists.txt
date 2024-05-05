@@ -13,7 +13,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fconstexpr-ops-limit=1000000000 -fconst
 # General settings and options #
 #------------------------------#
 
-add_library(chess-engine SHARED)
+add_library(chess-engine SHARED
+        src/magic_numbers/generate_rook_magic_numbers.c)
 
 add_library(chess-engine::chess-engine ALIAS chess-engine)
 

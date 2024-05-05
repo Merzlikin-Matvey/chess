@@ -53,9 +53,7 @@ namespace chess::masks {
         return (board * magic_number) >> (64 - num_bits);
     }
 
-
-
-    static constexpr std::array<Bitboard , 4096> _generate_rook_masks(uint8_t square){
+     constexpr std::array<Bitboard , 4096> generate_primary_rook_masks(uint8_t square){
         std::array<Bitboard , 4096> masks = {};
         Bitboard board, mask;
         uint8_t num_up_bits = up_bits[square];
@@ -139,15 +137,58 @@ namespace chess::masks {
         return masks;
     }
 
-     consteval std::array<std::array<Bitboard, 4096>, 64> _get_rook_masks(){
+    static consteval std::array<std::array<Bitboard, 4096>, 64> get_primary_rook_masks(){
         std::array<std::array<Bitboard, 4096>, 64> masks{};
         for (uint8_t square = 0; square < 64; square++) {
-            masks[square] = _generate_rook_masks(square);
+            masks[square] = generate_primary_rook_masks(square);
         }
         return masks;
     }
 
-     constexpr std::array<std::array<Bitboard, 4096>, 64> rook_masks = _get_rook_masks();
+    static constexpr Bitboard get_secondary_rook_mask(uint8_t square) {
+        Bitboard mask = 0;
+        uint8_t num_up_bits = up_bits[square];
+        uint8_t num_down_bits = down_bits[square];
+        uint8_t num_right_bits = right_bits[square];
+        uint8_t num_left_bits = left_bits[square];
+
+        for (uint8_t i = 0; i < num_up_bits; i++){
+            bitboard_operations::set_1(mask, square + 8 * (i + 1));
+        }
+
+        for (uint8_t i = 0; i < num_down_bits; i++){
+            bitboard_operations::set_1(mask, square - 8 * (i + 1));
+        }
+
+        for (uint8_t i = 0; i < num_right_bits; i++){
+            bitboard_operations::set_1(mask, square + (i + 1));
+        }
+
+        for (uint8_t i = 0; i < num_left_bits; i++){
+            bitboard_operations::set_1(mask, square - (i + 1));
+        }
+
+        return mask;
+    }
+
+    static consteval std::array<Bitboard, 64> get_secondary_rook_masks(){
+        std::array<Bitboard, 64> masks = {};
+        for (uint8_t square = 0; square < 64; square++) {
+            masks[square] = get_secondary_rook_mask(square);
+        }
+        return masks;
+    }
+
+    constexpr std::array<std::array<Bitboard, 4096>, 64> primary_rook_masks = get_primary_rook_masks();
+    constexpr std::array<Bitboard, 64> secondary_rook_masks = get_secondary_rook_masks();
+
+    Bitboard get_rook_mask(Board& board, uint8_t square, uint8_t color) {
+        Bitboard mask = board.all & secondary_rook_masks[square];
+        int hash = get_rook_hash(mask, square);
+        return primary_rook_masks[square][hash];
+    }
+
+
 
 
 }

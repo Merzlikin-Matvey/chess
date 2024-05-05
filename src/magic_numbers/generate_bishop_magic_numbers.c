@@ -6,7 +6,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-int _up_right_bits[64] = {
+const int _up_right_bits[64] = {
         6, 5, 4, 3, 2, 1, 0, 0,
         5, 5, 4, 3, 2, 1, 0, 0,
         4, 4, 4, 3, 2, 1, 0, 0,
@@ -17,7 +17,7 @@ int _up_right_bits[64] = {
         0, 0, 0, 0, 0, 0, 0, 0
 };
 
-int _down_left_bits[64] = {
+const int _down_left_bits[64] = {
         0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 1, 1, 1, 1, 1, 1,
@@ -28,7 +28,7 @@ int _down_left_bits[64] = {
         0, 0, 1, 2, 3, 4, 5, 6
 };
 
-int _up_left_bits[64] = {
+const int _up_left_bits[64] = {
         0, 0, 1, 2, 3, 4, 5, 6,
         0, 0, 1, 2, 3, 4, 5, 5,
         0, 0, 1, 2, 3, 4, 4, 4,
@@ -40,7 +40,7 @@ int _up_left_bits[64] = {
 };
 
 
-int _down_right_bits[64] = {
+const int _down_right_bits[64] = {
         0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0,
         1, 1, 1, 1, 1, 1, 0, 0,
@@ -60,29 +60,30 @@ Bitboard _set_bishop_board(uint8_t square, uint16_t blockers) {
     int up_left = _up_left_bits[square];
     int down_right = _down_right_bits[square];
 
-    for (int pos = 1; pos < up_right + 1; pos++){
-        if (_c_bitboard_operations_get_bit(blockers, square + pos * 9)){
-            _c_bitboard_operations_set_1(&board, square + pos * 9);
+    for (int i = 0; i < up_right; i++){
+        if (_c_bitboard_operations_get_bit(blockers, i)){
+            _c_bitboard_operations_set_1(&board, square + (i + 1) * 9);
         }
     }
 
-    for (int pos = 1; pos < down_left + 1; pos++){
-        if (_c_bitboard_operations_get_bit(blockers, square - pos * 9)){
-            _c_bitboard_operations_set_1(&board, square - pos * 9);
+    for (int i = 0; i < down_left; i++){
+        if (_c_bitboard_operations_get_bit(blockers, i + up_right)){
+            _c_bitboard_operations_set_1(&board, square - (i + 1) * 9);
         }
     }
 
-    for (int pos = 1; pos < up_left + 1; pos++){
-        if (_c_bitboard_operations_get_bit(blockers, square + pos * 7)){
-            _c_bitboard_operations_set_1(&board, square + pos * 7);
+    for (int i = 0; i < up_left; i++){
+        if (_c_bitboard_operations_get_bit(blockers, i + up_right + down_left)){
+            _c_bitboard_operations_set_1(&board, square + (i + 1) * 7);
         }
     }
 
-    for (int pos = 1; pos < down_right + 1; pos++){
-        if (_c_bitboard_operations_get_bit(blockers, square - pos * 7)){
-            _c_bitboard_operations_set_1(&board, square - pos * 7);
+    for (int i = 0; i < down_right; i++){
+        if (_c_bitboard_operations_get_bit(blockers, i + up_right + down_left + up_left)){
+            _c_bitboard_operations_set_1(&board, square - (i + 1) * 7);
         }
     }
+
 
     return board;
 
@@ -109,6 +110,7 @@ bool _is_bishop_magic_number_valid(uint64_t magic_number, uint8_t square) {
         if (array[hash]){
             return false;
         }
+        array[hash] = true;
     }
     free(array);
     return true;
@@ -117,7 +119,7 @@ bool _is_bishop_magic_number_valid(uint64_t magic_number, uint8_t square) {
 uint64_t _generate_bishop_magic_number(uint8_t square) {
     uint64_t magic_number;
     do {
-        magic_number = _generate_random_64bit();
+        magic_number = _generate_random_64bit() & _generate_random_64bit() & _generate_random_64bit();
     } while (!_is_bishop_magic_number_valid(magic_number, square));
     return magic_number;
 }

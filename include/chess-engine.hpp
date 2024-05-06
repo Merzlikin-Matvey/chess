@@ -13,4 +13,5 @@
 #include "headers/masks/rook_masks.hpp"
 #include "headers/masks/bishop_masks.hpp"
 #include "headers/masks/vertical_pin_masks.hpp"
+#include "headers/masks/horizontal_pin_masks.hpp"
 

@@ -48,25 +48,24 @@ Bitboard _set_vertical_pin_board(uint8_t square, uint8_t blockers){
     return board;
 }
 
-uint16_t _get_vertical_pin_mask_hash(Bitboard board, uint64_t magic_number, uint8_t square){
+uint16_t _get_vertical_pin_mask_hash(Bitboard board, uint64_t magic_number){
     return (uint16_t)((board * magic_number) >> (64 - 7));
 }
 
 bool is_vertical_pin_magic_number_valid(uint8_t square, uint64_t magic_number){
-    Bitboard board = 0;
-    uint16_t hash = 0;
+    Bitboard board;
+    uint16_t hash;
     uint16_t number_of_positions = pow(2, 7);
     bool* array = calloc(number_of_positions, sizeof(bool));
 
     for (uint16_t i = 0; i < number_of_positions; i++){
         board = _set_vertical_pin_board(square, i);
-        hash = _get_vertical_pin_mask_hash(board, magic_number, square);
+        hash = _get_vertical_pin_mask_hash(board, magic_number);
 
         if (array[hash]){
             free(array);
             return false;
         }
-
         array[hash] = true;
     }
 
@@ -75,13 +74,12 @@ bool is_vertical_pin_magic_number_valid(uint8_t square, uint64_t magic_number){
 }
 
 Bitboard _generate_vertical_pin_magic_number(uint8_t square){
-    uint64_t magic_number = 0;
-    int i = 0;
+    uint64_t magic_number;
 
     do {
         magic_number = _generate_random_64bit() & _generate_random_64bit() & _generate_random_64bit();
-        i++;
     } while (!is_vertical_pin_magic_number_valid(square, magic_number));
 
     return magic_number;
 }
+

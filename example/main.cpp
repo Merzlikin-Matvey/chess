@@ -11,8 +11,6 @@ using namespace chess;
 
 
 int main() {
-    Board board = Board("r7/P7/P7/K7/8/8/P7/r7");
-
-    auto mask = masks::get_vertical_pin_mask(board, 32, 0);
-    print_bitboard(mask);
+    Board board = Board("rPP1KnPr/8/8/8/8/8/8/8");
+    print_bitboard(masks::get_horizontal_pin_mask(board, 60, 0));
 }

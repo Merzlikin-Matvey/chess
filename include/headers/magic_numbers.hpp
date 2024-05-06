@@ -79,6 +79,28 @@ namespace chess::magic_numbers{
         }
     }
 
+    Bitboard generate_horizontal_pin_magic_number(uint8_t square){
+        return ::_generate_horizontal_pin_magic_number(square);
+    }
+
+    std::array<Bitboard, 64> generate_horizontal_pin_magic_numbers() {
+        std::array<Bitboard, 64> magic_numbers{};
+        for (uint8_t square = 0; square < 64; square++) {
+            magic_numbers[square] = generate_horizontal_pin_magic_number(square);
+        }
+        return magic_numbers;
+    }
+
+    void fancy_print_horizontal_pin_magic_numbers() {
+        std::array<Bitboard, 64> magic_numbers = generate_horizontal_pin_magic_numbers();
+        for (uint8_t square = 0; square < 64; square += 4) {
+            std::cout << "0x" << std::hex << magic_numbers[square] << ", "
+                      << "0x"<< std::hex << magic_numbers[square + 1] << ", "
+                      << "0x"<< std::hex << magic_numbers[square + 2] << ", "
+                      << "0x"<< std::hex << magic_numbers[square + 3] << "," << std::endl;
+        }
+    }
+
     // Constants
     constexpr std::array<Bitboard, 64> rook_magic_numbers = {
             0x80004008805020, 0x40200210004000, 0x300200100285040, 0x3000d0020081000,
@@ -136,6 +158,25 @@ namespace chess::magic_numbers{
             0x884082200480001, 0x450210220080410c, 0x20041104a812081, 0x10054060800801,
             0x84004c220801008, 0x1005404204082040, 0x2810089120040200, 0x811408021002c0,
             0x4100208042080400, 0x10290400804200, 0x4100604810804201, 0x1300201005800840
+    };
+
+    constexpr std::array<Bitboard, 64> horizontal_pin_magic_numbers = {
+            0x100001204054008, 0x1301004020801810, 0xd00001010000551, 0x4900040001000088,
+            0x1100420010822068, 0x808000020410000, 0x4100210002100040, 0x200407008001200,
+            0x1000800002040, 0x2043000048400800, 0x225002040000001, 0x4e09004001000020,
+            0x11000900020002, 0x21000020000084, 0x4040008004018, 0x81000000502080,
+            0x180090000100000, 0x823700000500e1, 0x44050000020020, 0x412202018120000,
+            0x1113101044060000, 0x1200210009020400, 0x1000410000000020, 0x4002420000100000,
+            0x100000300110000, 0x1000300640081, 0x1026500212901, 0xa020500000,
+            0x4001090100c0000, 0x2201000808201000, 0x2004104100641000, 0x28000200040008,
+            0x200005051010000, 0x1400091407002204, 0x2000108040400000, 0x5181000809000000,
+            0x8404210100200, 0x40000021000001, 0x42000c002c040000, 0x4001052040800000,
+            0x3040001400a10001, 0x120001009430000, 0x5420000000050000, 0x100090800090008,
+            0x20a400004110002, 0x2400000040210108, 0x20001050001c0412, 0x110180020020014,
+            0x10000000600902, 0x40260024000301, 0x1002020000000d00, 0x240010804106900,
+            0x9003000001100, 0x4180042210016100, 0x3040002042084101, 0x482020001022040,
+            0x90054100101, 0x2000820004003, 0x113004000004d, 0x200340010012019,
+            0x58080a10000611, 0x28019008010c21, 0x1800e001400041, 0x2002400040204002,
     };
 
 

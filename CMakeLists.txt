@@ -14,7 +14,10 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fconstexpr-ops-limit=1000000000 -fconst
 #------------------------------#
 
 add_library(chess-engine SHARED
-        src/magic_numbers/generate_rook_magic_numbers.c)
+        src/magic_numbers/generate_rook_magic_numbers.c
+        src/magic_numbers/generate_vertical_check_mask_magic_numbers.c
+        include/headers/masks/vertical_pin_masks.hpp
+        src/magic_numbers/generate_horizontal_pin_mask_magic_numbers.c)
 
 add_library(chess-engine::chess-engine ALIAS chess-engine)
 
@@ -42,8 +45,10 @@ endif()
 #------------------------------#
 
 find_package(OpenMP)
-if(OpenMP_CXX_FOUND)
-    target_link_libraries(chess-engine PUBLIC OpenMP::OpenMP_CXX)
+if (OPENMP_FOUND)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
 endif()
 
 #------------------------------#
@@ -72,12 +77,12 @@ set(public_headers
         include/headers/fen.hpp
         include/headers/move.hpp
         include/headers/notations.hpp
-        include/headers/rook_masks.hpp
+        include/headers/masks/rook_masks.hpp
         include/headers/bitboard_lines.hpp
         include/headers/magic_numbers.hpp
-        include/headers/masks_utils.hpp
-        include/headers/bishop_masks.hpp
-        include/headers/king_knight_masks.hpp
+        include/headers/masks/masks_utils.hpp
+        include/headers/masks/bishop_masks.hpp
+        include/headers/masks/king_knight_masks.hpp
 )
 
 set(sources

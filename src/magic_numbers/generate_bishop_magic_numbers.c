@@ -108,6 +108,7 @@ bool _is_bishop_magic_number_valid(uint64_t magic_number, uint8_t square) {
         board = _set_bishop_board(square, i);
         hash = _get_bishop_hash(board, magic_number, square);
         if (array[hash]){
+            free(array);
             return false;
         }
         array[hash] = true;

@@ -8,8 +8,9 @@
 #include "headers/fen.hpp"
 #include "headers/move.hpp"
 #include "headers/notations.hpp"
-#include "headers/rook_masks.hpp"
-#include "headers/bishop_masks.hpp"
 #include "headers/bitboard_lines.hpp"
 #include "headers/magic_numbers.hpp"
+#include "headers/masks/rook_masks.hpp"
+#include "headers/masks/bishop_masks.hpp"
+#include "headers/masks/vertical_pin_masks.hpp"
 

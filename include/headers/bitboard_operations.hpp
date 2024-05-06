@@ -99,6 +99,11 @@ namespace bitboard_operations {
         return columns;
     }
 
+    constexpr std::array<Bitboard, 8> rows = get_rows();
+    constexpr std::array<Bitboard, 8> inverse_rows = get_inverse_rows();
+    constexpr std::array<Bitboard, 8> columns = get_columns();
+    constexpr std::array<Bitboard, 8> inverse_columns = get_inverse_columns();
+
 
 
 

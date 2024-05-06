@@ -104,6 +104,7 @@ bool _is_rook_magic_number_valid(uint64_t magic_number, uint8_t square) {
         board = _set_rook_board(square, i);
         hash = _get_rook_hash(board, magic_number, square);
         if (array[hash]){
+            free(array);
             return false;
         }
         array[hash] = true;

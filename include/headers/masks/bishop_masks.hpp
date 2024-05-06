@@ -1,6 +1,6 @@
 #pragma once
 
-#include "headers/masks_utils.hpp"
+#include "masks_utils.hpp"
 #include "headers/magic_numbers.hpp"
 #include "headers/bitboard_lines.hpp"
 #include "headers/bitboard_operations.hpp"

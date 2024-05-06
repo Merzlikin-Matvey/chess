@@ -6,30 +6,10 @@
 #include "headers/masks/masks_utils.hpp"
 #include "headers/board.hpp"
 #include "headers/constants.hpp"
+#include "headers/masks/number_of_bits.hpp"
+
 
 namespace chess::masks {
-    constexpr std::array<uint8_t, 64> _right_bits = {
-            7, 6, 5, 4, 3, 2, 1, 0,
-            7, 6, 5, 4, 3, 2, 1, 0,
-            7, 6, 5, 4, 3, 2, 1, 0,
-            7, 6, 5, 4, 3, 2, 1, 0,
-            7, 6, 5, 4, 3, 2, 1, 0,
-            7, 6, 5, 4, 3, 2, 1, 0,
-            7, 6, 5, 4, 3, 2, 1, 0,
-            7, 6, 5, 4, 3, 2, 1, 0
-    };
-
-    constexpr std::array<uint8_t, 64> _left_bits = {
-            0, 1, 2, 3, 4, 5, 6, 7,
-            0, 1, 2, 3, 4, 5, 6, 7,
-            0, 1, 2, 3, 4, 5, 6, 7,
-            0, 1, 2, 3, 4, 5, 6, 7,
-            0, 1, 2, 3, 4, 5, 6, 7,
-            0, 1, 2, 3, 4, 5, 6, 7,
-            0, 1, 2, 3, 4, 5, 6, 7,
-            0, 1, 2, 3, 4, 5, 6, 7
-    };
-
     constexpr int get_horizontal_pin_hash(Bitboard board, uint8_t square) {
         Bitboard magic_number = chess::magic_numbers::horizontal_pin_magic_numbers[square];
         int num_bits = _right_bits[square] + _left_bits[square];

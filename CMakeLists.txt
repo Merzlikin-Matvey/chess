@@ -17,7 +17,8 @@ add_library(chess-engine SHARED
         src/magic_numbers/generate_rook_magic_numbers.c
         src/magic_numbers/generate_vertical_check_mask_magic_numbers.c
         include/headers/masks/vertical_pin_masks.hpp
-        src/magic_numbers/generate_horizontal_pin_mask_magic_numbers.c)
+        src/magic_numbers/generate_horizontal_pin_mask_magic_numbers.c
+        include/headers/masks/number_of_bits.hpp)
 
 add_library(chess-engine::chess-engine ALIAS chess-engine)
 

@@ -6,31 +6,10 @@
 #include "headers/masks/masks_utils.hpp"
 #include "headers/board.hpp"
 #include "headers/constants.hpp"
+#include "headers/masks/number_of_bits.hpp"
 
 
 namespace chess::masks {
-    constexpr std::array<uint8_t, 64> _up_bits = {
-            7, 7, 7, 7, 7, 7, 7, 7,
-            6, 6, 6, 6, 6, 6, 6, 6,
-            5, 5, 5, 5, 5, 5, 5, 5,
-            4, 4, 4, 4, 4, 4, 4, 4,
-            3, 3, 3, 3, 3, 3, 3, 3,
-            2, 2, 2, 2, 2, 2, 2, 2,
-            1, 1, 1, 1, 1, 1, 1, 1,
-            0, 0, 0, 0, 0, 0, 0, 0,
-    };
-
-    constexpr std::array<uint8_t, 64> _down_bits {
-            0, 0, 0, 0, 0, 0, 0, 0,
-            1, 1, 1, 1, 1, 1, 1, 1,
-            2, 2, 2, 2, 2, 2, 2, 2,
-            3, 3, 3, 3, 3, 3, 3, 3,
-            4, 4, 4, 4, 4, 4, 4, 4,
-            5, 5, 5, 5, 5, 5, 5, 5,
-            6, 6, 6, 6, 6, 6, 6, 6,
-            7, 7, 7, 7, 7, 7, 7, 7,
-    };
-
     constexpr int get_vertical_pin_hash(Bitboard board, uint8_t square) {
         Bitboard magic_number = chess::magic_numbers::vertical_pin_magic_numbers[square];
         int num_bits = _up_bits[square] + _down_bits[square];

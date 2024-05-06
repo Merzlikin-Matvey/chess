@@ -11,5 +11,6 @@ extern Bitboard _generate_bishop_magic_number(uint8_t square);
 extern Bitboard _generate_rook_magic_number(uint8_t square);
 extern Bitboard _generate_vertical_pin_magic_number(uint8_t square);
 extern Bitboard _generate_horizontal_pin_magic_number(uint8_t square);
+extern Bitboard _generate_up_right_pin_magic_number(uint8_t square);
 
 #endif //CHESS_MAGIC_NUMBERS_H

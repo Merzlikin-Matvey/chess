@@ -12,15 +12,15 @@
 namespace chess::masks {
     constexpr int get_vertical_pin_hash(Bitboard board, uint8_t square) {
         Bitboard magic_number = chess::magic_numbers::vertical_pin_magic_numbers[square];
-        int num_bits = _up_bits[square] + _down_bits[square];
+        int num_bits = up_bits[square] + down_bits[square];
         return (board * magic_number) >> (64 - num_bits);
     }
 
      static constexpr std::array<Bitboard, 128> generate_rook_or_queen_vertical_pin_masks(uint8_t square) {
         std::array<Bitboard, 128> masks = {};
         Bitboard board, mask;
-        uint8_t up_bits = _up_bits[square];
-        uint8_t down_bits = _down_bits[square];
+        uint8_t num_up_bits = up_bits[square];
+        uint8_t num_down_bits = down_bits[square];
         int hash;
         bool flag;
 
@@ -29,7 +29,7 @@ namespace chess::masks {
             mask = 0;
 
             flag = true;
-            for (int bit = 0; bit < up_bits; bit++) {
+            for (int bit = 0; bit < num_up_bits; bit++) {
                 if (_get_bit(blockers, bit)) {
                     if (flag) {
                         mask |= chess::masks::lines[square + 8 * (bit + 1)][square];
@@ -40,8 +40,8 @@ namespace chess::masks {
             }
 
             flag = true;
-            for (int bit = 0; bit < down_bits; bit++) {
-                if (_get_bit(blockers, bit + up_bits)) {
+            for (int bit = 0; bit < num_down_bits; bit++) {
+                if (_get_bit(blockers, bit + num_up_bits)) {
                     if (flag) {
                         mask |= chess::masks::lines[square - 8 * (bit + 1)][square];
                         flag = false;
@@ -69,8 +69,8 @@ namespace chess::masks {
     static constexpr std::array<Bitboard, 128> generate_opposite_vertical_pin_masks(uint8_t square) {
         std::array<Bitboard, 128> masks = {};
         Bitboard board, mask;
-        uint8_t up_bits = _up_bits[square];
-        uint8_t down_bits = _down_bits[square];
+        uint8_t num_up_bits = up_bits[square];
+        uint8_t num_down_bits = down_bits[square];
         int hash;
         int count = 0;
 
@@ -79,7 +79,7 @@ namespace chess::masks {
             mask = 0;
 
             count = 0;
-            for (uint8_t bit = 0; bit < up_bits; bit++){
+            for (uint8_t bit = 0; bit < num_up_bits; bit++){
                 if (_get_bit(blockers, bit)){
                     count++;
                     bitboard_operations::set_1(board, square + 8 * (bit + 1));
@@ -91,8 +91,8 @@ namespace chess::masks {
             }
 
             count = 0;
-            for (uint8_t bit = 0; bit < down_bits; bit++){
-                if (_get_bit(blockers, bit + up_bits)){
+            for (uint8_t bit = 0; bit < num_down_bits; bit++){
+                if (_get_bit(blockers, bit + num_up_bits)){
                     count++;
                     bitboard_operations::set_1(board, square - 8 * (bit + 1));
                 }
@@ -122,8 +122,8 @@ namespace chess::masks {
     static constexpr std::array<Bitboard, 128> generate_vertical_teammate_pin_masks(uint8_t square) {
         std::array<Bitboard, 128> masks = {};
         Bitboard board, mask;
-        uint8_t up_bits = _up_bits[square];
-        uint8_t down_bits = _down_bits[square];
+        uint8_t num_up_bits = up_bits[square];
+        uint8_t num_down_bits = down_bits[square];
         int hash;
         int count = 0;
 
@@ -132,7 +132,7 @@ namespace chess::masks {
             mask = 0;
 
             count = 0;
-            for (uint8_t bit = 0; bit < up_bits; bit++){
+            for (uint8_t bit = 0; bit < num_up_bits; bit++){
                 if (_get_bit(blockers, bit)){
                     count++;
                     bitboard_operations::set_1(board, square + 8 * (bit + 1));
@@ -144,8 +144,8 @@ namespace chess::masks {
             }
 
             count = 0;
-            for (uint8_t bit = 0; bit < down_bits; bit++){
-                if (_get_bit(blockers, bit + up_bits)){
+            for (uint8_t bit = 0; bit < num_down_bits; bit++){
+                if (_get_bit(blockers, bit + num_up_bits)){
                     count++;
                     bitboard_operations::set_1(board, square - 8 * (bit + 1));
                 }

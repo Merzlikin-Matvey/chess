@@ -4,7 +4,7 @@
 #include <array>
 
 namespace chess::masks {
-    constexpr std::array<uint8_t, 64> _up_bits = {
+    constexpr std::array<uint8_t, 64> up_bits = {
             7, 7, 7, 7, 7, 7, 7, 7,
             6, 6, 6, 6, 6, 6, 6, 6,
             5, 5, 5, 5, 5, 5, 5, 5,
@@ -15,7 +15,7 @@ namespace chess::masks {
             0, 0, 0, 0, 0, 0, 0, 0,
     };
 
-    constexpr std::array<uint8_t, 64> _down_bits {
+    constexpr std::array<uint8_t, 64> down_bits {
             0, 0, 0, 0, 0, 0, 0, 0,
             1, 1, 1, 1, 1, 1, 1, 1,
             2, 2, 2, 2, 2, 2, 2, 2,
@@ -26,7 +26,7 @@ namespace chess::masks {
             7, 7, 7, 7, 7, 7, 7, 7
     };
 
-    constexpr std::array<uint8_t, 64> _right_bits = {
+    constexpr std::array<uint8_t, 64> right_bits = {
             7, 6, 5, 4, 3, 2, 1, 0,
             7, 6, 5, 4, 3, 2, 1, 0,
             7, 6, 5, 4, 3, 2, 1, 0,
@@ -37,7 +37,7 @@ namespace chess::masks {
             7, 6, 5, 4, 3, 2, 1, 0
     };
 
-    constexpr std::array<uint8_t, 64> _left_bits = {
+    constexpr std::array<uint8_t, 64> left_bits = {
             0, 1, 2, 3, 4, 5, 6, 7,
             0, 1, 2, 3, 4, 5, 6, 7,
             0, 1, 2, 3, 4, 5, 6, 7,
@@ -46,5 +46,16 @@ namespace chess::masks {
             0, 1, 2, 3, 4, 5, 6, 7,
             0, 1, 2, 3, 4, 5, 6, 7,
             0, 1, 2, 3, 4, 5, 6, 7
+    };
+
+    constexpr std::array<uint8_t, 64> up_right_bits = {
+            7, 6, 5, 4, 3, 2, 1, 0,
+            6, 6, 5, 4, 3, 2, 1, 0,
+            5, 5, 5, 4, 3, 2, 1, 0,
+            4, 4, 4, 4, 3, 2, 1, 0,
+            3, 3, 3, 3, 3, 2, 1, 0,
+            2, 2, 2, 2, 2, 2, 1, 0,
+            1, 1, 1, 1, 1, 1, 1, 0,
+            0, 0, 0, 0, 0, 0, 0, 0
     };
 }

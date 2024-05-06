@@ -15,10 +15,13 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fconstexpr-ops-limit=1000000000 -fconst
 
 add_library(chess-engine SHARED
         src/magic_numbers/generate_rook_magic_numbers.c
-        src/magic_numbers/generate_vertical_check_mask_magic_numbers.c
+        src/magic_numbers/generate_vertical_pin_mask_magic_numbers.c
         include/headers/masks/vertical_pin_masks.hpp
         src/magic_numbers/generate_horizontal_pin_mask_magic_numbers.c
-        include/headers/masks/number_of_bits.hpp)
+        include/headers/masks/number_of_bits.hpp
+        include/headers/masks/up_right_diagonal_pin_masks.hpp
+        src/magic_numbers/up_right_pin_mask_magic_numbers.c
+        src/magic_numbers/down_right_pin_mask_magic_numbers.c)
 
 add_library(chess-engine::chess-engine ALIAS chess-engine)
 

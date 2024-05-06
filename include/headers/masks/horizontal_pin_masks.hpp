@@ -12,15 +12,15 @@
 namespace chess::masks {
     constexpr int get_horizontal_pin_hash(Bitboard board, uint8_t square) {
         Bitboard magic_number = chess::magic_numbers::horizontal_pin_magic_numbers[square];
-        int num_bits = _right_bits[square] + _left_bits[square];
+        int num_bits = right_bits[square] + left_bits[square];
         return (board * magic_number) >> (64 - num_bits);
     }
 
     static constexpr std::array<Bitboard, 128> generate_rook_or_queen_horizontal_pin_masks(uint8_t square) {
         std::array<Bitboard, 128> masks = {};
         Bitboard board, mask;
-        uint8_t right_bits = _right_bits[square];
-        uint8_t left_bits = _left_bits[square];
+        uint8_t num_right_bits = right_bits[square];
+        uint8_t num_left_bits = left_bits[square];
         int hash;
         bool flag;
 
@@ -29,7 +29,7 @@ namespace chess::masks {
             mask = 0;
 
             flag = true;
-            for (int bit = 0; bit < right_bits; bit++) {
+            for (int bit = 0; bit < num_right_bits; bit++) {
                 if (_get_bit(blockers, bit)) {
                     if (flag) {
                         mask |= chess::masks::lines[square + (bit + 1)][square];
@@ -40,8 +40,8 @@ namespace chess::masks {
             }
 
             flag = true;
-            for (int bit = 0; bit < left_bits; bit++) {
-                if (_get_bit(blockers, bit + right_bits)) {
+            for (int bit = 0; bit < num_left_bits; bit++) {
+                if (_get_bit(blockers, bit + num_right_bits)) {
                     if (flag) {
                         mask |= chess::masks::lines[square - (bit + 1)][square];
                         flag = false;
@@ -70,8 +70,8 @@ namespace chess::masks {
     static constexpr std::array<Bitboard, 128> generate_opposite_horizontal_pin_masks(uint8_t square) {
         std::array<Bitboard, 128> masks = {};
         Bitboard board, mask;
-        uint8_t right_bits = _right_bits[square];
-        uint8_t left_bits = _left_bits[square];
+        uint8_t num_right_bits = right_bits[square];
+        uint8_t num_left_bits = left_bits[square];
         int hash;
         int count = 0;
 
@@ -80,7 +80,7 @@ namespace chess::masks {
             mask = 0;
 
             count = 0;
-            for (uint8_t bit = 0; bit < right_bits; bit++){
+            for (uint8_t bit = 0; bit < num_right_bits; bit++){
                 if (_get_bit(blockers, bit)){
                     count++;
                     bitboard_operations::set_1(board, square + (bit + 1));
@@ -92,8 +92,8 @@ namespace chess::masks {
             }
 
             count = 0;
-            for (uint8_t bit = 0; bit < left_bits; bit++){
-                if (_get_bit(blockers, bit + right_bits)){
+            for (uint8_t bit = 0; bit < num_left_bits; bit++){
+                if (_get_bit(blockers, bit + num_right_bits)){
                     count++;
                     bitboard_operations::set_1(board, square - (bit + 1));
                 }
@@ -126,8 +126,8 @@ namespace chess::masks {
     static constexpr std::array<Bitboard, 128> generate_teammate_horizontal_pin_masks(uint8_t square) {
         std::array<Bitboard, 128> masks = {};
         Bitboard board, mask;
-        uint8_t right_bits = _right_bits[square];
-        uint8_t left_bits = _left_bits[square];
+        uint8_t num_right_bits = right_bits[square];
+        uint8_t num_left_bits = left_bits[square];
         int hash;
         int count = 0;
 
@@ -136,7 +136,7 @@ namespace chess::masks {
             mask = 0;
 
             count = 0;
-            for (uint8_t bit = 0; bit < right_bits; bit++) {
+            for (uint8_t bit = 0; bit < num_right_bits; bit++) {
                 if (_get_bit(blockers, bit)) {
                     count++;
                     bitboard_operations::set_1(board, square + (bit + 1));
@@ -148,8 +148,8 @@ namespace chess::masks {
             }
 
             count = 0;
-            for (uint8_t bit = 0; bit < left_bits; bit++) {
-                if (_get_bit(blockers, bit + right_bits)) {
+            for (uint8_t bit = 0; bit < num_left_bits; bit++) {
+                if (_get_bit(blockers, bit + num_right_bits)) {
                     count++;
                     bitboard_operations::set_1(board, square - (bit + 1));
                 }
@@ -178,14 +178,14 @@ namespace chess::masks {
 
     static constexpr Bitboard generate_secondary_horizontal_pin_mask(uint8_t square) {
         Bitboard mask = 0;
-        uint8_t right_bits = _right_bits[square];
-        uint8_t left_bits = _left_bits[square];
+        uint8_t num_right_bits = right_bits[square];
+        uint8_t num_left_bits = left_bits[square];
 
-        for (uint8_t i = 0; i < right_bits; i++) {
+        for (uint8_t i = 0; i < num_right_bits; i++) {
             bitboard_operations::set_1(mask, square + (i + 1));
         }
 
-        for (uint8_t i = 0; i < left_bits; i++) {
+        for (uint8_t i = 0; i < num_left_bits; i++) {
             bitboard_operations::set_1(mask, square - (i + 1));
         }
 

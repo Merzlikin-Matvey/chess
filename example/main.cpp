@@ -11,5 +11,6 @@ using namespace chess;
 
 
 int main() {
-    magic_numbers::fancy_print_up_right_pin_magic_numbers();
+    Board board = Board("8/8/8/4b3/3P4/8/1K6/8");
+    print_bitboard(masks::get_up_right_pin_mask(board, 7, 0));
 }

@@ -14,18 +14,18 @@ const int up_right_bits[64] = {
         3, 3, 3, 3, 3, 2, 1, 0,
         2, 2, 2, 2, 2, 2, 1, 0,
         1, 1, 1, 1, 1, 1, 1, 0,
-        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0
 };
 
 const int down_left_bits[64] = {
-        0, 1, 2, 3, 4, 5, 6, 7,
-        1, 1, 2, 3, 4, 5, 6, 7,
-        2, 2, 2, 3, 4, 5, 6, 7,
-        3, 3, 3, 3, 4, 5, 6, 7,
-        4, 4, 4, 4, 4, 5, 6, 7,
-        5, 5, 5, 5, 5, 5, 6, 7,
-        6, 6, 6, 6, 6, 6, 6, 7,
-        7, 7, 7, 7, 7, 7, 7, 7
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 1, 1, 1, 1, 1, 1, 1,
+        0, 1, 2, 2, 2, 2, 2, 2,
+        0, 1, 2, 3, 3, 3, 3, 3,
+        0, 1, 2, 3, 4, 4, 4, 4,
+        0, 1, 2, 3, 4, 5, 5, 5,
+        0, 1, 2, 3, 4, 5, 6, 6,
+        0, 1, 2, 3, 4, 5, 6, 7
 };
 
 Bitboard _set_up_right_pin_board(uint8_t square, uint8_t blockers){
@@ -35,13 +35,13 @@ Bitboard _set_up_right_pin_board(uint8_t square, uint8_t blockers){
 
     for (int i = 0; i < up_right; i++){
         if (_c_bitboard_operations_get_bit(blockers, i)){
-            _c_bitboard_operations_set_1(&board, square + 9 * (i + 1));
+            _c_bitboard_operations_set_1(&board, square + 7 * (i + 1));
         }
     }
 
     for (int i = 0; i < down_left; i++){
         if (_c_bitboard_operations_get_bit(blockers, i + up_right)){
-            _c_bitboard_operations_set_1(&board, square - 9 * (i + 1));
+            _c_bitboard_operations_set_1(&board, square - 7 * (i + 1));
         }
     }
 
@@ -84,4 +84,3 @@ Bitboard _generate_up_right_pin_magic_number(uint8_t square){
     } while (!is_up_right_pin_magic_number_valid(square, magic_number));
     return magic_number;
 }
-

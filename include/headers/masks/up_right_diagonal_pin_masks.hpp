@@ -18,7 +18,7 @@ namespace chess::masks {
         return (board * magic_number) >> (64 - num_bits);
     }
 
-    static constexpr std::array<Bitboard, 128> generate_bishop_or_queen_up_right_pin_masks(uint8_t square) {
+    static /* constexpr */ std::array<Bitboard, 128> generate_bishop_or_queen_up_right_pin_masks(uint8_t square) {
         std::array<Bitboard, 128> masks = {};
         Bitboard board, mask;
         uint8_t num_up_right_bits = up_right_bits[square];
@@ -27,6 +27,7 @@ namespace chess::masks {
         int hash;
         bool flag;
 
+        std::cout << num_up_right_bits + num_down_left_bits << std::endl;
         for (uint16_t blockers = 0; blockers < num_of_permutations; blockers++) {
             board = 0;
             mask = 0;
@@ -54,13 +55,16 @@ namespace chess::masks {
             }
 
             hash = get_up_right_pin_hash(board, square);
+
+            std::cout << "Hash: " << hash << ".\n";
+
             masks[hash] = mask;
         }
 
         return masks;
     }
 
-    static consteval std::array<std::array<Bitboard, 128>, 64> get_bishop_or_queen_up_right_pin_masks() {
+    static /* consteval */ std::array<std::array<Bitboard, 128>, 64> get_bishop_or_queen_up_right_pin_masks() {
         std::array<std::array<Bitboard, 128>, 64> masks = {};
 
         for (uint8_t square = 0; square < 64; square++) {
@@ -125,7 +129,7 @@ namespace chess::masks {
         return masks;
     }
 
-    static constexpr std::array<Bitboard, 128> generate_up_right_teammate_pin_masks(uint8_t square) {
+    static constexpr std::array<Bitboard, 128> generate_teammate_up_right_pin_masks(uint8_t square) {
         std::array<Bitboard, 128> masks = {};
         Bitboard board, mask;
         uint8_t num_up_right_bits = up_right_bits[square];
@@ -170,11 +174,11 @@ namespace chess::masks {
         return masks;
     }
 
-    static consteval std::array<std::array<Bitboard, 128>, 64> get_up_right_teammate_pin_masks() {
+    static consteval std::array<std::array<Bitboard, 128>, 64> get_teammate_up_right_pin_masks() {
         std::array<std::array<Bitboard, 128>, 64> masks = {};
 
         for (uint8_t square = 0; square < 64; square++) {
-            masks[square] = generate_up_right_teammate_pin_masks(square);
+            masks[square] = generate_teammate_up_right_pin_masks(square);
         }
 
         return masks;
@@ -198,22 +202,21 @@ static consteval std::array<Bitboard, 64> get_secondary_up_right_pin_masks() {
     }
     
     constexpr std::array<Bitboard, 64> secondary_up_right_pin_masks = get_secondary_up_right_pin_masks();
-    constexpr std::array<std::array<Bitboard, 128>, 64> teammate_up_right_pin_masks = get_up_right_teammate_pin_masks();
+    constexpr std::array<std::array<Bitboard, 128>, 64> teammate_up_right_pin_masks = get_teammate_up_right_pin_masks();
     constexpr std::array<std::array<Bitboard, 128>, 64> opposite_up_right_pin_masks = get_opposite_up_right_pin_masks();
-    constexpr std::array<std::array<Bitboard, 128>, 64> bishop_or_queen_up_right_pin_masks = get_bishop_or_queen_up_right_pin_masks();
+    // constexpr std::array<std::array<Bitboard, 128>, 64> bishop_or_queen_up_right_pin_masks = get_bishop_or_queen_up_right_pin_masks();
 
-    Bitboard get_up_right_pin_mask(Board& board, uint8_t square, uint8_t color) {
+    /* Bitboard get_up_right_pin_mask(Board& board, uint8_t square, uint8_t color) {
         int bishop_or_queen_hash = get_up_right_pin_hash(secondary_up_right_pin_masks[square] & (
                 board.piece_bitboards[!color][chess::Bishop] | board.piece_bitboards[!color][chess::Queen]), square);
         Bitboard bishop_or_queen = bishop_or_queen_up_right_pin_masks[square][bishop_or_queen_hash];
 
-        int opposite_hash = get_up_right_pin_hash(board.side_bitboards[!color], square);
+        int opposite_hash = get_up_right_pin_hash(board.side_bitboards[!color] & secondary_up_right_pin_masks[square], square);
         Bitboard opposite = bishop_or_queen & opposite_up_right_pin_masks[square][opposite_hash];
 
-        int teammate_hash = get_up_right_pin_hash(board.side_bitboards[color], square);
+        int teammate_hash = get_up_right_pin_hash(board.side_bitboards[color] & secondary_up_right_pin_masks[square], square);
         Bitboard teammate = opposite & teammate_up_right_pin_masks[square][teammate_hash];
 
-        return teammate;
-    }
-
+        return bishop_or_queen;
+    } */
 }

@@ -196,7 +196,7 @@ namespace chess::masks {
         int opposite_hash = get_vertical_pin_hash(board.side_bitboards[!color], square);
         Bitboard opposite = rook_or_queen & opposite_vertical_pin_masks[square][opposite_hash];
 
-        int teammate_hash = get_vertical_pin_hash(board.side_bitboards[color], square);
+        int teammate_hash = get_vertical_pin_hash(board.side_bitboards[color] & secondary_vertical_pin_masks[square], square);
         Bitboard teammate = opposite & teammate_vertical_pin_masks[square][teammate_hash];
 
         return teammate;

@@ -21,7 +21,8 @@ add_library(chess-engine SHARED
         include/headers/masks/number_of_bits.hpp
         include/headers/masks/up_right_diagonal_pin_masks.hpp
         src/magic_numbers/up_right_pin_mask_magic_numbers.c
-        src/magic_numbers/down_right_pin_mask_magic_numbers.c)
+        src/magic_numbers/down_right_pin_mask_magic_numbers.c
+        include/headers/masks/down_right_diagonal_pin_masks.hpp)
 
 add_library(chess-engine::chess-engine ALIAS chess-engine)
 

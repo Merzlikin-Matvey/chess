@@ -35,32 +35,32 @@ Bitboard _set_down_right_pin_board(uint8_t square, uint8_t blockers){
 
     for (int i = 0; i < up_left; i++){
         if (_c_bitboard_operations_get_bit(blockers, i)){
-            _c_bitboard_operations_set_1(&board, square + 9 * (i + 1));
+            _c_bitboard_operations_set_1(&board, square + 7 * (i + 1));
         }
     }
 
     for (int i = 0; i < down_right; i++){
         if (_c_bitboard_operations_get_bit(blockers, i + up_left)){
-            _c_bitboard_operations_set_1(&board, square - 9 * (i + 1));
+            _c_bitboard_operations_set_1(&board, square - 7 * (i + 1));
         }
     }
 
     return board;
 }
 
-uint8_t _get_number_of_up_left_pin_mask_bits(uint8_t square) {
+uint8_t _get_number_of_down_right_pin_mask_bits(uint8_t square) {
     return up_left_bits[square] + down_right_bits[square];
 }
 
 uint16_t _get_down_right_pin_mask_hash(Bitboard board, uint64_t magic_number, uint8_t square){
-    uint8_t number_of_bits = _get_number_of_up_left_pin_mask_bits(square);
+    uint8_t number_of_bits = _get_number_of_down_right_pin_mask_bits(square);
     return (uint16_t)((board * magic_number) >> (64 - number_of_bits));
 }
 
 bool is_down_right_pin_magic_number_valid(uint8_t square, uint64_t magic_number){
     Bitboard board;
     uint16_t hash;
-    uint16_t number_of_positions = pow(2, _get_number_of_up_left_pin_mask_bits(square));
+    uint16_t number_of_positions = pow(2, _get_number_of_down_right_pin_mask_bits(square));
     bool* array = calloc(number_of_positions, sizeof(bool));
 
     for (uint16_t blocker = 0; blocker < number_of_positions; blocker++){

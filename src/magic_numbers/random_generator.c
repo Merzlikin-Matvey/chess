@@ -1,6 +1,6 @@
 #include "headers/C functions/magic_numbers.h"
-
 #include <stdlib.h>
+#include <time.h>
 
 Bitboard _generate_random_64bit() {
     Bitboard number = 0;

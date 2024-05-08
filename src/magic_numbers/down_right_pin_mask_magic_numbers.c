@@ -79,9 +79,23 @@ bool is_down_right_pin_magic_number_valid(uint8_t square, uint64_t magic_number)
 
 Bitboard _generate_down_right_pin_magic_number(uint8_t square){
     Bitboard magic_number;
+
+    for (uint8_t i = 0; i < 32; i++){
+        magic_number = pow(2, i);
+        if (is_down_right_pin_magic_number_valid(square, magic_number)) {
+            return magic_number;
+        }
+    }
+
     do {
         magic_number = _generate_random_64bit() & _generate_random_64bit() & _generate_random_64bit();
     } while (!is_down_right_pin_magic_number_valid(square, magic_number));
     return magic_number;
+}
+
+void _fancy_print_down_right_pin_magic_numbers(){
+    for (uint8_t i = 0; i < 64; i++){
+        printf("%llu,\n", _generate_down_right_pin_magic_number(i));
+    }
 }
 

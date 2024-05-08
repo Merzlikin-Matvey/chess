@@ -14,15 +14,17 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fconstexpr-ops-limit=1000000000 -fconst
 #------------------------------#
 
 add_library(chess-engine SHARED
-        src/magic_numbers/generate_rook_magic_numbers.c
-        src/magic_numbers/generate_vertical_pin_mask_magic_numbers.c
+        src/magic_numbers/rook_magic_numbers.c
+        src/magic_numbers/vertical_pin_mask_magic_numbers.c
         include/headers/masks/vertical_pin_masks.hpp
-        src/magic_numbers/generate_horizontal_pin_mask_magic_numbers.c
+        src/magic_numbers/horizontal_pin_mask_magic_numbers.c
         include/headers/masks/number_of_bits.hpp
         include/headers/masks/up_right_diagonal_pin_masks.hpp
         src/magic_numbers/up_right_pin_mask_magic_numbers.c
         src/magic_numbers/down_right_pin_mask_magic_numbers.c
-        include/headers/masks/down_right_diagonal_pin_masks.hpp)
+        include/headers/masks/down_right_diagonal_pin_masks.hpp
+        include/headers/magic_numbers_constants.hpp
+        include/headers/pin_mask_magic_numbers.hpp)
 
 add_library(chess-engine::chess-engine ALIAS chess-engine)
 
@@ -101,7 +103,7 @@ set(sources
         src/notations.cpp
         src/board/get_legal_moves.cpp
         src/magic_numbers/random_generator.c
-        src/magic_numbers/generate_bishop_magic_numbers.c
+        src/magic_numbers/bishop_magic_numbers.c
 )
 
 

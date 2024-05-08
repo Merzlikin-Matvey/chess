@@ -16,7 +16,7 @@ namespace chess::masks {
         return (board * magic_number) >> (64 - num_bits);
     }
 
-    static std::array<Bitboard, 128> generate_rook_or_queen_horizontal_pin_masks(uint8_t square) {
+    static constexpr std::array<Bitboard, 128> generate_rook_or_queen_horizontal_pin_masks(uint8_t square) {
         std::array<Bitboard, 128> masks = {};
         Bitboard board, mask;
         uint8_t num_right_bits = right_bits[square];
@@ -51,14 +51,13 @@ namespace chess::masks {
             }
 
             hash = get_horizontal_pin_hash(board, square);
-            std::cout << "Hash: " << hash << ".\n";
             masks[hash] = mask;
         }
 
         return masks;
     }
 
-    static /* consteval */ std::array<std::array<Bitboard, 128>, 64> get_rook_or_queen_horizontal_pin_masks() {
+    static consteval std::array<std::array<Bitboard, 128>, 64> get_rook_or_queen_horizontal_pin_masks() {
         std::array<std::array<Bitboard, 128>, 64> masks = {};
 
         for (uint8_t square = 0; square < 64; square++) {
@@ -206,11 +205,11 @@ namespace chess::masks {
     }
 
     constexpr std::array<Bitboard, 64> secondary_horizontal_pin_masks = get_secondary_horizontal_pin_masks();
-    // constexpr std::array<std::array<Bitboard, 128>, 64> rook_or_queen_horizontal_pin_masks = get_rook_or_queen_horizontal_pin_masks();
+    constexpr std::array<std::array<Bitboard, 128>, 64> rook_or_queen_horizontal_pin_masks = get_rook_or_queen_horizontal_pin_masks();
     constexpr std::array<std::array<Bitboard, 128>, 64> opposite_horizontal_pin_masks = get_opposite_horizontal_pin_masks();
     constexpr std::array<std::array<Bitboard, 128>, 64> teammate_horizontal_pin_masks = get_horizontal_teammate_pin_masks();
 
-    /* Bitboard get_horizontal_pin_mask(Board& board, uint8_t square, uint8_t color) {
+    Bitboard get_horizontal_pin_mask(Board& board, uint8_t square, uint8_t color) {
         int rook_or_queen_hash = get_horizontal_pin_hash(secondary_horizontal_pin_masks[square] & (
                 board.piece_bitboards[!color][chess::Rook] | board.piece_bitboards[!color][chess::Queen]), square);
         Bitboard rook_or_queen = rook_or_queen_horizontal_pin_masks[square][rook_or_queen_hash];
@@ -220,7 +219,8 @@ namespace chess::masks {
 
         int teammate_hash = get_horizontal_pin_hash(board.side_bitboards[color] & secondary_horizontal_pin_masks[square], square);
         Bitboard teammate = opposite & teammate_horizontal_pin_masks[square][teammate_hash];
+
         return teammate;
-    } */
+    }
 
 }

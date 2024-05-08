@@ -83,3 +83,9 @@ Bitboard _generate_vertical_pin_magic_number(uint8_t square){
     return magic_number;
 }
 
+void _fancy_print_vertical_pin_magic_numbers(){
+    for (uint8_t i = 0; i < 64; i++){
+        printf("%llu,\n", _generate_vertical_pin_magic_number(i));
+    }
+}
+

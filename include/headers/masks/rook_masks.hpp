@@ -1,6 +1,7 @@
 #include "headers/magic_numbers.hpp"
 #include "headers/bitboard_lines.hpp"
-#include "masks_utils.hpp"
+#include "headers/masks/masks_utils.hpp"
+#include "headers/magic_numbers_constants.hpp"
 
 namespace {
     constexpr std::array<uint8_t, 64> rook_up_bits = {

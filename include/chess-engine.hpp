@@ -16,4 +16,6 @@
 #include "headers/masks/horizontal_pin_masks.hpp"
 #include "headers/masks/up_right_diagonal_pin_masks.hpp"
 #include "headers/masks/down_right_diagonal_pin_masks.hpp"
+#include "headers/pin_mask_magic_numbers.hpp"
+#include "headers/magic_numbers_constants.hpp"
 

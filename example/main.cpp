@@ -11,7 +11,8 @@ using namespace std;
 using namespace chess;
 
 
-
 int main() {
-    masks::generate_rook_or_queen_horizontal_pin_masks(10);
+    Board board = Board("8/6q1/8/4N3/3K4/8/1B6/q7");
+    print_bitboard(masks::get_up_right_pin_mask(board, 27, 0));
+
 }

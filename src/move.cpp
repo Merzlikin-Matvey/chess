@@ -102,3 +102,21 @@ void chess::Board::move(chess::Move move){
     }
 }
 
+
+std::ostream& chess::operator<<(std::ostream &ostream, chess::Move move) {
+    ostream << "First: " << (int)move.first << std::endl;
+    ostream << "First side: " << (int)move.first_side << std::endl;
+    ostream << "First type: " << (int)move.first_type << std::endl;
+    ostream << "Second: " << (int)move.second << std::endl;
+    ostream << "Second side: " << (int)move.second_side << std::endl;
+    ostream << "Second type: " << (int)move.second_type << std::endl;
+    ostream << "W long castling: " << move.w_l_castling << std::endl;
+    ostream << "W short castling: " << move.w_s_castling << std::endl;
+    ostream << "B long castling: " << move.b_l_castling << std::endl;
+    ostream << "B short castling: " << move.b_s_castling << std::endl;
+    ostream << "Pawn double move: " << move.pawn_double_move << std::endl;
+    ostream << "En passant: " << move.en_passant << std::endl;
+    ostream << "Pawn change type: " << (int)move.pawn_change_type << std::endl;
+
+    return ostream;
+}

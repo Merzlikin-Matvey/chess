@@ -7,6 +7,7 @@
 #include "headers/board.hpp"
 #include "headers/constants.hpp"
 #include "headers/masks/number_of_bits.hpp"
+#include "headers/magic_numbers_constants.hpp"
 
 
 namespace chess::masks {

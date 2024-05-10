@@ -1,4 +1,5 @@
 #include "headers/board.hpp"
+#include "headers/move.hpp"
 #include "headers/bitboard_operations.hpp"
 
 #include <iostream>
@@ -71,3 +72,4 @@ void chess::print_bitboard(Bitboard bitboard) {
         std::cout << std::endl;
     }
 }
+

@@ -42,11 +42,14 @@ namespace chess {
         uint8_t pawn_change_type = 255;
     };
 
+    std::ostream& operator<<(std::ostream &ostream, chess::Move move);
+
     class MoveArray {
     public:
+        MoveArray();
         std::array<chess::Move, 218> moves{};
+        uint8_t size = 0;
 
+        void push_back(chess::Move move);
     };
-
-    MoveArray mask_to_moves(uint8_t piece, Bitboard mask);
 }

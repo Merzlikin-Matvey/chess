@@ -29,6 +29,8 @@ namespace chess {
         bool b_l_castling = true;
         bool b_s_castling = true;
 
+        MoveArray& legal_moves = *new MoveArray();
+
 
         void add_hash_to_history(zobrist::ZobristHash hash);
         void add_hash_to_history();
@@ -37,7 +39,10 @@ namespace chess {
 
         void move(Move move);
 
-        static MoveArray get_legal_moves();
+        MoveArray& get_legal_moves();
+
+        void pawn_mask_to_moves(Bitboard mask, int delta, MoveArray* moves);
+        void mask_to_moves(Bitboard mask, MoveArray* moves);
 
         bool operator==(const Board &board) const;
         bool operator!=(const Board &board) const;

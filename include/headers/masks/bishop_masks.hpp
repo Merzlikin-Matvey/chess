@@ -194,7 +194,7 @@ namespace chess::masks {
     static constexpr std::array<Bitboard, 64> secondary_bishop_masks = get_secondary_bishop_masks();
     static constexpr std::array<std::array<Bitboard, 512>, 64> primary_bishop_masks = get_primary_bishop_masks();
 
-    Bitboard get_bishop_mask(Board& board, uint8_t square, uint8_t color) {
+    Bitboard get_bishop_mask(Board& board, uint8_t square) {
         Bitboard mask = board.all & secondary_bishop_masks[square];
         int hash = get_bishop_hash(mask, square);
         return primary_bishop_masks[square][hash];

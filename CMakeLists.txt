@@ -24,7 +24,13 @@ add_library(chess-engine SHARED
         src/magic_numbers/down_right_pin_mask_magic_numbers.c
         include/headers/masks/down_right_diagonal_pin_masks.hpp
         include/headers/magic_numbers_constants.hpp
-        include/headers/pin_mask_magic_numbers.hpp)
+        include/headers/pin_mask_magic_numbers.hpp
+        include/headers/masks/pin_masks.hpp
+        include/headers/masks/pawn_masks.hpp
+        src/pawn_mask.cpp
+        src/mask_to_moves.cpp
+        src/move_array.cpp
+)
 
 add_library(chess-engine::chess-engine ALIAS chess-engine)
 
@@ -90,6 +96,7 @@ set(public_headers
         include/headers/masks/masks_utils.hpp
         include/headers/masks/bishop_masks.hpp
         include/headers/masks/king_knight_masks.hpp
+        include/headers/magic_numbers_constants.hpp
 )
 
 set(sources

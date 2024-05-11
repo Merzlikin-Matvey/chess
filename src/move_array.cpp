@@ -10,7 +10,8 @@ void chess::MoveArray::push_back(chess::Move move) {
 }
 
 void chess::MoveArray::clear() {
-    this->size = 0;
-    this->moves = {};
+    for (int i = 0; i < size; i++) {
+        moves[i] = chess::Move();
+    }
+    size = 0;
 }
-

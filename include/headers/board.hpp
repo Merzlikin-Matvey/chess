@@ -31,7 +31,6 @@ namespace chess {
 
         MoveArray& legal_moves = *new MoveArray();
 
-
         void add_hash_to_history(zobrist::ZobristHash hash);
         void add_hash_to_history();
         void clear_history();
@@ -44,6 +43,7 @@ namespace chess {
         void pawn_mask_to_moves(Bitboard mask, int delta, MoveArray* moves);
         void mask_to_moves(Bitboard mask, uint8_t attacker_index, uint8_t attacker_color, uint8_t attacker_type, MoveArray* moves);
 
+        bool is_position_attacked(uint8_t x);
         bool is_check();
         bool is_checkmate();
         bool is_double_check();

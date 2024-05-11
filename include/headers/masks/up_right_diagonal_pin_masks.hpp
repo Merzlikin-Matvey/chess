@@ -209,10 +209,10 @@ static consteval std::array<Bitboard, 64> get_secondary_up_right_pin_masks() {
                 board.piece_bitboards[!color][chess::Bishop] | board.piece_bitboards[!color][chess::Queen]), square);
         Bitboard bishop_or_queen = bishop_or_queen_up_right_pin_masks[square][bishop_or_queen_hash];
 
-        int opposite_hash = get_up_right_pin_hash(board.side_bitboards[!color] & secondary_up_right_pin_masks[square], square);
+        int opposite_hash = get_up_right_pin_hash(board.side_bitboards[!color] & bishop_or_queen, square);
         Bitboard opposite = bishop_or_queen & opposite_up_right_pin_masks[square][opposite_hash];
 
-        int teammate_hash = get_up_right_pin_hash(board.side_bitboards[color] & secondary_up_right_pin_masks[square], square);
+        int teammate_hash = get_up_right_pin_hash(board.side_bitboards[color] & opposite, square);
         Bitboard teammate = opposite & teammate_up_right_pin_masks[square][teammate_hash];
 
         return teammate;

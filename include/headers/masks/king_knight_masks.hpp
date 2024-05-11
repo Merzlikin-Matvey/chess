@@ -95,4 +95,15 @@ namespace chess::masks {
         }
         return masks;
     }
+
+    static constexpr std::array<Bitboard, 64> knight_masks = get_knight_masks();
+    static constexpr std::array<Bitboard, 64> king_masks = get_king_masks();
+
+    Bitboard get_knight_mask(uint8_t square) {
+        return knight_masks[square];
+    }
+
+    Bitboard get_king_mask(uint8_t square) {
+        return king_masks[square];
+    }
 }

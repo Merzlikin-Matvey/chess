@@ -48,7 +48,9 @@ namespace chess {
     public:
         MoveArray();
         std::array<chess::Move, 218> moves{};
-        uint8_t size = 0;
+        int size = 0;
+
+
 
         void push_back(chess::Move move);
         void clear();

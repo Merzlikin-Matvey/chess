@@ -11,7 +11,7 @@ using namespace std;
 using namespace chess;
 
 void test() {
-    Board board = Board("8/6q1/8/4N3/3K4/8/1B6/q7");
+    Board board = Board();
 
     int n = 100000;
 
@@ -27,5 +27,6 @@ void test() {
 
 int main() {
     test();
+
 
 }

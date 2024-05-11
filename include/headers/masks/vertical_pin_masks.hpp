@@ -194,12 +194,13 @@ namespace chess::masks {
                 board.piece_bitboards[!color][chess::Rook] | board.piece_bitboards[!color][chess::Queen]), square);
         Bitboard rook_or_queen = rook_or_queen_vertical_pin_masks[square][rook_or_queen_hash];
 
-        int opposite_hash = get_vertical_pin_hash(board.side_bitboards[!color], square);
+        int opposite_hash = get_vertical_pin_hash(board.side_bitboards[!color] & rook_or_queen, square);
         Bitboard opposite = rook_or_queen & opposite_vertical_pin_masks[square][opposite_hash];
 
-        int teammate_hash = get_vertical_pin_hash(board.side_bitboards[color] & secondary_vertical_pin_masks[square], square);
+        int teammate_hash = get_vertical_pin_hash(board.side_bitboards[color] & opposite, square);
         Bitboard teammate = opposite & teammate_vertical_pin_masks[square][teammate_hash];
 
-        return teammate;
+
+        return  teammate;
     }
 }

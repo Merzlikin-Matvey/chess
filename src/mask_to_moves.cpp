@@ -17,6 +17,10 @@ void chess::Board::pawn_mask_to_moves(Bitboard mask, int delta, MoveArray* moves
         opponent_index = bitboard_operations::bitScanForward(mask);
         bitboard_operations::set_0(mask, opponent_index);
 
+        if (bitboard_operations::get_bit(this->side_bitboards[attacker_color], opponent_index)){
+            continue;
+        }
+
         opponent_type = 255;
         for (uint8_t i = 0; i < 6; i++){
             if (bitboard_operations::get_bit(this->piece_bitboards[1 - attacker_color][i], opponent_index)) {
@@ -53,6 +57,10 @@ void chess::Board::mask_to_moves(Bitboard mask, uint8_t attacker_index, uint8_t 
     while (mask) {
         opponent_index = bitboard_operations::bitScanForward(mask);
         bitboard_operations::set_0(mask, opponent_index);
+
+        if (bitboard_operations::get_bit(this->side_bitboards[attacker_color], opponent_index)){
+            continue;
+        }
 
         opponent_type = 255;
         for (uint8_t i = 0; i < 6; i++){

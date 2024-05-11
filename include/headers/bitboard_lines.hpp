@@ -1,5 +1,7 @@
 #pragma once
 
+#include "headers/bitboard_operations.hpp"
+
 #include <array>
 #include <memory>
 

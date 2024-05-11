@@ -30,7 +30,7 @@ add_library(chess-engine SHARED
         src/pawn_mask.cpp
         src/mask_to_moves.cpp
         src/move_array.cpp
-        src/board/check_and_checkmate.cpp
+        include/headers/check_and_checkmate.hpp
 )
 
 add_library(chess-engine::chess-engine ALIAS chess-engine)

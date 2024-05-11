@@ -1,10 +1,10 @@
+#pragma once
+
 #include "headers/board.hpp"
-#include "headers/masks/pawn_masks.hpp"
+#include "headers/constants.hpp"
 #include "headers/masks/rook_masks.hpp"
 #include "headers/masks/bishop_masks.hpp"
-#include "headers/masks/pawn_masks.hpp"
 #include "headers/masks/king_knight_masks.hpp"
-#include "headers/constants.hpp"
 
 
 bool chess::Board::is_position_attacked(uint8_t x) {
@@ -59,11 +59,13 @@ bool chess::Board::is_position_attacked(uint8_t x) {
     return false;
 }
 
+
 bool chess::Board::is_check() {
     uint8_t color = white_turn ? White : Black;
     uint8_t king_index = bitboard_operations::bitScanForward(piece_bitboards[color][King]);
     return is_position_attacked(king_index);
 }
+
 
 bool chess::Board::is_double_check() {
     uint16_t count = 0;
@@ -107,6 +109,7 @@ bool chess::Board::is_double_check() {
 
     return count >= 2;
 }
+
 
 bool chess::Board::is_checkmate() {
     MoveArray& moves = get_legal_moves();

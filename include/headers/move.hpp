@@ -51,5 +51,6 @@ namespace chess {
         uint8_t size = 0;
 
         void push_back(chess::Move move);
+        void clear();
     };
 }

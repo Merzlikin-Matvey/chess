@@ -42,7 +42,11 @@ namespace chess {
         MoveArray& get_legal_moves();
 
         void pawn_mask_to_moves(Bitboard mask, int delta, MoveArray* moves);
-        void mask_to_moves(Bitboard mask, MoveArray* moves);
+        void mask_to_moves(Bitboard mask, uint8_t attacker_index, uint8_t attacker_color, uint8_t attacker_type, MoveArray* moves);
+
+        bool is_check();
+        bool is_checkmate();
+        bool is_double_check();
 
         bool operator==(const Board &board) const;
         bool operator!=(const Board &board) const;

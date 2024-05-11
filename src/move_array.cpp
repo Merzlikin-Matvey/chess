@@ -9,3 +9,8 @@ void chess::MoveArray::push_back(chess::Move move) {
     this->size++;
 }
 
+void chess::MoveArray::clear() {
+    this->size = 0;
+    this->moves = {};
+}
+

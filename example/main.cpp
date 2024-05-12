@@ -1,23 +1,23 @@
 #include <iostream>
 
+#include "headers/check_and_checkmate.hpp"
 #include "chess-engine.hpp"
-#include "headers/C functions/magic_numbers.h"
 #include <iostream>
 #include <omp.h>
 #include <chrono>
 #include <cmath>
 
+
 using namespace std;
 using namespace chess;
 
 void test() {
-    Board board = Board();
-
-    int n = 100000;
+    auto board = Board();
+    int n = 10;
 
     auto start = chrono::high_resolution_clock::now();
     for (int i = 0; i < n; i++) {
-        auto arr = board.get_legal_moves();
+        auto board1 = board;
     }
     auto end = chrono::high_resolution_clock::now();
 
@@ -26,5 +26,11 @@ void test() {
 }
 
 int main() {
-    test();
+    string fen;
+    for (int i = 0; i < 10; i++) {
+        cin >> fen;
+        auto board = Board(fen);
+        cout << "Check: " << board.is_check() << endl;
+        cout << "Double check: " << board.is_double_check() << endl;
+    }
 }

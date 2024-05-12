@@ -58,4 +58,6 @@ namespace chess {
 
     std::ostream& operator<<(std::ostream &ostream, chess::Board board);
     void print_bitboard(Bitboard bitboard);
+
+
 }

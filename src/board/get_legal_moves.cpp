@@ -2,10 +2,7 @@
 #include "headers/constants.hpp"
 #include "headers/move.hpp"
 #include "headers/bitboard_operations.hpp"
-#include "headers/masks/pin_masks.hpp"
-#include "headers/masks/pawn_masks.hpp"
-#include "headers/masks/rook_masks.hpp"
-#include "headers/masks/bishop_masks.hpp"
+#include "headers/masks/masks.hpp"
 
 #include <vector>
 #include <iostream>

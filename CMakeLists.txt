@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 project(chess-engine
-        VERSION 0.2.6
+        VERSION 0.2.3
         DESCRIPTION "Chess engine"
         LANGUAGES C CXX)
 
@@ -25,7 +25,7 @@ add_library(chess-engine SHARED
         include/headers/masks/down_right_diagonal_pin_masks.hpp
         include/headers/magic_numbers_constants.hpp
         include/headers/pin_mask_magic_numbers.hpp
-        include/headers/masks/pin_masks.hpp
+        include/headers/masks/masks.hpp
         include/headers/masks/pawn_masks.hpp
         src/pawn_mask.cpp
         src/mask_to_moves.cpp

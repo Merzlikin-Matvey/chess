@@ -7,12 +7,32 @@
 #include "headers/masks/king_knight_masks.hpp"
 
 
+Bitboard get_rook_mask(chess::Board& board, uint8_t square) {
+    Bitboard mask = board.all & chess::masks::secondary_rook_masks[square];
+    int hash = chess::masks::get_rook_hash(mask, square);
+    return chess::masks::primary_rook_masks[square][hash];
+}
+
+Bitboard get_bishop_mask(chess::Board& board, uint8_t square) {
+    Bitboard mask = board.all & chess::masks::secondary_bishop_masks[square];
+    int hash = chess::masks::get_bishop_hash(mask, square);
+    return chess::masks::primary_bishop_masks[square][hash];
+}
+
+Bitboard get_knight_mask(uint8_t square) {
+    return chess::masks::knight_masks[square];
+}
+
+Bitboard get_king_mask(uint8_t square) {
+    return chess::masks::king_masks[square];
+}
+
 bool chess::Board::is_position_attacked(uint8_t x) {
     uint8_t color = white_turn ? White : Black;
-    Bitboard rook_mask = masks::get_rook_mask(*this, x);
-    Bitboard bishop_mask = masks::get_bishop_mask(*this, x);
-    Bitboard king_mask = masks::get_king_mask(x);
-    Bitboard knight_mask = masks::get_knight_mask(x);
+    Bitboard rook_mask = get_rook_mask(*this, x);
+    Bitboard bishop_mask =get_bishop_mask(*this, x);
+    Bitboard king_mask = get_king_mask(x);
+    Bitboard knight_mask = get_knight_mask(x);
 
     if (rook_mask & (piece_bitboards[!color][Rook] | piece_bitboards[!color][Queen])) {
         return true;
@@ -71,10 +91,10 @@ bool chess::Board::is_double_check() {
     uint16_t count = 0;
     uint8_t king_index = bitboard_operations::bitScanForward(piece_bitboards[white_turn ? White : Black][King]);
     uint8_t color = white_turn ? White : Black;
-    Bitboard rook_mask = masks::get_rook_mask(*this, king_index);
-    Bitboard bishop_mask = masks::get_bishop_mask(*this, king_index);
-    Bitboard king_mask = masks::get_king_mask(king_index);
-    Bitboard knight_mask = masks::get_knight_mask(king_index);
+    Bitboard rook_mask = get_rook_mask(*this, king_index);
+    Bitboard bishop_mask = get_bishop_mask(*this, king_index);
+    Bitboard king_mask = get_king_mask(king_index);
+    Bitboard knight_mask = get_knight_mask(king_index);
 
     count += bitboard_operations::count_1(rook_mask & (piece_bitboards[!color][Rook] | piece_bitboards[!color][Queen]));
     count += bitboard_operations::count_1(bishop_mask & (piece_bitboards[!color][Bishop] | piece_bitboards[!color][Queen]));

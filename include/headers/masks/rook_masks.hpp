@@ -2,7 +2,6 @@
 #include "headers/bitboard_lines.hpp"
 #include "headers/masks/masks_utils.hpp"
 #include "headers/magic_numbers_constants.hpp"
-#include "headers/board.hpp"
 
 namespace {
     constexpr std::array<uint8_t, 64> rook_up_bits = {
@@ -187,11 +186,6 @@ namespace chess::masks {
     constexpr std::array<std::array<Bitboard, 4096>, 64> primary_rook_masks = get_primary_rook_masks();
     constexpr std::array<Bitboard, 64> secondary_rook_masks = get_secondary_rook_masks();
 
-    Bitboard get_rook_mask(Board& board, uint8_t square) {
-        Bitboard mask = board.all & secondary_rook_masks[square];
-        int hash = get_rook_hash(mask, square);
-        return primary_rook_masks[square][hash];
-    }
 
 
 

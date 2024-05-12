@@ -1,17 +1,48 @@
 #include "headers/board.hpp"
 #include "headers/constants.hpp"
 #include "headers/move.hpp"
-#include "headers/bitboard_operations.hpp"
 #include "headers/masks/masks.hpp"
+#include "headers/check_and_checkmate.hpp"
 
-#include <vector>
-#include <iostream>
+
+Bitboard chess::Board::get_king_legal_moves_mask() {
+    uint8_t color = white_turn ? White : Black;
+    uint8_t king_position = bitboard_operations::bitScanForward(piece_bitboards[color][King]);
+    Bitboard primary_mask = masks::king_masks[king_position];
+    Bitboard mask = 0;
+    uint8_t bit;
+
+    bitboard_operations::set_0(piece_bitboards[color][King], king_position);
+    bitboard_operations::set_0(side_bitboards[color], king_position);
+    bitboard_operations::set_0(all, king_position);
+    while (primary_mask) {
+        bit = bitboard_operations::bitScanForward(primary_mask);
+        bitboard_operations::set_0(primary_mask, bit);
+
+        bitboard_operations::set_1(piece_bitboards[color][King], bit);
+        if (!is_check()) {
+            bitboard_operations::set_1(mask, bit);
+        }
+        bitboard_operations::set_0(piece_bitboards[color][King], bit);
+    }
+
+    bitboard_operations::set_1(piece_bitboards[color][King], king_position);
+    bitboard_operations::set_1(side_bitboards[color], king_position);
+    bitboard_operations::set_1(all, king_position);
+    return mask;
+}
+
 
 
 chess::MoveArray& chess::Board::get_legal_moves() {
     legal_moves.clear();
     uint8_t color = white_turn ? White : Black;
     uint8_t king_position = bitboard_operations::bitScanForward(piece_bitboards[color][King]);
+
+    if (is_double_check()){
+        mask_to_moves(get_king_legal_moves_mask(), king_position, color,King, &legal_moves);
+        return legal_moves;
+    }
 
     Bitboard vertical_pin_mask = masks::get_vertical_pin_mask(*this, king_position, color);
     Bitboard horizontal_pin_mask = masks::get_horizontal_pin_mask(*this, king_position, color);

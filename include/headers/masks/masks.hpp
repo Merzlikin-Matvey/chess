@@ -5,6 +5,7 @@
 #include "headers/masks/up_right_diagonal_pin_masks.hpp"
 #include "headers/masks/down_right_diagonal_pin_masks.hpp"
 
+
 #include "headers/masks/rook_masks.hpp"
 #include "headers/masks/bishop_masks.hpp"
 #include "headers/masks/pawn_masks.hpp"
@@ -28,7 +29,7 @@ namespace chess::masks{
         return knight_masks[square];
     }
 
-    Bitboard get_king_mask(uint8_t square) {
+    Bitboard get_king_mask( uint8_t square) {
         return king_masks[square];
     }
 

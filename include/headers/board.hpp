@@ -48,6 +48,9 @@ namespace chess {
         bool is_checkmate();
         bool is_double_check();
 
+        Bitboard get_king_legal_moves_mask();
+        Bitboard get_check_path();
+
         bool operator==(const Board &board) const;
         bool operator!=(const Board &board) const;
 

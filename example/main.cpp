@@ -13,11 +13,11 @@ using namespace chess;
 
 void test() {
     auto board = Board();
-    int n = 10;
+    int n = 1000;
 
     auto start = chrono::high_resolution_clock::now();
     for (int i = 0; i < n; i++) {
-        auto board1 = board;
+        board.get_legal_moves();
     }
     auto end = chrono::high_resolution_clock::now();
 
@@ -26,11 +26,11 @@ void test() {
 }
 
 int main() {
-    string fen;
-    for (int i = 0; i < 10; i++) {
-        cin >> fen;
-        auto board = Board(fen);
-        cout << "Check: " << board.is_check() << endl;
-        cout << "Double check: " << board.is_double_check() << endl;
+    Board board = Board("8/8/1r6/4q3/8/8/1K3r2/8");
+    cout << board << endl;
+    auto moves = board.get_legal_moves();
+    for (int i = 0; i < moves.size; i++) {
+        cout << moves[i] << endl;
     }
+
 }

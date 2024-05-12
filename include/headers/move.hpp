@@ -50,7 +50,10 @@ namespace chess {
         std::array<chess::Move, 218> moves{};
         int size = 0;
 
+        chess::Move& operator[](int index);
 
+
+        const chess::Move& operator[](int index) const;
 
         void push_back(chess::Move move);
         void clear();

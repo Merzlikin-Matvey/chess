@@ -18,4 +18,5 @@
 #include "headers/pin_mask_magic_numbers.hpp"
 #include "headers/magic_numbers_constants.hpp"
 #include "headers/masks/pawn_masks.hpp"
+#include "headers/check_and_checkmate.hpp"
 

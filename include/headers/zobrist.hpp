@@ -68,6 +68,12 @@ namespace zobrist {
             return this->hash >= other.hash;
         }
 
+        ZobristHash operator^(const uint64_t& other) const {
+            ZobristHash result = *this;
+            result.hash = result.hash ^ other;
+            return result;
+        }
+
         ZobristHash operator^(const ZobristHash& other) const {
             ZobristHash result = *this;
             result.hash = result.hash ^ other.hash;

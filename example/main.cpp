@@ -7,17 +7,19 @@
 #include <chrono>
 #include <cmath>
 
-
 using namespace std;
 using namespace chess;
 
 void test() {
-    auto board = Board();
-    int n = 100000;
+    int n = 1000;
+    auto default_board = Board();
 
     auto start = chrono::high_resolution_clock::now();
     for (int i = 0; i < n; i++) {
+        auto board = default_board;
         board.get_legal_moves();
+        board.move(board.legal_moves[0]);
+
     }
     auto end = chrono::high_resolution_clock::now();
 
@@ -26,10 +28,6 @@ void test() {
 }
 
 int main() {
-    Board board = Board("8/8/8/8/8/8/8/4K2r");
-    auto moves = board.get_legal_moves();
-    for (int i = 0; i < moves.size; i++){
-        cout << moves.moves[i].to_string() << endl;
-    }
-
+    test();
 }
+

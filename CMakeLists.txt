@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 project(chess-engine
-        VERSION 0.3.4
+        VERSION 0.3.5
         DESCRIPTION "Chess library"
         LANGUAGES C CXX)
 
@@ -221,8 +221,6 @@ if(CHESS_ENGINE_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
     endif()
 
 endif()
-
-
 
 #------------------------------#
 #         Testing              #

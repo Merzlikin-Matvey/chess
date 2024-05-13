@@ -13,7 +13,7 @@ using namespace chess;
 
 void test() {
     auto board = Board();
-    int n = 1000;
+    int n = 100000;
 
     auto start = chrono::high_resolution_clock::now();
     for (int i = 0; i < n; i++) {
@@ -26,10 +26,9 @@ void test() {
 }
 
 int main() {
-    Board board = Board("K7/8/8/8/8/5r2/4P3/8");
-    cout << board << endl;
+    Board board = Board("8/8/8/8/8/8/8/R3K3");
     auto moves = board.get_legal_moves();
-    for (int i = 0; i < moves.size; i++){
+    for (int i = 0; i < moves.size; i++) {
         cout << moves[i].to_string() << endl;
     }
 }

@@ -3,6 +3,8 @@
 #include "headers/bitboard_operations.hpp"
 #include "headers/board.hpp"
 
+#include <iostream>
+
 Bitboard chess::masks::get_pawn_mask(Bitboard pawns, Board& board) {
     Bitboard empty = ~board.all;
 
@@ -39,6 +41,32 @@ Bitboard chess::masks::get_pawn_left_mask(Bitboard pawns, Board& board) {
     } else {
         return (pawns >> 9) & board.side_bitboards[Black] & ~bitboard_operations::columns[7];
     }
+}
+
+Bitboard chess::masks::get_left_en_passant_mask(Bitboard pawns, Board& board) {
+    Bitboard en_passant_mask = 0;
+    if (board.white_turn) {
+        pawns = pawns & bitboard_operations::rows[4];
+        en_passant_mask = (pawns << 7) & ((board.piece_bitboards[Black][Pawn] & bitboard_operations::rows[4]) << 8);
+    } else {
+        pawns = pawns & bitboard_operations::rows[3];
+        en_passant_mask = (pawns >> 9) & ((board.piece_bitboards[White][Pawn] & bitboard_operations::rows[3]) >> 8);
+    }
+
+    return en_passant_mask;
+}
+
+Bitboard chess::masks::get_right_en_passant_mask(Bitboard pawns, Board& board) {
+    Bitboard en_passant_mask = 0;
+    if (board.white_turn) {
+        pawns = pawns & bitboard_operations::rows[4];
+        en_passant_mask = (pawns << 9) & ((board.piece_bitboards[Black][Pawn] & bitboard_operations::rows[4]) << 8);
+    } else {
+        pawns = pawns & bitboard_operations::rows[3];
+        en_passant_mask = (pawns >> 7) & ((board.piece_bitboards[White][Pawn] & bitboard_operations::rows[3]) >> 8);
+    }
+
+    return en_passant_mask;
 }
 
 

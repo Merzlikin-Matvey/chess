@@ -40,7 +40,7 @@ namespace chess {
 
         MoveArray& get_legal_moves();
 
-        void pawn_mask_to_moves(Bitboard mask, int delta, MoveArray* moves);
+        void pawn_mask_to_moves(Bitboard mask, int delta, MoveArray* moves, bool en_passant);
         void mask_to_moves(Bitboard mask, uint8_t attacker_index, uint8_t attacker_color, uint8_t attacker_type, MoveArray* moves);
 
         bool is_position_attacked(uint8_t x);
@@ -50,6 +50,8 @@ namespace chess {
 
         Bitboard get_king_legal_moves_mask();
         Bitboard get_check_mask();
+
+        void castling(MoveArray* moves);
 
         bool operator==(const Board &board) const;
         bool operator!=(const Board &board) const;

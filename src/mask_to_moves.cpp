@@ -2,7 +2,7 @@
 #include "headers/bitboard_operations.hpp"
 #include "headers/constants.hpp"
 
-void chess::Board::pawn_mask_to_moves(Bitboard mask, int delta, MoveArray* moves) {
+void chess::Board::pawn_mask_to_moves(Bitboard mask, int delta, MoveArray* moves, bool en_passant) {
     Move move;
     uint8_t attacker_index;
     uint8_t attacker_type = Pawn;
@@ -29,7 +29,12 @@ void chess::Board::pawn_mask_to_moves(Bitboard mask, int delta, MoveArray* moves
             }
         }
 
-        attacker_index = opponent_index - delta;
+        if (this->white_turn){
+            attacker_index = opponent_index - delta;
+        }
+        else {
+            attacker_index = opponent_index + delta;
+        }
 
         if (opponent_type == 255){
             opponent_color = 255;
@@ -38,10 +43,18 @@ void chess::Board::pawn_mask_to_moves(Bitboard mask, int delta, MoveArray* moves
             opponent_color = 1 - attacker_color;
         }
 
-        move = Move(attacker_index, attacker_color, attacker_type,
-                    opponent_index, opponent_color, opponent_type,
-                    false, false, false, false,
-                    double_move, false, 255);
+        if (en_passant){
+            move = Move(attacker_index, attacker_color, attacker_type,
+                        opponent_index, opponent_color, opponent_type,
+                        false, false, false, false,
+                        false, true, 255);
+        }
+        else {
+            move = Move(attacker_index, attacker_color, attacker_type,
+                        opponent_index, opponent_color, opponent_type,
+                        false, false, false, false,
+                        double_move, false, 255);
+        }
 
         moves->push_back(move);
     }

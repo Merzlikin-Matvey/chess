@@ -40,6 +40,8 @@ namespace chess {
         bool pawn_double_move = false;
         bool en_passant = false;
         uint8_t pawn_change_type = 255;
+
+        std::string to_string();
     };
 
     std::ostream& operator<<(std::ostream &ostream, chess::Move move);
@@ -51,7 +53,6 @@ namespace chess {
         int size = 0;
 
         chess::Move& operator[](int index);
-
 
         const chess::Move& operator[](int index) const;
 

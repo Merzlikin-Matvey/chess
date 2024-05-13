@@ -2,6 +2,7 @@
 #include "headers/board.hpp"
 #include "headers/constants.hpp"
 #include "headers/bitboard_operations.hpp"
+#include "headers/notations.hpp"
 
 #include <iostream>
 
@@ -119,4 +120,8 @@ std::ostream& chess::operator<<(std::ostream &ostream, chess::Move move) {
     ostream << "Pawn change type: " << (int)move.pawn_change_type << std::endl;
 
     return ostream;
+}
+
+std::string chess::Move::to_string() {
+    return move_to_chess_notation(first, second);
 }

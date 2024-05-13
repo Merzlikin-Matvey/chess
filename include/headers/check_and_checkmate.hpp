@@ -137,7 +137,7 @@ bool chess::Board::is_checkmate() {
 }
 
 
-Bitboard chess::Board::get_check_path() {
+Bitboard chess::Board::get_check_mask() {
     uint8_t color = white_turn ? White : Black;
     uint8_t king_index = bitboard_operations::bitScanForward(piece_bitboards[color][King]);
     uint8_t opponent_index;

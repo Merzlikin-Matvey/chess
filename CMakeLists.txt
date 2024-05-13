@@ -1,37 +1,19 @@
 cmake_minimum_required(VERSION 3.14)
 project(chess-engine
-        VERSION 0.3.0
+        VERSION 0.3.1
         DESCRIPTION "Chess engine"
         LANGUAGES C CXX)
 
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
 set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -flto")
 set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fconstexpr-ops-limit=1000000000 -fconstexpr-loop-limit=1000000000")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fconstexpr-ops-limit=2147483647 -fconstexpr-loop-limit=2147483647")
 
 #------------------------------#
 # General settings and options #
 #------------------------------#
 
-add_library(chess-engine SHARED
-        src/magic_numbers/rook_magic_numbers.c
-        src/magic_numbers/vertical_pin_mask_magic_numbers.c
-        include/headers/masks/vertical_pin_masks.hpp
-        src/magic_numbers/horizontal_pin_mask_magic_numbers.c
-        include/headers/masks/number_of_bits.hpp
-        include/headers/masks/up_right_diagonal_pin_masks.hpp
-        src/magic_numbers/up_right_pin_mask_magic_numbers.c
-        src/magic_numbers/down_right_pin_mask_magic_numbers.c
-        include/headers/masks/down_right_diagonal_pin_masks.hpp
-        include/headers/magic_numbers_constants.hpp
-        include/headers/pin_mask_magic_numbers.hpp
-        include/headers/masks/masks.hpp
-        include/headers/masks/pawn_masks.hpp
-        src/pawn_mask.cpp
-        src/mask_to_moves.cpp
-        src/move_array.cpp
-        include/headers/check_and_checkmate.hpp
-)
+add_library(chess-engine SHARED)
 
 add_library(chess-engine::chess-engine ALIAS chess-engine)
 
@@ -98,6 +80,15 @@ set(public_headers
         include/headers/masks/bishop_masks.hpp
         include/headers/masks/king_knight_masks.hpp
         include/headers/magic_numbers_constants.hpp
+        include/headers/masks/vertical_pin_masks.hpp
+        include/headers/masks/number_of_bits.hpp
+        include/headers/masks/up_right_diagonal_pin_masks.hpp
+        include/headers/masks/down_right_diagonal_pin_masks.hpp
+        include/headers/magic_numbers_constants.hpp
+        include/headers/pin_mask_magic_numbers.hpp
+        include/headers/masks/masks.hpp
+        include/headers/masks/pawn_masks.hpp
+        include/headers/check_and_checkmate.hpp
 )
 
 set(sources
@@ -112,6 +103,14 @@ set(sources
         src/board/get_legal_moves.cpp
         src/magic_numbers/random_generator.c
         src/magic_numbers/bishop_magic_numbers.c
+        src/magic_numbers/rook_magic_numbers.c
+        src/magic_numbers/vertical_pin_mask_magic_numbers.c
+        src/magic_numbers/horizontal_pin_mask_magic_numbers.c
+        src/magic_numbers/up_right_pin_mask_magic_numbers.c
+        src/magic_numbers/down_right_pin_mask_magic_numbers.c
+        src/pawn_mask.cpp
+        src/mask_to_moves.cpp
+        src/move_array.cpp
 )
 
 

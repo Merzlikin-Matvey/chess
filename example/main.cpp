@@ -26,7 +26,7 @@ void test() {
 }
 
 int main() {
-    Board board = Board("8/8/8/2q5/3K4/8/8/8");
+    Board board = Board("K7/8/8/8/8/5r2/4P3/8");
     cout << board << endl;
     auto moves = board.get_legal_moves();
     for (int i = 0; i < moves.size; i++){

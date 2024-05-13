@@ -57,8 +57,12 @@ chess::MoveArray& chess::Board::get_legal_moves() {
         Bitboard check_mask = get_check_mask();
 
         // Pinned pawns
-        Bitboard pinned_pawns = piece_bitboards[color][Pawn] & vertical_pin_mask;
-        pawn_mask_to_moves(masks::get_pawn_mask(pinned_pawns, *this) & check_mask, 8, &legal_moves);
+        Bitboard vertical_pinned_pawns = piece_bitboards[color][Pawn] & vertical_pin_mask;
+        Bitboard diagonal_pinned_pawns = piece_bitboards[color][Pawn] & (up_right_pin_mask | up_left_pin_mask);
+        pawn_mask_to_moves(masks::get_pawn_mask(vertical_pinned_pawns, *this) & check_mask, 8, &legal_moves);
+        pawn_mask_to_moves(masks::get_pawn_long_mask(vertical_pinned_pawns, *this) & check_mask, 16, &legal_moves);
+        pawn_mask_to_moves(masks::get_pawn_right_mask(diagonal_pinned_pawns, *this) & check_mask, 9, &legal_moves);
+        pawn_mask_to_moves(masks::get_pawn_left_mask(diagonal_pinned_pawns, *this) & check_mask, 7, &legal_moves);
 
         // Pinned rooks
         Bitboard pinned_rooks = piece_bitboards[color][Rook] & (horizontal_pin_mask | vertical_pin_mask);
@@ -151,11 +155,13 @@ chess::MoveArray& chess::Board::get_legal_moves() {
 
     }
 
-
     // Pinned pawns
-    Bitboard pinned_pawns = piece_bitboards[color][Pawn] & vertical_pin_mask;
-    pawn_mask_to_moves(masks::get_pawn_mask(pinned_pawns, *this), 8, &legal_moves);
-
+    Bitboard vertical_pinned_pawns = piece_bitboards[color][Pawn] & vertical_pin_mask;
+    Bitboard diagonal_pinned_pawns = piece_bitboards[color][Pawn] & (up_right_pin_mask | up_left_pin_mask);
+    pawn_mask_to_moves(masks::get_pawn_mask(vertical_pinned_pawns, *this), 8, &legal_moves);
+    pawn_mask_to_moves(masks::get_pawn_long_mask(vertical_pinned_pawns, *this), 16, &legal_moves);
+    pawn_mask_to_moves(masks::get_pawn_right_mask(diagonal_pinned_pawns, *this), 9, &legal_moves);
+    pawn_mask_to_moves(masks::get_pawn_left_mask(diagonal_pinned_pawns, *this), 7, &legal_moves);
 
     // Pinned rooks
     Bitboard pinned_rooks = piece_bitboards[color][Rook] & (horizontal_pin_mask | vertical_pin_mask);
@@ -197,10 +203,12 @@ chess::MoveArray& chess::Board::get_legal_moves() {
                       &legal_moves);
     }
 
-
     // Pawns
     Bitboard pawns = piece_bitboards[color][Pawn] & inverse_pin_mask;
     pawn_mask_to_moves(masks::get_pawn_mask(pawns, *this), 8, &legal_moves);
+    pawn_mask_to_moves(masks::get_pawn_long_mask(pawns, *this), 16, &legal_moves);
+    pawn_mask_to_moves(masks::get_pawn_right_mask(pawns, *this), 9, &legal_moves);
+    pawn_mask_to_moves(masks::get_pawn_left_mask(pawns, *this), 7, &legal_moves);
 
     // Rooks
     Bitboard rooks = piece_bitboards[color][Rook] & inverse_pin_mask;

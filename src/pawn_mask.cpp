@@ -14,12 +14,13 @@ Bitboard chess::masks::get_pawn_mask(Bitboard pawns, Board& board) {
 }
 
 Bitboard chess::masks::get_pawn_long_mask(Bitboard pawns, Board& board) {
-    Bitboard pawn_mask = get_pawn_mask(pawns, board);
     Bitboard empty = ~board.all;
 
     if (board.white_turn) {
+        Bitboard pawn_mask = get_pawn_mask(pawns & bitboard_operations::rows[1], board);
         return (pawn_mask << 8) & empty;
     } else {
+        Bitboard pawn_mask = get_pawn_mask(pawns & bitboard_operations::rows[6], board);
         return (pawn_mask >> 8) & empty;
     }
 }

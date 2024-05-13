@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
 project(chess-engine
-        VERSION 0.3.2
-        DESCRIPTION "Chess engine"
+        VERSION 0.3.3
+        DESCRIPTION "Chess library"
         LANGUAGES C CXX)
 
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")

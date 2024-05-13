@@ -6,6 +6,7 @@
 #include "headers/bitboard_lines.hpp"
 
 
+
 Bitboard _get_rook_mask(chess::Board& board, uint8_t square) {
     Bitboard mask = board.all & chess::masks::secondary_rook_masks[square];
     int hash = chess::masks::get_rook_hash(mask, square);

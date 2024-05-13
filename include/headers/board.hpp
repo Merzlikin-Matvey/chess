@@ -24,10 +24,8 @@ namespace chess {
         std::vector<zobrist::ZobristHash> _hashes;
 
         bool white_turn = true;
-        bool w_l_castling = true;
-        bool w_s_castling = true;
-        bool b_l_castling = true;
-        bool b_s_castling = true;
+        bool white_castling = true;
+        bool black_castling = true;
 
         MoveArray& legal_moves = *new MoveArray();
 

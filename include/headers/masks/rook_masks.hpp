@@ -83,7 +83,7 @@ namespace chess::masks {
             }
 
             if (flag and num_up_bits > 0) {
-                mask |= chess::masks::lines[square + 8 * num_up_bits][square];
+                mask |= chess::masks::lines[square + 8 * (num_up_bits + 1)][square];
             }
 
 
@@ -99,7 +99,7 @@ namespace chess::masks {
             }
 
             if (flag  and num_down_bits > 0) {
-                mask |= chess::masks::lines[square - 8 * num_down_bits][square];
+                mask |= chess::masks::lines[square - 8 * (num_down_bits + 1)][square];
             }
 
 
@@ -115,7 +115,7 @@ namespace chess::masks {
             }
 
             if (flag and num_right_bits > 0) {
-                mask |= chess::masks::lines[square + num_right_bits][square];
+                mask |= chess::masks::lines[square + (num_right_bits + 1)][square];
             }
 
 
@@ -131,7 +131,7 @@ namespace chess::masks {
             }
 
             if (flag and (square % 8) != 0) {
-                mask |= chess::masks::lines[square - num_left_bits][square];
+                mask |= chess::masks::lines[square - (num_left_bits + 1)][square];
             }
 
             hash = get_rook_hash(board, square);
@@ -183,9 +183,10 @@ namespace chess::masks {
         return masks;
     }
 
+
+
     constexpr std::array<std::array<Bitboard, 4096>, 64> primary_rook_masks = get_primary_rook_masks();
     constexpr std::array<Bitboard, 64> secondary_rook_masks = get_secondary_rook_masks();
-
 
 
 

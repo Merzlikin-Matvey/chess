@@ -8,6 +8,13 @@
 void chess::Board::castling(chess::MoveArray *moves) {
     uint8_t color = white_turn ? White : Black;
 
+    if (color == White and !white_castling){
+        return;
+    }
+    if (color == Black and !black_castling){
+        return;
+    }
+
     if (color == White){
         // Long
         if (bitboard_operations::get_bit(piece_bitboards[White][Rook], 0) and

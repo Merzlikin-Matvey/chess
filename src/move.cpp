@@ -82,24 +82,28 @@ void chess::Board::move(chess::Move move){
         bitboard_operations::set_1(piece_bitboards[chess::White][chess::King], 2);
         bitboard_operations::set_0(piece_bitboards[chess::White][chess::Rook], 0);
         bitboard_operations::set_1(piece_bitboards[chess::White][chess::Rook], 3);
+        white_castling = false;
     }
     else if (move.w_s_castling){
         bitboard_operations::set_0(piece_bitboards[chess::White][chess::King], 4);
         bitboard_operations::set_1(piece_bitboards[chess::White][chess::King], 6);
         bitboard_operations::set_0(piece_bitboards[chess::White][chess::Rook], 7);
         bitboard_operations::set_1(piece_bitboards[chess::White][chess::Rook], 5);
+        white_castling = false;
     }
     else if (move.b_l_castling){
         bitboard_operations::set_0(piece_bitboards[chess::Black][chess::King], 60);
         bitboard_operations::set_1(piece_bitboards[chess::Black][chess::King], 58);
         bitboard_operations::set_0(piece_bitboards[chess::Black][chess::Rook], 56);
         bitboard_operations::set_1(piece_bitboards[chess::Black][chess::Rook], 59);
+        black_castling = false;
     }
     else if (move.b_s_castling){
         bitboard_operations::set_0(piece_bitboards[chess::Black][chess::King], 60);
         bitboard_operations::set_1(piece_bitboards[chess::Black][chess::King], 62);
         bitboard_operations::set_0(piece_bitboards[chess::Black][chess::Rook], 63);
         bitboard_operations::set_1(piece_bitboards[chess::Black][chess::Rook], 61);
+        black_castling = false;
     }
 }
 

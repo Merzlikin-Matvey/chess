@@ -54,7 +54,7 @@ void chess::Board::castling(chess::MoveArray *moves) {
                 moves->push_back(Move(
                         60, Black, King,
                         58, 255, 255,
-                        false, false, false, false,
+                        false, false, true, false,
                         false, false, 255
                         ));
             }
@@ -70,7 +70,7 @@ void chess::Board::castling(chess::MoveArray *moves) {
                 moves->push_back(Move(
                         60, Black, King,
                         62, 255, 255,
-                        false, false, false, false,
+                        false, false, false, true,
                         false, false, 255
                         ));
             }

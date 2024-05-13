@@ -3,7 +3,7 @@
 #include "headers/bitboard_operations.hpp"
 
 #include <string>
-
+#include <iostream>
 
 std::array<std::array<Bitboard, 6>, 2> chess::convert_fen_to_bitboards(std::string fen){
     std::array<std::array<Bitboard, 6>, 2> piece_bitboards = {{{0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0}}};
@@ -80,13 +80,6 @@ std::array<std::array<Bitboard, 6>, 2> chess::convert_fen_to_bitboards(std::stri
                 x++;
             }
         }
-        else {
-            if (symbol == 'w'){
-                side = White;
-            } else if (symbol == 'b'){
-                side = Black;
-            }
-        }
     }
 
     return piece_bitboards;
@@ -94,6 +87,6 @@ std::array<std::array<Bitboard, 6>, 2> chess::convert_fen_to_bitboards(std::stri
 
 std::array<std::array<Bitboard, 6>, 2> chess::convert_default_positions(){
     std::array<std::array<Bitboard, 6>, 2> piece_bitboards = {{{0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0}}};
-    std::string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -";
+    std::string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
     return convert_fen_to_bitboards(fen);
 }

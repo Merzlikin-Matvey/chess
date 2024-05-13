@@ -1,6 +1,7 @@
 #include "headers/board.hpp"
 #include "headers/move.hpp"
 #include "headers/bitboard_operations.hpp"
+#include "headers/constants.hpp"
 
 #include <iostream>
 
@@ -10,40 +11,40 @@ std::ostream& chess::operator<<(std::ostream &ostream, chess::Board board) {
         for (uint8_t x = 0; x < 8; x = x + 1) {
             int8_t piece = board.get_piece_type(board, x, y);
             switch (piece) {
-                case 0:
+                case Pawn:
                     ostream << "P";
                     break;
-                case 1:
+                case Knight:
                     ostream << "N";
                     break;
-                case 2:
+                case Bishop:
                     ostream << "B";
                     break;
-                case 3:
+                case Rook:
                     ostream << "R";
                     break;
-                case 4:
+                case Queen:
                     ostream << "Q";
                     break;
-                case 5:
+                case King:
                     ostream << "K";
                     break;
-                case 6:
+                case Pawn + 6:
                     ostream << "p";
                     break;
-                case 7:
+                case Rook + 6:
                     ostream << "r";
                     break;
-                case 8:
+                case Bishop + 6:
                     ostream << "b";
                     break;
-                case 9:
+                case Knight + 6:
                     ostream << "n";
                     break;
-                case 10:
+                case Queen + 6:
                     ostream << "q";
                     break;
-                case 11:
+                case King + 6:
                     ostream << "k";
                     break;
                 default:

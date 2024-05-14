@@ -27,6 +27,8 @@ namespace chess {
         bool white_castling = true;
         bool black_castling = true;
 
+        double num_of_moves = 0;
+
         MoveArray& legal_moves = *new MoveArray();
 
         void add_hash_to_history(zobrist::ZobristHash hash);
@@ -45,6 +47,7 @@ namespace chess {
         bool is_check();
         bool is_checkmate();
         bool is_double_check();
+        bool is_draw();
 
         Bitboard get_king_legal_moves_mask();
         Bitboard get_check_mask();

@@ -200,3 +200,24 @@ inline Bitboard chess::Board::get_check_mask() {
     return 0;
 }
 
+inline bool chess::Board::is_draw() {
+    uint8_t pawn_material = 1;
+    uint8_t knight_material = 3;
+    uint8_t bishop_material = 3;
+    uint8_t rook_material = 5;
+    uint8_t queen_material = 9;
+
+    int count = 0;
+    count += bitboard_operations::count_1(piece_bitboards[White][Pawn]) * pawn_material;
+    count += bitboard_operations::count_1(piece_bitboards[Black][Pawn]) * pawn_material;
+    count += bitboard_operations::count_1(piece_bitboards[White][Knight]) * knight_material;
+    count += bitboard_operations::count_1(piece_bitboards[Black][Knight]) * knight_material;
+    count += bitboard_operations::count_1(piece_bitboards[White][Bishop]) * bishop_material;
+    count += bitboard_operations::count_1(piece_bitboards[Black][Bishop]) * bishop_material;
+    count += bitboard_operations::count_1(piece_bitboards[White][Rook]) * rook_material;
+    count += bitboard_operations::count_1(piece_bitboards[Black][Rook]) * rook_material;
+    count += bitboard_operations::count_1(piece_bitboards[White][Queen]) * queen_material;
+    count += bitboard_operations::count_1(piece_bitboards[Black][Queen]) * queen_material;
+
+    return num_of_moves >= 50 || get_num_of_repetitions() >= 3 || count <= 4;
+}

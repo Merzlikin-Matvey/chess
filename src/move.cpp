@@ -155,6 +155,8 @@ void chess::Board::move(chess::Move move){
     else {
         _hashes.push_back(zobrist::ZobristHash(*this));
     }
+
+    num_of_moves += 0.5;
 }
 
 

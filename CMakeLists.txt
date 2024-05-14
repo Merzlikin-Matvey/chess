@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 project(chess-lib
-        VERSION 0.3.6
+        VERSION 0.3.7
         DESCRIPTION "Chess library"
         LANGUAGES C CXX)
 
@@ -64,7 +64,6 @@ generate_export_header(chess-lib EXPORT_FILE_NAME include/${export_file_name})
 set(public_headers
         include/export.h
         include/chess-lib.hpp
-        dependencies/json/json.hpp
         include/headers/bitboard_operations.hpp
         include/headers/board.hpp
         include/headers/constants.hpp

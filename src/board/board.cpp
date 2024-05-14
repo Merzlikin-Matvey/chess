@@ -83,3 +83,17 @@ int8_t chess::Board::get_piece_type(const chess::Board& board, uint8_t x) {
     }
     return -1;
 }
+
+chess::Board& chess::Board::operator = (const Board& other) {
+    piece_bitboards = other.piece_bitboards;
+    side_bitboards = other.side_bitboards;
+    all = other.all;
+    white_turn = other.white_turn;
+    white_castling = other.white_castling;
+    black_castling = other.black_castling;
+    num_of_moves = other.num_of_moves;
+    legal_moves = other.legal_moves;
+    _hashes = other._hashes;
+
+    return *this;
+}

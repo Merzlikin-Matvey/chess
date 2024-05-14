@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 project(chess-lib
-        VERSION 0.3.7
+        VERSION 0.3.8
         DESCRIPTION "Chess library"
         LANGUAGES C CXX)
 
@@ -218,6 +218,7 @@ if(CHESS_LIB_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
     else()
         execute_process(COMMAND bash ${CMAKE_SOURCE_DIR}/scripts/install_paths.sh ${CMAKE_INSTALL_PREFIX})
     endif()
+
 
 endif()
 

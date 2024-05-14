@@ -57,6 +57,7 @@ namespace chess {
 
         bool operator==(const Board &board) const;
         bool operator!=(const Board &board) const;
+        Board& operator=(const Board& other);
 
         int8_t get_piece_type(const chess::Board &board, uint8_t x, uint8_t y);
         int8_t get_piece_type(const chess::Board &board, uint8_t x);

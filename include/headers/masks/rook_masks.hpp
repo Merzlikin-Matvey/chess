@@ -1,3 +1,5 @@
+#pragma once
+
 #include "headers/magic_numbers.hpp"
 #include "headers/bitboard_lines.hpp"
 #include "headers/masks/masks_utils.hpp"

@@ -189,7 +189,7 @@ namespace chess::masks {
     constexpr std::array<std::array<Bitboard, 128>, 64> opposite_vertical_pin_masks = get_opposite_vertical_pin_masks();
     constexpr std::array<std::array<Bitboard, 128>, 64> teammate_vertical_pin_masks = get_teammate_vertical_pin_masks();
 
-    Bitboard get_vertical_pin_mask(Board& board, uint8_t square, uint8_t color) {
+    inline Bitboard get_vertical_pin_mask(Board& board, uint8_t square, uint8_t color) {
         int rook_or_queen_hash = get_vertical_pin_hash(secondary_vertical_pin_masks[square] & (
                 board.piece_bitboards[!color][chess::Rook] | board.piece_bitboards[!color][chess::Queen]), square);
         Bitboard rook_or_queen = rook_or_queen_vertical_pin_masks[square][rook_or_queen_hash];

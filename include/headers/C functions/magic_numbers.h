@@ -1,4 +1,4 @@
-#ifndef CHESS_MAGIC_NUMBERS_HCHESS_MAGIC_NUMBERS_H
+#ifndef CHESS_MAGIC_NUMBERS_H
 #define CHESS_MAGIC_NUMBERS_H
 
 #include <stdint.h>

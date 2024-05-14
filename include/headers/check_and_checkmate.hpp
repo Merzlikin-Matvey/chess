@@ -7,27 +7,27 @@
 
 
 
-Bitboard _get_rook_mask(chess::Board& board, uint8_t square) {
+inline Bitboard _get_rook_mask(chess::Board& board, uint8_t square) {
     Bitboard mask = board.all & chess::masks::secondary_rook_masks[square];
     int hash = chess::masks::get_rook_hash(mask, square);
     return chess::masks::primary_rook_masks[square][hash];
 }
 
-Bitboard _get_bishop_mask(chess::Board& board, uint8_t square) {
+inline Bitboard _get_bishop_mask(chess::Board& board, uint8_t square) {
     Bitboard mask = board.all & chess::masks::secondary_bishop_masks[square];
     int hash = chess::masks::get_bishop_hash(mask, square);
     return chess::masks::primary_bishop_masks[square][hash];
 }
 
-Bitboard _get_knight_mask(uint8_t square) {
+inline Bitboard _get_knight_mask(uint8_t square) {
     return chess::masks::knight_masks[square];
 }
 
-Bitboard _get_king_mask(uint8_t square) {
+inline Bitboard _get_king_mask(uint8_t square) {
     return chess::masks::king_masks[square];
 }
 
-bool chess::Board::is_position_attacked(uint8_t x) {
+inline bool chess::Board::is_position_attacked(uint8_t x) {
     uint8_t color = white_turn ? White : Black;
     Bitboard rook_mask = _get_rook_mask(*this, x);
     Bitboard bishop_mask = _get_bishop_mask(*this, x);
@@ -80,7 +80,7 @@ bool chess::Board::is_position_attacked(uint8_t x) {
 }
 
 
-bool chess::Board::is_check() {
+inline bool chess::Board::is_check() {
 
     uint8_t color = white_turn ? White : Black;
     uint8_t king_index = bitboard_operations::bitScanForward(piece_bitboards[color][King]);
@@ -88,7 +88,7 @@ bool chess::Board::is_check() {
 }
 
 
-bool chess::Board::is_double_check() {
+inline bool chess::Board::is_double_check() {
     uint16_t count = 0;
     uint8_t king_index = bitboard_operations::bitScanForward(piece_bitboards[white_turn ? White : Black][King]);
     uint8_t color = white_turn ? White : Black;
@@ -132,13 +132,13 @@ bool chess::Board::is_double_check() {
 }
 
 
-bool chess::Board::is_checkmate() {
+inline bool chess::Board::is_checkmate() {
     MoveArray& moves = get_legal_moves();
     return moves.size == 0;
 }
 
 
-Bitboard chess::Board::get_check_mask() {
+inline Bitboard chess::Board::get_check_mask() {
     uint8_t color = white_turn ? White : Black;
     uint8_t king_index = bitboard_operations::bitScanForward(piece_bitboards[color][King]);
     uint8_t opponent_index;

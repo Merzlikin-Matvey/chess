@@ -13,23 +13,23 @@
 
 
 namespace chess::masks{
-    Bitboard get_rook_mask(Board& board, uint8_t square) {
+    inline Bitboard get_rook_mask(Board& board, uint8_t square) {
         Bitboard mask = board.all & secondary_rook_masks[square];
         int hash = get_rook_hash(mask, square);
         return primary_rook_masks[square][hash];
     }
 
-    Bitboard get_bishop_mask(Board& board, uint8_t square) {
+    inline Bitboard get_bishop_mask(Board& board, uint8_t square) {
         Bitboard mask = board.all & secondary_bishop_masks[square];
         int hash = get_bishop_hash(mask, square);
         return primary_bishop_masks[square][hash];
     }
 
-    Bitboard get_knight_mask(uint8_t square) {
+    inline Bitboard get_knight_mask(uint8_t square) {
         return knight_masks[square];
     }
 
-    Bitboard get_king_mask( uint8_t square) {
+    inline Bitboard get_king_mask( uint8_t square) {
         return king_masks[square];
     }
 

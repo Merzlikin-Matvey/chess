@@ -11,7 +11,8 @@ endif()
 set(sources main.cpp)
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${sources})
 
-add_executable(chess-lib-example)
+add_executable(chess-lib-example
+        tmp.cpp)
 target_sources(chess-lib-example PRIVATE ${sources})
 target_link_libraries(chess-lib-example PRIVATE chess-lib::chess-lib)
 

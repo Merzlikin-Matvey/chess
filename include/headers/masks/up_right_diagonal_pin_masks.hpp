@@ -204,7 +204,7 @@ static consteval std::array<Bitboard, 64> get_secondary_up_right_pin_masks() {
     constexpr std::array<std::array<Bitboard, 128>, 64> opposite_up_right_pin_masks = get_opposite_up_right_pin_masks();
     constexpr std::array<std::array<Bitboard, 128>, 64> bishop_or_queen_up_right_pin_masks = get_bishop_or_queen_up_right_pin_masks();
 
-    Bitboard get_up_right_pin_mask(Board& board, uint8_t square, uint8_t color) {
+    inline Bitboard get_up_right_pin_mask(Board& board, uint8_t square, uint8_t color) {
         int bishop_or_queen_hash = get_up_right_pin_hash(secondary_up_right_pin_masks[square] & (
                 board.piece_bitboards[!color][chess::Bishop] | board.piece_bitboards[!color][chess::Queen]), square);
         Bitboard bishop_or_queen = bishop_or_queen_up_right_pin_masks[square][bishop_or_queen_hash];

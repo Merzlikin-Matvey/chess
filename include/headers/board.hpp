@@ -37,6 +37,7 @@ namespace chess {
         uint8_t get_num_of_repetitions();
 
         void move(Move move);
+        void move(std::string move);
 
         MoveArray& get_legal_moves();
 

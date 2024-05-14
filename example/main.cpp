@@ -24,10 +24,14 @@ void test() {
 }
 
 int main() {
-    Board board = Board("8/8/8/6n1/4K3/3n4/8/8");
-    auto moves = board.get_legal_moves();
-    for (int i = 0; i < moves.size; i++){
-        cout << moves[i].to_string() << endl;
+    Board board = Board();
+
+    string move;
+    for (int i = 0; i < 10; i++){
+        cin >> move;
+        board.move(move);
+        cout << board;
     }
+
 }
 

@@ -13,7 +13,7 @@ void chess::Board::clear_history() {
 }
 
 uint8_t chess::Board::get_num_of_repetitions() {
-    zobrist::ZobristHash current_hash = zobrist::ZobristHash(*this);
+    zobrist::ZobristHash current_hash = _hashes.back();
     int repetitions = 0;
     for (auto hash : _hashes) {
         if (hash == current_hash) {

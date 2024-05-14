@@ -157,6 +157,17 @@ void chess::Board::move(chess::Move move){
     }
 
     num_of_moves += 0.5;
+    get_legal_moves();
+}
+
+void chess::Board::move(std::string move){
+    for (int i = 0; i < legal_moves.size; i++){
+        if (move == legal_moves.moves[i].to_string()){
+            this->move(legal_moves.moves[i]);
+            return;
+        }
+    }
+    throw std::invalid_argument("Invalid move");
 }
 
 

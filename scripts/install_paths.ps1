@@ -1,16 +1,16 @@
 param (
-    [string]$chess_engine_path
+    [string]$CHESS_LIB_path
 )
 
-if (-not $chess_engine_path) {
+if (-not $CHESS_LIB_path) {
     Write-Host "Not enough arguments"
     exit 1
 }
 
-[Environment]::SetEnvironmentVariable("CHESS_ENGINE_PATH", $chess_engine_path, "User")
+[Environment]::SetEnvironmentVariable("CHESS_LIB_PATH", $CHESS_LIB_path, "User")
 
-if (-not [Environment]::GetEnvironmentVariable("CHESS_ENGINE_PATH", "User")) {
-    Write-Host "Failed to set CHESS_ENGINE_PATH"
+if (-not [Environment]::GetEnvironmentVariable("CHESS_LIB_PATH", "User")) {
+    Write-Host "Failed to set CHESS_LIB_PATH"
     exit 1
 }
 
@@ -45,6 +45,6 @@ Function Set-PathVariable {
     [System.Environment]::SetEnvironmentVariable('PATH', $value, $Scope)
 }
 
-$chess_engine_bin_path = Join-Path -Path $chess_engine_path -ChildPath "bin"
-Add-Path-User $chess_engine_bin_path
-Add-Path-Machine $chess_engine_bin_path
+$CHESS_LIB_bin_path = Join-Path -Path $CHESS_LIB_path -ChildPath "bin"
+Add-Path-User $CHESS_LIB_bin_path
+Add-Path-Machine $CHESS_LIB_bin_path

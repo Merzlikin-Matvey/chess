@@ -8,14 +8,11 @@ using namespace chess;
 
 void test() {
     int n = 10000;
-    auto default_board = Board();
+    auto board = Board("5K2/1R6/2R5/3R4/4R3/5R2/6R1/8");
 
     auto start = chrono::high_resolution_clock::now();
     for (int i = 0; i < n; i++) {
-        auto board = default_board;
         board.get_legal_moves();
-        board.move(board.legal_moves[0]);
-
     }
     auto end = chrono::high_resolution_clock::now();
 
@@ -24,14 +21,7 @@ void test() {
 }
 
 int main() {
-    Board board = Board();
-
-    string move;
-    for (int i = 0; i < 10; i++){
-        cin >> move;
-        board.move(move);
-        cout << board;
-    }
+    test();
 
 }
 

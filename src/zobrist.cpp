@@ -5,7 +5,7 @@
 
 #include <iostream>
 
-zobrist::ZobristHash::ZobristHash(chess::Board board) {
+chess::zobrist::ZobristHash::ZobristHash(chess::Board board) {
     this->hash = 0;
 
     if (!board.white_turn){
@@ -33,7 +33,7 @@ zobrist::ZobristHash::ZobristHash(chess::Board board) {
     }
 }
 
-std::ostream& zobrist::operator<<(std::ostream &ostream, zobrist::ZobristHash hash) {
+std::ostream& chess::zobrist::operator<<(std::ostream &ostream, zobrist::ZobristHash hash) {
     ostream << static_cast<unsigned long long>(hash.hash);
     return ostream;
 }

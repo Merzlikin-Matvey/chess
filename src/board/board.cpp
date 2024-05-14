@@ -17,7 +17,6 @@ chess::Board::Board(std::array<std::array<Bitboard, 6>, 2> board) {
     }
     all = side_bitboards[0] | side_bitboards[1];
 
-    get_legal_moves();
 }
 
 chess::Board::Board(std::string fen){
@@ -31,7 +30,6 @@ chess::Board::Board(std::string fen){
     }
     all = side_bitboards[0] | side_bitboards[1];
 
-    get_legal_moves();
 }
 
 
@@ -48,7 +46,6 @@ chess::Board::Board() {
     }
     all = side_bitboards[0] | side_bitboards[1];
 
-    get_legal_moves();
 }
 
 bool chess::Board::operator == (const Board &board) const {

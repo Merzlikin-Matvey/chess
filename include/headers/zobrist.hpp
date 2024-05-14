@@ -8,7 +8,7 @@ namespace chess {
     class Board;
 }
 
-namespace zobrist {
+namespace chess::zobrist {
     static constexpr uint64_t Seed = 0x98f107;
     static constexpr uint64_t Multiplier = 0x71abc9;
     static constexpr uint64_t Summand = 0xff1b3f;

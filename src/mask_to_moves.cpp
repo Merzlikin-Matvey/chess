@@ -76,14 +76,13 @@ void chess::Board::mask_to_moves(Bitboard mask, uint8_t attacker_index, uint8_t 
         }
 
         opponent_type = 255;
-        if (!bitboard_operations::get_bit(this->all, opponent_index)) {
-            for (uint8_t i = 0; i < 6; i++) {
-                if (bitboard_operations::get_bit(this->piece_bitboards[1 - attacker_color][i], opponent_index)) {
-                    opponent_type = i;
-                    break;
-                }
+        for (uint8_t i = 0; i < 6; i++) {
+            if (bitboard_operations::get_bit(this->piece_bitboards[1 - attacker_color][i], opponent_index)) {
+                opponent_type = i;
+                break;
             }
         }
+
 
         if (opponent_type == 255){
             opponent_color = 255;

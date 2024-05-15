@@ -50,6 +50,8 @@ namespace chess {
         bool is_double_check();
         bool is_draw();
 
+        int get_winner();
+
         Bitboard get_king_legal_moves_mask();
         Bitboard get_check_mask();
 

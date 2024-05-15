@@ -221,3 +221,13 @@ inline bool chess::Board::is_draw() {
 
     return num_of_moves >= 50 || get_num_of_repetitions() >= 3 || count <= 4;
 }
+
+int chess::Board::get_winner() {
+    if (is_checkmate()){
+        return white_turn ? Black : White;
+    }
+    if (is_draw()){
+        return 2;
+    }
+    return -1;
+}

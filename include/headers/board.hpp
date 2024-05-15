@@ -24,6 +24,8 @@ namespace chess {
         std::vector<zobrist::ZobristHash> _hashes;
 
         bool white_turn = true;
+        bool white_castling = false;
+        bool black_castling = false;
         bool w_l_castling = false;
         bool w_s_castling = false;
         bool b_l_castling = false;

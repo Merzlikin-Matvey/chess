@@ -101,6 +101,7 @@ void chess::Board::move(chess::Move move){
         bitboard_operations::set_1(side_bitboards[chess::White], 3);
         bitboard_operations::set_1(all, 3);
         w_l_castling = true;
+        white_castling = true;
     }
     else if (move.w_s_castling){
         bitboard_operations::set_1(piece_bitboards[chess::White][chess::King], 6);
@@ -113,6 +114,7 @@ void chess::Board::move(chess::Move move){
         bitboard_operations::set_1(side_bitboards[chess::White], 5);
         bitboard_operations::set_1(all, 5);
         w_s_castling = true;
+        white_castling = true;
     }
     else if (move.b_l_castling){
         bitboard_operations::set_1(piece_bitboards[chess::Black][chess::King], 58);
@@ -125,6 +127,7 @@ void chess::Board::move(chess::Move move){
         bitboard_operations::set_1(side_bitboards[chess::Black], 59);
         bitboard_operations::set_1(all, 59);
         b_l_castling = true;
+        black_castling = true;
     }
     else if (move.b_s_castling){
         bitboard_operations::set_1(piece_bitboards[chess::Black][chess::King], 62);
@@ -137,6 +140,7 @@ void chess::Board::move(chess::Move move){
         bitboard_operations::set_1(side_bitboards[chess::Black], 61);
         bitboard_operations::set_1(all, 61);
         b_s_castling = true;
+        black_castling = true;
     }
 
     white_turn = !white_turn;

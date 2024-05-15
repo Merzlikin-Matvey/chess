@@ -21,7 +21,15 @@ void test() {
 }
 
 int main() {
-    Board board = Board("5K2/1R6/2R5/3R4/4R3/5R2/6R1/8");
+    Board board = Board();
 
+    auto start = chrono::high_resolution_clock::now();
+    for (int i = 0; i < 1000; i++){
+        board.get_legal_moves();
+    }
+    auto end = chrono::high_resolution_clock::now();
+
+    auto duration = chrono::duration_cast<chrono::nanoseconds>(end - start);
+    cout << "Time: " << duration.count() / 1000 << "ns" << endl;
 }
 

@@ -12,6 +12,22 @@ chess::zobrist::ZobristHash::ZobristHash(chess::Board board) {
         this->hash = this->hash ^ zobrist::BlackMove;
     }
 
+    if (board.w_l_castling) {
+        this->hash = this->hash ^ zobrist::WhiteLongCastling;
+    }
+
+    if (board.w_s_castling) {
+        this->hash = this->hash ^ zobrist::WhiteShortCastling;
+    }
+
+    if (board.b_l_castling) {
+        this->hash = this->hash ^ zobrist::BlackLongCastling;
+    }
+
+    if (board.b_s_castling) {
+        this->hash = this->hash ^ zobrist::BlackShortCastling;
+    }
+
     uint8_t side;
     for (uint8_t square = 0; square < 64; square = square + 1) {
         if (bitboard_operations::get_bit(board.side_bitboards[chess::White], square)) {

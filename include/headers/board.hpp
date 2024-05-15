@@ -24,8 +24,10 @@ namespace chess {
         std::vector<zobrist::ZobristHash> _hashes;
 
         bool white_turn = true;
-        bool white_castling = true;
-        bool black_castling = true;
+        bool w_l_castling = false;
+        bool w_s_castling = false;
+        bool b_l_castling = false;
+        bool b_s_castling = false;
 
         double num_of_moves = 0;
 
@@ -63,9 +65,6 @@ namespace chess {
 
         int8_t get_piece_type(const chess::Board &board, uint8_t x, uint8_t y);
         int8_t get_piece_type(const chess::Board &board, uint8_t x);
-
-
-
     };
 
     std::ostream& operator<<(std::ostream &ostream, chess::Board board);

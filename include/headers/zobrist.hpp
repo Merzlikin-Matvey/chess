@@ -41,6 +41,8 @@ namespace chess::zobrist {
     class ZobristHash{
     public:
         ZobristHash(chess::Board board);
+        ZobristHash() = default;
+        ZobristHash(uint64_t hash) : hash(hash) {}
 
         uint64_t hash;
 

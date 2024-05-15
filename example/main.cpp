@@ -21,7 +21,8 @@ void test() {
 }
 
 int main() {
-    test();
+    Board board = Board("5K2/1R6/2R5/3R4/4R3/5R2/6R1/8");
+    zobrist::Z
 
 }
 

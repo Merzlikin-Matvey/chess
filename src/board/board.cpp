@@ -16,6 +16,7 @@ chess::Board::Board(std::array<std::array<Bitboard, 6>, 2> board) {
         }
     }
     all = side_bitboards[0] | side_bitboards[1];
+    _hashes.push_back(zobrist::ZobristHash(*this));
 
 }
 
@@ -29,7 +30,7 @@ chess::Board::Board(std::string fen){
         }
     }
     all = side_bitboards[0] | side_bitboards[1];
-
+    _hashes.push_back(zobrist::ZobristHash(*this));
 }
 
 
@@ -45,7 +46,7 @@ chess::Board::Board() {
         }
     }
     all = side_bitboards[0] | side_bitboards[1];
-
+    _hashes.push_back(zobrist::ZobristHash(*this));
 }
 
 bool chess::Board::operator == (const Board &board) const {

@@ -96,6 +96,8 @@ chess::Board& chess::Board::operator = (const Board& other) {
     num_of_moves = other.num_of_moves;
     legal_moves = other.legal_moves;
     _hashes = other._hashes;
+    move_history = other.move_history;
+
 
     return *this;
 }

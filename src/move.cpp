@@ -62,6 +62,9 @@ void chess::Board::move(chess::Move move){
     if (move.second_type == King){
         std::cout << "KING EATING" << std::endl;
         std::cout << move << std::endl;
+        for (int i = 0; i < move_history.size(); i++){
+            std::cout << "\"" << move_history[i] << "\"" << "," << std::endl;
+        }
         std::cout << *this << std::endl;
 
     }

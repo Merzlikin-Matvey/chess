@@ -181,7 +181,7 @@ namespace chess::masks {
 
     static constexpr Bitboard generate_secondary_down_right_pin_mask(uint8_t square) {
         Bitboard mask = 0;
-        mask |= lines[square + 7 * std::min(0, (std::min(square % 8, 8 - square / 8 - 1)))][square];
+        mask |= lines[square + 7 * std::max(0, (std::min(square % 8, 8 - square / 8 - 1)))][square];
         mask |= lines[square - 7 * std::max(0, (std::min(8 - square % 8, square / 8)))][square];
         return mask;
     }

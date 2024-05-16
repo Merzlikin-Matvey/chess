@@ -21,11 +21,6 @@ void test() {
 }
 
 int main() {
-    Board board = Board("rnbqkb1r/pppppppp/4n3/8/3N1P2/8/PPPPP1PP/RNBQKBNR");
-    board.get_legal_moves();
 
-    board.move("a2a3");
-    board.move("e6d4");
-    cout << board;
 }
 

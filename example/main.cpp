@@ -21,34 +21,17 @@ void test() {
 }
 
 int main() {
-    vector<string> moves = {
-            "f2f4",
-            "e7e5",
-            "a2a3",
-            "g7g5",
-            "b2b3",
-            "a7a6",
-            "c2c3",
-            "f8b4",
-            "c3c4",
-            "b7b5",
-            "e2e3",
-            "d7d5",
-            "g2g3",
-            "b4c3",
-            //"d2d3",
-    };
-
-    Board board = Board("7k/8/1b6/8/8/4P3/5K2/8");
-
-
-    Bitboard vertical_pin_mask = masks::get_vertical_pin_mask(board, 13, White);
-    Bitboard horizontal_pin_mask = masks::get_horizontal_pin_mask(board, 13, White);
-    Bitboard up_right_pin_mask = masks::get_up_right_pin_mask(board, 13, White);
-    Bitboard up_left_pin_mask = masks::get_down_right_pin_mask(board, 13, White);
-
-
-    print_bitboard(up_left_pin_mask);
+    Board board = Board("8/5q2/1K6/6N1/8/8/8/5k2");
+    board.get_legal_moves();
+    for (int i = 0; i < board.legal_moves.size(); i++){
+        cout << board.legal_moves[i].to_string() << endl;
+    }
+    for (int i = 0; i < board.legal_moves.size(); i++){
+        auto copy = board;
+        cout << copy << endl;
+        copy.move(copy.legal_moves[i]);
+        cout << copy.legal_moves[i].to_string();
+    }
 
 }
 

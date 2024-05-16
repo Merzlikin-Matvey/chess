@@ -55,8 +55,14 @@ namespace chess {
         }
 
         chess::Move& operator[](int index);
-
         const chess::Move& operator[](int index) const;
+        MoveArray& operator=(const MoveArray& other) {
+            if (this != &other) {
+                _size = other._size;
+                moves = other.moves;
+            }
+            return *this;
+        }
 
         void push_back(chess::Move move);
         void clear();

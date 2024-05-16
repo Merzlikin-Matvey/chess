@@ -170,7 +170,7 @@ namespace chess::masks {
         }
 
         for (uint8_t i = 0; i < num_bishop_down_right_bits; i++) {
-            bitboard_operations::set_1(mask, square - 9 * (i + 1));
+            bitboard_operations::set_1(mask, square - 7 * (i + 1));
         }
 
         for (uint8_t i = 0; i < num_bishop_up_left_bits; i++) {
@@ -178,7 +178,7 @@ namespace chess::masks {
         }
 
         for (uint8_t i = 0; i < num_bishop_down_left_bits; i++) {
-            bitboard_operations::set_1(mask, square - 7 * (i + 1));
+            bitboard_operations::set_1(mask, square - 9 * (i + 1));
         }
 
         return mask;

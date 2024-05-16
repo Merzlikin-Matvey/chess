@@ -59,6 +59,12 @@ chess::Move::Move(uint8_t first,
 }
 
 void chess::Board::move(chess::Move move){
+    if (move.second_type == King){
+        std::cout << "KING EATING" << std::endl;
+        std::cout << move << std::endl;
+        std::cout << *this << std::endl;
+
+    }
     bitboard_operations::set_0(piece_bitboards[move.first_side][move.first_type], move.first);
     bitboard_operations::set_0(side_bitboards[move.first_side], move.first);
     bitboard_operations::set_0(all, move.first);
@@ -159,13 +165,13 @@ void chess::Board::move(chess::Move move){
     else {
         _hashes.push_back(zobrist::ZobristHash(*this));
     }
-
+    move_history.push_back(move.to_string());
     num_of_moves += 0.5;
     get_legal_moves();
 }
 
 void chess::Board::move(std::string move){
-    for (int i = 0; i < legal_moves.size; i++){
+    for (int i = 0; i < legal_moves.size(); i++){
         if (move == legal_moves.moves[i].to_string()){
             this->move(legal_moves.moves[i]);
             return;

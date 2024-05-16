@@ -8,6 +8,10 @@
 
 
 inline Bitboard _get_rook_mask(chess::Board& board, uint8_t square) {
+    if (square > 63){
+        std::cout << unsigned(square) << std::endl;
+        std::cout << board << std::endl;
+    }
     Bitboard mask = board.all & chess::masks::secondary_rook_masks[square];
     int hash = chess::masks::get_rook_hash(mask, square);
     return chess::masks::primary_rook_masks[square][hash];
@@ -134,7 +138,7 @@ inline bool chess::Board::is_double_check() {
 
 inline bool chess::Board::is_checkmate() {
     MoveArray& moves = get_legal_moves();
-    return moves.size == 0;
+    return moves.size() == 0;
 }
 
 

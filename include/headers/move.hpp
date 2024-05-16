@@ -50,7 +50,9 @@ namespace chess {
     public:
         MoveArray();
         std::array<chess::Move, 218> moves{};
-        int size = 0;
+        int size() const{
+            return _size;
+        }
 
         chess::Move& operator[](int index);
 
@@ -58,5 +60,7 @@ namespace chess {
 
         void push_back(chess::Move move);
         void clear();
+    private:
+        int _size = 0;
     };
 }

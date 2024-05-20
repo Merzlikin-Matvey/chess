@@ -106,7 +106,7 @@ namespace chess::masks {
                 }
             }
 
-            if (flag and (square % 8 != 7) and (square > 7) and (square - 9 * (num_bishop_down_right_bits + 1) >= 0)) {
+            if (flag and (square % 8 != 7) and (square > 7) and (square - 7 * (num_bishop_down_right_bits + 1) >= 0)) {
                 mask |= chess::masks::lines[square - 7 * (num_bishop_down_right_bits + 1)][square];
             }
 
@@ -138,7 +138,7 @@ namespace chess::masks {
                 }
             }
 
-            if (flag and (square % 8 != 0) and (square > 7) and (square - 7 * (num_bishop_down_left_bits + 1) >= 0)){
+            if (flag and (square % 8 != 0) and (square > 7) and (square - 9 * (num_bishop_down_left_bits + 1) >= 0)){
                 mask |= chess::masks::lines[square - 9 * (num_bishop_down_left_bits + 1)][square];
             }
 

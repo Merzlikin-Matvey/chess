@@ -5,7 +5,7 @@
 #include "headers/masks/masks_utils.hpp"
 #include "headers/magic_numbers_constants.hpp"
 
-namespace {
+namespace chess::masks {
     constexpr std::array<uint8_t, 64> rook_up_bits = {
             6, 6, 6, 6, 6, 6, 6, 6,
             5, 5, 5, 5, 5, 5, 5, 5,
@@ -49,9 +49,7 @@ namespace {
             0, 0, 1, 2, 3, 4, 5, 6,
             0, 0, 1, 2, 3, 4, 5, 6
     };
-}
 
-namespace chess::masks {
     constexpr int get_rook_hash(Bitboard board, uint8_t square){
         Bitboard magic_number = chess::magic_numbers::rook_magic_numbers[square];
         int num_bits = rook_up_bits[square] + rook_down_bits[square] + rook_right_bits[square] + rook_left_bits[square];

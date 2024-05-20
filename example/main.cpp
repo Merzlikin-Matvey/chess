@@ -7,8 +7,8 @@ using namespace std;
 using namespace chess;
 
 void test() {
-    int n = 10000;
-    auto board = Board("5K2/1R6/2R5/3R4/4R3/5R2/6R1/8");
+    int n = 100;
+    Board board = Board();
 
     auto start = chrono::high_resolution_clock::now();
     for (int i = 0; i < n; i++) {
@@ -21,17 +21,8 @@ void test() {
 }
 
 int main() {
-    Board board = Board("8/5q2/1K6/6N1/8/8/8/5k2");
-    board.get_legal_moves();
-    for (int i = 0; i < board.legal_moves.size(); i++){
-        cout << board.legal_moves[i].to_string() << endl;
-    }
-    for (int i = 0; i < board.legal_moves.size(); i++){
-        auto copy = board;
-        cout << copy << endl;
-        copy.move(copy.legal_moves[i]);
-        cout << copy.legal_moves[i].to_string();
-    }
+    Board board = Board("6k1/8/8/8/K7/8/8/4bR2");
+    print_bitboard(masks::primary_bishop_masks[8][0]);
 
 }
 

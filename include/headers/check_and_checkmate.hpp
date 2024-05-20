@@ -14,8 +14,12 @@ inline Bitboard _get_rook_mask(chess::Board& board, uint8_t square) {
 }
 
 inline Bitboard _get_bishop_mask(chess::Board& board, uint8_t square) {
+    std::cout << "Second" << std::endl;
+    chess::print_bitboard(chess::masks::secondary_bishop_masks[square]);
+    std::cout << std::endl;
     Bitboard mask = board.all & chess::masks::secondary_bishop_masks[square];
     int hash = chess::masks::get_bishop_hash(mask, square);
+    std::cout << "Hash: " << hash << std::endl;
     return chess::masks::primary_bishop_masks[square][hash];
 }
 
@@ -37,7 +41,7 @@ inline bool chess::Board::is_position_attacked(uint8_t x) {
     if (rook_mask & (piece_bitboards[!color][Rook] | piece_bitboards[!color][Queen])) {
         return true;
     }
-
+    print_bitboard(bishop_mask);
     if (bishop_mask & (piece_bitboards[!color][Bishop] | piece_bitboards[!color][Queen])) {
         return true;
     }
@@ -81,7 +85,6 @@ inline bool chess::Board::is_position_attacked(uint8_t x) {
 
 
 inline bool chess::Board::is_check() {
-
     uint8_t color = white_turn ? White : Black;
     uint8_t king_index = bitboard_operations::bitScanForward(piece_bitboards[color][King]);
     return is_position_attacked(king_index);

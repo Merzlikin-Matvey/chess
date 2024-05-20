@@ -23,6 +23,5 @@ void test() {
 int main() {
     Board board = Board("6k1/8/8/8/K7/8/8/4bR2");
     print_bitboard(masks::primary_bishop_masks[8][0]);
-
 }
 

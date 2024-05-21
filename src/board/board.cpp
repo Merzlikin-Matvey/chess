@@ -16,7 +16,7 @@ chess::Board::Board(std::array<std::array<Bitboard, 6>, 2> board) {
         }
     }
     all = side_bitboards[0] | side_bitboards[1];
-    _hashes.push_back(zobrist::ZobristHash(*this));
+    hashes.push_back(zobrist::ZobristHash(*this));
 
 }
 
@@ -30,7 +30,7 @@ chess::Board::Board(std::string fen){
         }
     }
     all = side_bitboards[0] | side_bitboards[1];
-    _hashes.push_back(zobrist::ZobristHash(*this));
+    hashes.push_back(zobrist::ZobristHash(*this));
 }
 
 
@@ -46,7 +46,7 @@ chess::Board::Board() {
         }
     }
     all = side_bitboards[0] | side_bitboards[1];
-    _hashes.push_back(zobrist::ZobristHash(*this));
+    hashes.push_back(zobrist::ZobristHash(*this));
 }
 
 bool chess::Board::operator == (const Board &board) const {
@@ -95,7 +95,7 @@ chess::Board& chess::Board::operator = (const Board& other) {
     b_s_castling = other.b_s_castling;
     num_of_moves = other.num_of_moves;
     legal_moves = other.legal_moves;
-    _hashes = other._hashes;
+    hashes = other.hashes;
     move_history = other.move_history;
 
 

@@ -21,7 +21,7 @@ namespace chess {
         std::array<std::array<Bitboard, 6>, 2> piece_bitboards{};
         std::array<Bitboard, 2> side_bitboards;
 
-        std::vector<zobrist::ZobristHash> _hashes;
+        std::vector<zobrist::ZobristHash> hashes;
 
         bool white_turn = true;
         bool white_castling = false;

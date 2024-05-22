@@ -95,7 +95,7 @@ namespace chess::masks {
             }
 
             if (count < 2) {
-                mask |= lines[square + 9 * (std::min(8 - (square % 8), 8 - (square / 8)) - 1)][square];
+                mask |= lines[square + 9 * num_up_right_bits][square];
             }
 
             count = 0;
@@ -107,7 +107,7 @@ namespace chess::masks {
             }
 
             if (count < 2) {
-                mask |= lines[square - 9 * (std::min(square % 8, square / 8))][square];
+                mask |= lines[square - 9 * num_down_left_bits][square];
             }
 
             hash = get_up_right_pin_hash(board, square);
@@ -150,7 +150,7 @@ namespace chess::masks {
             }
 
             if (count == 1) {
-                mask |= lines[square + 9 * (std::min(8 - (square % 8), 8 - (square / 8)) - 1)][square];
+                mask |= lines[square + 9 * num_up_right_bits][square];
             }
 
             count = 0;
@@ -162,7 +162,7 @@ namespace chess::masks {
             }
 
             if (count == 1) {
-                mask |= lines[square - 9 * (std::min(square % 8, square / 8))][square];
+                mask |= lines[square - 9 * num_down_left_bits][square];
             }
 
             hash = get_up_right_pin_hash(board, square);
@@ -184,8 +184,10 @@ namespace chess::masks {
 
     static constexpr Bitboard generate_secondary_up_right_pin_mask(uint8_t square) {
         Bitboard mask = 0;
-        mask |= lines[square + 9 * (std::min(8 - (square % 8), 8 - (square / 8)) - 1)][square];
-        mask |= lines[square - 9 * (std::min(square % 8, square / 8))][square];
+        uint8_t num_up_right_bits = up_right_bits[square];
+        uint8_t num_down_left_bits = down_left_bits[square];
+        mask |= lines[square + 9 * num_up_right_bits][square];
+        mask |= lines[square - 9 * num_down_left_bits][square];
         return mask;
     }
 
@@ -211,6 +213,7 @@ static consteval std::array<Bitboard, 64> get_secondary_up_right_pin_masks() {
 
         int opposite_hash = get_up_right_pin_hash(board.side_bitboards[!color] & bishop_or_queen, square);
         Bitboard opposite = bishop_or_queen & opposite_up_right_pin_masks[square][opposite_hash];
+
 
         int teammate_hash = get_up_right_pin_hash(board.side_bitboards[color] & opposite, square);
         Bitboard teammate = opposite & teammate_up_right_pin_masks[square][teammate_hash];

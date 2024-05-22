@@ -1,20 +1,19 @@
 cmake_minimum_required(VERSION 3.14)
 project(chess-lib
-        VERSION 0.3.8
+        VERSION 0.3.9
         DESCRIPTION "Chess library"
         LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fconstexpr-ops-limit=2147483647 -fconstexpr-loop-limit=2147483647")
 
-add_definitions(-O3)
-
 #------------------------------#
 # General settings and options #
 #------------------------------#
 
-add_library(chess-lib SHARED)
+add_definitions(-O3)
 
+add_library(chess-lib SHARED)
 add_library(chess-lib::chess-lib ALIAS chess-lib)
 
 string(COMPARE EQUAL "${CMAKE_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}"

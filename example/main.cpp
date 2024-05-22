@@ -21,10 +21,8 @@ void test() {
 }
 
 int main() {
-    Board board = Board("8/8/8/8/8/6K1/2Q3r1/6k1");
-    auto legal_moves = board.get_legal_moves();
-    for (int i = 0; i < legal_moves.size(); i++) {
-        cout << legal_moves.moves[i].to_string() << endl;
-    }
+    Board board = Board("2k2K2/2B2Q2/P1r1p3/8/8/8/8/8");
+    cout << board << endl;
+
 }
 

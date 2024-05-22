@@ -83,28 +83,26 @@ namespace chess::masks {
             count = 0;
             for (int bit = 0; bit < num_up_left_bits; bit++) {
                 if (_get_bit(blockers, bit)) {
-                    mask |= lines[square + 7 * (bit + 1)][square];
                     bitboard_operations::set_1(board, square + 7 * (bit + 1));
                     count++;
                 }
             }
 
             if (count < 2) {
-                mask |= lines[square + 7 * std::max(0, (std::min(square % 8, 8 - square / 8) - 1))][square];
+                mask |= lines[square + 7 * num_up_left_bits][square];
             }
 
 
             count = 0;
             for (int bit = 0; bit < num_down_right_bits; bit++) {
                 if (_get_bit(blockers, bit + num_up_left_bits)) {
-                    mask |= lines[square - 7 * (bit + 1)][square];
                     bitboard_operations::set_1(board, square - 7 * (bit + 1));
                     count++;
                 }
             }
 
             if (count < 2) {
-                mask |= lines[square - 7 * std::max(0, (std::min(8 - square % 8, square / 8) - 1))][square];
+                mask |= lines[square - 7 * num_down_right_bits][square];
             }
 
             hash = get_down_right_pin_hash(board, square);
@@ -146,7 +144,7 @@ namespace chess::masks {
             }
 
             if (count == 1) {
-                mask |= lines[square + 7 * std::max(0, (std::min(square % 8, 8 - square / 8) - 1))][square];
+                mask |= lines[square + 7 * num_up_left_bits][square];
             }
 
             count = 0;
@@ -158,7 +156,7 @@ namespace chess::masks {
             }
 
             if (count == 1) {
-                mask |= lines[square - 7 * std::max(0, (std::min(8 - square % 8, square / 8) - 1))][square];
+                mask |= lines[square - 7 * num_down_right_bits][square];
 
             }
 
@@ -181,8 +179,10 @@ namespace chess::masks {
 
     static constexpr Bitboard generate_secondary_down_right_pin_mask(uint8_t square) {
         Bitboard mask = 0;
-        mask |= lines[square + 7 * std::max(0, (std::min(square % 8, 8 - square / 8 - 1)))][square];
-        mask |= lines[square - 7 * std::max(0, (std::min(8 - square % 8, square / 8)))][square];
+        uint8_t num_down_right_bits = down_right_bits[square];
+        uint8_t num_up_left_bits = up_left_bits[square];
+        mask |= lines[square + 7 * num_up_left_bits][square];
+        mask |= lines[square - 7 * num_down_right_bits][square];
         return mask;
     }
 

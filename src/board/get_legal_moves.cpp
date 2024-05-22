@@ -243,8 +243,6 @@ chess::MoveArray& chess::Board::get_legal_moves() {
         return legal_moves;
 
     }
-
-
     // Pinned pawns
     Bitboard vertical_pinned_pawns = piece_bitboards[color][Pawn] & vertical_pin_mask;
     Bitboard diagonal_pinned_pawns = piece_bitboards[color][Pawn] & (up_right_pin_mask | up_left_pin_mask);

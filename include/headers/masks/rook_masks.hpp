@@ -82,7 +82,7 @@ namespace chess::masks {
                 }
             }
 
-            if (flag and num_up_bits > 0) {
+            if (flag and square < 56) {
                 mask |= chess::masks::lines[square + 8 * (num_up_bits + 1)][square];
             }
 
@@ -98,7 +98,7 @@ namespace chess::masks {
                 }
             }
 
-            if (flag  and num_down_bits > 0) {
+            if (flag and square > 7) {
                 mask |= chess::masks::lines[square - 8 * (num_down_bits + 1)][square];
             }
 

@@ -10,54 +10,39 @@ namespace chess::masks {
         std::array<Bitboard, 64> masks{};
         for (int i = 0; i < 64; i++) {
             Bitboard mask = 0;
-            if (i % 8 < 6) {
-                if (i / 8 < 7) {
-                    if (i + 17 < 64){
-                        mask |= (1ull << (i + 17));
-                    }
-                }
-                if (i / 8 > 0) {
-                    if (i >= 15) {
-                        mask |= (1ull << (i - 15));
-                    }
-                }
-            }
             if (i % 8 < 7) {
                 if (i / 8 < 6) {
-                    if (i + 10 < 64){
-                        mask |= (1ull << (i + 10));
-                    }
+                    bitboard_operations::set_1(mask, i + 17);
                 }
                 if (i / 8 > 1) {
-                    if (i >= 6){
-                        mask |= (1ull << (i - 6));
-                    }
+                    bitboard_operations::set_1(mask, i - 15);
                 }
             }
-            if (i % 8 > 0) {
-                if (i / 8 < 6) {
-                    if (i + 15 < 64){
-                        mask |= (1ull << (i + 15));
-                    }
+            if (i % 8 < 6) {
+                if (i / 8 < 7) {
+                    bitboard_operations::set_1(mask, i + 10);
                 }
                 if (i / 8 > 0) {
-                    if (i >= 17){
-                        mask |= (1ull << (i - 17));
-                    }
+                    bitboard_operations::set_1(mask, i - 6);
                 }
             }
             if (i % 8 > 1) {
                 if (i / 8 < 7) {
-                    if (i + 6 < 64){
-                        mask |= (1ull << (i + 6));
-                    }
+                    bitboard_operations::set_1(mask, i + 6);
                 }
-                if (i / 8 > 1) {
-                    if (i >= 10){
-                        mask |= (1ull << (i - 10));
-                    }
+                if (i / 8 > 0) {
+                    bitboard_operations::set_1(mask, i - 10);
                 }
             }
+            if (i % 8 > 0) {
+                if (i / 8 < 6) {
+                    bitboard_operations::set_1(mask, i + 15);
+                }
+                if (i / 8 > 1) {
+                    bitboard_operations::set_1(mask, i - 17);
+                }
+            }
+
             masks[i] = mask;
         }
         return masks;

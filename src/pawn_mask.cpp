@@ -31,7 +31,7 @@ Bitboard chess::masks::get_pawn_right_mask(Bitboard pawns, Board& board) {
     if (board.white_turn) {
         return (pawns << 9) & board.side_bitboards[Black] & ~bitboard_operations::columns[0];
     } else {
-        return (pawns >> 7) & board.side_bitboards[Black] & ~bitboard_operations::columns[0];
+        return (pawns >> 7) & board.side_bitboards[White] & ~bitboard_operations::columns[0];
     }
 }
 
@@ -39,7 +39,7 @@ Bitboard chess::masks::get_pawn_left_mask(Bitboard pawns, Board& board) {
     if (board.white_turn) {
         return (pawns << 7) & board.side_bitboards[Black] & ~bitboard_operations::columns[7];
     } else {
-        return (pawns >> 9) & board.side_bitboards[Black] & ~bitboard_operations::columns[7];
+        return (pawns >> 9) & board.side_bitboards[White] & ~bitboard_operations::columns[7];
     }
 }
 

@@ -219,6 +219,9 @@ chess::MoveArray& chess::Board::get_legal_moves() {
             mask_to_moves(masks::get_bishop_mask(*this, square) & check_mask,
                           square, color, Queen,
                           &legal_moves);
+            mask_to_moves(masks::get_rook_mask(*this, square) & check_mask,
+                            square, color, Queen,
+                            &legal_moves);
         }
 
         // Knights

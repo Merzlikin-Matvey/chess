@@ -144,8 +144,14 @@ chess::MoveArray& chess::Board::get_legal_moves() {
         Bitboard up_left_pinned_pawns = piece_bitboards[color][Pawn] & up_left_pin_mask;
         pawn_mask_to_moves(masks::get_pawn_mask(vertical_pinned_pawns, *this) & check_mask, 8, &legal_moves, false);
         pawn_mask_to_moves(masks::get_pawn_long_mask(vertical_pinned_pawns, *this) & check_mask, 16, &legal_moves, false);
-        pawn_mask_to_moves(masks::get_pawn_right_mask(up_right_pinned_pawns, *this) & check_mask, 9, &legal_moves, false);
-        pawn_mask_to_moves(masks::get_pawn_left_mask(up_left_pinned_pawns, *this) & check_mask, 7, &legal_moves, false);
+        if (color == White){
+            pawn_mask_to_moves(masks::get_pawn_right_mask(up_right_pinned_pawns, *this) & check_mask, 9, &legal_moves, false);
+            pawn_mask_to_moves(masks::get_pawn_left_mask(up_left_pinned_pawns, *this) & check_mask, 7, &legal_moves, false);
+        }
+        else {
+            pawn_mask_to_moves(masks::get_pawn_right_mask(up_right_pinned_pawns, *this) & check_mask, 7, &legal_moves, false);
+            pawn_mask_to_moves(masks::get_pawn_left_mask(up_left_pinned_pawns, *this) & check_mask, 9, &legal_moves, false);
+        }
 
         // Pinned rooks
         Bitboard pinned_rooks = piece_bitboards[color][Rook] & (horizontal_pin_mask | vertical_pin_mask);
@@ -191,8 +197,14 @@ chess::MoveArray& chess::Board::get_legal_moves() {
         Bitboard pawns = piece_bitboards[color][Pawn] & inverse_pin_mask;
         pawn_mask_to_moves(masks::get_pawn_mask(pawns, *this) & check_mask, 8, &legal_moves, false);
         pawn_mask_to_moves(masks::get_pawn_long_mask(pawns, *this) & check_mask, 16, &legal_moves, false);
-        pawn_mask_to_moves(masks::get_pawn_right_mask(pawns, *this) & check_mask, 9, &legal_moves, false);
-        pawn_mask_to_moves(masks::get_pawn_left_mask(pawns, *this) & check_mask, 7, &legal_moves, false);
+        if (color == White){
+            pawn_mask_to_moves(masks::get_pawn_right_mask(pawns, *this) & check_mask, 9, &legal_moves, false);
+            pawn_mask_to_moves(masks::get_pawn_left_mask(pawns, *this) & check_mask, 7, &legal_moves, false);
+        }
+        else {
+            pawn_mask_to_moves(masks::get_pawn_right_mask(pawns, *this) & check_mask, 7, &legal_moves, false);
+            pawn_mask_to_moves(masks::get_pawn_left_mask(pawns, *this) & check_mask, 9, &legal_moves, false);
+        }
 
         // Rooks
         Bitboard rooks = piece_bitboards[color][Rook] & inverse_pin_mask;
@@ -253,8 +265,14 @@ chess::MoveArray& chess::Board::get_legal_moves() {
     Bitboard up_left_pinned_pawns = piece_bitboards[color][Pawn] & up_left_pin_mask;
     pawn_mask_to_moves(masks::get_pawn_mask(vertical_pinned_pawns, *this), 8, &legal_moves, false);
     pawn_mask_to_moves(masks::get_pawn_long_mask(vertical_pinned_pawns, *this), 16, &legal_moves, false);
-    pawn_mask_to_moves(masks::get_pawn_right_mask(up_right_pinned_pawns, *this), 9, &legal_moves, false);
-    pawn_mask_to_moves(masks::get_pawn_left_mask(up_left_pinned_pawns, *this), 7, &legal_moves, false);
+    if (color == White){
+        pawn_mask_to_moves(masks::get_pawn_right_mask(up_right_pinned_pawns, *this), 9, &legal_moves, false);
+        pawn_mask_to_moves(masks::get_pawn_left_mask(up_left_pinned_pawns, *this), 7, &legal_moves, false);
+    }
+    else {
+        pawn_mask_to_moves(masks::get_pawn_right_mask(up_left_pinned_pawns, *this), 7, &legal_moves, false);
+        pawn_mask_to_moves(masks::get_pawn_left_mask(up_right_pinned_pawns, *this), 9, &legal_moves, false);
+    }
 
     // Pinned rooks
     Bitboard pinned_rooks = piece_bitboards[color][Rook] & (horizontal_pin_mask | vertical_pin_mask);
@@ -290,9 +308,15 @@ chess::MoveArray& chess::Board::get_legal_moves() {
     Bitboard pawns = piece_bitboards[color][Pawn] & inverse_pin_mask;
     pawn_mask_to_moves(masks::get_pawn_mask(pawns, *this), 8, &legal_moves, false);
     pawn_mask_to_moves(masks::get_pawn_long_mask(pawns, *this), 16, &legal_moves, false);
-    pawn_mask_to_moves(masks::get_pawn_right_mask(pawns, *this), 9, &legal_moves, false);
-    pawn_mask_to_moves(masks::get_pawn_left_mask(pawns, *this), 7, &legal_moves, false);
-    pawn_mask_to_moves(masks::get_left_en_passant_mask(pawns, *this), 7, &legal_moves, true);
+    if (color == White){
+        pawn_mask_to_moves(masks::get_pawn_right_mask(pawns, *this), 9, &legal_moves, false);
+        pawn_mask_to_moves(masks::get_pawn_left_mask(pawns, *this), 7, &legal_moves, false);
+    }
+    else {
+        pawn_mask_to_moves(masks::get_pawn_right_mask(pawns, *this), 7, &legal_moves, false);
+        pawn_mask_to_moves(masks::get_pawn_left_mask(pawns, *this), 9, &legal_moves, false);
+    }
+
 
     // Rooks
     Bitboard rooks = piece_bitboards[color][Rook] & inverse_pin_mask;

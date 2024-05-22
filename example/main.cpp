@@ -21,7 +21,7 @@ void test() {
 }
 
 int main() {
-    Board board = Board("3b2n1/p1N1kppr/4Q2p/1p6/2P5/1P4P1/P2PP2P/R1B1KBNR");
+    Board board = Board("6Q1/4Nrk1/7p/p5p1/2P2p2/BP1P2P1/P3P2P/R3KBNR");
     board.white_turn = false;
     cout << board << endl;
     auto moves = board.get_legal_moves();

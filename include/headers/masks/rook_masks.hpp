@@ -114,7 +114,7 @@ namespace chess::masks {
                 }
             }
 
-            if (flag and num_right_bits > 0) {
+            if (flag and (square % 8) != 7){
                 mask |= chess::masks::lines[square + (num_right_bits + 1)][square];
             }
 

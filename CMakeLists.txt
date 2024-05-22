@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 project(chess-lib
-        VERSION 0.3.9
+        VERSION 0.3.10
         DESCRIPTION "Chess library"
         LANGUAGES C CXX)
 

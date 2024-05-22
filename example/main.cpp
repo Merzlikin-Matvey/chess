@@ -21,8 +21,14 @@ void test() {
 }
 
 int main() {
-    Board board = Board("2k2K2/2B2Q2/P1r1p3/8/8/8/8/8");
+    Board board = Board("3b2n1/p1N1kppr/4Q2p/1p6/2P5/1P4P1/P2PP2P/R1B1KBNR");
+    board.white_turn = false;
     cout << board << endl;
+    auto moves = board.get_legal_moves();
+    for (int i = 0; i < moves.size(); i++) {
+        cout << moves[i].to_string() << endl;
+    }
+    cout << "Is check: " << board.is_check() << endl;
 
 }
 

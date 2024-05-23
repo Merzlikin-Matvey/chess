@@ -17,6 +17,29 @@ namespace chess {
         Board(std::string fen);
         Board();
 
+        ~Board() {
+            delete &legal_moves;
+        }
+
+        Board(const Board& other)
+                : all(other.all),
+                  piece_bitboards(other.piece_bitboards),
+                  side_bitboards(other.side_bitboards),
+                  white_turn(other.white_turn),
+                  white_castling(other.white_castling),
+                  black_castling(other.black_castling),
+                  w_l_castling(other.w_l_castling),
+                  w_s_castling(other.w_s_castling),
+                  b_l_castling(other.b_l_castling),
+                  b_s_castling(other.b_s_castling),
+                  num_of_moves(other.num_of_moves),
+                  legal_moves(*new MoveArray(other.legal_moves)),
+                  hashes(other.hashes),
+                  move_history(other.move_history) {
+        }
+
+        Board& operator=(const Board& other);
+
         Bitboard all;
         std::array<std::array<Bitboard, 6>, 2> piece_bitboards{};
         std::array<Bitboard, 2> side_bitboards;
@@ -64,7 +87,6 @@ namespace chess {
 
         bool operator==(const Board &board) const;
         bool operator!=(const Board &board) const;
-        Board& operator=(const Board& other);
 
         int8_t get_piece_type(const chess::Board &board, uint8_t x, uint8_t y);
         int8_t get_piece_type(const chess::Board &board, uint8_t x);

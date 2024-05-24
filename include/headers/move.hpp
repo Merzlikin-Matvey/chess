@@ -66,6 +66,23 @@ namespace chess {
 
         void push_back(chess::Move move);
         void clear();
+
+        std::array<chess::Move, 218>::iterator begin() {
+            return moves.begin();
+        }
+
+        std::array<chess::Move, 218>::iterator end() {
+            return moves.begin() + _size;
+        }
+
+        std::array<chess::Move, 218>::const_iterator begin() const {
+            return moves.begin();
+        }
+
+        std::array<chess::Move, 218>::const_iterator end() const {
+            return moves.begin() + _size;
+        }
+
     private:
         int _size = 0;
     };

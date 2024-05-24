@@ -284,6 +284,16 @@ chess::MoveArray& chess::Board::get_legal_moves() {
                       &legal_moves);
     }
 
+    // Pinned bishops
+    Bitboard pinned_bishops = piece_bitboards[color][Bishop] & (up_right_pin_mask | up_left_pin_mask);
+    while (pinned_bishops) {
+        square = bitboard_operations::bitScanForward(pinned_bishops);
+        bitboard_operations::set_0(pinned_bishops, square);
+        mask_to_moves(masks::get_bishop_mask(*this, square) & (up_right_pin_mask | up_left_pin_mask),
+                      square, color, Bishop,
+                      &legal_moves);
+    }
+
     // Pinned queens
     Bitboard vertical_and_horizontal_pinned_queens = piece_bitboards[color][Queen] & (horizontal_pin_mask | vertical_pin_mask);
     Bitboard diagonal_pinned_queens = piece_bitboards[color][Queen] & (up_right_pin_mask | up_left_pin_mask);

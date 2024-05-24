@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 project(chess-lib
-        VERSION 0.4.0
+        VERSION 0.4.1
         DESCRIPTION "Chess library"
         LANGUAGES C CXX)
 
@@ -234,3 +234,4 @@ endif()
 if(CHESS_LIB_BUILD_EXAMPLES)
     add_subdirectory(example)
 endif()
+

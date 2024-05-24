@@ -20,15 +20,34 @@ void test() {
     cout << "Time: " << duration.count() / n << "ns" << endl;
 }
 
-int main() {
-    Board board = Board("6Q1/4Nrk1/7p/p5p1/2P2p2/BP1P2P1/P3P2P/R3KBNR");
-    board.white_turn = false;
-    cout << board << endl;
-    auto moves = board.get_legal_moves();
-    for (int i = 0; i < moves.size(); i++) {
-        cout << moves[i].to_string() << endl;
+int count_positions(Board& board, int depth) {
+    if (depth == 0) {
+        return 1;
     }
-    cout << "Is check: " << board.is_check() << endl;
+
+    int count = 0;
+    board.get_legal_moves();
+    for (int i = 0; i < board.legal_moves.size(); i++) {
+        Board copy = board;
+        copy.move(board.legal_moves.moves[i]);
+        count += count_positions(copy, depth - 1);
+    }
+
+    return count;
+}
+
+int main() {
+    Board board = Board();
+    int n = 100;
+
+    auto start = chrono::high_resolution_clock::now();
+    for (int i = 0; i < n; i++) {
+        board.get_legal_moves();
+    }
+    auto end = chrono::high_resolution_clock::now();
+
+    auto duration = chrono::duration_cast<chrono::nanoseconds>(end - start);
+    cout << "Time: " << duration.count() / n << "ns" << endl;
 
 }
 

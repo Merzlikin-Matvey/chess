@@ -69,6 +69,9 @@ namespace chess {
         MoveArray& get_legal_moves();
         std::vector<std::string> move_history;
 
+        bool is_begin();
+        bool is_end();
+
         void pawn_mask_to_moves(Bitboard mask, int delta, MoveArray* moves, bool en_passant);
         void mask_to_moves(Bitboard mask, uint8_t attacker_index, uint8_t attacker_color, uint8_t attacker_type, MoveArray* moves);
 

@@ -1,15 +1,21 @@
 cmake_minimum_required(VERSION 3.14)
 project(chess-lib
-        VERSION 0.4.2
+        VERSION 0.4.4
         DESCRIPTION "Chess library"
         LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fconstexpr-ops-limit=2147483647 -fconstexpr-loop-limit=2147483647")
 
 #------------------------------#
 # General settings and options #
 #------------------------------#
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fconstexpr-ops-limit=2147483647 -fconstexpr-loop-limit=2147483647")
+endif()
+
+if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fconstexpr-steps=2147483647")
+endif()
 
 add_definitions(-O3)
 

@@ -37,17 +37,12 @@ int count_positions(Board& board, int depth) {
 }
 
 int main() {
-    Board board = Board();
-    int n = 100;
-
-    auto start = chrono::high_resolution_clock::now();
-    for (int i = 0; i < n; i++) {
-        board.get_legal_moves();
+    Board board = Board("5bnr/p3k1p1/5p2/1r2Q1Bp/2p1P1q1/2PP4/PP5P/1R2K1NR");
+    board.white_turn = false;
+    auto moves = board.get_legal_moves();
+    for (int i = 0; i < moves.size(); i++) {
+        cout << moves[i].to_string() << endl;
     }
-    auto end = chrono::high_resolution_clock::now();
-
-    auto duration = chrono::duration_cast<chrono::nanoseconds>(end - start);
-    cout << "Time: " << duration.count() / n << "ns" << endl;
 
 }
 

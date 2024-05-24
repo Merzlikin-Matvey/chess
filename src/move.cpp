@@ -170,6 +170,7 @@ void chess::Board::move(chess::Move move){
     }
     move_history.push_back(move.to_string());
     num_of_moves += 0.5;
+
 }
 
 void chess::Board::move(std::string move){

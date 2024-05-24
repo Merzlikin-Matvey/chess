@@ -41,3 +41,4 @@ dependencies
 # Extra files
 .idea/
 build/
+wasm/

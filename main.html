@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>WebAssembly Hello World!</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .row {
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #output {
+            font-size: 40px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="row">
+    <div id="output"></div>
+</div>
+<script src="wasm/chess_lib.js"></script>
+<script>
+    Module['onRuntimeInitialized'] = onRuntimeInitialized;
+    function onRuntimeInitialized() {
+        const helloMessage = Module.ccall('getHelloMessage', 'string', [], []);
+        const element = document.getElementById('output');
+        element.textContent = helloMessage;
+    }
+</script>
+</body>
+
+</html>

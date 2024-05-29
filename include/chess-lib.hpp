@@ -19,4 +19,8 @@
 #include "headers/magic_numbers_constants.hpp"
 #include "headers/masks/pawn_masks.hpp"
 #include "headers/check_and_checkmate.hpp"
+#include "headers/evaluating_constants.hpp"
+#include "headers/evaluate_position.hpp"
+#include "headers/ai.hpp"
+
 

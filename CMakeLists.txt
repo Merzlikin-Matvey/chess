@@ -92,7 +92,6 @@ set(public_headers
         include/headers/masks/masks.hpp
         include/headers/masks/pawn_masks.hpp
         include/headers/check_and_checkmate.hpp
-        src/board/begin_and_end.cpp
 )
 
 set(sources
@@ -115,6 +114,11 @@ set(sources
         src/pawn_mask.cpp
         src/mask_to_moves.cpp
         src/move_array.cpp
+        src/board/begin_and_end.cpp
+        src/ai/ai.cpp
+        src/ai/evaluate_position.cpp
+        src/ai/minimax.cpp
+        src/ai/move_sorting.cpp
 )
 
 if (WASM_INTERFACE)

@@ -29,7 +29,7 @@
     function onRuntimeInitialized() {
         const fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
         const position = 1;
-        const legalMoves = Module.ccall('getLegalMovesForPosition', 'string', ['string', 'number'], [fen, position]);
+        const legalMoves = Module.ccall('getLegalMovesForPositionInterface', 'string', ['string', 'number'], [fen, position]);
         const element = document.getElementById('output');
         element.textContent = legalMoves;
     }

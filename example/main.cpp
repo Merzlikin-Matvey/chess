@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "headers/check_and_checkmate.hpp"
+#include "chess-lib.hpp"
 #include <chrono>
 
 using namespace std;
@@ -38,7 +38,8 @@ int count_positions(Board& board, int depth) {
 
 int main() {
     Board board = Board();
-
+    engine::AI ai = engine::AI();
+    cout << ai.search(board);
 
 }
 

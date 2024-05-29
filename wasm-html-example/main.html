@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>WebAssembly Hello World!</title>
+    <title>WebAssembly Chess!</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
@@ -27,9 +27,11 @@
 <script>
     Module['onRuntimeInitialized'] = onRuntimeInitialized;
     function onRuntimeInitialized() {
-        const helloMessage = Module.ccall('getLegalMovesInterface', 'string', [], []);
+        const fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
+        const position = 1;
+        const legalMoves = Module.ccall('getLegalMovesForPosition', 'string', ['string', 'number'], [fen, position]);
         const element = document.getElementById('output');
-        element.textContent = helloMessage;
+        element.textContent = legalMoves;
     }
 </script>
 </body>

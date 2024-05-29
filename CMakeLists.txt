@@ -20,9 +20,7 @@ endif()
 
 add_definitions(-O3)
 
-add_library(chess-lib SHARED
-        src/wasm/wasm.cpp
-        src/wasm/wasm.cpp)
+add_library(chess-lib SHARED)
 add_library(chess-lib::chess-lib ALIAS chess-lib)
 
 string(COMPARE EQUAL "${CMAKE_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}"

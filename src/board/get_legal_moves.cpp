@@ -382,3 +382,16 @@ chess::MoveArray& chess::Board::get_legal_moves() {
 
     return legal_moves;
 }
+
+chess::MoveArray chess::Board::get_legal_moves_for_position(uint8_t x) {
+    MoveArray moves = MoveArray();
+    get_legal_moves();
+
+    for (int i = 0; i < legal_moves.size(); i++) {
+        if (legal_moves.moves[i].first == x) {
+            moves.push_back(legal_moves.moves[i]);
+        }
+    }
+
+    return moves;
+}

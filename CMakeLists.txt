@@ -9,6 +9,7 @@ set(CMAKE_CXX_STANDARD 23)
 #------------------------------#
 # General settings and options #
 #------------------------------#
+
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fconstexpr-ops-limit=2147483647 -fconstexpr-loop-limit=2147483647")
 endif()
@@ -20,7 +21,7 @@ endif()
 add_definitions(-O3)
 
 add_library(chess-lib SHARED
-        src/board/begin_and_end.cpp)
+        src/main.cpp)
 add_library(chess-lib::chess-lib ALIAS chess-lib)
 
 string(COMPARE EQUAL "${CMAKE_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}"
@@ -34,6 +35,7 @@ string(COMPARE EQUAL "${CMAKE_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}" is_top_
 option(CHESS_LIB_BUILD_TESTS "Build chess-lib tests" OFF)
 option(CHESS_LIB_BUILD_EXAMPLES "Build chess-lib examples" ON)
 option(CHESS_LIB_INSTALL "Generate target for installing chess-lib" ${is_top_level})
+option(WASM_INTERFACE "Enable WebAssembly interface" OFF)
 set_if_undefined(CHESS_LIB_INSTALL_CMAKEDIR
         "${CMAKE_INSTALL_LIBDIR}/cmake/chess-lib-${PROJECT_VERSION}" CACHE STRING
         "Install path for chess-lib package-related CMake files")
@@ -46,12 +48,9 @@ endif()
 #         Dependencies         #
 #------------------------------#
 
-find_package(OpenMP)
-if (OPENMP_FOUND)
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
-endif()
+if (WASM_INTERFACE)
+    find_package(emscripten REQUIRED)
+endif ()
 
 #------------------------------#
 #         Source files         #
@@ -94,6 +93,7 @@ set(public_headers
         include/headers/masks/masks.hpp
         include/headers/masks/pawn_masks.hpp
         include/headers/check_and_checkmate.hpp
+        src/board/begin_and_end.cpp
 )
 
 set(sources
@@ -118,6 +118,12 @@ set(sources
         src/move_array.cpp
 )
 
+if (WASM_INTERFACE)
+    add_subdirectory(wasm)
+    set(WASM_FILES src/wasm/wasm.cpp)
+
+    list(APPEND sources ${WASM_FILES})
+endif()
 
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${sources})
 
@@ -241,4 +247,3 @@ endif()
 if(CHESS_LIB_BUILD_EXAMPLES)
     add_subdirectory(example)
 endif()
-

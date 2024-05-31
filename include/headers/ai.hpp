@@ -26,4 +26,19 @@ namespace chess::engine {
         AlphaAI() : AI(2) {}
     };
 
+    class BetaAI : public AI {
+    public:
+        BetaAI() : AI(3) {}
+    };
+
+    class GammaAI : public AI {
+    public:
+        GammaAI() : AI(4) {}
+    };
+
+    class DeltaAI : public AI {
+    public:
+        DeltaAI() : AI(5) {}
+    };
+
 }

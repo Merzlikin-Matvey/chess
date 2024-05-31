@@ -31,15 +31,8 @@ else
     rm -rf $output_dir/*
 fi
 
-echo "Compile as a side module? [Y/n] "
-read answer
+
 
 echo "Compiling..."
-if [ "$answer" = "Y" ] || [ "$answer" = "y" ]; then
-    echo "Compiling as a side module..."
-    emcc $src_files -I $include_dir -std=c++23 -s EXPORT_ALL=1 -fconstexpr-steps=2147483647 -s SIDE_MODULE=1 -o $output_dir/$output_file.wasm
-else
-    echo "Compiling as a main module..."
-    emcc $src_files $wasm_files -I $include_dir -std=c++23 -s EXPORT_ALL=1 -fconstexpr-steps=2147483647 -o $output_dir/$output_file.js -s EXPORTED_RUNTIME_METHODS='["cwrap"]'
-fi
+emcc $src_files $wasm_files -I $include_dir -std=c++23 -O3 -s EXPORT_ALL=1 -fconstexpr-steps=2147483647 -o $output_dir/$output_file.js -s EXPORTED_RUNTIME_METHODS='["cwrap"]'
 echo "Done!"

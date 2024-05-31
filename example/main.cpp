@@ -37,9 +37,12 @@ int count_positions(Board& board, int depth) {
 }
 
 int main() {
-    Board board = Board();
-    engine::AI ai = engine::AI();
-    cout << ai.search(board);
+    Board board = Board("r1b1k1nr/pppp1ppp/3bpq2/4n3/3P2P1/2P2N2/PP2PP1P/RNBQKB1R");
+    board.get_legal_moves();
+    for (int i = 0; i < board.legal_moves.size(); i++) {
+        cout << board.legal_moves.moves[i].to_string() << endl;
+    }
+
 
 }
 

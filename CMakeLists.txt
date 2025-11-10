@@ -10,13 +10,13 @@ set(CMAKE_CXX_STANDARD 23)
 # General settings and options #
 #------------------------------#
 
-if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fconstexpr-ops-limit=2147483647 -fconstexpr-loop-limit=2147483647")
-endif()
+endif ()
 
-if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fconstexpr-steps=2147483647")
-endif()
+endif ()
 
 add_definitions(-O3)
 
@@ -28,9 +28,9 @@ include(GNUInstallDirs)
 option(CHESS_LIB_BUILD_EXAMPLES "Build chess-lib examples" ON)
 option(WASM_INTERFACE "Enable WebAssembly interface" OFF)
 
-if(DEFINED CHESS_LIB_SHARED_LIBS)
+if (DEFINED CHESS_LIB_SHARED_LIBS)
     set(BUILD_SHARED_LIBS ${CHESS_LIB_SHARED_LIBS})
-endif()
+endif ()
 
 #------------------------------#
 #         Dependencies         #
@@ -47,9 +47,9 @@ endif ()
 include(GenerateExportHeader)
 set(export_file_name "export_shared.h")
 
-if(NOT BUILD_SHARED_LIBS)
+if (NOT BUILD_SHARED_LIBS)
     set(export_file_name "export_static.h")
-endif()
+endif ()
 
 generate_export_header(chess-lib EXPORT_FILE_NAME include/${export_file_name})
 
@@ -115,7 +115,7 @@ if (WASM_INTERFACE)
     set(WASM_FILES src/wasm/wasm.cpp)
 
     list(APPEND sources ${WASM_FILES})
-endif()
+endif ()
 
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${sources})
 
@@ -131,11 +131,11 @@ list(APPEND sources
 include(CMakePackageConfigHelpers)
 
 target_sources(chess-lib PRIVATE ${sources})
-if(NOT BUILD_SHARED_LIBS)
+if (NOT BUILD_SHARED_LIBS)
     target_compile_definitions(chess-lib
             PUBLIC
             CHESS_LIB_STATIC_DEFINE)
-endif()
+endif ()
 
 
 target_include_directories(chess-lib
@@ -163,6 +163,6 @@ set_target_properties(chess-lib PROPERTIES
 #        Other targets         #
 #------------------------------#
 
-if(CHESS_LIB_BUILD_EXAMPLES)
+if (CHESS_LIB_BUILD_EXAMPLES)
     add_subdirectory(example)
-endif()
+endif ()

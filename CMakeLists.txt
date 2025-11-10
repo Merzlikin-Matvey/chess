@@ -81,6 +81,7 @@ set(public_headers
         include/headers/masks/masks.hpp
         include/headers/masks/pawn_masks.hpp
         include/headers/check_and_checkmate.hpp
+        include/headers/uci.hpp
 )
 
 set(sources
@@ -108,6 +109,7 @@ set(sources
         src/ai/evaluate_position.cpp
         src/ai/minimax.cpp
         src/ai/move_sorting.cpp
+        src/uci.cpp
 )
 
 if (WASM_INTERFACE)

@@ -219,7 +219,7 @@ inline bool chess::Board::is_draw() {
     count += bitboard_operations::count_1(piece_bitboards[White][Queen]) * queen_material;
     count += bitboard_operations::count_1(piece_bitboards[Black][Queen]) * queen_material;
 
-    return num_of_moves >= 50 || get_num_of_repetitions() >= 3 || count <= 4;
+    return num_of_moves >= 100 || get_num_of_repetitions() >= 3 || count <= 4;
 }
 
 inline int chess::Board::get_winner() {

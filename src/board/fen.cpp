@@ -90,3 +90,53 @@ std::array<std::array<Bitboard, 6>, 2> chess::convert_default_positions(){
     std::string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
     return convert_fen_to_bitboards(fen);
 }
+
+std::string chess::bitboards_to_fen(std::array<std::array<Bitboard, 6>, 2> piece_bitboards){
+    std::string fen = "";
+    std::string figures = "PNBRQKpnbrqk";
+
+    for (int rank = 7; rank >= 0; rank--) {
+        int empty = 0;
+        for (int file = 0; file < 8; file++) {
+            int square = 8 * rank + file;
+
+            bool found = false;
+            for (int side = 0; side < 2; side++) {
+                for (int piece = 0; piece < 6; piece++) {
+                    if (bitboard_operations::get_bit(piece_bitboards[side][piece], square)) {
+                        if (empty > 0) {
+                            fen += std::to_string(empty);
+                            empty = 0;
+                        }
+
+                        fen += figures[side * 6 + piece];
+                        found = true;
+                        break;
+                    }
+
+                    if (found) break;
+                }
+                if (found) break;
+            }
+
+            if (!found) {
+                empty++;
+            }
+        }
+
+        if (empty > 0) {
+            fen += std::to_string(empty);
+        }
+
+        if (rank > 0) {
+            fen += "/";
+        }
+    }
+
+    return fen;
+
+
+
+
+
+}

@@ -31,8 +31,9 @@ add_definitions(-O3)
 add_library(chess-lib SHARED)
 add_library(chess-lib::chess-lib ALIAS chess-lib)
 
-option(CHESS_LIB_BUILD_EXAMPLES "Build chess-lib examples" ON)
+option(CHESS_LIB_BUILD_EXAMPLE "Build chess-lib examples" ON)
 option(CHESS_LIB_BUILD_UCI "Build chess-lib uci" ON)
+option(CHESS_LIB_BUILD_STATELESS_EXAMPLE "Build chess-lib stateless example" ON)
 option(WASM_INTERFACE "Enable WebAssembly interface" OFF)
 
 
@@ -162,10 +163,14 @@ set_target_properties(chess-lib PROPERTIES
 #        Other targets         #
 #------------------------------#
 
-if (CHESS_LIB_BUILD_EXAMPLES)
+if (CHESS_LIB_BUILD_EXAMPLE)
     add_subdirectory(example)
 endif ()
 
 if (CHESS_LIB_BUILD_UCI)
     add_subdirectory(uci)
+endif ()
+
+if (CHESS_LIB_BUILD_STATELESS_EXAMPLE)
+    add_subdirectory(stateless-example)
 endif ()

@@ -1,3 +1,9 @@
+/*
+ * There are high-level functions for library
+ * You can use similar code in cases, when you don't want to store board on library size
+ * In most cases you need just fen and turn color
+*/
+
 #include "chess-lib.hpp"
 
 std::vector<std::string> getLegalMoves(const std::string &fen, const bool white_turn = true) {

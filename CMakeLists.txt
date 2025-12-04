@@ -31,10 +31,10 @@ add_definitions(-O3)
 add_library(chess-lib SHARED)
 add_library(chess-lib::chess-lib ALIAS chess-lib)
 
-include(GNUInstallDirs)
-
 option(CHESS_LIB_BUILD_EXAMPLES "Build chess-lib examples" ON)
+option(CHESS_LIB_BUILD_UCI "Build chess-lib uci" ON)
 option(WASM_INTERFACE "Enable WebAssembly interface" OFF)
+
 
 if (DEFINED CHESS_LIB_SHARED_LIBS)
     set(BUILD_SHARED_LIBS ${CHESS_LIB_SHARED_LIBS})
@@ -52,18 +52,7 @@ endif ()
 #         Source files         #
 #------------------------------#
 
-include(GenerateExportHeader)
-set(export_file_name "export_shared.h")
-
-if (NOT BUILD_SHARED_LIBS)
-    set(export_file_name "export_static.h")
-endif ()
-
-generate_export_header(chess-lib EXPORT_FILE_NAME include/${export_file_name})
-
-
 set(public_headers
-        include/export.h
         include/chess-lib.hpp
         include/headers/bitboard_operations.hpp
         include/headers/board.hpp
@@ -130,9 +119,9 @@ endif ()
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${sources})
 
 list(APPEND public_headers
-        "${CMAKE_CURRENT_BINARY_DIR}/include/${export_file_name}")
+        "${CMAKE_CURRENT_BINARY_DIR}/include/${chess-lib.hpp}")
 list(APPEND sources
-        "${CMAKE_CURRENT_BINARY_DIR}/include/${export_file_name}")
+        "${CMAKE_CURRENT_BINARY_DIR}/include/${chess-lib.hpp}")
 
 #------------------------------#
 #        Target settings       #
@@ -175,4 +164,8 @@ set_target_properties(chess-lib PROPERTIES
 
 if (CHESS_LIB_BUILD_EXAMPLES)
     add_subdirectory(example)
+endif ()
+
+if (CHESS_LIB_BUILD_UCI)
+    add_subdirectory(uci)
 endif ()

@@ -35,9 +35,7 @@ void chess::uci::UCI::command_uci() {
     std::cout << "uciok" << std::endl;
 }
 
-void chess::uci::UCI::command_isready() {
-    std::cout << "readyok" << std::endl;
-}
+void chess::uci::UCI::command_isready() { std::cout << "readyok" << std::endl; }
 
 void chess::uci::UCI::command_position() {
     std::string type;

@@ -11,7 +11,7 @@ std::string chess::engine::AI::search(Board& board) {
     auto moves = board.legal_moves;
     sort_moves(&moves);
 
-    if (board.white_turn){
+    if (board.white_turn) {
         double max_score = constants::minimum;
         for (int i = 0; i < moves.size(); i++) {
             copy = board;
@@ -23,13 +23,12 @@ std::string chess::engine::AI::search(Board& board) {
                 max_score = score;
                 best_move = move;
                 alpha = std::max(alpha, score);
-                if (alpha >= beta){
+                if (alpha >= beta) {
                     break;
                 }
             }
         }
-    }
-    else {
+    } else {
         double min_score = constants::maximum;
         for (int i = 0; i < moves.size(); i++) {
             copy = board;
@@ -50,4 +49,3 @@ std::string chess::engine::AI::search(Board& board) {
 
     return best_move.to_string();
 }
-

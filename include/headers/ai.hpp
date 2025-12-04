@@ -2,14 +2,15 @@
 
 #include <string>
 
-#include "chess-lib.hpp"
+#include "board.hpp"
 
 namespace chess::engine {
-    class AI{
+    class AI {
     public:
-        AI (int max_depth, int begin_depth, int end_depth) :  max_depth(max_depth), begin_depth(begin_depth), end_depth(end_depth) {}
-        AI (int max_depth) :  max_depth(max_depth), begin_depth(max_depth), end_depth(max_depth) {}
-        AI () :  max_depth(4), begin_depth(4), end_depth(4) {}
+        AI(int max_depth, int begin_depth, int end_depth)
+            : max_depth(max_depth), begin_depth(begin_depth), end_depth(end_depth) {}
+        AI(int max_depth) : max_depth(max_depth), begin_depth(max_depth), end_depth(max_depth) {}
+        AI() : max_depth(4), begin_depth(4), end_depth(4) {}
         int max_depth;
         int begin_depth;
         int end_depth;
@@ -41,4 +42,4 @@ namespace chess::engine {
         DeltaAI() : AI(5) {}
     };
 
-}
+} // namespace chess::engine

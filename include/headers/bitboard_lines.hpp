@@ -73,4 +73,4 @@ namespace chess::masks {
     }
     constexpr std::array<std::array<Bitboard, 64>, 64> lines = _get_lines();
 
-}
+} // namespace chess::masks

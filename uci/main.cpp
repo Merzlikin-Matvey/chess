@@ -6,4 +6,3 @@ int main() {
     auto uci = chess::uci::UCI();
     uci.start_handle();
 }
-

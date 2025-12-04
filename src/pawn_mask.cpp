@@ -1,7 +1,7 @@
-#include "headers/masks/pawn_masks.hpp"
-#include "headers/constants.hpp"
 #include "headers/bitboard_operations.hpp"
 #include "headers/board.hpp"
+#include "headers/constants.hpp"
+#include "headers/masks/pawn_masks.hpp"
 
 #include <iostream>
 
@@ -68,5 +68,3 @@ Bitboard chess::masks::get_right_en_passant_mask(Bitboard pawns, Board& board) {
 
     return en_passant_mask;
 }
-
-

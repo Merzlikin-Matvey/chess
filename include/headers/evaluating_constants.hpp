@@ -1,7 +1,7 @@
 #pragma once
 
-#include <memory>
 #include <math.h>
+#include <memory>
 #include <unordered_map>
 
 namespace chess::engine::constants {
@@ -55,4 +55,4 @@ namespace chess::engine::constants {
 
     static constexpr Bitboard center = get_center_bitboard();
 
-}
+} // namespace chess::engine::constants

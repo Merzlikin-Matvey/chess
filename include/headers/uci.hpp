@@ -21,6 +21,6 @@ namespace chess::uci {
         void command_go();
 
 
-        void add_log(std::string log)const;
+        void add_log(std::string log) const;
     };
-}
+} // namespace chess::uci

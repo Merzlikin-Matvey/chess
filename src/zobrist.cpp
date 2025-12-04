@@ -1,14 +1,14 @@
 #include "headers/zobrist.hpp"
 #include "headers/bitboard_operations.hpp"
-#include "headers/constants.hpp"
 #include "headers/board.hpp"
+#include "headers/constants.hpp"
 
 #include <iostream>
 
 chess::zobrist::ZobristHash::ZobristHash(chess::Board board) {
     this->hash = 0;
 
-    if (!board.white_turn){
+    if (!board.white_turn) {
         this->hash = this->hash ^ zobrist::BlackMove;
     }
 
@@ -32,11 +32,9 @@ chess::zobrist::ZobristHash::ZobristHash(chess::Board board) {
     for (uint8_t square = 0; square < 64; square = square + 1) {
         if (bitboard_operations::get_bit(board.side_bitboards[chess::White], square)) {
             side = chess::White;
-        }
-        else if (bitboard_operations::get_bit(board.side_bitboards[chess::Black], square)) {
+        } else if (bitboard_operations::get_bit(board.side_bitboards[chess::Black], square)) {
             side = chess::Black;
-        }
-        else {
+        } else {
             continue;
         }
 
@@ -49,7 +47,7 @@ chess::zobrist::ZobristHash::ZobristHash(chess::Board board) {
     }
 }
 
-std::ostream& chess::zobrist::operator<<(std::ostream &ostream, zobrist::ZobristHash hash) {
+std::ostream& chess::zobrist::operator<<(std::ostream& ostream, zobrist::ZobristHash hash) {
     ostream << static_cast<unsigned long long>(hash.hash);
     return ostream;
 }

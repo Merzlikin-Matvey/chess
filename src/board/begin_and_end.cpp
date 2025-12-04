@@ -1,5 +1,5 @@
-#include "headers/board.hpp"
 #include "headers/bitboard_operations.hpp"
+#include "headers/board.hpp"
 
 bool chess::Board::is_begin() {
     if (num_of_moves <= 4) {
@@ -14,4 +14,3 @@ bool chess::Board::is_end() {
     }
     return false;
 }
-

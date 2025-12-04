@@ -1,8 +1,8 @@
 #pragma once
 
-#include <memory>
 #include <array>
 #include <cstdint>
+#include <memory>
 
 namespace chess {
     class Board;
@@ -38,7 +38,7 @@ namespace chess::zobrist {
     static constexpr uint64_t BlackShortCastling = next_random(BlackLongCastling);
 
 
-    class ZobristHash{
+    class ZobristHash {
     public:
         ZobristHash(chess::Board board);
         ZobristHash() = default;
@@ -46,29 +46,17 @@ namespace chess::zobrist {
 
         uint64_t hash;
 
-        bool operator==(const ZobristHash& other) const {
-            return this->hash == other.hash;
-        }
+        bool operator==(const ZobristHash& other) const { return this->hash == other.hash; }
 
-        bool operator!=(const ZobristHash& other) const {
-            return this->hash != other.hash;
-        }
+        bool operator!=(const ZobristHash& other) const { return this->hash != other.hash; }
 
-        bool operator<(const ZobristHash& other) const {
-            return this->hash < other.hash;
-        }
+        bool operator<(const ZobristHash& other) const { return this->hash < other.hash; }
 
-        bool operator>(const ZobristHash& other) const {
-            return this->hash > other.hash;
-        }
+        bool operator>(const ZobristHash& other) const { return this->hash > other.hash; }
 
-        bool operator<=(const ZobristHash& other) const {
-            return this->hash <= other.hash;
-        }
+        bool operator<=(const ZobristHash& other) const { return this->hash <= other.hash; }
 
-        bool operator>=(const ZobristHash& other) const {
-            return this->hash >= other.hash;
-        }
+        bool operator>=(const ZobristHash& other) const { return this->hash >= other.hash; }
 
         ZobristHash operator^(const uint64_t& other) const {
             ZobristHash result = *this;
@@ -83,5 +71,5 @@ namespace chess::zobrist {
         }
     };
 
-    std::ostream& operator<<(std::ostream &ostream, zobrist::ZobristHash hash);
-}
+    std::ostream& operator<<(std::ostream& ostream, zobrist::ZobristHash hash);
+} // namespace chess::zobrist

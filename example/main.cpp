@@ -1,7 +1,7 @@
 #include <iostream>
 
-#include "chess-lib.hpp"
 #include <chrono>
+#include "chess-lib.hpp"
 
 #include "headers/uci.hpp"
 
@@ -43,4 +43,3 @@ int main() {
     auto uci = uci::UCI();
     uci.start_handle();
 }
-

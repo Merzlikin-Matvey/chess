@@ -1,13 +1,13 @@
 #include "headers/move.hpp"
+#include "headers/bitboard_operations.hpp"
 #include "headers/board.hpp"
 #include "headers/constants.hpp"
-#include "headers/bitboard_operations.hpp"
 #include "headers/notations.hpp"
 
 #include <iostream>
 
 
-chess::Move::Move(){
+chess::Move::Move() {
     first = 0;
     first_side = 0;
     first_type = 0;
@@ -26,19 +26,9 @@ chess::Move::Move(){
     pawn_change_type = 255;
 }
 
-chess::Move::Move(uint8_t first,
-           uint8_t first_side,
-           uint8_t first_type,
-           uint8_t second,
-           uint8_t second_side,
-           uint8_t second_type,
-           bool w_l_castling,
-           bool w_s_castling,
-           bool b_l_castling,
-           bool b_s_castling,
-           bool pawn_double_move,
-           bool en_passant,
-           uint8_t pawn_change_type) {
+chess::Move::Move(uint8_t first, uint8_t first_side, uint8_t first_type, uint8_t second, uint8_t second_side,
+                  uint8_t second_type, bool w_l_castling, bool w_s_castling, bool b_l_castling, bool b_s_castling,
+                  bool pawn_double_move, bool en_passant, uint8_t pawn_change_type) {
 
     this->first = first;
     this->first_side = first_side;
@@ -58,48 +48,45 @@ chess::Move::Move(uint8_t first,
     this->pawn_change_type = pawn_change_type;
 }
 
-void chess::Board::move(chess::Move move){
-    if (move.second_type == King){
+void chess::Board::move(chess::Move move) {
+    if (move.second_type == King) {
         std::cout << "KING EATING" << std::endl;
         std::cout << move << std::endl;
-        for (int i = 0; i < move_history.size(); i++){
-            std::cout << "\"" << move_history[i] << "\"" << "," << std::endl;
+        for (int i = 0; i < move_history.size(); i++) {
+            std::cout << "\"" << move_history[i] << "\""
+                      << "," << std::endl;
         }
         std::cout << *this << std::endl;
-
     }
     bitboard_operations::set_0(piece_bitboards[move.first_side][move.first_type], move.first);
     bitboard_operations::set_0(side_bitboards[move.first_side], move.first);
     bitboard_operations::set_0(all, move.first);
-    if (move.second_type == 255){
+    if (move.second_type == 255) {
         bitboard_operations::set_1(piece_bitboards[move.first_side][move.first_type], move.second);
         bitboard_operations::set_1(side_bitboards[move.first_side], move.second);
         bitboard_operations::set_1(all, move.second);
-    }
-    else {
+    } else {
         bitboard_operations::set_0(piece_bitboards[move.second_side][move.second_type], move.second);
         bitboard_operations::set_0(side_bitboards[move.second_side], move.second);
         bitboard_operations::set_0(all, move.second);
         bitboard_operations::set_1(piece_bitboards[move.first_side][move.first_type], move.second);
         bitboard_operations::set_1(side_bitboards[move.first_side], move.second);
         bitboard_operations::set_1(all, move.second);
-
     }
 
-    if (move.en_passant){
-        if (move.first_side == chess::White){
+    if (move.en_passant) {
+        if (move.first_side == chess::White) {
             bitboard_operations::set_0(piece_bitboards[chess::Black][chess::Pawn], move.second - 8);
             bitboard_operations::set_0(side_bitboards[chess::Black], move.second - 8);
             bitboard_operations::set_0(all, move.second - 8);
-        }
-        else {
+        } else {
             bitboard_operations::set_0(piece_bitboards[chess::White][chess::Pawn], move.second + 8);
             bitboard_operations::set_0(side_bitboards[chess::White], move.second + 8);
             bitboard_operations::set_0(all, move.second + 8);
         }
     }
 
-    if (move.w_l_castling){
+    if (move.w_l_castling) {
         bitboard_operations::set_1(piece_bitboards[chess::White][chess::King], 2);
         bitboard_operations::set_1(side_bitboards[chess::White], 2);
         bitboard_operations::set_1(all, 2);
@@ -111,8 +98,7 @@ void chess::Board::move(chess::Move move){
         bitboard_operations::set_1(all, 3);
         w_l_castling = true;
         white_castling = true;
-    }
-    else if (move.w_s_castling){
+    } else if (move.w_s_castling) {
         bitboard_operations::set_1(piece_bitboards[chess::White][chess::King], 6);
         bitboard_operations::set_1(side_bitboards[chess::White], 6);
         bitboard_operations::set_1(all, 6);
@@ -124,8 +110,7 @@ void chess::Board::move(chess::Move move){
         bitboard_operations::set_1(all, 5);
         w_s_castling = true;
         white_castling = true;
-    }
-    else if (move.b_l_castling){
+    } else if (move.b_l_castling) {
         bitboard_operations::set_1(piece_bitboards[chess::Black][chess::King], 58);
         bitboard_operations::set_1(side_bitboards[chess::Black], 58);
         bitboard_operations::set_1(all, 58);
@@ -137,8 +122,7 @@ void chess::Board::move(chess::Move move){
         bitboard_operations::set_1(all, 59);
         b_l_castling = true;
         black_castling = true;
-    }
-    else if (move.b_s_castling){
+    } else if (move.b_s_castling) {
         bitboard_operations::set_1(piece_bitboards[chess::Black][chess::King], 62);
         bitboard_operations::set_1(side_bitboards[chess::Black], 62);
         bitboard_operations::set_1(all, 62);
@@ -153,29 +137,26 @@ void chess::Board::move(chess::Move move){
     }
 
     white_turn = !white_turn;
-    if (hashes.size() > 0){
+    if (hashes.size() > 0) {
         zobrist::ZobristHash last_hash = hashes.back();
         last_hash = last_hash ^ zobrist::BlackMove;
         last_hash = last_hash ^ zobrist::Constants[move.first][move.first_side][move.first_type];
-        if (move.second_type == 255){
+        if (move.second_type == 255) {
             last_hash = last_hash ^ zobrist::Constants[move.second][move.first_side][move.first_type];
-        }
-        else {
+        } else {
             last_hash = last_hash ^ zobrist::Constants[move.second][move.second_side][move.second_type];
         }
         hashes.push_back(last_hash);
-    }
-    else {
+    } else {
         hashes.push_back(zobrist::ZobristHash(*this));
     }
     move_history.push_back(move.to_string());
     num_of_moves += 0.5;
-
 }
 
-void chess::Board::move(std::string move){
-    for (int i = 0; i < legal_moves.size(); i++){
-        if (move == legal_moves.moves[i].to_string()){
+void chess::Board::move(std::string move) {
+    for (int i = 0; i < legal_moves.size(); i++) {
+        if (move == legal_moves.moves[i].to_string()) {
             this->move(legal_moves.moves[i]);
             return;
         }
@@ -184,7 +165,7 @@ void chess::Board::move(std::string move){
 }
 
 
-std::ostream& chess::operator<<(std::ostream &ostream, chess::Move move) {
+std::ostream& chess::operator<<(std::ostream& ostream, chess::Move move) {
     ostream << "First: " << (int)move.first << std::endl;
     ostream << "First side: " << (int)move.first_side << std::endl;
     ostream << "First type: " << (int)move.first_type << std::endl;
@@ -202,6 +183,4 @@ std::ostream& chess::operator<<(std::ostream &ostream, chess::Move move) {
     return ostream;
 }
 
-std::string chess::Move::to_string() {
-    return move_to_chess_notation(first, second);
-}
+std::string chess::Move::to_string() { return move_to_chess_notation(first, second); }

@@ -3,7 +3,7 @@
 #include <memory>
 
 
-namespace chess{
+namespace chess {
     static constexpr uint8_t Pawn = 0;
     static constexpr uint8_t Rook = 1;
     static constexpr uint8_t Knight = 2;
@@ -13,4 +13,4 @@ namespace chess{
 
     static constexpr uint8_t White = 0;
     static constexpr uint8_t Black = 1;
-}
+} // namespace chess

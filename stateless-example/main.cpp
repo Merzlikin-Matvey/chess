@@ -2,24 +2,24 @@
  * There are high-level functions for library
  * You can use similar code in cases, when you don't want to store board on library size
  * In most cases you need just fen and turn color
-*/
+ */
 
 #include "chess-lib.hpp"
 
-std::vector<std::string> getLegalMoves(const std::string &fen, const bool white_turn = true) {
+std::vector<std::string> getLegalMoves(const std::string& fen, const bool white_turn = true) {
     auto board = chess::Board(fen);
     board.white_turn = white_turn;
 
     auto moves = board.get_legal_moves();
     std::vector<std::string> legal_moves;
-    for (auto move: moves) {
+    for (auto move : moves) {
         legal_moves.push_back(move.to_string());
     }
     return legal_moves;
 }
 
 
-std::string getAIMove(const std::string &fen, const bool white_turn = false) {
+std::string getAIMove(const std::string& fen, const bool white_turn = false) {
     auto board = chess::Board(fen);
     board.white_turn = white_turn;
 
@@ -29,7 +29,7 @@ std::string getAIMove(const std::string &fen, const bool white_turn = false) {
     return move;
 }
 
-std::string makeMove(const std::string &fen, const std::string &move, const bool white_turn = true) {
+std::string makeMove(const std::string& fen, const std::string& move, const bool white_turn = true) {
     auto board = chess::Board(fen);
     board.white_turn = white_turn;
 
@@ -39,7 +39,7 @@ std::string makeMove(const std::string &fen, const std::string &move, const bool
     return board.to_fen();
 }
 
-std::string getResult(const std::string &fen, const bool white_turn = true) {
+std::string getResult(const std::string& fen, const bool white_turn = true) {
     auto board = chess::Board(fen);
     board.white_turn = white_turn;
 

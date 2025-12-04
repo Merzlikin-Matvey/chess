@@ -22,5 +22,6 @@
 #include "headers/evaluating_constants.hpp"
 #include "headers/evaluate_position.hpp"
 #include "headers/ai.hpp"
+#include "headers/uci.hpp"
 
 

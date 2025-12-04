@@ -82,6 +82,10 @@ int8_t chess::Board::get_piece_type(const chess::Board& board, uint8_t x) {
     return -1;
 }
 
+std::string chess::Board::to_fen(){
+    return bitboards_to_fen(piece_bitboards);
+}
+
 chess::Board& chess::Board::operator = (const Board& other) {
     piece_bitboards = other.piece_bitboards;
     side_bitboards = other.side_bitboards;

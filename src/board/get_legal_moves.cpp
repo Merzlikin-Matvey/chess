@@ -3,27 +3,22 @@
 #include "headers/move.hpp"
 #include "headers/masks/masks.hpp"
 #include "headers/check_and_checkmate.hpp"
+#include "headers/bitboard_operations.hpp"
 
 
 void chess::Board::castling(chess::MoveArray *moves) {
     uint8_t color = white_turn ? White : Black;
 
-    if (color == White and !white_castling){
-        return;
-    }
-    if (color == Black and !black_castling){
-        return;
-    }
-
     if (color == White){
         // Long
-        if (bitboard_operations::get_bit(piece_bitboards[White][Rook], 0) and
+        if (w_l_castling and
+            bitboard_operations::get_bit(piece_bitboards[White][Rook], 0) and
             !bitboard_operations::get_bit(all, 1) and
             !bitboard_operations::get_bit(all, 2) and
             !bitboard_operations::get_bit(all, 3) and
             bitboard_operations::get_bit(piece_bitboards[White][King], 4)
         ) {
-            if (!is_position_attacked(2)){
+            if (!is_position_attacked(2) and !is_position_attacked(3)){
                 moves->push_back(Move(
                         4, White, King,
                         2, 255, 255,
@@ -34,12 +29,13 @@ void chess::Board::castling(chess::MoveArray *moves) {
         }
 
         // Short
-        if (bitboard_operations::get_bit(piece_bitboards[White][Rook], 7) and
+        if (w_s_castling and
+            bitboard_operations::get_bit(piece_bitboards[White][Rook], 7) and
             !bitboard_operations::get_bit(all, 5) and
             !bitboard_operations::get_bit(all, 6) and
             bitboard_operations::get_bit(piece_bitboards[White][King], 4)
         ) {
-            if (!is_position_attacked(6)){
+            if (!is_position_attacked(5) and !is_position_attacked(6)){
                 moves->push_back(Move(
                         4, White, King,
                         6, 255, 255,
@@ -51,13 +47,14 @@ void chess::Board::castling(chess::MoveArray *moves) {
     }
     else {
         // Long
-        if (bitboard_operations::get_bit(piece_bitboards[Black][Rook], 56) and
+        if (b_l_castling and
+            bitboard_operations::get_bit(piece_bitboards[Black][Rook], 56) and
             !bitboard_operations::get_bit(all, 57) and
             !bitboard_operations::get_bit(all, 58) and
             !bitboard_operations::get_bit(all, 59) and
             bitboard_operations::get_bit(piece_bitboards[Black][King], 60)
         ) {
-            if (!is_position_attacked(58)){
+            if (!is_position_attacked(58) and !is_position_attacked(59)){
                 moves->push_back(Move(
                         60, Black, King,
                         58, 255, 255,
@@ -68,12 +65,13 @@ void chess::Board::castling(chess::MoveArray *moves) {
         }
 
         // Short
-        if (bitboard_operations::get_bit(piece_bitboards[Black][Rook], 63) and
+        if (b_s_castling and
+            bitboard_operations::get_bit(piece_bitboards[Black][Rook], 63) and
             !bitboard_operations::get_bit(all, 61) and
             !bitboard_operations::get_bit(all, 62) and
             bitboard_operations::get_bit(piece_bitboards[Black][King], 60)
         ) {
-            if (!is_position_attacked(62)){
+            if (!is_position_attacked(61) and !is_position_attacked(62)){
                 moves->push_back(Move(
                         60, Black, King,
                         62, 255, 255,
@@ -113,6 +111,8 @@ Bitboard chess::Board::get_king_legal_moves_mask() {
     bitboard_operations::set_1(all, king_position);
     return mask;
 }
+
+
 
 
 
@@ -206,6 +206,56 @@ chess::MoveArray& chess::Board::get_legal_moves() {
             pawn_mask_to_moves(masks::get_pawn_left_mask(pawns, *this) & check_mask, 9, &legal_moves, false);
         }
 
+        // En passant during check (only if capturing the checking pawn)
+        if (en_passant_square >= 0) {
+            uint8_t captured_sq = (color == White) ? en_passant_square - 8 : en_passant_square + 8;
+            if (bitboard_operations::get_bit(check_mask, captured_sq)) {
+                Bitboard ep_masks[] = {
+                    masks::get_right_en_passant_mask(pawns, *this),
+                    masks::get_left_en_passant_mask(pawns, *this)
+                };
+                int deltas_w[] = {9, 7};
+                int deltas_b[] = {7, 9};
+                int* deltas = (color == White) ? deltas_w : deltas_b;
+
+                for (int d = 0; d < 2; d++) {
+                    Bitboard ep = ep_masks[d];
+                    while (ep) {
+                        uint8_t target = bitboard_operations::bitScanForward(ep);
+                        bitboard_operations::set_0(ep, target);
+                        uint8_t src = white_turn ? target - deltas[d] : target + deltas[d];
+
+                        bitboard_operations::set_0(piece_bitboards[color][Pawn], src);
+                        bitboard_operations::set_0(side_bitboards[color], src);
+                        bitboard_operations::set_0(all, src);
+                        bitboard_operations::set_0(piece_bitboards[1 - color][Pawn], captured_sq);
+                        bitboard_operations::set_0(side_bitboards[1 - color], captured_sq);
+                        bitboard_operations::set_0(all, captured_sq);
+                        bitboard_operations::set_1(piece_bitboards[color][Pawn], target);
+                        bitboard_operations::set_1(side_bitboards[color], target);
+                        bitboard_operations::set_1(all, target);
+
+                        bool valid = !is_check();
+
+                        bitboard_operations::set_1(piece_bitboards[color][Pawn], src);
+                        bitboard_operations::set_1(side_bitboards[color], src);
+                        bitboard_operations::set_1(all, src);
+                        bitboard_operations::set_1(piece_bitboards[1 - color][Pawn], captured_sq);
+                        bitboard_operations::set_1(side_bitboards[1 - color], captured_sq);
+                        bitboard_operations::set_1(all, captured_sq);
+                        bitboard_operations::set_0(piece_bitboards[color][Pawn], target);
+                        bitboard_operations::set_0(side_bitboards[color], target);
+                        bitboard_operations::set_0(all, target);
+
+                        if (valid) {
+                            Bitboard single = 1ull << target;
+                            pawn_mask_to_moves(single, deltas[d], &legal_moves, true);
+                        }
+                    }
+                }
+            }
+        }
+
         // Rooks
         Bitboard rooks = piece_bitboards[color][Rook] & inverse_pin_mask;
         while (rooks) {
@@ -251,135 +301,177 @@ chess::MoveArray& chess::Board::get_legal_moves() {
 
         // King
         mask_to_moves(get_king_legal_moves_mask(), king_position, color,King, &legal_moves);
+    } else {
+        // Pinned pawns
+        Bitboard vertical_pinned_pawns = piece_bitboards[color][Pawn] & vertical_pin_mask;
+        Bitboard up_right_pinned_pawns = piece_bitboards[color][Pawn] & up_right_pin_mask;
+        Bitboard up_left_pinned_pawns = piece_bitboards[color][Pawn] & up_left_pin_mask;
+        pawn_mask_to_moves(masks::get_pawn_mask(vertical_pinned_pawns, *this), 8, &legal_moves, false);
+        pawn_mask_to_moves(masks::get_pawn_long_mask(vertical_pinned_pawns, *this), 16, &legal_moves, false);
+        if (color == White){
+            pawn_mask_to_moves(masks::get_pawn_right_mask(up_right_pinned_pawns, *this), 9, &legal_moves, false);
+            pawn_mask_to_moves(masks::get_pawn_left_mask(up_left_pinned_pawns, *this), 7, &legal_moves, false);
+        }
+        else {
+            pawn_mask_to_moves(masks::get_pawn_right_mask(up_left_pinned_pawns, *this), 7, &legal_moves, false);
+            pawn_mask_to_moves(masks::get_pawn_left_mask(up_right_pinned_pawns, *this), 9, &legal_moves, false);
+        }
+
+        // Pinned rooks
+        Bitboard pinned_rooks = piece_bitboards[color][Rook] & (horizontal_pin_mask | vertical_pin_mask);
+        while (pinned_rooks) {
+            square = bitboard_operations::bitScanForward(pinned_rooks);
+            bitboard_operations::set_0(pinned_rooks, square);
+            mask_to_moves(masks::get_rook_mask(*this, square) & (horizontal_pin_mask | vertical_pin_mask),
+                          square, color, Rook,
+                          &legal_moves);
+        }
+
+        // Pinned bishops
+        Bitboard pinned_bishops = piece_bitboards[color][Bishop] & (up_right_pin_mask | up_left_pin_mask);
+        while (pinned_bishops) {
+            square = bitboard_operations::bitScanForward(pinned_bishops);
+            bitboard_operations::set_0(pinned_bishops, square);
+            mask_to_moves(masks::get_bishop_mask(*this, square) & (up_right_pin_mask | up_left_pin_mask),
+                          square, color, Bishop,
+                          &legal_moves);
+        }
+
+        // Pinned queens
+        Bitboard vertical_and_horizontal_pinned_queens = piece_bitboards[color][Queen] & (horizontal_pin_mask | vertical_pin_mask);
+        Bitboard diagonal_pinned_queens = piece_bitboards[color][Queen] & (up_right_pin_mask | up_left_pin_mask);
+
+        while (vertical_and_horizontal_pinned_queens) {
+            square = bitboard_operations::bitScanForward(vertical_and_horizontal_pinned_queens);
+            bitboard_operations::set_0(vertical_and_horizontal_pinned_queens, square);
+            mask_to_moves(masks::get_rook_mask(*this, square) & (horizontal_pin_mask | vertical_pin_mask),
+                          square, color, Queen,
+                          &legal_moves);
+        }
+
+        while (diagonal_pinned_queens) {
+            square = bitboard_operations::bitScanForward(diagonal_pinned_queens);
+            bitboard_operations::set_0(diagonal_pinned_queens, square);
+            mask_to_moves(masks::get_bishop_mask(*this, square) & (up_right_pin_mask | up_left_pin_mask),
+                          square, color, Queen,
+                          &legal_moves);
+        }
+
+        // Pawns
+        Bitboard pawns = piece_bitboards[color][Pawn] & inverse_pin_mask;
+        pawn_mask_to_moves(masks::get_pawn_mask(pawns, *this), 8, &legal_moves, false);
+        pawn_mask_to_moves(masks::get_pawn_long_mask(pawns, *this), 16, &legal_moves, false);
+        if (color == White){
+            pawn_mask_to_moves(masks::get_pawn_right_mask(pawns, *this), 9, &legal_moves, false);
+            pawn_mask_to_moves(masks::get_pawn_left_mask(pawns, *this), 7, &legal_moves, false);
+        }
+        else {
+            pawn_mask_to_moves(masks::get_pawn_right_mask(pawns, *this), 7, &legal_moves, false);
+            pawn_mask_to_moves(masks::get_pawn_left_mask(pawns, *this), 9, &legal_moves, false);
+        }
+
+        // En passant
+        if (en_passant_square >= 0) {
+            uint8_t captured_sq = (color == White) ? en_passant_square - 8 : en_passant_square + 8;
+            Bitboard ep_masks[] = {
+                masks::get_right_en_passant_mask(pawns, *this),
+                masks::get_left_en_passant_mask(pawns, *this)
+            };
+            int deltas_w[] = {9, 7};
+            int deltas_b[] = {7, 9};
+            int* deltas = (color == White) ? deltas_w : deltas_b;
+
+            for (int d = 0; d < 2; d++) {
+                Bitboard ep = ep_masks[d];
+                while (ep) {
+                    uint8_t target = bitboard_operations::bitScanForward(ep);
+                    bitboard_operations::set_0(ep, target);
+                    uint8_t src = white_turn ? target - deltas[d] : target + deltas[d];
+
+                    // Simulate capture
+                    bitboard_operations::set_0(piece_bitboards[color][Pawn], src);
+                    bitboard_operations::set_0(side_bitboards[color], src);
+                    bitboard_operations::set_0(all, src);
+                    bitboard_operations::set_0(piece_bitboards[1 - color][Pawn], captured_sq);
+                    bitboard_operations::set_0(side_bitboards[1 - color], captured_sq);
+                    bitboard_operations::set_0(all, captured_sq);
+                    bitboard_operations::set_1(piece_bitboards[color][Pawn], target);
+                    bitboard_operations::set_1(side_bitboards[color], target);
+                    bitboard_operations::set_1(all, target);
+
+                    bool valid = !is_check();
+
+                    // Undo
+                    bitboard_operations::set_1(piece_bitboards[color][Pawn], src);
+                    bitboard_operations::set_1(side_bitboards[color], src);
+                    bitboard_operations::set_1(all, src);
+                    bitboard_operations::set_1(piece_bitboards[1 - color][Pawn], captured_sq);
+                    bitboard_operations::set_1(side_bitboards[1 - color], captured_sq);
+                    bitboard_operations::set_1(all, captured_sq);
+                    bitboard_operations::set_0(piece_bitboards[color][Pawn], target);
+                    bitboard_operations::set_0(side_bitboards[color], target);
+                    bitboard_operations::set_0(all, target);
+
+                    if (valid) {
+                        Bitboard single = 1ull << target;
+                        pawn_mask_to_moves(single, deltas[d], &legal_moves, true);
+                    }
+                }
+            }
+        }
+
+        // Rooks
+        Bitboard rooks = piece_bitboards[color][Rook] & inverse_pin_mask;
+        while (rooks) {
+            square = bitboard_operations::bitScanForward(rooks);
+            bitboard_operations::set_0(rooks, square);
+            mask_to_moves(masks::get_rook_mask(*this, square),
+                          square, color, Rook,
+                          &legal_moves);
+        }
+
+        // Bishops
+        Bitboard bishops = piece_bitboards[color][Bishop] & inverse_pin_mask;
+        while (bishops) {
+            square = bitboard_operations::bitScanForward(bishops);
+            bitboard_operations::set_0(bishops, square);
+            mask_to_moves(masks::get_bishop_mask(*this, square),
+                          square, color, Bishop,
+                          &legal_moves);
+        }
+
+        // Queens
+        Bitboard queens = piece_bitboards[color][Queen] & inverse_pin_mask;
+        while (queens) {
+            square = bitboard_operations::bitScanForward(queens);
+            bitboard_operations::set_0(queens, square);
+            mask_to_moves(masks::get_bishop_mask(*this, square),
+                          square, color, Queen,
+                          &legal_moves);
+            mask_to_moves(masks::get_rook_mask(*this, square),
+                          square, color, Queen,
+                          &legal_moves);
+        }
+
+        // Knights
+        Bitboard knights = piece_bitboards[color][Knight] & inverse_pin_mask;
+        while (knights) {
+            square = bitboard_operations::bitScanForward(knights);
+            bitboard_operations::set_0(knights, square);
+            mask_to_moves(masks::get_knight_mask(square),
+                          square, color, Knight,
+                          &legal_moves);
+        }
+
+        // King
+        mask_to_moves(get_king_legal_moves_mask(), king_position, color,King, &legal_moves);
+
 
         // Castling
         castling(&legal_moves);
-
-        return legal_moves;
-
     }
 
-    // Pinned pawns
-    Bitboard vertical_pinned_pawns = piece_bitboards[color][Pawn] & vertical_pin_mask;
-    Bitboard up_right_pinned_pawns = piece_bitboards[color][Pawn] & up_right_pin_mask;
-    Bitboard up_left_pinned_pawns = piece_bitboards[color][Pawn] & up_left_pin_mask;
-    pawn_mask_to_moves(masks::get_pawn_mask(vertical_pinned_pawns, *this), 8, &legal_moves, false);
-    pawn_mask_to_moves(masks::get_pawn_long_mask(vertical_pinned_pawns, *this), 16, &legal_moves, false);
-    if (color == White){
-        pawn_mask_to_moves(masks::get_pawn_right_mask(up_right_pinned_pawns, *this), 9, &legal_moves, false);
-        pawn_mask_to_moves(masks::get_pawn_left_mask(up_left_pinned_pawns, *this), 7, &legal_moves, false);
-    }
-    else {
-        pawn_mask_to_moves(masks::get_pawn_right_mask(up_left_pinned_pawns, *this), 7, &legal_moves, false);
-        pawn_mask_to_moves(masks::get_pawn_left_mask(up_right_pinned_pawns, *this), 9, &legal_moves, false);
-    }
-
-    // Pinned rooks
-    Bitboard pinned_rooks = piece_bitboards[color][Rook] & (horizontal_pin_mask | vertical_pin_mask);
-    while (pinned_rooks) {
-        square = bitboard_operations::bitScanForward(pinned_rooks);
-        bitboard_operations::set_0(pinned_rooks, square);
-        mask_to_moves(masks::get_rook_mask(*this, square) & (horizontal_pin_mask | vertical_pin_mask),
-                      square, color, Rook,
-                      &legal_moves);
-    }
-
-    // Pinned bishops
-    Bitboard pinned_bishops = piece_bitboards[color][Bishop] & (up_right_pin_mask | up_left_pin_mask);
-    while (pinned_bishops) {
-        square = bitboard_operations::bitScanForward(pinned_bishops);
-        bitboard_operations::set_0(pinned_bishops, square);
-        mask_to_moves(masks::get_bishop_mask(*this, square) & (up_right_pin_mask | up_left_pin_mask),
-                      square, color, Bishop,
-                      &legal_moves);
-    }
-
-    // Pinned queens
-    Bitboard vertical_and_horizontal_pinned_queens = piece_bitboards[color][Queen] & (horizontal_pin_mask | vertical_pin_mask);
-    Bitboard diagonal_pinned_queens = piece_bitboards[color][Queen] & (up_right_pin_mask | up_left_pin_mask);
-
-    while (vertical_and_horizontal_pinned_queens) {
-        square = bitboard_operations::bitScanForward(vertical_and_horizontal_pinned_queens);
-        bitboard_operations::set_0(vertical_and_horizontal_pinned_queens, square);
-        mask_to_moves(masks::get_rook_mask(*this, square) & (horizontal_pin_mask | vertical_pin_mask),
-                      square, color, Queen,
-                      &legal_moves);
-    }
-
-    while (diagonal_pinned_queens) {
-        square = bitboard_operations::bitScanForward(diagonal_pinned_queens);
-        bitboard_operations::set_0(diagonal_pinned_queens, square);
-        mask_to_moves(masks::get_bishop_mask(*this, square) & (up_right_pin_mask | up_left_pin_mask),
-                      square, color, Queen,
-                      &legal_moves);
-    }
-
-    // Pawns
-    Bitboard pawns = piece_bitboards[color][Pawn] & inverse_pin_mask;
-    pawn_mask_to_moves(masks::get_pawn_mask(pawns, *this), 8, &legal_moves, false);
-    pawn_mask_to_moves(masks::get_pawn_long_mask(pawns, *this), 16, &legal_moves, false);
-    if (color == White){
-        pawn_mask_to_moves(masks::get_pawn_right_mask(pawns, *this), 9, &legal_moves, false);
-        pawn_mask_to_moves(masks::get_pawn_left_mask(pawns, *this), 7, &legal_moves, false);
-    }
-    else {
-        pawn_mask_to_moves(masks::get_pawn_right_mask(pawns, *this), 7, &legal_moves, false);
-        pawn_mask_to_moves(masks::get_pawn_left_mask(pawns, *this), 9, &legal_moves, false);
-    }
-
-
-    // Rooks
-    Bitboard rooks = piece_bitboards[color][Rook] & inverse_pin_mask;
-    while (rooks) {
-        square = bitboard_operations::bitScanForward(rooks);
-        bitboard_operations::set_0(rooks, square);
-        mask_to_moves(masks::get_rook_mask(*this, square),
-                      square, color, Rook,
-                      &legal_moves);
-    }
-
-    // Bishops
-    Bitboard bishops = piece_bitboards[color][Bishop] & inverse_pin_mask;
-    while (bishops) {
-        square = bitboard_operations::bitScanForward(bishops);
-        bitboard_operations::set_0(bishops, square);
-        mask_to_moves(masks::get_bishop_mask(*this, square),
-                      square, color, Bishop,
-                      &legal_moves);
-    }
-
-    // Queens
-    Bitboard queens = piece_bitboards[color][Queen] & inverse_pin_mask;
-    while (queens) {
-        square = bitboard_operations::bitScanForward(queens);
-        bitboard_operations::set_0(queens, square);
-        mask_to_moves(masks::get_bishop_mask(*this, square),
-                      square, color, Queen,
-                      &legal_moves);
-        mask_to_moves(masks::get_rook_mask(*this, square),
-                      square, color, Queen,
-                      &legal_moves);
-    }
-
-    // Knights
-    Bitboard knights = piece_bitboards[color][Knight] & inverse_pin_mask;
-    while (knights) {
-        square = bitboard_operations::bitScanForward(knights);
-        bitboard_operations::set_0(knights, square);
-        mask_to_moves(masks::get_knight_mask(square),
-                      square, color, Knight,
-                      &legal_moves);
-    }
-
-    // King
-    mask_to_moves(get_king_legal_moves_mask(), king_position, color,King, &legal_moves);
-
-
-    // Castling
-    castling(&legal_moves);
-
-
-
+    legal_moves = distil_pawn_moves(legal_moves);
     return legal_moves;
 }
 
@@ -394,4 +486,28 @@ chess::MoveArray chess::Board::get_legal_moves_for_position(uint8_t x) {
     }
 
     return moves;
+}
+
+chess::MoveArray chess::Board::distil_pawn_moves(MoveArray moves){
+    MoveArray distilled_moves;
+
+    for (int i = 0; i < moves.size(); i++) {
+        if (moves[i].first_type == Pawn and moves[i].first_side == White and moves[i].second >= 56) {
+            for (uint8_t promo : {Queen, Rook, Bishop, Knight}) {
+                Move m = moves[i];
+                m.pawn_change_type = promo;
+                distilled_moves.push_back(m);
+            }
+        } else if (moves[i].first_type == Pawn and moves[i].first_side == Black and moves[i].second <= 7) {
+            for (uint8_t promo : {Queen, Rook, Bishop, Knight}) {
+                Move m = moves[i];
+                m.pawn_change_type = promo;
+                distilled_moves.push_back(m);
+            }
+        } else {
+            distilled_moves.push_back(moves[i]);
+        }
+    }
+
+    return distilled_moves;
 }

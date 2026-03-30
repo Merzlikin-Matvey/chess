@@ -109,8 +109,6 @@ void chess::Board::move(chess::Move move){
         bitboard_operations::set_1(piece_bitboards[chess::White][chess::Rook], 3);
         bitboard_operations::set_1(side_bitboards[chess::White], 3);
         bitboard_operations::set_1(all, 3);
-        w_l_castling = true;
-        white_castling = true;
     }
     else if (move.w_s_castling){
         bitboard_operations::set_1(piece_bitboards[chess::White][chess::King], 6);
@@ -122,8 +120,6 @@ void chess::Board::move(chess::Move move){
         bitboard_operations::set_1(piece_bitboards[chess::White][chess::Rook], 5);
         bitboard_operations::set_1(side_bitboards[chess::White], 5);
         bitboard_operations::set_1(all, 5);
-        w_s_castling = true;
-        white_castling = true;
     }
     else if (move.b_l_castling){
         bitboard_operations::set_1(piece_bitboards[chess::Black][chess::King], 58);
@@ -135,8 +131,6 @@ void chess::Board::move(chess::Move move){
         bitboard_operations::set_1(piece_bitboards[chess::Black][chess::Rook], 59);
         bitboard_operations::set_1(side_bitboards[chess::Black], 59);
         bitboard_operations::set_1(all, 59);
-        b_l_castling = true;
-        black_castling = true;
     }
     else if (move.b_s_castling){
         bitboard_operations::set_1(piece_bitboards[chess::Black][chess::King], 62);
@@ -148,8 +142,48 @@ void chess::Board::move(chess::Move move){
         bitboard_operations::set_1(piece_bitboards[chess::Black][chess::Rook], 61);
         bitboard_operations::set_1(side_bitboards[chess::Black], 61);
         bitboard_operations::set_1(all, 61);
-        b_s_castling = true;
-        black_castling = true;
+    }
+
+    // Revoke castling rights
+    if (move.first_type == chess::King) {
+        if (move.first_side == chess::White) {
+            w_l_castling = false;
+            w_s_castling = false;
+        } else {
+            b_l_castling = false;
+            b_s_castling = false;
+        }
+    }
+    if (move.first_type == chess::Rook) {
+        if (move.first == 0) w_l_castling = false;
+        if (move.first == 7) w_s_castling = false;
+        if (move.first == 56) b_l_castling = false;
+        if (move.first == 63) b_s_castling = false;
+    }
+    // Rook captured
+    if (move.second != 255) {
+        if (move.second == 0) w_l_castling = false;
+        if (move.second == 7) w_s_castling = false;
+        if (move.second == 56) b_l_castling = false;
+        if (move.second == 63) b_s_castling = false;
+    }
+
+    // En passant square
+    if (move.pawn_double_move) {
+        if (move.first_side == chess::White) {
+            en_passant_square = move.first + 8;
+        } else {
+            en_passant_square = move.first - 8;
+        }
+    } else {
+        en_passant_square = -1;
+    }
+
+    // Halfmove clock
+    if (move.first_type == chess::Pawn || move.second_type != 255) {
+        halfmove_clock = 0;
+    } else {
+        halfmove_clock++;
     }
 
     white_turn = !white_turn;

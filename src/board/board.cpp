@@ -2,9 +2,10 @@
 #include "headers/bitboard_operations.hpp"
 #include "headers/fen.hpp"
 #include "headers/constants.hpp"
-#include "headers/fen.hpp"
+#include "headers/notations.hpp"
 
 #include <string>
+#include <sstream>
 
 chess::Board::Board(std::array<std::array<Bitboard, 6>, 2> board) {
     piece_bitboards = board;
@@ -21,7 +22,11 @@ chess::Board::Board(std::array<std::array<Bitboard, 6>, 2> board) {
 }
 
 chess::Board::Board(std::string fen){
-    piece_bitboards = chess::convert_fen_to_bitboards(fen);
+    std::istringstream iss(fen);
+    std::string piece_placement;
+    iss >> piece_placement;
+
+    piece_bitboards = chess::convert_fen_to_bitboards(piece_placement);
     side_bitboards = {0, 0};
     all = 0;
     for (int i = 0; i < 2; i++) {
@@ -30,6 +35,40 @@ chess::Board::Board(std::string fen){
         }
     }
     all = side_bitboards[0] | side_bitboards[1];
+
+    std::string active_color;
+    if (iss >> active_color) {
+        white_turn = (active_color == "w");
+
+        std::string castling_str;
+        if (iss >> castling_str) {
+            if (castling_str != "-") {
+                w_s_castling = castling_str.find('K') != std::string::npos;
+                w_l_castling = castling_str.find('Q') != std::string::npos;
+                b_s_castling = castling_str.find('k') != std::string::npos;
+                b_l_castling = castling_str.find('q') != std::string::npos;
+            }
+
+            std::string en_passant_str;
+            if (iss >> en_passant_str) {
+                if (en_passant_str != "-") {
+                    en_passant_square = chess::position_to_number_notation(en_passant_str);
+                }
+
+                std::string halfmove_str;
+                if (iss >> halfmove_str) {
+                    halfmove_clock = std::stoi(halfmove_str);
+
+                    std::string fullmove_str;
+                    if (iss >> fullmove_str) {
+                        int fullmove = std::stoi(fullmove_str);
+                        num_of_moves = (fullmove - 1) + (white_turn ? 0.0 : 0.5);
+                    }
+                }
+            }
+        }
+    }
+
     hashes.push_back(zobrist::ZobristHash(*this));
 }
 
@@ -46,6 +85,10 @@ chess::Board::Board() {
         }
     }
     all = side_bitboards[0] | side_bitboards[1];
+    w_l_castling = true;
+    w_s_castling = true;
+    b_l_castling = true;
+    b_s_castling = true;
     hashes.push_back(zobrist::ZobristHash(*this));
 }
 
@@ -83,7 +126,30 @@ int8_t chess::Board::get_piece_type(const chess::Board& board, uint8_t x) {
 }
 
 std::string chess::Board::to_fen(){
-    return bitboards_to_fen(piece_bitboards);
+    std::string fen = bitboards_to_fen(piece_bitboards);
+
+    fen += white_turn ? " w " : " b ";
+
+    std::string castling;
+    if (w_s_castling) castling += 'K';
+    if (w_l_castling) castling += 'Q';
+    if (b_s_castling) castling += 'k';
+    if (b_l_castling) castling += 'q';
+    if (castling.empty()) castling = "-";
+    fen += castling;
+
+    if (en_passant_square >= 0) {
+        fen += " " + chess::position_to_chess_notation(en_passant_square);
+    } else {
+        fen += " -";
+    }
+
+    fen += " " + std::to_string(halfmove_clock);
+
+    int fullmove = static_cast<int>(num_of_moves) + 1;
+    fen += " " + std::to_string(fullmove);
+
+    return fen;
 }
 
 chess::Board& chess::Board::operator = (const Board& other) {
@@ -91,17 +157,16 @@ chess::Board& chess::Board::operator = (const Board& other) {
     side_bitboards = other.side_bitboards;
     all = other.all;
     white_turn = other.white_turn;
-    white_castling = other.white_castling;
-    black_castling = other.black_castling;
     w_l_castling = other.w_l_castling;
     w_s_castling = other.w_s_castling;
     b_l_castling = other.b_l_castling;
     b_s_castling = other.b_s_castling;
+    en_passant_square = other.en_passant_square;
+    halfmove_clock = other.halfmove_clock;
     num_of_moves = other.num_of_moves;
     legal_moves = other.legal_moves;
     hashes = other.hashes;
     move_history = other.move_history;
-
 
     return *this;
 }

@@ -8,22 +8,16 @@
 void chess::Board::castling(chess::MoveArray *moves) {
     uint8_t color = white_turn ? White : Black;
 
-    if (color == White and !white_castling){
-        return;
-    }
-    if (color == Black and !black_castling){
-        return;
-    }
-
     if (color == White){
         // Long
-        if (bitboard_operations::get_bit(piece_bitboards[White][Rook], 0) and
+        if (w_l_castling and
+            bitboard_operations::get_bit(piece_bitboards[White][Rook], 0) and
             !bitboard_operations::get_bit(all, 1) and
             !bitboard_operations::get_bit(all, 2) and
             !bitboard_operations::get_bit(all, 3) and
             bitboard_operations::get_bit(piece_bitboards[White][King], 4)
         ) {
-            if (!is_position_attacked(2)){
+            if (!is_position_attacked(2) and !is_position_attacked(3)){
                 moves->push_back(Move(
                         4, White, King,
                         2, 255, 255,
@@ -34,12 +28,13 @@ void chess::Board::castling(chess::MoveArray *moves) {
         }
 
         // Short
-        if (bitboard_operations::get_bit(piece_bitboards[White][Rook], 7) and
+        if (w_s_castling and
+            bitboard_operations::get_bit(piece_bitboards[White][Rook], 7) and
             !bitboard_operations::get_bit(all, 5) and
             !bitboard_operations::get_bit(all, 6) and
             bitboard_operations::get_bit(piece_bitboards[White][King], 4)
         ) {
-            if (!is_position_attacked(6)){
+            if (!is_position_attacked(5) and !is_position_attacked(6)){
                 moves->push_back(Move(
                         4, White, King,
                         6, 255, 255,
@@ -51,13 +46,14 @@ void chess::Board::castling(chess::MoveArray *moves) {
     }
     else {
         // Long
-        if (bitboard_operations::get_bit(piece_bitboards[Black][Rook], 56) and
+        if (b_l_castling and
+            bitboard_operations::get_bit(piece_bitboards[Black][Rook], 56) and
             !bitboard_operations::get_bit(all, 57) and
             !bitboard_operations::get_bit(all, 58) and
             !bitboard_operations::get_bit(all, 59) and
             bitboard_operations::get_bit(piece_bitboards[Black][King], 60)
         ) {
-            if (!is_position_attacked(58)){
+            if (!is_position_attacked(58) and !is_position_attacked(59)){
                 moves->push_back(Move(
                         60, Black, King,
                         58, 255, 255,
@@ -68,12 +64,13 @@ void chess::Board::castling(chess::MoveArray *moves) {
         }
 
         // Short
-        if (bitboard_operations::get_bit(piece_bitboards[Black][Rook], 63) and
+        if (b_s_castling and
+            bitboard_operations::get_bit(piece_bitboards[Black][Rook], 63) and
             !bitboard_operations::get_bit(all, 61) and
             !bitboard_operations::get_bit(all, 62) and
             bitboard_operations::get_bit(piece_bitboards[Black][King], 60)
         ) {
-            if (!is_position_attacked(62)){
+            if (!is_position_attacked(61) and !is_position_attacked(62)){
                 moves->push_back(Move(
                         60, Black, King,
                         62, 255, 255,
@@ -251,9 +248,6 @@ chess::MoveArray& chess::Board::get_legal_moves() {
 
         // King
         mask_to_moves(get_king_legal_moves_mask(), king_position, color,King, &legal_moves);
-
-        // Castling
-        castling(&legal_moves);
 
         return legal_moves;
 

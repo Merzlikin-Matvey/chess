@@ -26,12 +26,12 @@ namespace chess {
                   piece_bitboards(other.piece_bitboards),
                   side_bitboards(other.side_bitboards),
                   white_turn(other.white_turn),
-                  white_castling(other.white_castling),
-                  black_castling(other.black_castling),
                   w_l_castling(other.w_l_castling),
                   w_s_castling(other.w_s_castling),
                   b_l_castling(other.b_l_castling),
                   b_s_castling(other.b_s_castling),
+                  en_passant_square(other.en_passant_square),
+                  halfmove_clock(other.halfmove_clock),
                   num_of_moves(other.num_of_moves),
                   legal_moves(*new MoveArray(other.legal_moves)),
                   hashes(other.hashes),
@@ -47,13 +47,13 @@ namespace chess {
         std::vector<zobrist::ZobristHash> hashes;
 
         bool white_turn = true;
-        bool white_castling = false;
-        bool black_castling = false;
         bool w_l_castling = false;
         bool w_s_castling = false;
         bool b_l_castling = false;
         bool b_s_castling = false;
 
+        int8_t en_passant_square = -1;
+        uint16_t halfmove_clock = 0;
         double num_of_moves = 0;
 
         MoveArray& legal_moves = *new MoveArray();

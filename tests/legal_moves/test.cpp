@@ -12,28 +12,12 @@ namespace {
 struct LegalMovesTestData {
     std::string fen;
     std::string comment;
-    bool white_turn;
-    bool w_l_castling;
-    bool w_s_castling;
-    bool b_l_castling;
-    bool b_s_castling;
     std::set<std::string> expected_moves;
 };
 
 LegalMovesTestData parse_entry(const json& j) {
     LegalMovesTestData data;
-    std::string full_fen = j["board"];
-
-    std::istringstream fen_stream(full_fen);
-    std::string piece_placement, turn, castling;
-    fen_stream >> piece_placement >> turn >> castling;
-
-    data.fen = piece_placement;
-    data.white_turn = (turn == "w");
-    data.w_s_castling = castling.find('K') != std::string::npos;
-    data.w_l_castling = castling.find('Q') != std::string::npos;
-    data.b_s_castling = castling.find('k') != std::string::npos;
-    data.b_l_castling = castling.find('q') != std::string::npos;
+    data.fen = j["board"];
 
     if (j.contains("comment")) {
         data.comment = j["comment"].get<std::string>();
@@ -68,13 +52,7 @@ std::set<std::string> get_move_strings(chess::Board& board) {
 }
 
 chess::Board make_board(const LegalMovesTestData& data) {
-    chess::Board board(data.fen);
-    board.white_turn = data.white_turn;
-    board.w_l_castling = data.w_l_castling;
-    board.w_s_castling = data.w_s_castling;
-    board.b_l_castling = data.b_l_castling;
-    board.b_s_castling = data.b_s_castling;
-    return board;
+    return chess::Board(data.fen);
 }
 
 std::string case_info(size_t i, const LegalMovesTestData& c) {

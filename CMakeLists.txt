@@ -36,6 +36,7 @@ option(CHESS_LIB_BUILD_UCI "Build chess-lib uci" ON)
 option(CHESS_LIB_BUILD_STATELESS_EXAMPLE "Build chess-lib stateless example" ON)
 option(WASM_INTERFACE "Enable WebAssembly interface" OFF)
 option(CHESS_LIB_BUILD_TESTS "Build tests" ON)
+option(CHESS_LIB_BUILD_PERFORMANCE "Build performance benchmarks" ON)
 
 
 if (DEFINED CHESS_LIB_SHARED_LIBS)
@@ -196,4 +197,8 @@ endif ()
 
 if (CHESS_LIB_BUILD_STATELESS_EXAMPLE)
     add_subdirectory(stateless-example)
+endif ()
+
+if (CHESS_LIB_BUILD_PERFORMANCE)
+    add_subdirectory(performance)
 endif ()

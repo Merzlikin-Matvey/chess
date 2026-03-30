@@ -237,5 +237,10 @@ std::ostream& chess::operator<<(std::ostream &ostream, chess::Move move) {
 }
 
 std::string chess::Move::to_string() {
-    return move_to_chess_notation(first, second);
+    std::string result = move_to_chess_notation(first, second);
+    if (pawn_change_type != 255) {
+        const char promo_chars[] = {'\0', 'r', 'n', 'b', 'q', '\0'};
+        result += promo_chars[pawn_change_type];
+    }
+    return result;
 }

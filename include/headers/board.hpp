@@ -68,6 +68,7 @@ namespace chess {
 
         MoveArray& get_legal_moves();
         MoveArray get_legal_moves_for_position(uint8_t x);
+        static MoveArray distil_pawn_moves(MoveArray moves);
         std::vector<std::string> move_history;
 
         bool is_begin();

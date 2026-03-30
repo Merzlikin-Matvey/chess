@@ -1,0 +1,38 @@
+[
+  {
+    "board": "r1bqkbnr/pppp1ppp/2n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R b - - 11 7",
+    "moves": [
+      "a7a5",
+      "a7a6",
+      "a8b8",
+      "b7b6",
+      "c6a5",
+      "c6b4",
+      "c6b8",
+      "c6d4",
+      "c6e7",
+      "d7d5",
+      "d7d6",
+      "d8e7",
+      "d8f6",
+      "d8g5",
+      "d8h4",
+      "e8e7",
+      "f7f5",
+      "f7f6",
+      "f8a3",
+      "f8b4",
+      "f8c5",
+      "f8d6",
+      "f8e7",
+      "g7g5",
+      "g7g6",
+      "g8e7",
+      "g8f6",
+      "g8h6",
+      "h7h5",
+      "h7h6"
+    ],
+    "comment": "Ruy Lopez opening."
+  }
+]

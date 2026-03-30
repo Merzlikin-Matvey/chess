@@ -17,7 +17,12 @@ CMake options: `CHESS_LIB_BUILD_EXAMPLE`, `CHESS_LIB_BUILD_UCI`, `CHESS_LIB_BUIL
 
 Build produces shared library `chess-lib` and up to three executables: `chess-lib-example`, `chess-lib-uci`, `chess-lib-stateless-example`.
 
-No test framework configured. No linter/formatter configured.
+Tests: GTest, located in `tests/`. Test data (JSON with positions and expected legal moves) in `tests/legal_moves/data/`. No linter/formatter configured.
+
+
+## Dependencies
+
+Use conan (version 2.0+). In project root there is `conanfile.py` with all dependencies.
 
 ## Architecture Overview
 

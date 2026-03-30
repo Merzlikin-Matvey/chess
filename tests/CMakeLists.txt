@@ -5,6 +5,7 @@ find_package(nlohmann_json REQUIRED)
 
 set(tests
         legal_moves/test.cpp
+        legal_moves/perft_test.cpp
 )
 
 add_executable(chess-lib-tests ${tests})

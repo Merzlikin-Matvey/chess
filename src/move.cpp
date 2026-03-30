@@ -71,8 +71,15 @@ void chess::Board::move(chess::Move move){
     bitboard_operations::set_0(piece_bitboards[move.first_side][move.first_type], move.first);
     bitboard_operations::set_0(side_bitboards[move.first_side], move.first);
     bitboard_operations::set_0(all, move.first);
+
+    uint8_t placed_type = move.first_type;
+    if (move.pawn_change_type != 255) {
+        placed_type = move.pawn_change_type;
+    }
+
+
     if (move.second_type == 255){
-        bitboard_operations::set_1(piece_bitboards[move.first_side][move.first_type], move.second);
+        bitboard_operations::set_1(piece_bitboards[move.first_side][placed_type], move.second);
         bitboard_operations::set_1(side_bitboards[move.first_side], move.second);
         bitboard_operations::set_1(all, move.second);
     }
@@ -80,10 +87,9 @@ void chess::Board::move(chess::Move move){
         bitboard_operations::set_0(piece_bitboards[move.second_side][move.second_type], move.second);
         bitboard_operations::set_0(side_bitboards[move.second_side], move.second);
         bitboard_operations::set_0(all, move.second);
-        bitboard_operations::set_1(piece_bitboards[move.first_side][move.first_type], move.second);
+        bitboard_operations::set_1(piece_bitboards[move.first_side][placed_type], move.second);
         bitboard_operations::set_1(side_bitboards[move.first_side], move.second);
         bitboard_operations::set_1(all, move.second);
-
     }
 
     if (move.en_passant){

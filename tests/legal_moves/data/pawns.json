@@ -1,0 +1,108 @@
+[
+  {
+    "board": "7k/8/8/8/pPp5/8/8/7K b - b3 0 1",
+    "moves": [
+      "a4a3",
+      "a4b3",
+      "c4b3",
+      "c4c3",
+      "h8g7",
+      "h8g8",
+      "h8h7"
+    ],
+    "comment": "Two possible en passant capture possibilities."
+  },
+  {
+    "board": "7k/8/8/PpP5/8/8/8/7K w - b6 0 1",
+    "moves": [
+      "a5a6",
+      "a5b6",
+      "c5b6",
+      "c5c6",
+      "h1g1",
+      "h1g2",
+      "h1h2"
+    ],
+    "comment": "Two possible en passant capture possibilities."
+  },
+  {
+    "board": "7k/8/8/8/pPp5/8/8/7K b - - 0 1",
+    "moves": [
+      "a4a3",
+      "c4c3",
+      "h8g7",
+      "h8g8",
+      "h8h7"
+    ],
+    "comment": "Same position but without the en passant capture possibilities."
+  },
+  {
+    "board": "7k/8/8/PpP5/8/8/8/7K w - - 0 1",
+    "moves": [
+      "a5a6",
+      "c5c6",
+      "h1g1",
+      "h1g2",
+      "h1h2"
+    ],
+    "comment": "Same position but without the en passant capture possibilities."
+  },
+  {
+    "board": "8/4k3/1p1p1p1p/pPpPpPpP/P1P1P1P1/8/5K2/8 w - - 0 1",
+    "moves": [
+      "f2e1",
+      "f2e2",
+      "f2e3",
+      "f2f1",
+      "f2f3",
+      "f2g1",
+      "f2g2",
+      "f2g3"
+    ],
+    "comment": "Full set of pawns but no moves."
+  },
+  {
+    "board": "8/5k2/8/p1p1p1p1/PpPpPpPp/1P1P1P1P/4K3/8 b - - 0 1",
+    "moves": [
+      "f7e6",
+      "f7e7",
+      "f7e8",
+      "f7f6",
+      "f7f8",
+      "f7g6",
+      "f7g7",
+      "f7g8"
+    ],
+    "comment": "Full set of pawns but no moves."
+  },
+  {
+    "board": "8/8/4k3/8/2pPp3/8/B7/7K b - d3 0 1",
+    "moves": [
+      "e4d3",
+      "e4e3",
+      "e6d5",
+      "e6d6",
+      "e6d7",
+      "e6e7",
+      "e6f5",
+      "e6f6",
+      "e6f7"
+    ],
+    "comment": "Black has two en passant possibilities, but only one is legal."
+  },
+  {
+    "board": "7k/b7/8/2PpP3/8/4K3/8/8 w - d6 0 1",
+    "moves": [
+      "e3d2",
+      "e3d3",
+      "e3d4",
+      "e3e2",
+      "e3f2",
+      "e3f3",
+      "e3f4",
+      "e5d6",
+      "e5e6"
+    ],
+    "comment": "White has two en passant possibilities, but only one is legal."
+  }
+]

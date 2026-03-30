@@ -35,6 +35,7 @@ option(CHESS_LIB_BUILD_EXAMPLE "Build chess-lib examples" ON)
 option(CHESS_LIB_BUILD_UCI "Build chess-lib uci" ON)
 option(CHESS_LIB_BUILD_STATELESS_EXAMPLE "Build chess-lib stateless example" ON)
 option(WASM_INTERFACE "Enable WebAssembly interface" OFF)
+option(CHESS_LIB_BUILD_TESTS "Build tests" ON)
 
 
 if (DEFINED CHESS_LIB_SHARED_LIBS)
@@ -44,6 +45,24 @@ endif ()
 #------------------------------#
 #         Dependencies         #
 #------------------------------#
+
+set(CONAN OFF)
+
+if (CHESS_LIB_BUILD_TESTS)
+    set(CONAN ON)
+endif ()
+
+if (CONAN)
+    if (NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/build/conan/generators")
+        message(FATAL_ERROR
+                "Conan generators not found at ${CMAKE_CURRENT_SOURCE_DIR}/build/conan/generators\n"
+                "Run: conan install --build=missing -vtrace")
+    endif ()
+    list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/build/conan/generators")
+endif ()
+
+
+
 
 if (WASM_INTERFACE)
     find_package(emscripten REQUIRED)
@@ -157,7 +176,11 @@ set_target_properties(chess-lib PROPERTIES
 #         Testing              #
 #------------------------------#
 
-# TODO: Add tests
+if (CHESS_LIB_BUILD_TESTS)
+    find_package(GTest REQUIRED)
+    enable_testing()
+    add_subdirectory(tests)
+endif ()
 
 #------------------------------#
 #        Other targets         #

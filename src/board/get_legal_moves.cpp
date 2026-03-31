@@ -480,7 +480,7 @@ chess::MoveArray chess::Board::get_legal_moves_for_position(uint8_t x) {
     get_legal_moves();
 
     for (int i = 0; i < legal_moves.size(); i++) {
-        if (legal_moves.moves[i].first == x) {
+        if (legal_moves.moves[i].from() == x) {
             moves.push_back(legal_moves.moves[i]);
         }
     }
@@ -492,16 +492,18 @@ chess::MoveArray chess::Board::distil_pawn_moves(MoveArray moves){
     MoveArray distilled_moves;
 
     for (int i = 0; i < moves.size(); i++) {
-        if (moves[i].first_type == Pawn and moves[i].first_side == White and moves[i].second >= 56) {
+        if (moves[i].piece_type() == Pawn and moves[i].attacker_color() == White and moves[i].to() >= 56) {
             for (uint8_t promo : {Queen, Rook, Bishop, Knight}) {
-                Move m = moves[i];
-                m.pawn_change_type = promo;
+                Move m = Move::make(moves[i].from(), moves[i].to(), moves[i].piece_type(),
+                                    moves[i].attacker_color(), moves[i].captured_type(),
+                                    moves[i].captured_color(), MT_NORMAL, promo);
                 distilled_moves.push_back(m);
             }
-        } else if (moves[i].first_type == Pawn and moves[i].first_side == Black and moves[i].second <= 7) {
+        } else if (moves[i].piece_type() == Pawn and moves[i].attacker_color() == Black and moves[i].to() <= 7) {
             for (uint8_t promo : {Queen, Rook, Bishop, Knight}) {
-                Move m = moves[i];
-                m.pawn_change_type = promo;
+                Move m = Move::make(moves[i].from(), moves[i].to(), moves[i].piece_type(),
+                                    moves[i].attacker_color(), moves[i].captured_type(),
+                                    moves[i].captured_color(), MT_NORMAL, promo);
                 distilled_moves.push_back(m);
             }
         } else {

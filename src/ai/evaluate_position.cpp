@@ -38,17 +38,17 @@ double chess::engine::evaluate_position(Board& board, uint8_t color) {
 
     for (int i = 0; i < board.legal_moves.size(); i++){
         Move move = board.legal_moves.moves[i];
-        if (move.first_type == chess::Pawn){
+        if (move.piece_type() == chess::Pawn){
             num_pawns_moves++;
-        } else if (move.first_type == chess::Knight){
+        } else if (move.piece_type() == chess::Knight){
             num_knights_moves++;
-        } else if (move.first_type == chess::Bishop){
+        } else if (move.piece_type() == chess::Bishop){
             num_bishops_moves++;
-        } else if (move.first_type == chess::Rook){
+        } else if (move.piece_type() == chess::Rook){
             num_rooks_moves++;
-        } else if (move.first_type == chess::Queen){
+        } else if (move.piece_type() == chess::Queen){
             num_queens_moves++;
-        } else if (move.first_type == chess::King){
+        } else if (move.piece_type() == chess::King){
             num_kings_moves++;
         }
     }

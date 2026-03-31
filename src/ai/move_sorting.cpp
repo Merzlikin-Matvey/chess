@@ -9,12 +9,12 @@
 namespace chess::engine {
 
     double AI::evaluate_move( chess::Move move) {
-        if (move.first == move.second){
+        if (move.from() == move.to()){
             return -1024;
         }
         else{
             double score = 0;
-            switch (move.first_type){
+            switch (move.piece_type()){
                 case 0:
                     score += 4;
                     break;
@@ -37,7 +37,7 @@ namespace chess::engine {
                     return 0;
             }
 
-            switch (move.second_type){
+            switch (move.second_type()){
                 case 0:
                     score -= 3;
                     break;

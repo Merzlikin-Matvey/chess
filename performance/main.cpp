@@ -23,8 +23,13 @@ long long perft(Board& board, int depth) {
         return 1;
     }
 
-    long long count = 0;
     board.get_legal_moves();
+
+    if (depth == 1) {
+        return board.legal_moves.size();
+    }
+
+    long long count = 0;
     MoveArray moves = board.legal_moves;
     PositionState state;
     for (int i = 0; i < moves.size(); i++) {
@@ -62,6 +67,6 @@ void benchmark_perft(const Board& board, int max_depth) {
 
 int main() {
     auto  board = Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
-    constexpr int max_depth = 6;
+    constexpr int max_depth = 7;
     benchmark_perft(board, max_depth);
 }

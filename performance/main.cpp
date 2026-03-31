@@ -23,11 +23,11 @@ long long perft(Board& board, int depth) {
         return 1;
     }
 
-    board.get_legal_moves();
-
     if (depth == 1) {
-        return board.legal_moves.size();
+        return board.count_legal_moves();
     }
+
+    board.get_legal_moves();
 
     long long count = 0;
     MoveArray moves = board.legal_moves;

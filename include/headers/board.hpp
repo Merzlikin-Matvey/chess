@@ -11,6 +11,17 @@ typedef uint64_t Bitboard;
 
 namespace chess {
 
+    struct PositionState {
+        uint8_t  captured_type = 255;
+        uint8_t  captured_side = 255;
+        int8_t   prev_en_passant = -1;
+        uint16_t prev_halfmove = 0;
+        bool     prev_w_l_castling = false;
+        bool     prev_w_s_castling = false;
+        bool     prev_b_l_castling = false;
+        bool     prev_b_s_castling = false;
+    };
+
     class Board {
     public:
         Board(std::array<std::array<Bitboard, 6>, 2> board);
@@ -65,6 +76,9 @@ namespace chess {
 
         void move(Move move);
         void move(std::string move);
+
+        void make_move(Move move, PositionState& state);
+        void unmake_move(Move move, const PositionState& state);
 
         MoveArray& get_legal_moves();
         MoveArray get_legal_moves_for_position(uint8_t x);

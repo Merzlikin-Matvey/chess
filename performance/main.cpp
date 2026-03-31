@@ -25,10 +25,12 @@ long long perft(Board& board, int depth) {
 
     long long count = 0;
     board.get_legal_moves();
-    for (int i = 0; i < board.legal_moves.size(); i++) {
-        Board copy = board;
-        copy.move(board.legal_moves.moves[i]);
-        count += perft(copy, depth - 1);
+    MoveArray moves = board.legal_moves;
+    PositionState state;
+    for (int i = 0; i < moves.size(); i++) {
+        board.make_move(moves.moves[i], state);
+        count += perft(board, depth - 1);
+        board.unmake_move(moves.moves[i], state);
     }
 
     return count;

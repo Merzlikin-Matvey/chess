@@ -10,10 +10,12 @@ uint64_t perft(chess::Board& board, int depth) {
 
     uint64_t nodes = 0;
     board.get_legal_moves();
-    for (int i = 0; i < board.legal_moves.size(); i++) {
-        chess::Board copy = board;
-        copy.move(board.legal_moves.moves[i]);
-        nodes += perft(copy, depth - 1);
+    chess::MoveArray moves = board.legal_moves;
+    chess::PositionState state;
+    for (int i = 0; i < moves.size(); i++) {
+        board.make_move(moves.moves[i], state);
+        nodes += perft(board, depth - 1);
+        board.unmake_move(moves.moves[i], state);
     }
     return nodes;
 }

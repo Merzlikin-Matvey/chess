@@ -213,6 +213,229 @@ void chess::Board::move(chess::Move move){
 
 }
 
+void chess::Board::make_move(chess::Move move, chess::PositionState& state) {
+    state.captured_type = move.second_type;
+    state.captured_side = move.second_side;
+    state.prev_en_passant = en_passant_square;
+    state.prev_halfmove = halfmove_clock;
+    state.prev_w_l_castling = w_l_castling;
+    state.prev_w_s_castling = w_s_castling;
+    state.prev_b_l_castling = b_l_castling;
+    state.prev_b_s_castling = b_s_castling;
+
+    bitboard_operations::set_0(piece_bitboards[move.first_side][move.first_type], move.first);
+    bitboard_operations::set_0(side_bitboards[move.first_side], move.first);
+    bitboard_operations::set_0(all, move.first);
+
+    uint8_t placed_type = move.first_type;
+    if (move.pawn_change_type != 255) {
+        placed_type = move.pawn_change_type;
+    }
+
+    if (move.second_type == 255) {
+        bitboard_operations::set_1(piece_bitboards[move.first_side][placed_type], move.second);
+        bitboard_operations::set_1(side_bitboards[move.first_side], move.second);
+        bitboard_operations::set_1(all, move.second);
+    } else {
+        bitboard_operations::set_0(piece_bitboards[move.second_side][move.second_type], move.second);
+        bitboard_operations::set_0(side_bitboards[move.second_side], move.second);
+        bitboard_operations::set_1(piece_bitboards[move.first_side][placed_type], move.second);
+        bitboard_operations::set_1(side_bitboards[move.first_side], move.second);
+        bitboard_operations::set_1(all, move.second);
+    }
+
+    // En passant capture
+    if (move.en_passant) {
+        if (move.first_side == chess::White) {
+            bitboard_operations::set_0(piece_bitboards[chess::Black][chess::Pawn], move.second - 8);
+            bitboard_operations::set_0(side_bitboards[chess::Black], move.second - 8);
+            bitboard_operations::set_0(all, move.second - 8);
+        } else {
+            bitboard_operations::set_0(piece_bitboards[chess::White][chess::Pawn], move.second + 8);
+            bitboard_operations::set_0(side_bitboards[chess::White], move.second + 8);
+            bitboard_operations::set_0(all, move.second + 8);
+        }
+    }
+
+    // Castling rook movement
+    if (move.w_l_castling) {
+        bitboard_operations::set_1(piece_bitboards[chess::White][chess::King], 2);
+        bitboard_operations::set_1(side_bitboards[chess::White], 2);
+        bitboard_operations::set_1(all, 2);
+        bitboard_operations::set_0(piece_bitboards[chess::White][chess::Rook], 0);
+        bitboard_operations::set_0(side_bitboards[chess::White], 0);
+        bitboard_operations::set_0(all, 0);
+        bitboard_operations::set_1(piece_bitboards[chess::White][chess::Rook], 3);
+        bitboard_operations::set_1(side_bitboards[chess::White], 3);
+        bitboard_operations::set_1(all, 3);
+    } else if (move.w_s_castling) {
+        bitboard_operations::set_1(piece_bitboards[chess::White][chess::King], 6);
+        bitboard_operations::set_1(side_bitboards[chess::White], 6);
+        bitboard_operations::set_1(all, 6);
+        bitboard_operations::set_0(piece_bitboards[chess::White][chess::Rook], 7);
+        bitboard_operations::set_0(side_bitboards[chess::White], 7);
+        bitboard_operations::set_0(all, 7);
+        bitboard_operations::set_1(piece_bitboards[chess::White][chess::Rook], 5);
+        bitboard_operations::set_1(side_bitboards[chess::White], 5);
+        bitboard_operations::set_1(all, 5);
+    } else if (move.b_l_castling) {
+        bitboard_operations::set_1(piece_bitboards[chess::Black][chess::King], 58);
+        bitboard_operations::set_1(side_bitboards[chess::Black], 58);
+        bitboard_operations::set_1(all, 58);
+        bitboard_operations::set_0(piece_bitboards[chess::Black][chess::Rook], 56);
+        bitboard_operations::set_0(side_bitboards[chess::Black], 56);
+        bitboard_operations::set_0(all, 56);
+        bitboard_operations::set_1(piece_bitboards[chess::Black][chess::Rook], 59);
+        bitboard_operations::set_1(side_bitboards[chess::Black], 59);
+        bitboard_operations::set_1(all, 59);
+    } else if (move.b_s_castling) {
+        bitboard_operations::set_1(piece_bitboards[chess::Black][chess::King], 62);
+        bitboard_operations::set_1(side_bitboards[chess::Black], 62);
+        bitboard_operations::set_1(all, 62);
+        bitboard_operations::set_0(piece_bitboards[chess::Black][chess::Rook], 63);
+        bitboard_operations::set_0(side_bitboards[chess::Black], 63);
+        bitboard_operations::set_0(all, 63);
+        bitboard_operations::set_1(piece_bitboards[chess::Black][chess::Rook], 61);
+        bitboard_operations::set_1(side_bitboards[chess::Black], 61);
+        bitboard_operations::set_1(all, 61);
+    }
+
+    // Revoke castling rights
+    if (move.first_type == chess::King) {
+        if (move.first_side == chess::White) {
+            w_l_castling = false;
+            w_s_castling = false;
+        } else {
+            b_l_castling = false;
+            b_s_castling = false;
+        }
+    }
+    if (move.first_type == chess::Rook) {
+        if (move.first == 0) w_l_castling = false;
+        if (move.first == 7) w_s_castling = false;
+        if (move.first == 56) b_l_castling = false;
+        if (move.first == 63) b_s_castling = false;
+    }
+    if (move.second != 255) {
+        if (move.second == 0) w_l_castling = false;
+        if (move.second == 7) w_s_castling = false;
+        if (move.second == 56) b_l_castling = false;
+        if (move.second == 63) b_s_castling = false;
+    }
+
+    // En passant square
+    if (move.pawn_double_move) {
+        if (move.first_side == chess::White) {
+            en_passant_square = move.first + 8;
+        } else {
+            en_passant_square = move.first - 8;
+        }
+    } else {
+        en_passant_square = -1;
+    }
+
+    // Halfmove clock
+    if (move.first_type == chess::Pawn || move.second_type != 255) {
+        halfmove_clock = 0;
+    } else {
+        halfmove_clock++;
+    }
+
+    white_turn = !white_turn;
+    num_of_moves += 0.5;
+}
+
+void chess::Board::unmake_move(chess::Move move, const chess::PositionState& state) {
+    white_turn = !white_turn;
+    num_of_moves -= 0.5;
+
+    // Restore saved state
+    en_passant_square = state.prev_en_passant;
+    halfmove_clock = state.prev_halfmove;
+    w_l_castling = state.prev_w_l_castling;
+    w_s_castling = state.prev_w_s_castling;
+    b_l_castling = state.prev_b_l_castling;
+    b_s_castling = state.prev_b_s_castling;
+
+    uint8_t placed_type = move.first_type;
+    if (move.pawn_change_type != 255) {
+        placed_type = move.pawn_change_type;
+    }
+
+    // Undo castling rook movement
+    if (move.w_l_castling) {
+        bitboard_operations::set_0(piece_bitboards[chess::White][chess::King], 2);
+        bitboard_operations::set_0(side_bitboards[chess::White], 2);
+        bitboard_operations::set_0(all, 2);
+        bitboard_operations::set_1(piece_bitboards[chess::White][chess::Rook], 0);
+        bitboard_operations::set_1(side_bitboards[chess::White], 0);
+        bitboard_operations::set_1(all, 0);
+        bitboard_operations::set_0(piece_bitboards[chess::White][chess::Rook], 3);
+        bitboard_operations::set_0(side_bitboards[chess::White], 3);
+        bitboard_operations::set_0(all, 3);
+    } else if (move.w_s_castling) {
+        bitboard_operations::set_0(piece_bitboards[chess::White][chess::King], 6);
+        bitboard_operations::set_0(side_bitboards[chess::White], 6);
+        bitboard_operations::set_0(all, 6);
+        bitboard_operations::set_1(piece_bitboards[chess::White][chess::Rook], 7);
+        bitboard_operations::set_1(side_bitboards[chess::White], 7);
+        bitboard_operations::set_1(all, 7);
+        bitboard_operations::set_0(piece_bitboards[chess::White][chess::Rook], 5);
+        bitboard_operations::set_0(side_bitboards[chess::White], 5);
+        bitboard_operations::set_0(all, 5);
+    } else if (move.b_l_castling) {
+        bitboard_operations::set_0(piece_bitboards[chess::Black][chess::King], 58);
+        bitboard_operations::set_0(side_bitboards[chess::Black], 58);
+        bitboard_operations::set_0(all, 58);
+        bitboard_operations::set_1(piece_bitboards[chess::Black][chess::Rook], 56);
+        bitboard_operations::set_1(side_bitboards[chess::Black], 56);
+        bitboard_operations::set_1(all, 56);
+        bitboard_operations::set_0(piece_bitboards[chess::Black][chess::Rook], 59);
+        bitboard_operations::set_0(side_bitboards[chess::Black], 59);
+        bitboard_operations::set_0(all, 59);
+    } else if (move.b_s_castling) {
+        bitboard_operations::set_0(piece_bitboards[chess::Black][chess::King], 62);
+        bitboard_operations::set_0(side_bitboards[chess::Black], 62);
+        bitboard_operations::set_0(all, 62);
+        bitboard_operations::set_1(piece_bitboards[chess::Black][chess::Rook], 63);
+        bitboard_operations::set_1(side_bitboards[chess::Black], 63);
+        bitboard_operations::set_1(all, 63);
+        bitboard_operations::set_0(piece_bitboards[chess::Black][chess::Rook], 61);
+        bitboard_operations::set_0(side_bitboards[chess::Black], 61);
+        bitboard_operations::set_0(all, 61);
+    }
+
+    // Remove piece from destination
+    bitboard_operations::set_0(piece_bitboards[move.first_side][placed_type], move.second);
+    bitboard_operations::set_0(side_bitboards[move.first_side], move.second);
+    bitboard_operations::set_0(all, move.second);
+
+    // Restore piece at source
+    bitboard_operations::set_1(piece_bitboards[move.first_side][move.first_type], move.first);
+    bitboard_operations::set_1(side_bitboards[move.first_side], move.first);
+    bitboard_operations::set_1(all, move.first);
+
+    // Restore captured piece
+    if (state.captured_type != 255) {
+        bitboard_operations::set_1(piece_bitboards[state.captured_side][state.captured_type], move.second);
+        bitboard_operations::set_1(side_bitboards[state.captured_side], move.second);
+        bitboard_operations::set_1(all, move.second);
+    }
+
+    // Undo en passant capture
+    if (move.en_passant) {
+        if (move.first_side == chess::White) {
+            bitboard_operations::set_1(piece_bitboards[chess::Black][chess::Pawn], move.second - 8);
+            bitboard_operations::set_1(side_bitboards[chess::Black], move.second - 8);
+            bitboard_operations::set_1(all, move.second - 8);
+        } else {
+            bitboard_operations::set_1(piece_bitboards[chess::White][chess::Pawn], move.second + 8);
+            bitboard_operations::set_1(side_bitboards[chess::White], move.second + 8);
+            bitboard_operations::set_1(all, move.second + 8);
+        }
+    }
+}
+
 void chess::Board::move(std::string move){
     for (int i = 0; i < legal_moves.size(); i++){
         if (move == legal_moves.moves[i].to_string()){

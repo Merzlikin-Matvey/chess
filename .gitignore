@@ -44,3 +44,4 @@ build/
 wasm/
 CMakeUserPresets.json
 *.venv/
+.claude/

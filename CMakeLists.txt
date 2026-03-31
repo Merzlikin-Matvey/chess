@@ -26,7 +26,8 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fconstexpr-steps=2147483647")
 endif ()
 
-add_definitions(-O3)
+add_definitions(-O3 -march=native -DNDEBUG)
+set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
 
 add_library(chess-lib SHARED)
 add_library(chess-lib::chess-lib ALIAS chess-lib)

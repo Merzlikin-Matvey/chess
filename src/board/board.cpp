@@ -6,6 +6,21 @@
 
 #include <string>
 #include <sstream>
+#include <cstring>
+
+void chess::Board::init_mailbox() {
+    std::memset(mailbox, 255, 64);
+    for (uint8_t color = 0; color < 2; color++) {
+        for (uint8_t piece = 0; piece < 6; piece++) {
+            Bitboard bb = piece_bitboards[color][piece];
+            while (bb) {
+                int sq = bitboard_operations::bitScanForward(bb);
+                bitboard_operations::set_0(bb, sq);
+                mailbox[sq] = (color << 3) | piece;
+            }
+        }
+    }
+}
 
 chess::Board::Board(std::array<std::array<Bitboard, 6>, 2> board) {
     piece_bitboards = board;
@@ -17,6 +32,7 @@ chess::Board::Board(std::array<std::array<Bitboard, 6>, 2> board) {
         }
     }
     all = side_bitboards[0] | side_bitboards[1];
+    init_mailbox();
     hashes.push_back(zobrist::ZobristHash(*this));
 
 }
@@ -35,6 +51,7 @@ chess::Board::Board(std::string fen){
         }
     }
     all = side_bitboards[0] | side_bitboards[1];
+    init_mailbox();
 
     std::string active_color;
     if (iss >> active_color) {
@@ -85,6 +102,7 @@ chess::Board::Board() {
         }
     }
     all = side_bitboards[0] | side_bitboards[1];
+    init_mailbox();
     w_l_castling = true;
     w_s_castling = true;
     b_l_castling = true;
@@ -167,6 +185,7 @@ chess::Board& chess::Board::operator = (const Board& other) {
     legal_moves = other.legal_moves;
     hashes = other.hashes;
     move_history = other.move_history;
+    std::ranges::copy(other.mailbox, std::begin(mailbox));
 
     return *this;
 }

@@ -40,20 +40,30 @@ void chess::Board::pawn_mask_to_moves(Bitboard mask, int delta, MoveArray* moves
             opponent_color = 1 - attacker_color;
         }
 
-        if (en_passant){
+        bool is_promotion = (attacker_color == White && opponent_index >= 56) ||
+                             (attacker_color == Black && opponent_index <= 7);
+
+        if (is_promotion) {
+            for (const uint8_t promo : {Queen, Rook, Bishop, Knight}) {
+                move = Move(attacker_index, attacker_color, attacker_type,
+                            opponent_index, opponent_color, opponent_type,
+                            false, false, false, false,
+                            false, false, promo);
+                moves->push_back(move);
+            }
+        } else if (en_passant) {
             move = Move(attacker_index, attacker_color, attacker_type,
                         opponent_index, opponent_color, opponent_type,
                         false, false, false, false,
                         false, true, 255);
-        }
-        else {
+            moves->push_back(move);
+        } else {
             move = Move(attacker_index, attacker_color, attacker_type,
                         opponent_index, opponent_color, opponent_type,
                         false, false, false, false,
                         double_move, false, 255);
+            moves->push_back(move);
         }
-
-        moves->push_back(move);
     }
 }
 

@@ -471,7 +471,6 @@ chess::MoveArray& chess::Board::get_legal_moves() {
         castling(&legal_moves);
     }
 
-    legal_moves = distil_pawn_moves(legal_moves);
     return legal_moves;
 }
 

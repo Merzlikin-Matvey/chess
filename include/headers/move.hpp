@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <memory>
 #include <array>
 
@@ -57,10 +58,8 @@ namespace chess {
         chess::Move& operator[](int index);
         const chess::Move& operator[](int index) const;
         MoveArray& operator=(const MoveArray& other) {
-            if (this != &other) {
-                _size = other._size;
-                moves = other.moves;
-            }
+            _size = other._size;
+            std::copy_n(other.moves.begin(), _size, moves.begin());
             return *this;
         }
 

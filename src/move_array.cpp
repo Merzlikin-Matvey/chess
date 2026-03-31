@@ -10,9 +10,6 @@ void chess::MoveArray::push_back(chess::Move move) {
 }
 
 void chess::MoveArray::clear() {
-    for (int i = 0; i < size(); i++) {
-        moves[i] = chess::Move();
-    }
     _size = 0;
 }
 

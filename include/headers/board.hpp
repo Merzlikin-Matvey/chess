@@ -28,14 +28,13 @@ namespace chess {
         Board(std::string fen);
         Board();
 
-        ~Board() {
-            delete &legal_moves;
-        }
+        ~Board() {}
 
         Board(const Board& other)
                 : all(other.all),
                   piece_bitboards(other.piece_bitboards),
                   side_bitboards(other.side_bitboards),
+                  hashes(other.hashes),
                   white_turn(other.white_turn),
                   w_l_castling(other.w_l_castling),
                   w_s_castling(other.w_s_castling),
@@ -44,8 +43,7 @@ namespace chess {
                   en_passant_square(other.en_passant_square),
                   halfmove_clock(other.halfmove_clock),
                   num_of_moves(other.num_of_moves),
-                  legal_moves(*new MoveArray(other.legal_moves)),
-                  hashes(other.hashes),
+                  legal_moves(other.legal_moves),
                   move_history(other.move_history) {
         }
 
@@ -67,7 +65,7 @@ namespace chess {
         uint16_t halfmove_clock = 0;
         double num_of_moves = 0;
 
-        MoveArray& legal_moves = *new MoveArray();
+        MoveArray legal_moves;
 
         void add_hash_to_history(zobrist::ZobristHash hash);
         void add_hash_to_history();

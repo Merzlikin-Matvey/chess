@@ -45,6 +45,7 @@ namespace chess {
                   num_of_moves(other.num_of_moves),
                   legal_moves(other.legal_moves),
                   move_history(other.move_history) {
+            std::copy(std::begin(other.mailbox), std::end(other.mailbox), std::begin(mailbox));
         }
 
         Board& operator=(const Board& other);
@@ -52,6 +53,7 @@ namespace chess {
         Bitboard all;
         std::array<std::array<Bitboard, 6>, 2> piece_bitboards{};
         std::array<Bitboard, 2> side_bitboards;
+        uint8_t mailbox[64]{};
 
         std::vector<zobrist::ZobristHash> hashes;
 
@@ -109,6 +111,8 @@ namespace chess {
         int8_t get_piece_type(const chess::Board &board, uint8_t x);
 
         std::string to_fen();
+
+        void init_mailbox();
     };
 
     std::ostream& operator<<(std::ostream &ostream, chess::Board board);

@@ -3,7 +3,7 @@
 #include "headers/evaluating_constants.hpp"
 #include "headers/ai.hpp"
 
-double chess::engine::AI::max(Board board, int depth, double alpha, double beta){
+double chess::engine::AI::max(Board& board, int depth, double alpha, double beta){
     auto moves = board.legal_moves;
     if (sort_max_depth <= depth and sort_max_depth != -1){
         sort_moves(&moves);
@@ -13,13 +13,13 @@ double chess::engine::AI::max(Board board, int depth, double alpha, double beta)
     }
 
     double max_score = constants::minimum;
-    Board copy;
     for (int i = 0; i < moves.size(); i++){
-        copy = board;
+        PositionState state;
         Move move = moves.moves[i];
-        copy.move(move);
-        copy.get_legal_moves();
-        double score = min(copy, depth - 1, alpha, beta);
+        board.make_move(move, state);
+        board.get_legal_moves();
+        double score = min(board, depth - 1, alpha, beta);
+        board.unmake_move(move, state);
         max_score = std::max(max_score, score);
         alpha = std::max(alpha, score);
         if (alpha >= beta){
@@ -30,7 +30,7 @@ double chess::engine::AI::max(Board board, int depth, double alpha, double beta)
     return max_score;
 }
 
-double chess::engine::AI::min(Board board, int depth, double alpha, double beta){
+double chess::engine::AI::min(Board& board, int depth, double alpha, double beta){
     auto moves = board.legal_moves;
     if (sort_max_depth <= depth and sort_max_depth != -1){
         sort_moves(&moves);
@@ -40,13 +40,13 @@ double chess::engine::AI::min(Board board, int depth, double alpha, double beta)
     }
 
     double min_score = constants::maximum;
-    Board copy;
     for (int i = 0; i < moves.size(); i++){
-        copy = board;
-        Move move = moves.moves[i];
-        copy.move(move);
-        copy.get_legal_moves();
-        double score = max(copy, depth - 1, alpha, beta);
+        PositionState state;
+        const Move move = moves.moves[i];
+        board.make_move(move, state);
+        board.get_legal_moves();
+        double score = max(board, depth - 1, alpha, beta);
+        board.unmake_move(move, state);
         min_score = std::min(min_score, score);
         beta = std::min(beta, score);
         if (alpha >= beta){

@@ -8,6 +8,7 @@ namespace chess::uci {
         DEBUG = 0,
         INPUT = 1,
         OUTPUT = 2,
+        ERROR = 3
     };
 
 

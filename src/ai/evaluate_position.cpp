@@ -7,12 +7,14 @@ double chess::engine::evaluate_position(Board& board, uint8_t color) {
     uint8_t king_index = bitboard_operations::bitScanForward(board.piece_bitboards[color][chess::King]);
     double score = 0;
 
-    if (board.is_checkmate()){
-        if (board_color == color){
-            return constants::minimum;
-        } else {
+    if (board.legal_moves.size() == 0){
+        if (board.is_check()) { // checkmate
+            if (board_color == color){
+                return constants::minimum;
+            }
             return constants::maximum;
         }
+        return 0; // stalemate
     }
 
     score += constants::material_weight * (

@@ -20,6 +20,8 @@ namespace chess::engine {
         void sort_moves(MoveArray* moves);
         double evaluate_move(Move move);
 
+        uint64_t nodes_searched = 0;
+
     private:
         static const std::array<int, 6> MVV_LVA_values;
     };

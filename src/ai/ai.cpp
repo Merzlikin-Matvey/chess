@@ -1,6 +1,7 @@
 #include "chess-lib.hpp"
 
 std::string chess::engine::AI::search(Board& board) {
+    nodes_searched = 0;
     board.get_legal_moves();
     double score;
     Move best_move;

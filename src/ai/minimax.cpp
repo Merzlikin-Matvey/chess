@@ -4,11 +4,12 @@
 #include "headers/ai.hpp"
 
 double chess::engine::AI::max(Board& board, int depth, double alpha, double beta){
+    nodes_searched++;
     auto moves = board.legal_moves;
     if (sort_max_depth <= depth and sort_max_depth != -1){
         sort_moves(&moves);
     }
-    if (depth == 0 or board.is_checkmate()){
+    if (depth == 0 or board.legal_moves.size() == 0){
         return evaluate_position(board, White);
     }
 
@@ -31,11 +32,12 @@ double chess::engine::AI::max(Board& board, int depth, double alpha, double beta
 }
 
 double chess::engine::AI::min(Board& board, int depth, double alpha, double beta){
+    nodes_searched++;
     auto moves = board.legal_moves;
     if (sort_max_depth <= depth and sort_max_depth != -1){
         sort_moves(&moves);
     }
-    if (depth == 0 or board.is_checkmate()){
+    if (depth == 0 or board.legal_moves.size() == 0){
         return evaluate_position(board, White);
     }
 

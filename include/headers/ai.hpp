@@ -19,6 +19,9 @@ namespace chess::engine {
         double min(Board& board, int depth, double alpha, double beta);
         void sort_moves(MoveArray* moves);
         double evaluate_move(Move move);
+
+    private:
+        static const std::array<int, 6> MVV_LVA_values;
     };
 
     class AlphaAI : public AI {

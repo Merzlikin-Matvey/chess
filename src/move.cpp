@@ -46,11 +46,11 @@ chess::Move::Move(uint8_t first,
 void chess::Board::move(chess::Move move){
     if (move.second_type() == King){
         std::cout << "KING EATING" << std::endl;
-        std::cout << move << std::endl;
-        for (int i = 0; i < move_history.size(); i++){
-            std::cout << "\"" << move_history[i] << "\"" << "," << std::endl;
-        }
         std::cout << *this << std::endl;
+        for (auto move : get_legal_moves()) {
+            std::cout << move.to_string() << std::endl;
+        }
+
 
     }
     bitboard_operations::set_0(piece_bitboards[move.attacker_color()][move.piece_type()], move.from());
@@ -77,16 +77,21 @@ void chess::Board::move(chess::Move move){
         bitboard_operations::set_1(all, move.to());
     }
 
+    mailbox[move.from()] = 255;
+    mailbox[move.to()] = (move.attacker_color() << 3) | placed_type;
+
     if (move.en_passant()){
         if (move.attacker_color() == chess::White){
             bitboard_operations::set_0(piece_bitboards[chess::Black][chess::Pawn], move.to() - 8);
             bitboard_operations::set_0(side_bitboards[chess::Black], move.to() - 8);
             bitboard_operations::set_0(all, move.to() - 8);
+            mailbox[move.to() - 8] = 255;
         }
         else {
             bitboard_operations::set_0(piece_bitboards[chess::White][chess::Pawn], move.to() + 8);
             bitboard_operations::set_0(side_bitboards[chess::White], move.to() + 8);
             bitboard_operations::set_0(all, move.to() + 8);
+            mailbox[move.to() + 8] = 255;
         }
     }
 
@@ -100,6 +105,9 @@ void chess::Board::move(chess::Move move){
         bitboard_operations::set_1(piece_bitboards[chess::White][chess::Rook], 3);
         bitboard_operations::set_1(side_bitboards[chess::White], 3);
         bitboard_operations::set_1(all, 3);
+        mailbox[2] = (chess::White << 3) | chess::King;
+        mailbox[0] = 255;
+        mailbox[3] = (chess::White << 3) | chess::Rook;
     }
     else if (move.w_s_castling()){
         bitboard_operations::set_1(piece_bitboards[chess::White][chess::King], 6);
@@ -111,6 +119,9 @@ void chess::Board::move(chess::Move move){
         bitboard_operations::set_1(piece_bitboards[chess::White][chess::Rook], 5);
         bitboard_operations::set_1(side_bitboards[chess::White], 5);
         bitboard_operations::set_1(all, 5);
+        mailbox[6] = (chess::White << 3) | chess::King;
+        mailbox[7] = 255;
+        mailbox[5] = (chess::White << 3) | chess::Rook;
     }
     else if (move.b_l_castling()){
         bitboard_operations::set_1(piece_bitboards[chess::Black][chess::King], 58);
@@ -122,6 +133,9 @@ void chess::Board::move(chess::Move move){
         bitboard_operations::set_1(piece_bitboards[chess::Black][chess::Rook], 59);
         bitboard_operations::set_1(side_bitboards[chess::Black], 59);
         bitboard_operations::set_1(all, 59);
+        mailbox[58] = (chess::Black << 3) | chess::King;
+        mailbox[56] = 255;
+        mailbox[59] = (chess::Black << 3) | chess::Rook;
     }
     else if (move.b_s_castling()){
         bitboard_operations::set_1(piece_bitboards[chess::Black][chess::King], 62);
@@ -133,6 +147,9 @@ void chess::Board::move(chess::Move move){
         bitboard_operations::set_1(piece_bitboards[chess::Black][chess::Rook], 61);
         bitboard_operations::set_1(side_bitboards[chess::Black], 61);
         bitboard_operations::set_1(all, 61);
+        mailbox[62] = (chess::Black << 3) | chess::King;
+        mailbox[63] = 255;
+        mailbox[61] = (chess::Black << 3) | chess::Rook;
     }
 
     // Revoke castling rights

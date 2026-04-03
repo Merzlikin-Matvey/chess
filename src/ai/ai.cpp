@@ -4,12 +4,16 @@ std::string chess::engine::AI::search(Board& board) {
     nodes_searched = 0;
     board.get_legal_moves();
     double score;
-    Move best_move;
     double alpha = constants::minimum;
     double beta = constants::maximum;
 
     auto moves = board.legal_moves;
+    if (moves.size() == 0) {
+        return "";
+    }
     sort_moves(&moves);
+
+    Move best_move = moves.moves[0];
 
     if (board.white_turn){
         double max_score = constants::minimum;

@@ -20,6 +20,7 @@ namespace chess {
         bool     prev_w_s_castling = false;
         bool     prev_b_l_castling = false;
         bool     prev_b_s_castling = false;
+        uint64_t prev_hash = 0;
     };
 
     class Board {
@@ -35,6 +36,7 @@ namespace chess {
                   piece_bitboards(other.piece_bitboards),
                   side_bitboards(other.side_bitboards),
                   hashes(other.hashes),
+                  current_hash(other.current_hash),
                   white_turn(other.white_turn),
                   w_l_castling(other.w_l_castling),
                   w_s_castling(other.w_s_castling),
@@ -56,6 +58,7 @@ namespace chess {
         uint8_t mailbox[64]{};
 
         std::vector<zobrist::ZobristHash> hashes;
+        uint64_t current_hash = 0;
 
         bool white_turn = true;
         bool w_l_castling = false;

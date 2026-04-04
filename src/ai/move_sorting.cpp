@@ -7,65 +7,20 @@
 #include <memory>
 
 namespace chess::engine {
+    const std::array<int, 6> AI::MVV_LVA_values= {1, 5, 3, 3, 9, 100};
 
-    double AI::evaluate_move( chess::Move move) {
-        if (move.from() == move.to()){
-            return -1024;
+
+    int AI::evaluate_move(const Move move) {
+        if (move.second_type() == 255) {
+            return 0;
         }
-        else{
-            double score = 0;
-            switch (move.piece_type()){
-                case 0:
-                    score += 4;
-                    break;
-                case 1:
-                    score += 12;
-                    break;
-                case 2:
-                    score += 12;
-                    break;
-                case 3:
-                    score += 12;
-                    break;
-                case 4:
-                    score += 25;
-                    break;
-                case 5:
-                    score += 50;
-                    break;
-                default:
-                    return 0;
-            }
 
-            switch (move.second_type()){
-                case 0:
-                    score -= 3;
-                    break;
-                case 1:
-                    score -= 8;
-                    break;
-                case 2:
-                    score -= 8;
-                    break;
-                case 3:
-                    score -= 8;
-                    break;
-                case 4:
-                    score -= 15;
-                    break;
-                case 5:
-                    score -= 40;
-                    break;
-                default:
-                    return 0;
-            }
+        return 10 * MVV_LVA_values.at(move.second_type()) - MVV_LVA_values.at(move.piece_type());
 
-            return score;
-        }
     }
 
-    void AI::sort_moves(MoveArray* moves) {
-        std::stable_sort(moves->begin(), moves->end(), [this](Move a, Move b) {
+    void AI::sort_moves(MoveArray* moves) const {
+        std::ranges::sort(*moves, [this](Move a, Move b) {
             return evaluate_move(a) > evaluate_move(b);
         });
     }

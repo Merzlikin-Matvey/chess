@@ -4,7 +4,11 @@ project(chess-lib-performance LANGUAGES CXX)
 set(sources main.cpp)
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${sources})
 
-add_executable(chess-lib-performance)
+add_executable(chess-lib-performance
+        main.h
+        tests/perft.cpp
+        tests/alpha_beta.cpp
+        common.cpp)
 target_sources(chess-lib-performance PRIVATE ${sources})
 target_link_libraries(chess-lib-performance PRIVATE chess-lib::chess-lib)
 

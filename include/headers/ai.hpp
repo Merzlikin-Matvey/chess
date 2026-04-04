@@ -15,10 +15,15 @@ namespace chess::engine {
         int end_depth;
         int sort_max_depth = 3;
         std::string search(Board& board);
-        double max(Board board, int depth, double alpha, double beta);
-        double min(Board board, int depth, double alpha, double beta);
-        void sort_moves(MoveArray* moves);
-        double evaluate_move(Move move);
+        double max(Board& board, int depth, double alpha, double beta);
+        double min(Board& board, int depth, double alpha, double beta);
+        void sort_moves(MoveArray* moves)const;
+        static int evaluate_move(Move move);
+
+        uint64_t nodes_searched = 0;
+
+    private:
+        static const std::array<int, 6> MVV_LVA_values;
     };
 
     class AlphaAI : public AI {

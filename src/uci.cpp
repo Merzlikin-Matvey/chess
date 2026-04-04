@@ -7,7 +7,7 @@
 #include "headers/board.hpp"
 
 chess::uci::UCI::UCI() {
-    ai_ = engine::AI(5);
+    ai_ = engine::AI(6);
     logs_path = "logs.txt";
     clear_logs();
 
@@ -33,17 +33,23 @@ void chess::uci::UCI::start_handle() {
         line = trim(line);
         add_log(command + " " + line, INPUT);
 
-        if (command == "uci") {
-            command_uci(line);
-        } else if (command == "isready") {
-            command_isready(line);
-        } else if (command == "position") {
-            command_position(line);
-        } else if (command == "go") {
-            command_go(line);
-        } else if (command == "quit") {
-            break;
+        try {
+            if (command == "uci") {
+                command_uci(line);
+            } else if (command == "isready") {
+                command_isready(line);
+            } else if (command == "position") {
+                command_position(line);
+            } else if (command == "go") {
+                command_go(line);
+            } else if (command == "quit") {
+                break;
+            }
+        } catch (std::exception &e) {
+            std::cerr << "Error: " << e.what() << std::endl;
+            add_log("Error: " + std::string(e.what()), ERROR);
         }
+
     }
 }
 
@@ -144,6 +150,9 @@ void chess::uci::UCI::add_log(std::string message, UCI_LOG_TYPE type) const {
             break;
         case OUTPUT:
             type_str = "[OUTPUT]";
+            break;
+        case ERROR:
+            type_str = "[ERROR]";
             break;
     }
     std::string log = time + " " + type_str + " " + message;

@@ -3,8 +3,6 @@
 #include "chess-lib.hpp"
 #include <chrono>
 
-#include "headers/uci.hpp"
-
 using namespace std;
 using namespace chess;
 

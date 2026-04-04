@@ -17,8 +17,8 @@ namespace chess::engine {
         std::string search(Board& board);
         double max(Board& board, int depth, double alpha, double beta);
         double min(Board& board, int depth, double alpha, double beta);
-        void sort_moves(MoveArray* moves);
-        double evaluate_move(Move move);
+        void sort_moves(MoveArray* moves)const;
+        static int evaluate_move(Move move);
 
         uint64_t nodes_searched = 0;
 

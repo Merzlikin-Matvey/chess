@@ -1,18 +1,31 @@
 #include "main.h"
 
-std::string pretty_number(long long n) {
-    if (n < 10'000) {
-        return std::to_string(n);
+
+std::string round(std::string s) {
+    if (s.find('.') == std::string::npos) {
+        return s;
     }
-    if (n < 10'000'000) {
-        return std::to_string(n / 1'000) + "K";
-    }
-    if (n < 10'000'000'000) {
-        return std::to_string(n / 1'000'000) + "M";
-    }
-    return std::to_string(n / 1'000'000'000) + "B";
+    return s.substr(0, s.find('.') + 2);
 }
 
 std::string pretty_number(double n) {
+    if (n < 1'000) {
+        return std::to_string(n);
+    }
+    if (n < 1'000'000) {
+        n = n / 1'000;
+        return round(std::to_string(n)) + "K";
+    }
+    if (n < 1'000'000'000) {
+        n = n / 1'000'000;
+        return round(std::to_string(n)) + "M";
+    }
+}
+
+std::string pretty_number(long long n) {
+    return pretty_number(static_cast<double>(n));
+}
+
+std::string pretty_number(uint64_t n) {
     return pretty_number(static_cast<long long>(n));
 }

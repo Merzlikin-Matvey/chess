@@ -51,7 +51,7 @@ void  run_alpha_beta() {
              << positions[i].substr(0, 40) << "...  "
              << "move: " << best_move << "  "
              << "time: " << static_cast<int>(ms) << " ms "
-             << "nodes searched: " << ai.nodes_searched << "  "
+             << "nodes searched: " << pretty_number(ai.nodes_searched) << "  "
              << "NPS: " << pretty_number(ai.nodes_searched / (ms / 1000) )<< std::endl;
     }
 

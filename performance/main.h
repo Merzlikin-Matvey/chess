@@ -2,8 +2,9 @@
 
 #include "chess-lib.hpp"
 
-std::string pretty_number(long long n);
 std::string pretty_number(double n);
+std::string pretty_number(long long n);
+std::string pretty_number(uint64_t n);
 
 // tests
 void run_perft();

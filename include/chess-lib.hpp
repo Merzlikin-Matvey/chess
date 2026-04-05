@@ -21,6 +21,7 @@
 #include "headers/check_and_checkmate.hpp"
 #include "headers/evaluating_constants.hpp"
 #include "headers/evaluate_position.hpp"
+#include "headers/transposition_table.hpp"
 #include "headers/ai.hpp"
 #include "headers/uci.hpp"
 

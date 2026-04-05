@@ -195,21 +195,8 @@ void chess::Board::move(chess::Move move){
     }
 
     white_turn = !white_turn;
-    if (hashes.size() > 0){
-        zobrist::ZobristHash last_hash = hashes.back();
-        last_hash = last_hash ^ zobrist::BlackMove;
-        last_hash = last_hash ^ zobrist::Constants[move.from()][move.attacker_color()][move.piece_type()];
-        if (move.second_type() == 255){
-            last_hash = last_hash ^ zobrist::Constants[move.to()][move.attacker_color()][move.piece_type()];
-        }
-        else {
-            last_hash = last_hash ^ zobrist::Constants[move.to()][move.second_side()][move.second_type()];
-        }
-        hashes.push_back(last_hash);
-    }
-    else {
-        hashes.push_back(zobrist::ZobristHash(*this));
-    }
+    current_hash = zobrist::ZobristHash(*this).hash;
+    hashes.push_back(zobrist::ZobristHash(current_hash));
     move_history.push_back(move.to_string());
     num_of_moves += 0.5;
 

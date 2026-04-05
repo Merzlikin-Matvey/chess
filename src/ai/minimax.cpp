@@ -11,6 +11,7 @@ double chess::engine::AI::max(Board& board, int depth, double alpha, double beta
     }
 
     double original_alpha = alpha;
+    double original_beta = beta;
 
     uint32_t tt_move_data = 0;
     TTEntry* entry = tt.probe(board.current_hash);
@@ -58,7 +59,7 @@ double chess::engine::AI::max(Board& board, int depth, double alpha, double beta
 
     TTFlag flag;
     if (max_score <= original_alpha) flag = TTFlag::UPPER_BOUND;
-    else if (max_score >= beta) flag = TTFlag::LOWER_BOUND;
+    else if (max_score >= original_beta) flag = TTFlag::LOWER_BOUND;
     else flag = TTFlag::EXACT;
     tt.store(board.current_hash, max_score, depth, flag, best_move.data);
 
@@ -72,6 +73,7 @@ double chess::engine::AI::min(Board& board, int depth, double alpha, double beta
         return evaluate_position(board, White);
     }
 
+    double original_alpha = alpha;
     double original_beta = beta;
 
     uint32_t tt_move_data = 0;
@@ -120,7 +122,7 @@ double chess::engine::AI::min(Board& board, int depth, double alpha, double beta
 
     TTFlag flag;
     if (min_score >= original_beta) flag = TTFlag::LOWER_BOUND;
-    else if (min_score <= alpha) flag = TTFlag::UPPER_BOUND;
+    else if (min_score <= original_alpha) flag = TTFlag::UPPER_BOUND;
     else flag = TTFlag::EXACT;
     tt.store(board.current_hash, min_score, depth, flag, best_move.data);
 

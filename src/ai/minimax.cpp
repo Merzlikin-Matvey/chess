@@ -7,6 +7,9 @@ double chess::engine::AI::max(Board& board, int depth, double alpha, double beta
     nodes_searched++;
 
     if (depth == 0 or board.legal_moves.size() == 0){
+        if (depth == 0 and board.legal_moves.size() > 0) {
+            return quiescence_max(board, alpha, beta);
+        }
         return evaluate_position(board, White);
     }
 
@@ -29,6 +32,7 @@ double chess::engine::AI::max(Board& board, int depth, double alpha, double beta
     if (sort_max_depth <= depth and sort_max_depth != -1){
         sort_moves(&moves);
     }
+
     if (tt_move_data != 0) {
         for (int i = 1; i < moves.size(); i++) {
             if (moves.moves[i].data == tt_move_data) {
@@ -70,6 +74,9 @@ double chess::engine::AI::min(Board& board, int depth, double alpha, double beta
     nodes_searched++;
 
     if (depth == 0 or board.legal_moves.size() == 0){
+        if (depth == 0 and board.legal_moves.size() > 0) {
+            return quiescence_min(board, alpha, beta);
+        }
         return evaluate_position(board, White);
     }
 

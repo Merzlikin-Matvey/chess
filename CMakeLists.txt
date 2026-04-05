@@ -129,6 +129,7 @@ set(sources
         src/ai/minimax.cpp
         src/ai/move_sorting.cpp
         src/uci.cpp
+        src/ai/quiescence.cpp
 )
 
 if (WASM_INTERFACE)

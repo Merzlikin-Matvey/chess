@@ -1,4 +1,5 @@
 #pragma once
+
 #include "ai.hpp"
 #include "board.hpp"
 

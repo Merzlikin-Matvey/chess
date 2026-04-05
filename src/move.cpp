@@ -534,3 +534,23 @@ std::string chess::Move::to_string() {
     }
     return result;
 }
+
+
+void chess::Board::make_null_move(NullMoveState& state) {
+    state.prev_en_passant = en_passant_square;
+    state.prev_hash = current_hash;
+
+    white_turn = !white_turn;
+    current_hash ^= zobrist::BlackMove;
+
+    if (en_passant_square >= 0) {
+        current_hash ^= zobrist::EnPassantFile[en_passant_square % 8];
+        en_passant_square = -1;
+    }
+}
+
+void chess::Board::unmake_null_move(const NullMoveState& state) {
+    white_turn = !white_turn;
+    en_passant_square = state.prev_en_passant;
+    current_hash = state.prev_hash;
+}

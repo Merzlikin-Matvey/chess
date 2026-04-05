@@ -23,6 +23,12 @@ namespace chess {
         uint64_t prev_hash = 0;
     };
 
+    struct NullMoveState {
+        int8_t prev_en_passant;
+        uint64_t prev_hash;
+    };
+
+
     class Board {
     public:
         Board(std::array<std::array<Bitboard, 6>, 2> board);
@@ -84,6 +90,10 @@ namespace chess {
 
         void make_move(Move move, PositionState& state);
         void unmake_move(Move move, const PositionState& state);
+
+
+        void make_null_move(NullMoveState& state);
+        void unmake_null_move(const NullMoveState& state);
 
         MoveArray& get_legal_moves();
         int count_legal_moves();

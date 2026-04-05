@@ -31,7 +31,7 @@ namespace chess::engine {
         static const std::array<int, 6> MVV_LVA_values;
 
         int begin_depth, end_depth;
-        int sort_max_depth = 3, nmp_min_depth = 2;
+        int sort_max_depth = 3, nmp_min_depth = 3;
     };
 
 }

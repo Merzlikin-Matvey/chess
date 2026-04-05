@@ -14,8 +14,8 @@ namespace chess::engine {
         std::string search(Board& board);
         std::string root_search(Board& board, int depth);
 
-        double max(Board& board, int depth, double alpha, double beta);
-        double min(Board& board, int depth, double alpha, double beta);
+        double max(Board& board, int depth, double alpha, double beta, bool allow_null = true);
+        double min(Board& board, int depth, double alpha, double beta, bool allow_null = true);
 
         double quiescence_max(Board& board, double alpha, double beta);
         double quiescence_min(Board& board, double alpha, double beta);
@@ -31,7 +31,7 @@ namespace chess::engine {
         static const std::array<int, 6> MVV_LVA_values;
 
         int begin_depth, end_depth;
-        int sort_max_depth = 3;
+        int sort_max_depth = 3, nmp_min_depth = 2;
     };
 
 }

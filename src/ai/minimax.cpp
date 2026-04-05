@@ -3,11 +3,11 @@
 #include "headers/evaluating_constants.hpp"
 #include "headers/ai.hpp"
 
-double chess::engine::AI::max(Board& board, int depth, double alpha, double beta){
+double chess::engine::AI::max(Board& board, int depth, double alpha, double beta, bool allow_null) {
     nodes_searched++;
 
-    if (depth == 0 or board.legal_moves.size() == 0){
-        if (depth == 0 and board.legal_moves.size() > 0) {
+    if (depth <= 0 or board.legal_moves.size() == 0){
+        if (depth <= 0 and board.legal_moves.size() > 0) {
             return quiescence_max(board, alpha, beta);
         }
         return evaluate_position(board, White);
@@ -26,6 +26,18 @@ double chess::engine::AI::max(Board& board, int depth, double alpha, double beta
             if (entry->flag == TTFlag::UPPER_BOUND) beta = std::min(beta, entry->score);
             if (alpha >= beta) return entry->score;
         }
+    }
+
+    if (allow_null and depth >= nmp_min_depth and board.check_status == 0) {
+        NullMoveState null_state;
+        board.make_null_move(null_state);
+        board.get_legal_moves();
+        double null_score = min(board, depth - 1 - 2, alpha, beta, false);
+        board.unmake_null_move(null_state);
+        if (null_score >= beta) {
+            return beta;
+        }
+        board.get_legal_moves();
     }
 
     auto moves = board.legal_moves;
@@ -70,11 +82,11 @@ double chess::engine::AI::max(Board& board, int depth, double alpha, double beta
     return max_score;
 }
 
-double chess::engine::AI::min(Board& board, int depth, double alpha, double beta){
+double chess::engine::AI::min(Board& board, int depth, double alpha, double beta, bool allow_null){
     nodes_searched++;
 
-    if (depth == 0 or board.legal_moves.size() == 0){
-        if (depth == 0 and board.legal_moves.size() > 0) {
+    if (depth <= 0 or board.legal_moves.size() == 0){
+        if (depth <= 0 and board.legal_moves.size() > 0) {
             return quiescence_min(board, alpha, beta);
         }
         return evaluate_position(board, White);
@@ -93,6 +105,18 @@ double chess::engine::AI::min(Board& board, int depth, double alpha, double beta
             if (entry->flag == TTFlag::UPPER_BOUND) beta = std::min(beta, entry->score);
             if (alpha >= beta) return entry->score;
         }
+    }
+
+    if (allow_null and depth >= nmp_min_depth and board.check_status == 0) {
+        NullMoveState null_state;
+        board.make_null_move(null_state);
+        board.get_legal_moves();
+        double null_score = max(board, depth - 1 - 2, alpha, beta, false);
+        board.unmake_null_move(null_state);
+        if (null_score <= alpha) {
+            return alpha;
+        }
+        board.get_legal_moves();
     }
 
     auto moves = board.legal_moves;

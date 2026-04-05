@@ -42,6 +42,8 @@ void chess::uci::UCI::start_handle() {
                 command_position(line);
             } else if (command == "go") {
                 command_go(line);
+            } else if (command == "ucinewgame") {
+                ai_.tt.clear();
             } else if (command == "quit") {
                 break;
             }
@@ -96,6 +98,7 @@ chess::uci::PositionCommandArgs parse_position_command(std::string line) {
 
 void chess::uci::UCI::command_position(std::string line) {
     const auto args = parse_position_command(line);
+    ai_.tt.clear();
 
     if (args.type == "startpos") {
         board_ = Board();

@@ -20,7 +20,10 @@ namespace chess::engine {
     }
 
     void AI::sort_moves(MoveArray* moves) const {
-        std::ranges::sort(*moves, [this](Move a, Move b) {
+        auto begin = moves->begin();
+        auto end = moves->begin() + moves->size();
+        int k = std::min(7, moves->size());
+        std::partial_sort(begin, begin + k, end, [](Move a, Move b) {
             return evaluate_move(a) > evaluate_move(b);
         });
     }

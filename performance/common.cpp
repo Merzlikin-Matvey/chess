@@ -10,7 +10,7 @@ std::string round(std::string s) {
 
 std::string pretty_number(double n) {
     if (n < 1'000) {
-        return std::to_string(n);
+        return round(std::to_string(n));
     }
     if (n < 1'000'000) {
         n = n / 1'000;
@@ -20,6 +20,15 @@ std::string pretty_number(double n) {
         n = n / 1'000'000;
         return round(std::to_string(n)) + "M";
     }
+    if (n < 1'000'000'000'000) {
+        n = n / 1'000'000'000;
+        return round(std::to_string(n)) + "B";
+    }
+    if (n < 1'000'000'000'000'000) {
+        n = n / 1'000'000'000'000;
+        return round(std::to_string(n)) + "T";
+    }
+    return "TOO MUCH";
 }
 
 std::string pretty_number(long long n) {

@@ -70,6 +70,8 @@ namespace chess {
         uint16_t halfmove_clock = 0;
         double num_of_moves = 0;
 
+        uint8_t check_status = 0;
+
         MoveArray legal_moves;
 
         void add_hash_to_history(zobrist::ZobristHash hash);

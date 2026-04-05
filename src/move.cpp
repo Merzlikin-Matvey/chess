@@ -224,6 +224,7 @@ void chess::Board::make_move(chess::Move move, chess::PositionState& state) {
     state.prev_w_s_castling = w_s_castling;
     state.prev_b_l_castling = b_l_castling;
     state.prev_b_s_castling = b_s_castling;
+    state.prev_hash = current_hash;
 
     bitboard_operations::set_0(piece_bitboards[move.attacker_color()][move.piece_type()], move.from());
     bitboard_operations::set_0(side_bitboards[move.attacker_color()], move.from());
@@ -357,11 +358,54 @@ void chess::Board::make_move(chess::Move move, chess::PositionState& state) {
 
     white_turn = !white_turn;
     num_of_moves += 0.5;
+
+    current_hash ^= zobrist::BlackMove;
+    current_hash ^= zobrist::Constants[move.from()][move.attacker_color()][move.piece_type()];
+    current_hash ^= zobrist::Constants[move.to()][move.attacker_color()][placed_type];
+
+    if (move.second_type() != 255) {
+        current_hash ^= zobrist::Constants[move.to()][move.second_side()][move.second_type()];
+    }
+
+    if (move.en_passant()) {
+        if (move.attacker_color() == White) {
+            current_hash ^= zobrist::Constants[move.to() - 8][Black][Pawn];
+        } else {
+            current_hash ^= zobrist::Constants[move.to() + 8][White][Pawn];
+        }
+    }
+
+    if (move.w_l_castling()) {
+        current_hash ^= zobrist::Constants[0][White][Rook];
+        current_hash ^= zobrist::Constants[3][White][Rook];
+    } else if (move.w_s_castling()) {
+        current_hash ^= zobrist::Constants[7][White][Rook];
+        current_hash ^= zobrist::Constants[5][White][Rook];
+    } else if (move.b_l_castling()) {
+        current_hash ^= zobrist::Constants[56][Black][Rook];
+        current_hash ^= zobrist::Constants[59][Black][Rook];
+    } else if (move.b_s_castling()) {
+        current_hash ^= zobrist::Constants[63][Black][Rook];
+        current_hash ^= zobrist::Constants[61][Black][Rook];
+    }
+
+    if (state.prev_w_l_castling != w_l_castling) current_hash ^= zobrist::WhiteLongCastling;
+    if (state.prev_w_s_castling != w_s_castling) current_hash ^= zobrist::WhiteShortCastling;
+    if (state.prev_b_l_castling != b_l_castling) current_hash ^= zobrist::BlackLongCastling;
+    if (state.prev_b_s_castling != b_s_castling) current_hash ^= zobrist::BlackShortCastling;
+
+    if (state.prev_en_passant >= 0) {
+        current_hash ^= zobrist::EnPassantFile[state.prev_en_passant % 8];
+    }
+    if (en_passant_square >= 0) {
+        current_hash ^= zobrist::EnPassantFile[en_passant_square % 8];
+    }
 }
 
 void chess::Board::unmake_move(chess::Move move, const chess::PositionState& state) {
     white_turn = !white_turn;
     num_of_moves -= 0.5;
+    current_hash = state.prev_hash;
 
     en_passant_square = state.prev_en_passant;
     halfmove_clock = state.prev_halfmove;

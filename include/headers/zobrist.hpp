@@ -14,17 +14,17 @@ namespace chess::zobrist {
     static constexpr uint64_t Summand = 0xff1b3f;
 
     static constexpr uint64_t next_random(uint64_t previous) {
-        return (previous * zobrist::Multiplier + zobrist::Summand);
+        return (previous * Multiplier + Summand);
     }
 
     static constexpr std::array<std::array<std::array<uint64_t, 6>, 2>, 64> generate_constants() {
         std::array<std::array<std::array<uint64_t, 6>, 2>, 64> constants{};
-        uint64_t random = zobrist::Seed;
+        uint64_t random = Seed;
         for (int i = 0; i < 64; i++) {
             for (int j = 0; j < 2; j++) {
                 for (int k = 0; k < 6; k++) {
                     constants[i][j][k] = random;
-                    random = zobrist::next_random(random);
+                    random = next_random(random);
                 }
             }
         }
@@ -37,12 +37,23 @@ namespace chess::zobrist {
     static constexpr uint64_t BlackLongCastling = next_random(WhiteShortCastling);
     static constexpr uint64_t BlackShortCastling = next_random(BlackLongCastling);
 
+    static constexpr std::array<uint64_t, 8> generate_en_passant_constants() {
+        std::array<uint64_t, 8> constants{};
+        uint64_t random = next_random(BlackShortCastling);
+        for (int i = 0; i < 8; i++) {
+            constants[i] = random;
+            random = next_random(random);
+        }
+        return constants;
+    }
+    static constexpr std::array<uint64_t, 8> EnPassantFile = generate_en_passant_constants();
+
 
     class ZobristHash{
     public:
-        ZobristHash(chess::Board board);
+        ZobristHash(const Board &board);
         ZobristHash() = default;
-        ZobristHash(uint64_t hash) : hash(hash) {}
+        ZobristHash(const uint64_t hash) : hash(hash) {}
 
         uint64_t hash;
 
@@ -83,5 +94,5 @@ namespace chess::zobrist {
         }
     };
 
-    std::ostream& operator<<(std::ostream &ostream, zobrist::ZobristHash hash);
+    std::ostream& operator<<(std::ostream &ostream, ZobristHash hash);
 }

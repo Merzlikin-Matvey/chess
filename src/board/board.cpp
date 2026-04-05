@@ -34,7 +34,7 @@ chess::Board::Board(std::array<std::array<Bitboard, 6>, 2> board) {
     all = side_bitboards[0] | side_bitboards[1];
     init_mailbox();
     hashes.push_back(zobrist::ZobristHash(*this));
-
+    current_hash = hashes.back().hash;
 }
 
 chess::Board::Board(std::string fen){
@@ -87,6 +87,7 @@ chess::Board::Board(std::string fen){
     }
 
     hashes.push_back(zobrist::ZobristHash(*this));
+    current_hash = hashes.back().hash;
 }
 
 
@@ -108,6 +109,7 @@ chess::Board::Board() {
     b_l_castling = true;
     b_s_castling = true;
     hashes.push_back(zobrist::ZobristHash(*this));
+    current_hash = hashes.back().hash;
 }
 
 bool chess::Board::operator == (const Board &board) const {
@@ -184,6 +186,7 @@ chess::Board& chess::Board::operator = (const Board& other) {
     num_of_moves = other.num_of_moves;
     legal_moves = other.legal_moves;
     hashes = other.hashes;
+    current_hash = other.current_hash;
     move_history = other.move_history;
     std::ranges::copy(other.mailbox, std::begin(mailbox));
 

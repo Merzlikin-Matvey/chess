@@ -50,7 +50,7 @@ void  run_alpha_beta() {
         std::cout << "[" << (i + 1) << "/" << positions.size() << "] "
              << positions[i].substr(0, 40) << "...  "
              << "move: " << best_move << "  "
-             << "time: " << static_cast<int>(ms) << " ms "
+             << "time: " << pretty_time(end - start) << " "
              << "nodes searched: " << pretty_number(ai.nodes_searched) << "  "
              << "NPS: " << pretty_number(ai.nodes_searched / (ms / 1000) )<< std::endl;
     }
@@ -61,8 +61,8 @@ void  run_alpha_beta() {
     const double max_t = *std::ranges::max_element(times_ms);
 
     std::cout << "-----------------------------------" << std::endl;
-    std::cout << "Total:   " << static_cast<int>(total) << " ms" << std::endl;
-    std::cout << "Average: " << static_cast<int>(avg) << " ms" << std::endl;
-    std::cout << "Min:     " << static_cast<int>(min_t) << " ms" << std::endl;
-    std::cout << "Max:     " << static_cast<int>(max_t) << " ms" << std::endl;
+    std::cout << "Total:   " << pretty_time(std::chrono::duration<double, std::milli>(total)) << std::endl;
+    std::cout << "Average: " << pretty_time(std::chrono::duration<double, std::milli>(avg)) << std::endl;
+    std::cout << "Min:     " << pretty_time(std::chrono::duration<double, std::milli>(min_t)) << std::endl;
+    std::cout << "Max:     " << pretty_time(std::chrono::duration<double, std::milli>(max_t)) << std::endl;
 }

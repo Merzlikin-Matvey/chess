@@ -44,7 +44,7 @@ void benchmark_perft(const chess::Board& board, int max_depth) {
 
         std::cout << "Depth " << depth
              << "  Nodes: " << pretty_number(nodes)
-             << "  Time: " << static_cast<long long>(ms) << " ms"
+             << "  Time: " << pretty_time(end - start)
              << "  NPS: " << pretty_number(nps) << std::endl;
     }
 }

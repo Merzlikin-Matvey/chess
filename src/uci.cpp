@@ -7,7 +7,7 @@
 #include "headers/board.hpp"
 
 chess::uci::UCI::UCI() {
-    ai_ = engine::AI(6);
+    ai_ = engine::AI(1, 7);
     logs_path = "logs.txt";
     clear_logs();
 

@@ -121,10 +121,12 @@ chess::MoveArray& chess::Board::get_legal_moves() {
     uint8_t color = white_turn ? White : Black;
     uint8_t king_position = bitboard_operations::bitScanForward(piece_bitboards[color][King]);
 
-    if (is_double_check()){
+    if (is_double_check()) {
+        check_status = 2;
         mask_to_moves(get_king_legal_moves_mask(), king_position, color,King, &legal_moves);
         return legal_moves;
     }
+    check_status = is_position_attacked(king_position) ? 1 : 0;
 
     Bitboard vertical_pin_mask = masks::get_vertical_pin_mask(*this, king_position, color);
     Bitboard horizontal_pin_mask = masks::get_horizontal_pin_mask(*this, king_position, color);
@@ -135,7 +137,7 @@ chess::MoveArray& chess::Board::get_legal_moves() {
 
     uint8_t square;
 
-    if (is_check()){
+    if (check_status == 1){
         Bitboard check_mask = get_check_mask();
 
         // Pinned pawns

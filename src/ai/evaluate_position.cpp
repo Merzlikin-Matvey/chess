@@ -74,14 +74,14 @@ double chess::engine::evaluate_position(Board& board, uint8_t color) {
                 num_kings_moves * constants::king_mobility);
     }
 
-    if (board.is_check()){
+    if (board.check_status > 0){
         if (color == board_color){
             score += constants::check;
         } else {
             score -= constants::check;
         }
 
-        if (board.is_double_check()){
+        if (board.check_status == 2){
             if (color == board_color){
                 score += constants::double_check;
             } else {

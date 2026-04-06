@@ -1,5 +1,5 @@
-#include "chess-lib.hpp"
 #include "headers/ai.hpp"
+#include "headers/constants.hpp"
 #include "headers/evaluate_position.hpp"
 
 double chess::engine::AI::quiescence_max(Board& board, double alpha, const double beta) {

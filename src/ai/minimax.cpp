@@ -1,5 +1,5 @@
-#include "chess-lib.hpp"
 #include "headers/ai.hpp"
+#include "headers/constants.hpp"
 #include "headers/evaluate_position.hpp"
 #include "headers/evaluating_constants.hpp"
 

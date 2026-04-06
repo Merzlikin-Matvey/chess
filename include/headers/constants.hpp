@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 
 namespace chess {
     static constexpr uint8_t Pawn = 0;

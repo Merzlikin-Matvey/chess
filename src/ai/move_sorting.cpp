@@ -1,6 +1,5 @@
 #include <algorithm>
 
-#include "chess-lib.hpp"
 #include "headers/ai.hpp"
 
 namespace chess::engine {

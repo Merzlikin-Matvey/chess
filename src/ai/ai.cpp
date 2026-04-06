@@ -1,4 +1,6 @@
-#include "chess-lib.hpp"
+#include "headers/ai.hpp"
+#include "headers/constants.hpp"
+#include "headers/evaluating_constants.hpp"
 
 std::string chess::engine::AI::search(Board& board) {
     nodes_searched = 0;

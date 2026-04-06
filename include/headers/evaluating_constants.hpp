@@ -1,4 +1,5 @@
 #pragma once
+#include "bitboard_operations.hpp"
 
 
 namespace chess::engine::constants {

@@ -4,7 +4,7 @@
 #include <cstdlib>
 #include <cstdint>
 
-namespace chess::magic_numbers {
+namespace chess::magic_numbers::generators {
 
 Bitboard generate_random_64bit();
 

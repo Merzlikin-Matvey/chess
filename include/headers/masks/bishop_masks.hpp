@@ -5,8 +5,8 @@
 #include "headers/bitboard_lines.hpp"
 #include "headers/bitboard_operations.hpp"
 #include "headers/board.hpp"
-#include "../magic_numbers/magic_numbers.hpp"
-#include "../magic_numbers/magic_numbers_constants.hpp"
+#include "../magic_numbers_generators/magic_numbers.hpp"
+#include "../magic_numbers_constants.hpp"
 #include "masks_utils.hpp"
 
 typedef uint64_t Bitboard;

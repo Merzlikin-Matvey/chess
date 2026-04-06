@@ -21,7 +21,7 @@ namespace chess::engine {
         double quiescence_max(Board& board, double alpha, double beta);
         double quiescence_min(Board& board, double alpha, double beta);
 
-        void sort_moves(MoveArray* moves) const;
+        static void sort_moves(MoveArray* moves) ;
 
         static int evaluate_move(Move move);
 

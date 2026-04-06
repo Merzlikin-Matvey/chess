@@ -6,7 +6,7 @@
 #include "headers/bitboard_operations.hpp"
 #include "headers/constants.hpp"
 
-std::array<std::array<Bitboard, 6>, 2> chess::convert_fen_to_bitboards(std::string fen) {
+std::array<std::array<Bitboard, 6>, 2> chess::convert_fen_to_bitboards(const std::string &fen) {
     std::array<std::array<Bitboard, 6>, 2> piece_bitboards = {{{0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0}}};
     uint8_t x = 0;
     uint8_t y = 7;
@@ -84,8 +84,7 @@ std::array<std::array<Bitboard, 6>, 2> chess::convert_fen_to_bitboards(std::stri
     return piece_bitboards;
 }
 
-std::array<std::array<Bitboard, 6>, 2> chess::convert_default_positions() {
-    std::array<std::array<Bitboard, 6>, 2> piece_bitboards = {{{0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0}}};
+std::array<std::array<Bitboard, 6>, 2> chess::convert_default_positions() {=
     const std::string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
     return convert_fen_to_bitboards(fen);
 }

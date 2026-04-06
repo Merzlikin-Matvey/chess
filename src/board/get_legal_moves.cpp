@@ -329,9 +329,9 @@ chess::MoveArray& chess::Board::get_legal_moves() {
             const uint8_t captured_sq = color == White ? en_passant_square - 8 : en_passant_square + 8;
             const Bitboard ep_masks[] = {masks::get_right_en_passant_mask(pawns, *this),
                                    masks::get_left_en_passant_mask(pawns, *this)};
-            int deltas_w[] = {9, 7};
-            int deltas_b[] = {7, 9};
-            const int* deltas = color == White ? deltas_w : deltas_b;
+            constexpr std::array deltas_w = {9, 7};
+            constexpr std::array deltas_b = {7, 9};
+            const std::array deltas = color == White ? deltas_w : deltas_b;
 
             for (int d = 0; d < 2; d++) {
                 Bitboard ep = ep_masks[d];
@@ -780,7 +780,7 @@ int chess::Board::count_legal_moves() {
     return count;
 }
 
-chess::MoveArray chess::Board::get_legal_moves_for_position(uint8_t x) {
+chess::MoveArray chess::Board::get_legal_moves_for_position(const uint8_t x) {
     auto  moves = MoveArray();
     get_legal_moves();
 

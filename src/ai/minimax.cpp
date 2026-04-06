@@ -3,7 +3,7 @@
 #include "headers/evaluate_position.hpp"
 #include "headers/evaluating_constants.hpp"
 
-double chess::engine::AI::max(Board& board, int depth, double alpha, double beta, bool allow_null) {
+double chess::engine::AI::max(Board& board, const int depth, double alpha, double beta, const bool allow_null) {
     nodes_searched++;
 
     if (depth <= 0 or board.legal_moves.size() == 0) {

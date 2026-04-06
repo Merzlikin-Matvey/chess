@@ -2,7 +2,7 @@
 
 #include "headers/evaluating_constants.hpp"
 
-double chess::engine::evaluate_position(Board& board, uint8_t color) {
+double chess::engine::evaluate_position(Board& board, const uint8_t color) {
     const uint8_t board_color = board.white_turn ? White : Black;
     const uint8_t king_index = bitboard_operations::bitScanForward(board.piece_bitboards[color][King]);
     double score = 0;

@@ -14,10 +14,10 @@ namespace chess::engine {
         return 10 * MVV_LVA_values.at(move.second_type()) - MVV_LVA_values.at(move.piece_type());
     }
 
-    void AI::sort_moves(MoveArray* moves) const {
+    void AI::sort_moves(MoveArray* moves)  {
         const auto begin = moves->begin();
         const auto end = moves->begin() + moves->size();
         const int k = std::min(7, moves->size());
-        std::partial_sort(begin, begin + k, end, [](Move a, Move b) { return evaluate_move(a) > evaluate_move(b); });
+        std::partial_sort(begin, begin + k, end, [](const Move a, const Move b) { return evaluate_move(a) > evaluate_move(b); });
     }
 }  // namespace chess::engine

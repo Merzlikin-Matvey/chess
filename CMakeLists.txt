@@ -64,8 +64,6 @@ if (CONAN)
 endif ()
 
 
-
-
 if (WASM_INTERFACE)
     find_package(emscripten REQUIRED)
 endif ()
@@ -113,13 +111,13 @@ set(sources
         src/move.cpp
         src/notations.cpp
         src/board/get_legal_moves.cpp
-        src/magic_numbers/random_generator.c
-        src/magic_numbers/bishop_magic_numbers.c
-        src/magic_numbers/rook_magic_numbers.c
-        src/magic_numbers/vertical_pin_mask_magic_numbers.c
-        src/magic_numbers/horizontal_pin_mask_magic_numbers.c
-        src/magic_numbers/up_right_pin_mask_magic_numbers.c
-        src/magic_numbers/down_right_pin_mask_magic_numbers.c
+        src/magic_numbers/random_generator.cpp
+        src/magic_numbers/bishop_magic_numbers.cpp
+        src/magic_numbers/rook_magic_numbers.cpp
+        src/magic_numbers/vertical_pin_mask_magic_numbers.cpp
+        src/magic_numbers/horizontal_pin_mask_magic_numbers.cpp
+        src/magic_numbers/up_right_pin_mask_magic_numbers.cpp
+        src/magic_numbers/down_right_pin_mask_magic_numbers.cpp
         src/pawn_mask.cpp
         src/mask_to_moves.cpp
         src/move_array.cpp

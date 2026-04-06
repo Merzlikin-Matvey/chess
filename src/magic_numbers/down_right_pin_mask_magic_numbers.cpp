@@ -1,5 +1,5 @@
-#include "headers/C functions/magic_numbers.h"
-#include "headers/C functions/bitboard_operations.h"
+#include "headers/magic_numbers_ganaration/magic_numbers.h"
+#include "headers/magic_numbers_ganaration/bitboard_operations.h"
 
 #include <math.h>
 #include <stdlib.h>
@@ -61,7 +61,7 @@ bool is_down_right_pin_magic_number_valid(uint8_t square, uint64_t magic_number)
     Bitboard board;
     uint16_t hash;
     const uint16_t number_of_positions = pow(2, _get_number_of_down_right_pin_mask_bits(square));
-    bool* array = calloc(number_of_positions, sizeof(bool));
+    bool* array = static_cast<bool*>(calloc(number_of_positions, sizeof(bool)));
 
     for (uint16_t blocker = 0; blocker < number_of_positions; blocker++){
         board = _set_down_right_pin_board(square, blocker);

@@ -5,7 +5,7 @@
 typedef uint64_t Bitboard;
 
 extern "C" {
-#include "C functions/magic_numbers.h"
+#include "magic_numbers_ganaration/magic_numbers.h"
 }
 
 namespace chess::magic_numbers {

@@ -1,5 +1,5 @@
-#include "headers/C functions/magic_numbers.h"
-#include "headers/C functions/bitboard_operations.h"
+#include "headers/magic_numbers_ganaration/magic_numbers.h"
+#include "headers/magic_numbers_ganaration/bitboard_operations.h"
 
 #include <math.h>
 #include <stdlib.h>
@@ -56,7 +56,7 @@ bool is_vertical_pin_magic_number_valid(uint8_t square, uint64_t magic_number){
     Bitboard board;
     uint16_t hash;
     const uint16_t number_of_positions = pow(2, 7);
-    bool* array = calloc(number_of_positions, sizeof(bool));
+    bool* array = static_cast<bool*>(calloc(number_of_positions, sizeof(bool)));
 
     for (uint16_t i = 0; i < number_of_positions; i++){
         board = _set_vertical_pin_board(square, i);

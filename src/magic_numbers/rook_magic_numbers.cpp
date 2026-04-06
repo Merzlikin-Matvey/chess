@@ -1,5 +1,5 @@
-#include "headers/C functions/magic_numbers.h"
-#include "headers/C functions/bitboard_operations.h"
+#include "headers/magic_numbers_ganaration/magic_numbers.h"
+#include "headers/magic_numbers_ganaration/bitboard_operations.h"
 
 #include <math.h>
 #include <stdlib.h>
@@ -98,7 +98,7 @@ bool _is_rook_magic_number_valid(uint64_t magic_number, uint8_t square) {
     uint16_t hash;
     const uint8_t number_of_bits = _get_number_of_rook_bits(square);
     const uint16_t number_of_positions = pow(2, number_of_bits);
-    bool* array = calloc(number_of_positions, sizeof(bool));
+    bool* array = static_cast<bool*>(calloc(number_of_positions, sizeof(bool)));
 
     for (uint16_t i = 0; i < pow(2, number_of_bits); i++){
         board = _set_rook_board(square, i);

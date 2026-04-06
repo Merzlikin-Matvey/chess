@@ -1,4 +1,4 @@
-#include "headers/C functions/magic_numbers.h"
+#include "headers/magic_numbers_ganaration/magic_numbers.h"
 #include <stdlib.h>
 
 Bitboard _generate_random_64bit() {

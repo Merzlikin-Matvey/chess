@@ -84,7 +84,7 @@ std::array<std::array<Bitboard, 6>, 2> chess::convert_fen_to_bitboards(const std
     return piece_bitboards;
 }
 
-std::array<std::array<Bitboard, 6>, 2> chess::convert_default_positions() {=
+std::array<std::array<Bitboard, 6>, 2> chess::convert_default_positions() {
     const std::string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
     return convert_fen_to_bitboards(fen);
 }

@@ -1,39 +1,37 @@
-#pragma once
-
-#include "headers/bitboard_lines.hpp"
 #include "headers/board.hpp"
+#include "headers/bitboard_lines.hpp"
+#include "headers/bitboard_operations.hpp"
 #include "headers/constants.hpp"
 #include "headers/masks/masks.hpp"
 
-namespace chess::masks {
 
-    inline Bitboard _get_absolute_rook_mask(Board &board, const uint8_t square) {
-        const Bitboard mask = board.all & secondary_rook_masks[square];
-        const int hash = get_rook_hash(mask, square);
-        return primary_rook_masks[square][hash];
-    }
+Bitboard get_absolute_rook_mask(chess::Board &board, const uint8_t square) {
+    const Bitboard mask = board.all & chess::masks::secondary_rook_masks[square];
+    const int hash = chess::masks::get_rook_hash(mask, square);
+    return chess::masks::primary_rook_masks[square][hash];
+}
 
-    inline Bitboard _get_absolute_bishop_mask(Board &board, const uint8_t square) {
-        const Bitboard mask = board.all & secondary_bishop_masks[square];
-        const int hash = get_bishop_hash(mask, square);
-        return primary_bishop_masks[square][hash];
-    }
+Bitboard get_absolute_bishop_mask(chess::Board &board, const uint8_t square) {
+    const Bitboard mask = board.all & chess::masks::secondary_bishop_masks[square];
+    const int hash = chess::masks::get_bishop_hash(mask, square);
+    return chess::masks::primary_bishop_masks[square][hash];
+}
 
-    inline Bitboard _get_absolute_knight_mask(const uint8_t square) {
-        return knight_masks[square];
-    }
+Bitboard get_absolute_knight_mask(const uint8_t square) {
+    return chess::masks::knight_masks[square];
+}
 
-    inline Bitboard _get_absolute_king_mask(const uint8_t square) {
-        return king_masks[square];
-    }
-}  // namespace chess::masks
+Bitboard get_absolute_king_mask(const uint8_t square) {
+    return chess::masks::king_masks[square];
+}
+    
 
-inline bool chess::Board::is_position_attacked(const uint8_t x) {
+bool chess::Board::is_position_attacked(const uint8_t x) {
     const uint8_t color = white_turn ? White : Black;
-    const Bitboard rook_mask = masks::_get_absolute_rook_mask(*this, x);
-    const Bitboard bishop_mask = masks::_get_absolute_bishop_mask(*this, x);
-    const Bitboard king_mask = masks::_get_absolute_king_mask(x);
-    const Bitboard knight_mask = masks::_get_absolute_knight_mask(x);
+    const Bitboard rook_mask = get_absolute_rook_mask(*this, x);
+    const Bitboard bishop_mask = get_absolute_bishop_mask(*this, x);
+    const Bitboard king_mask = get_absolute_king_mask(x);
+    const Bitboard knight_mask = get_absolute_knight_mask(x);
 
     if (rook_mask & (piece_bitboards[!color][Rook] | piece_bitboards[!color][Queen])) {
         return true;
@@ -79,20 +77,20 @@ inline bool chess::Board::is_position_attacked(const uint8_t x) {
     return false;
 }
 
-inline bool chess::Board::is_check() {
+bool chess::Board::is_check() {
     const uint8_t color = white_turn ? White : Black;
     const uint8_t king_index = bitboard_operations::bitScanForward(piece_bitboards[color][King]);
     return is_position_attacked(king_index);
 }
 
-inline bool chess::Board::is_double_check() {
+bool chess::Board::is_double_check() {
     uint16_t count = 0;
     const uint8_t king_index = bitboard_operations::bitScanForward(piece_bitboards[white_turn ? White : Black][King]);
     const uint8_t color = white_turn ? White : Black;
-    const Bitboard rook_mask = masks::_get_absolute_rook_mask(*this, king_index);
-    const Bitboard bishop_mask = masks::_get_absolute_bishop_mask(*this, king_index);
-    const Bitboard king_mask = masks::_get_absolute_king_mask(king_index);
-    const Bitboard knight_mask = masks::_get_absolute_knight_mask(king_index);
+    const Bitboard rook_mask = get_absolute_rook_mask(*this, king_index);
+    const Bitboard bishop_mask = get_absolute_bishop_mask(*this, king_index);
+    const Bitboard king_mask = get_absolute_king_mask(king_index);
+    const Bitboard knight_mask = get_absolute_knight_mask(king_index);
 
     count += bitboard_operations::count_1(rook_mask & (piece_bitboards[!color][Rook] | piece_bitboards[!color][Queen]));
     count +=
@@ -128,19 +126,19 @@ inline bool chess::Board::is_double_check() {
     return count >= 2;
 }
 
-inline bool chess::Board::is_checkmate() {
+bool chess::Board::is_checkmate() {
     const MoveArray &moves = get_legal_moves();
     return moves.size() == 0;
 }
 
-inline Bitboard chess::Board::get_check_mask() {
+Bitboard chess::Board::get_check_mask() {
     const uint8_t color = white_turn ? White : Black;
     const uint8_t king_index = bitboard_operations::bitScanForward(piece_bitboards[color][King]);
     uint8_t opponent_index;
-    const Bitboard rook_mask = masks::_get_absolute_rook_mask(*this, king_index);
-    const Bitboard bishop_mask = masks::_get_absolute_bishop_mask(*this, king_index);
-    const Bitboard king_mask = masks::_get_absolute_king_mask(king_index);
-    const Bitboard knight_mask = masks::_get_absolute_knight_mask(king_index);
+    const Bitboard rook_mask = get_absolute_rook_mask(*this, king_index);
+    const Bitboard bishop_mask = get_absolute_bishop_mask(*this, king_index);
+    const Bitboard king_mask = get_absolute_king_mask(king_index);
+    const Bitboard knight_mask = get_absolute_knight_mask(king_index);
 
     if (rook_mask & (piece_bitboards[!color][Rook] | piece_bitboards[!color][Queen])) {
         opponent_index = bitboard_operations::bitScanForward(
@@ -196,12 +194,12 @@ inline Bitboard chess::Board::get_check_mask() {
     return 0;
 }
 
-inline bool chess::Board::is_draw()const {
-    const uint8_t pawn_material = 1;
-    const uint8_t knight_material = 3;
-    const uint8_t bishop_material = 3;
-    const uint8_t rook_material = 5;
-    const uint8_t queen_material = 9;
+bool chess::Board::is_draw() const {
+    constexpr uint8_t pawn_material = 1;
+    constexpr uint8_t knight_material = 3;
+    constexpr uint8_t bishop_material = 3;
+    constexpr uint8_t rook_material = 5;
+    constexpr uint8_t queen_material = 9;
 
     int count = 0;
     count += bitboard_operations::count_1(piece_bitboards[White][Pawn]) * pawn_material;
@@ -218,7 +216,7 @@ inline bool chess::Board::is_draw()const {
     return num_of_moves >= 100 || get_num_of_repetitions() >= 3 || count <= 4;
 }
 
-inline int chess::Board::get_winner() {
+int chess::Board::get_winner() {
     if (is_checkmate()) {
         return white_turn ? Black : White;
     }

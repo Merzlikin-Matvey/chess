@@ -4,6 +4,7 @@
 #include "headers/bitboard_operations.hpp"
 #include "headers/board.hpp"
 #include "headers/constants.hpp"
+#include "headers/magic_numbers_constants.hpp"
 #include "headers/masks/masks_utils.hpp"
 #include "headers/masks/number_of_bits.hpp"
 

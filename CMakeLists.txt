@@ -78,7 +78,6 @@ set(public_headers
         include/headers/bitboard_lines.hpp
         include/headers/bitboard_operations.hpp
         include/headers/board.hpp
-        include/headers/check_and_checkmate.hpp
         include/headers/constants.hpp
         include/headers/evaluate_position.hpp
         include/headers/evaluating_constants.hpp
@@ -110,6 +109,7 @@ set(sources
         src/board/fen.cpp
         src/board/output.cpp
         src/zobrist.cpp
+        src/board/check_and_checkmate.cpp
         src/board/history.cpp
         src/move.cpp
         src/notations.cpp

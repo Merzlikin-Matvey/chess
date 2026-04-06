@@ -1,6 +1,5 @@
 #include "headers/evaluate_position.hpp"
 
-#include "headers/check_and_checkmate.hpp"
 #include "headers/constants.hpp"
 #include "headers/evaluating_constants.hpp"
 

@@ -2,7 +2,6 @@
 
 #include "headers/bitboard_operations.hpp"
 #include "headers/board.hpp"
-#include "headers/check_and_checkmate.hpp"
 #include "headers/constants.hpp"
 #include "headers/move.hpp"
 #include "headers/masks/down_right_diagonal_pin_masks.hpp"

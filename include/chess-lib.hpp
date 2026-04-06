@@ -4,7 +4,6 @@
 #include "headers/bitboard_lines.hpp"
 #include "headers/bitboard_operations.hpp"
 #include "headers/board.hpp"
-#include "headers/check_and_checkmate.hpp"
 #include "headers/constants.hpp"
 #include "headers/evaluate_position.hpp"
 #include "headers/evaluating_constants.hpp"

@@ -1,9 +1,9 @@
 #pragma once
 
-#include "headers/bitboard_operations.hpp"
-
 #include <array>
 #include <memory>
+
+#include "headers/bitboard_operations.hpp"
 
 typedef uint64_t Bitboard;
 
@@ -73,4 +73,4 @@ namespace chess::masks {
     }
     constexpr std::array<std::array<Bitboard, 64>, 64> lines = _get_lines();
 
-}
+}  // namespace chess::masks

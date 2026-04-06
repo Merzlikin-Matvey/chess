@@ -1,6 +1,5 @@
 #include "chess-lib.hpp"
 
-
 std::string chess::engine::AI::search(Board& board) {
     nodes_searched = 0;
     board.get_legal_moves();
@@ -41,7 +40,7 @@ std::string chess::engine::AI::root_search(Board& board, int depth) {
 
     Move best_move = moves.moves[0];
 
-    if (board.white_turn){
+    if (board.white_turn) {
         double max_score = constants::minimum;
         for (int i = 0; i < moves.size(); i++) {
             PositionState state;
@@ -54,13 +53,12 @@ std::string chess::engine::AI::root_search(Board& board, int depth) {
                 max_score = score;
                 best_move = move;
                 alpha = std::max(alpha, score);
-                if (alpha >= beta){
+                if (alpha >= beta) {
                     break;
                 }
             }
         }
-    }
-    else {
+    } else {
         double min_score = constants::maximum;
         for (int i = 0; i < moves.size(); i++) {
             PositionState state;
@@ -82,4 +80,3 @@ std::string chess::engine::AI::root_search(Board& board, int depth) {
 
     return best_move.to_string();
 }
-

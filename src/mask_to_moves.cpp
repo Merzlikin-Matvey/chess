@@ -22,7 +22,7 @@ void chess::Board::pawn_mask_to_moves(Bitboard mask, int delta, MoveArray* moves
 
         {
             const uint8_t mb = this->mailbox[opponent_index];
-            opponent_type = (mb == 255) ? 255 : (mb & 0x7);
+            opponent_type = mb == 255 ? 255 : mb & 0x7;
         }
 
         if (this->white_turn) {
@@ -75,7 +75,7 @@ void chess::Board::mask_to_moves(Bitboard mask, uint8_t attacker_index, uint8_t 
 
         {
             const uint8_t mb = this->mailbox[opponent_index];
-            opponent_type = (mb == 255) ? 255 : (mb & 0x7);
+            opponent_type = mb == 255 ? 255 : mb & 0x7;
         }
 
         if (opponent_type == 255) {

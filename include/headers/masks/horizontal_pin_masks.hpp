@@ -10,7 +10,7 @@
 
 namespace chess::masks {
     constexpr int get_horizontal_pin_hash(Bitboard board, uint8_t square) {
-        Bitboard magic_number = chess::magic_numbers::horizontal_pin_magic_numbers[square];
+        Bitboard magic_number = magic_numbers::horizontal_pin_magic_numbers[square];
         int num_bits = right_bits[square] + left_bits[square];
         return (board * magic_number) >> (64 - num_bits);
     }
@@ -31,7 +31,7 @@ namespace chess::masks {
             for (int bit = 0; bit < num_right_bits; bit++) {
                 if (_get_bit(blockers, bit)) {
                     if (flag) {
-                        mask |= chess::masks::lines[square + (bit + 1)][square];
+                        mask |= lines[square + (bit + 1)][square];
                         flag = false;
                     }
                     bitboard_operations::set_1(board, square + (bit + 1));
@@ -42,7 +42,7 @@ namespace chess::masks {
             for (int bit = 0; bit < num_left_bits; bit++) {
                 if (_get_bit(blockers, bit + num_right_bits)) {
                     if (flag) {
-                        mask |= chess::masks::lines[square - (bit + 1)][square];
+                        mask |= lines[square - (bit + 1)][square];
                         flag = false;
                     }
                     bitboard_operations::set_1(board, square - (bit + 1));
@@ -87,7 +87,7 @@ namespace chess::masks {
             }
 
             if (count < 2) {
-                mask |= lines[(square / 8) * 8 + 7][square];
+                mask |= lines[square / 8 * 8 + 7][square];
             }
 
             count = 0;
@@ -99,7 +99,7 @@ namespace chess::masks {
             }
 
             if (count < 2) {
-                mask |= lines[(square / 8) * 8][square];
+                mask |= lines[square / 8 * 8][square];
             }
 
             hash = get_horizontal_pin_hash(board, square);
@@ -141,7 +141,7 @@ namespace chess::masks {
             }
 
             if (count == 1) {
-                mask |= lines[(square / 8) * 8 + 7][square];
+                mask |= lines[square / 8 * 8 + 7][square];
             }
 
             count = 0;
@@ -153,7 +153,7 @@ namespace chess::masks {
             }
 
             if (count == 1) {
-                mask |= lines[(square / 8) * 8][square];
+                mask |= lines[square / 8 * 8][square];
             }
 
             hash = get_horizontal_pin_hash(board, square);
@@ -210,7 +210,7 @@ namespace chess::masks {
     inline Bitboard get_horizontal_pin_mask(Board& board, uint8_t square, uint8_t color) {
         int rook_or_queen_hash = get_horizontal_pin_hash(
             secondary_horizontal_pin_masks[square] &
-                (board.piece_bitboards[!color][chess::Rook] | board.piece_bitboards[!color][chess::Queen]),
+                (board.piece_bitboards[!color][Rook] | board.piece_bitboards[!color][Queen]),
             square);
         Bitboard rook_or_queen = rook_or_queen_horizontal_pin_masks[square][rook_or_queen_hash];
 

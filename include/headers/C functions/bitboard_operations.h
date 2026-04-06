@@ -7,11 +7,11 @@
 typedef uint64_t Bitboard;
 
 static inline void _c_bitboard_operations_set_1(Bitboard *bb, uint8_t square) {
-    *bb = *bb | (1ull << square);
+    *bb = *bb | 1ull << square;
 }
 
 static inline int _c_bitboard_operations_get_bit(Bitboard board, int i) {
-    return (board >> i) & 1;
+    return board >> i & 1;
 }
 
 static inline void _c_print_bitboard(Bitboard bitboard) {

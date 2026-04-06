@@ -208,8 +208,8 @@ namespace chess::masks {
 
     inline Bitboard get_up_right_pin_mask(Board& board, uint8_t square, uint8_t color) {
         int bishop_or_queen_hash =
-            get_up_right_pin_hash(secondary_up_right_pin_masks[square] & (board.piece_bitboards[!color][chess::Bishop] |
-                                                                          board.piece_bitboards[!color][chess::Queen]),
+            get_up_right_pin_hash(secondary_up_right_pin_masks[square] & (board.piece_bitboards[!color][Bishop] |
+                                                                          board.piece_bitboards[!color][Queen]),
                                   square);
         Bitboard bishop_or_queen = bishop_or_queen_up_right_pin_masks[square][bishop_or_queen_hash];
 

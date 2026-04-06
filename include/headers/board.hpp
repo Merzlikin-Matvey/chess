@@ -122,15 +122,15 @@ namespace chess {
         bool operator==(const Board& board) const;
         bool operator!=(const Board& board) const;
 
-        int8_t get_piece_type(const chess::Board& board, uint8_t x, uint8_t y);
-        int8_t get_piece_type(const chess::Board& board, uint8_t x);
+        int8_t get_piece_type(const Board& board, uint8_t x, uint8_t y);
+        int8_t get_piece_type(const Board& board, uint8_t x);
 
         std::string to_fen();
 
         void init_mailbox();
     };
 
-    std::ostream& operator<<(std::ostream& ostream, chess::Board board);
+    std::ostream& operator<<(std::ostream& ostream, Board board);
     void print_bitboard(Bitboard bitboard);
 
 }  // namespace chess

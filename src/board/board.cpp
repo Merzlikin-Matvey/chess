@@ -17,7 +17,7 @@ void chess::Board::init_mailbox() {
             while (bb) {
                 int sq = bitboard_operations::bitScanForward(bb);
                 bitboard_operations::set_0(bb, sq);
-                mailbox[sq] = (color << 3) | piece;
+                mailbox[sq] = color << 3 | piece;
             }
         }
     }
@@ -43,7 +43,7 @@ chess::Board::Board(std::string fen) {
     std::string piece_placement;
     iss >> piece_placement;
 
-    piece_bitboards = chess::convert_fen_to_bitboards(piece_placement);
+    piece_bitboards = convert_fen_to_bitboards(piece_placement);
     side_bitboards = {0, 0};
     all = 0;
     for (int i = 0; i < 2; i++) {
@@ -56,7 +56,7 @@ chess::Board::Board(std::string fen) {
 
     std::string active_color;
     if (iss >> active_color) {
-        white_turn = (active_color == "w");
+        white_turn = active_color == "w";
 
         std::string castling_str;
         if (iss >> castling_str) {
@@ -70,7 +70,7 @@ chess::Board::Board(std::string fen) {
             std::string en_passant_str;
             if (iss >> en_passant_str) {
                 if (en_passant_str != "-") {
-                    en_passant_square = chess::position_to_number_notation(en_passant_str);
+                    en_passant_square = position_to_number_notation(en_passant_str);
                 }
 
                 std::string halfmove_str;
@@ -80,7 +80,7 @@ chess::Board::Board(std::string fen) {
                     std::string fullmove_str;
                     if (iss >> fullmove_str) {
                         int fullmove = std::stoi(fullmove_str);
-                        num_of_moves = (fullmove - 1) + (white_turn ? 0.0 : 0.5);
+                        num_of_moves = fullmove - 1 + (white_turn ? 0.0 : 0.5);
                     }
                 }
             }
@@ -92,7 +92,7 @@ chess::Board::Board(std::string fen) {
 }
 
 chess::Board::Board() {
-    std::array<std::array<Bitboard, 6>, 2> board = chess::convert_default_positions();
+    std::array<std::array<Bitboard, 6>, 2> board = convert_default_positions();
     piece_bitboards = board;
     side_bitboards = {0, 0};
     all = 0;
@@ -126,21 +126,21 @@ bool chess::Board::operator!=(const Board& board) const {
     return !(*this == board);
 }
 
-int8_t chess::Board::get_piece_type(const chess::Board& board, uint8_t x, uint8_t y) {
+int8_t chess::Board::get_piece_type(const Board& board, uint8_t x, uint8_t y) {
     for (int i = 0; i < 6; i++) {
-        if (bitboard_operations::get_bit(board.piece_bitboards[chess::White][i], y * 8 + x))
+        if (bitboard_operations::get_bit(board.piece_bitboards[White][i], y * 8 + x))
             return i;
-        if (bitboard_operations::get_bit(board.piece_bitboards[chess::Black][i], y * 8 + x))
+        if (bitboard_operations::get_bit(board.piece_bitboards[Black][i], y * 8 + x))
             return i + 6;
     }
     return -1;
 }
 
-int8_t chess::Board::get_piece_type(const chess::Board& board, uint8_t x) {
+int8_t chess::Board::get_piece_type(const Board& board, uint8_t x) {
     for (int i = 0; i < 6; i++) {
-        if (bitboard_operations::get_bit(board.piece_bitboards[chess::White][i], x))
+        if (bitboard_operations::get_bit(board.piece_bitboards[White][i], x))
             return i;
-        if (bitboard_operations::get_bit(board.piece_bitboards[chess::Black][i], x))
+        if (bitboard_operations::get_bit(board.piece_bitboards[Black][i], x))
             return i + 6;
     }
     return -1;
@@ -165,7 +165,7 @@ std::string chess::Board::to_fen() {
     fen += castling;
 
     if (en_passant_square >= 0) {
-        fen += " " + chess::position_to_chess_notation(en_passant_square);
+        fen += " " + position_to_chess_notation(en_passant_square);
     } else {
         fen += " -";
     }

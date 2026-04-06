@@ -14,7 +14,7 @@ namespace chess::zobrist {
     static constexpr uint64_t Summand = 0xff1b3f;
 
     static constexpr uint64_t next_random(uint64_t previous) {
-        return (previous * Multiplier + Summand);
+        return previous * Multiplier + Summand;
     }
 
     static constexpr std::array<std::array<std::array<uint64_t, 6>, 2>, 64> generate_constants() {

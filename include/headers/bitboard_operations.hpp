@@ -7,14 +7,14 @@ typedef uint64_t Bitboard;
 
 namespace bitboard_operations {
     static constexpr void set_1(Bitboard &bb, uint8_t square) {
-        bb = bb | (1ull << square);
+        bb = bb | 1ull << square;
     }
     static constexpr void set_0(Bitboard &bb, uint8_t square) {
-        bb = bb & (~(1ull << square));
+        bb = bb & ~(1ull << square);
     }
 
     static constexpr bool get_bit(Bitboard bb, uint8_t square) {
-        return (bb & (1ull << square));
+        return bb & 1ull << square;
     }
 
     static constexpr uint8_t count_1(Bitboard bb) {
@@ -56,7 +56,7 @@ namespace bitboard_operations {
         for (int i = 0; i < 8; i++) {
             rows[i] = 0;
             for (int j = 0; j < 8; j++) {
-                rows[i] |= (1ull << (i * 8 + j));
+                rows[i] |= 1ull << (i * 8 + j);
             }
         }
         return rows;
@@ -67,7 +67,7 @@ namespace bitboard_operations {
         for (int i = 0; i < 8; i++) {
             rows[i] = 0;
             for (int j = 0; j < 8; j++) {
-                rows[i] |= (1ull << (i * 8 + j));
+                rows[i] |= 1ull << (i * 8 + j);
             }
             rows[i] = ~rows[i];
         }
@@ -79,7 +79,7 @@ namespace bitboard_operations {
         for (int i = 0; i < 8; i++) {
             columns[i] = 0;
             for (int j = 0; j < 8; j++) {
-                columns[i] |= (1ull << (j * 8 + i));
+                columns[i] |= 1ull << (j * 8 + i);
             }
         }
         return columns;
@@ -90,7 +90,7 @@ namespace bitboard_operations {
         for (int i = 0; i < 8; i++) {
             columns[i] = 0;
             for (int j = 0; j < 8; j++) {
-                columns[i] |= (1ull << (j * 8 + i));
+                columns[i] |= 1ull << (j * 8 + i);
             }
             columns[i] = ~columns[i];
         }

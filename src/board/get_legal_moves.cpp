@@ -7,7 +7,7 @@
 #include "headers/masks/masks.hpp"
 #include "headers/move.hpp"
 
-void chess::Board::castling(chess::MoveArray* moves) {
+void chess::Board::castling(MoveArray* moves) {
     uint8_t color = white_turn ? White : Black;
 
     if (color == White) {
@@ -174,13 +174,13 @@ chess::MoveArray& chess::Board::get_legal_moves() {
 
         // En passant during check (only if capturing the checking pawn)
         if (en_passant_square >= 0) {
-            uint8_t captured_sq = (color == White) ? en_passant_square - 8 : en_passant_square + 8;
+            uint8_t captured_sq = color == White ? en_passant_square - 8 : en_passant_square + 8;
             if (bitboard_operations::get_bit(check_mask, captured_sq)) {
                 Bitboard ep_masks[] = {masks::get_right_en_passant_mask(pawns, *this),
                                        masks::get_left_en_passant_mask(pawns, *this)};
                 int deltas_w[] = {9, 7};
                 int deltas_b[] = {7, 9};
-                int* deltas = (color == White) ? deltas_w : deltas_b;
+                int* deltas = color == White ? deltas_w : deltas_b;
 
                 for (int d = 0; d < 2; d++) {
                     Bitboard ep = ep_masks[d];
@@ -321,12 +321,12 @@ chess::MoveArray& chess::Board::get_legal_moves() {
 
         // En passant
         if (en_passant_square >= 0) {
-            uint8_t captured_sq = (color == White) ? en_passant_square - 8 : en_passant_square + 8;
+            uint8_t captured_sq = color == White ? en_passant_square - 8 : en_passant_square + 8;
             Bitboard ep_masks[] = {masks::get_right_en_passant_mask(pawns, *this),
                                    masks::get_left_en_passant_mask(pawns, *this)};
             int deltas_w[] = {9, 7};
             int deltas_b[] = {7, 9};
-            int* deltas = (color == White) ? deltas_w : deltas_b;
+            int* deltas = color == White ? deltas_w : deltas_b;
 
             for (int d = 0; d < 2; d++) {
                 Bitboard ep = ep_masks[d];
@@ -416,7 +416,7 @@ static int count_mask(const Bitboard mask, const Bitboard friendly) {
 
 static int count_pawn_mask(Bitboard mask, const Bitboard friendly, const uint8_t color) {
     mask &= ~friendly;
-    const Bitboard promo_rank = (color == chess::White) ? bitboard_operations::rows[7] : bitboard_operations::rows[0];
+    const Bitboard promo_rank = color == chess::White ? bitboard_operations::rows[7] : bitboard_operations::rows[0];
     const Bitboard promos = mask & promo_rank;
     const Bitboard non_promos = mask & ~promo_rank;
     return std::popcount(non_promos) + std::popcount(promos) * 4;
@@ -519,13 +519,13 @@ int chess::Board::count_legal_moves() {
 
         // En passant during check
         if (en_passant_square >= 0) {
-            uint8_t captured_sq = (color == White) ? en_passant_square - 8 : en_passant_square + 8;
+            uint8_t captured_sq = color == White ? en_passant_square - 8 : en_passant_square + 8;
             if (bitboard_operations::get_bit(check_mask, captured_sq)) {
                 Bitboard ep_masks[] = {masks::get_right_en_passant_mask(pawns, *this),
                                        masks::get_left_en_passant_mask(pawns, *this)};
                 int deltas_w[] = {9, 7};
                 int deltas_b[] = {7, 9};
-                int* deltas = (color == White) ? deltas_w : deltas_b;
+                int* deltas = color == White ? deltas_w : deltas_b;
 
                 for (int d = 0; d < 2; d++) {
                     Bitboard ep = ep_masks[d];
@@ -664,12 +664,12 @@ int chess::Board::count_legal_moves() {
 
         // En passant
         if (en_passant_square >= 0) {
-            uint8_t captured_sq = (color == White) ? en_passant_square - 8 : en_passant_square + 8;
+            uint8_t captured_sq = color == White ? en_passant_square - 8 : en_passant_square + 8;
             Bitboard ep_masks[] = {masks::get_right_en_passant_mask(pawns, *this),
                                    masks::get_left_en_passant_mask(pawns, *this)};
             int deltas_w[] = {9, 7};
             int deltas_b[] = {7, 9};
-            int* deltas = (color == White) ? deltas_w : deltas_b;
+            int* deltas = color == White ? deltas_w : deltas_b;
 
             for (int d = 0; d < 2; d++) {
                 Bitboard ep = ep_masks[d];

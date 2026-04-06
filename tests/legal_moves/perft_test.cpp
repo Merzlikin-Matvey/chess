@@ -62,7 +62,7 @@ std::vector<PerftCase> get_perft_cases() {
     };
 }
 
-class PerftTest : public ::testing::TestWithParam<std::tuple<size_t, int>> {};
+class PerftTest : public testing::TestWithParam<std::tuple<size_t, int>> {};
 
 TEST_P(PerftTest, NodeCount) {
     auto [case_idx, depth_idx] = GetParam();
@@ -86,7 +86,7 @@ std::vector<std::tuple<size_t, int>> generate_params() {
     return params;
 }
 
-std::string param_name(const ::testing::TestParamInfo<std::tuple<size_t, int>>& info) {
+std::string param_name(const testing::TestParamInfo<std::tuple<size_t, int>>& info) {
     auto [case_idx, depth_idx] = info.param;
     auto cases = get_perft_cases();
     std::string name = cases[case_idx].name;

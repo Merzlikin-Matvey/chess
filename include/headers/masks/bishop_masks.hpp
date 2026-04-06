@@ -30,7 +30,7 @@ namespace chess::masks {
         3, 3, 3, 3, 2, 1, 0, 0, 4, 4, 4, 3, 2, 1, 0, 0, 5, 5, 4, 3, 2, 1, 0, 0, 6, 5, 4, 3, 2, 1, 0, 0};
 
     constexpr int get_bishop_hash(Bitboard board, uint8_t square) {
-        Bitboard magic_number = chess::magic_numbers::bishop_magic_numbers[square];
+        Bitboard magic_number = magic_numbers::bishop_magic_numbers[square];
         int num_bits = bishop_up_right_bits[square] + bishop_down_right_bits[square] + bishop_up_left_bits[square] +
                        bishop_down_left_bits[square];
         int hash = (board * magic_number) >> (64 - num_bits);
@@ -57,45 +57,45 @@ namespace chess::masks {
             for (uint8_t bit = 0; bit < num_bishop_up_right_bits; bit++) {
                 if (_get_bit(blockers, bit)) {
                     if (flag) {
-                        mask |= chess::masks::lines[square + 9 * (bit + 1)][square];
+                        mask |= lines[square + 9 * (bit + 1)][square];
                         flag = false;
                     }
                     bitboard_operations::set_1(board, square + 9 * (bit + 1));
                 }
             }
 
-            if (flag and (square % 8 != 7) and (square < 56) and (square + 9 * (num_bishop_up_right_bits + 1) >= 0)) {
-                mask |= chess::masks::lines[square + 9 * (num_bishop_up_right_bits + 1)][square];
+            if (flag and square % 8 != 7 and square < 56 and square + 9 * (num_bishop_up_right_bits + 1) >= 0) {
+                mask |= lines[square + 9 * (num_bishop_up_right_bits + 1)][square];
             }
 
             flag = true;
             for (uint8_t bit = 0; bit < num_bishop_down_right_bits; bit++) {
                 if (_get_bit(blockers, bit + num_bishop_up_right_bits)) {
                     if (flag) {
-                        mask |= chess::masks::lines[square - 7 * (bit + 1)][square];
+                        mask |= lines[square - 7 * (bit + 1)][square];
                         flag = false;
                     }
                     bitboard_operations::set_1(board, square - 7 * (bit + 1));
                 }
             }
 
-            if (flag and (square % 8 != 7) and (square > 7) and (square - 7 * (num_bishop_down_right_bits + 1) >= 0)) {
-                mask |= chess::masks::lines[square - 7 * (num_bishop_down_right_bits + 1)][square];
+            if (flag and square % 8 != 7 and square > 7 and square - 7 * (num_bishop_down_right_bits + 1) >= 0) {
+                mask |= lines[square - 7 * (num_bishop_down_right_bits + 1)][square];
             }
 
             flag = true;
             for (uint8_t bit = 0; bit < num_bishop_up_left_bits; bit++) {
                 if (_get_bit(blockers, bit + num_bishop_up_right_bits + num_bishop_down_right_bits)) {
                     if (flag) {
-                        mask |= chess::masks::lines[square + 7 * (bit + 1)][square];
+                        mask |= lines[square + 7 * (bit + 1)][square];
                         flag = false;
                     }
                     bitboard_operations::set_1(board, square + 7 * (bit + 1));
                 }
             }
 
-            if (flag and (square % 8 != 0) and (square < 56) and (square + 7 * (num_bishop_up_left_bits + 1) >= 0)) {
-                mask |= chess::masks::lines[square + 7 * (num_bishop_up_left_bits + 1)][square];
+            if (flag and square % 8 != 0 and square < 56 and square + 7 * (num_bishop_up_left_bits + 1) >= 0) {
+                mask |= lines[square + 7 * (num_bishop_up_left_bits + 1)][square];
             }
 
             flag = true;
@@ -103,15 +103,15 @@ namespace chess::masks {
                 if (_get_bit(blockers,
                              bit + num_bishop_up_right_bits + num_bishop_down_right_bits + num_bishop_up_left_bits)) {
                     if (flag) {
-                        mask |= chess::masks::lines[square - 9 * (bit + 1)][square];
+                        mask |= lines[square - 9 * (bit + 1)][square];
                         flag = false;
                     }
                     bitboard_operations::set_1(board, square - 9 * (bit + 1));
                 }
             }
 
-            if (flag and (square % 8 != 0) and (square > 7) and (square - 9 * (num_bishop_down_left_bits + 1) >= 0)) {
-                mask |= chess::masks::lines[square - 9 * (num_bishop_down_left_bits + 1)][square];
+            if (flag and square % 8 != 0 and square > 7 and square - 9 * (num_bishop_down_left_bits + 1) >= 0) {
+                mask |= lines[square - 9 * (num_bishop_down_left_bits + 1)][square];
             }
 
             hash = get_bishop_hash(board, square);

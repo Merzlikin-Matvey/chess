@@ -11,7 +11,7 @@
 
 namespace chess::masks {
     constexpr int get_vertical_pin_hash(Bitboard board, uint8_t square) {
-        Bitboard magic_number = chess::magic_numbers::vertical_pin_magic_numbers[square];
+        Bitboard magic_number = magic_numbers::vertical_pin_magic_numbers[square];
         int num_bits = up_bits[square] + down_bits[square];
         return (board * magic_number) >> (64 - num_bits);
     }
@@ -32,7 +32,7 @@ namespace chess::masks {
             for (int bit = 0; bit < num_up_bits; bit++) {
                 if (_get_bit(blockers, bit)) {
                     if (flag) {
-                        mask |= chess::masks::lines[square + 8 * (bit + 1)][square];
+                        mask |= lines[square + 8 * (bit + 1)][square];
                         flag = false;
                     }
                     bitboard_operations::set_1(board, square + 8 * (bit + 1));
@@ -43,7 +43,7 @@ namespace chess::masks {
             for (int bit = 0; bit < num_down_bits; bit++) {
                 if (_get_bit(blockers, bit + num_up_bits)) {
                     if (flag) {
-                        mask |= chess::masks::lines[square - 8 * (bit + 1)][square];
+                        mask |= lines[square - 8 * (bit + 1)][square];
                         flag = false;
                     }
                     bitboard_operations::set_1(board, square - 8 * (bit + 1));
@@ -190,8 +190,8 @@ namespace chess::masks {
 
     inline Bitboard get_vertical_pin_mask(Board& board, uint8_t square, uint8_t color) {
         int rook_or_queen_hash =
-            get_vertical_pin_hash(secondary_vertical_pin_masks[square] & (board.piece_bitboards[!color][chess::Rook] |
-                                                                          board.piece_bitboards[!color][chess::Queen]),
+            get_vertical_pin_hash(secondary_vertical_pin_masks[square] & (board.piece_bitboards[!color][Rook] |
+                                                                          board.piece_bitboards[!color][Queen]),
                                   square);
         Bitboard rook_or_queen = rook_or_queen_vertical_pin_masks[square][rook_or_queen_hash];
 

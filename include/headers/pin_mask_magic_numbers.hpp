@@ -28,7 +28,7 @@ namespace chess::magic_numbers {
     }
 
     inline Bitboard generate_horizontal_pin_magic_number(uint8_t square) {
-        return ::_generate_horizontal_pin_magic_number(square);
+        return _generate_horizontal_pin_magic_number(square);
     }
 
     inline std::array<Bitboard, 64> generate_horizontal_pin_magic_numbers() {
@@ -44,7 +44,7 @@ namespace chess::magic_numbers {
     }
 
     inline Bitboard generate_up_right_pin_magic_number(uint8_t square) {
-        return ::_generate_up_right_pin_magic_number(square);
+        return _generate_up_right_pin_magic_number(square);
     }
 
     inline std::array<Bitboard, 64> generate_up_right_pin_magic_numbers() {
@@ -60,7 +60,7 @@ namespace chess::magic_numbers {
     }
 
     inline Bitboard generate_down_right_pin_magic_number(uint8_t square) {
-        return ::_generate_down_right_pin_magic_number(square);
+        return _generate_down_right_pin_magic_number(square);
     }
 
     inline std::array<Bitboard, 64> generate_down_right_pin_magic_numbers() {

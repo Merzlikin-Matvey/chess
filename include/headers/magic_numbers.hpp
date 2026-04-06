@@ -12,7 +12,7 @@ extern "C" {
 
 namespace chess::magic_numbers {
     inline Bitboard generate_rook_magic_number(uint8_t square) {
-        return ::_generate_rook_magic_number(square);
+        return _generate_rook_magic_number(square);
     }
 
     inline std::array<Bitboard, 64> generate_rook_magic_numbers() {
@@ -34,7 +34,7 @@ namespace chess::magic_numbers {
     }
 
     inline Bitboard generate_bishop_magic_number(uint8_t square) {
-        return ::_generate_bishop_magic_number(square);
+        return _generate_bishop_magic_number(square);
     }
 
     inline std::array<Bitboard, 64> generate_bishop_magic_numbers() {

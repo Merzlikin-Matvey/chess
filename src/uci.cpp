@@ -21,7 +21,7 @@ std::string trim(const std::string &str) {
         return str;
     }
     size_t last = str.find_last_not_of(' ');
-    return str.substr(first, (last - first + 1));
+    return str.substr(first, last - first + 1);
 }
 
 void chess::uci::UCI::start_handle() {

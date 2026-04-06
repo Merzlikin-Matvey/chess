@@ -24,7 +24,7 @@ namespace chess::masks {
                                                      3, 4, 5, 6, 0, 0, 1, 2, 3, 4, 5, 6, 0, 0, 1, 2, 3, 4, 5, 6};
 
     constexpr int get_rook_hash(Bitboard board, uint8_t square) {
-        Bitboard magic_number = chess::magic_numbers::rook_magic_numbers[square];
+        Bitboard magic_number = magic_numbers::rook_magic_numbers[square];
         int num_bits = rook_up_bits[square] + rook_down_bits[square] + rook_right_bits[square] + rook_left_bits[square];
         return (board * magic_number) >> (64 - num_bits);
     }
@@ -48,7 +48,7 @@ namespace chess::masks {
             for (uint8_t bit = 0; bit < num_up_bits; bit++) {
                 if (_get_bit(blockers, bit)) {
                     if (flag) {
-                        mask |= chess::masks::lines[square + 8 * (bit + 1)][square];
+                        mask |= lines[square + 8 * (bit + 1)][square];
                         flag = false;
                     }
                     bitboard_operations::set_1(board, square + 8 * (bit + 1));
@@ -56,14 +56,14 @@ namespace chess::masks {
             }
 
             if (flag and square < 56) {
-                mask |= chess::masks::lines[square + 8 * (num_up_bits + 1)][square];
+                mask |= lines[square + 8 * (num_up_bits + 1)][square];
             }
 
             flag = true;
             for (uint8_t bit = 0; bit < num_down_bits; bit++) {
                 if (_get_bit(blockers, bit + num_up_bits)) {
                     if (flag) {
-                        mask |= chess::masks::lines[square - 8 * (bit + 1)][square];
+                        mask |= lines[square - 8 * (bit + 1)][square];
                         flag = false;
                     }
                     bitboard_operations::set_1(board, square - 8 * (bit + 1));
@@ -71,37 +71,37 @@ namespace chess::masks {
             }
 
             if (flag and square > 7) {
-                mask |= chess::masks::lines[square - 8 * (num_down_bits + 1)][square];
+                mask |= lines[square - 8 * (num_down_bits + 1)][square];
             }
 
             flag = true;
             for (uint8_t bit = 0; bit < num_right_bits; bit++) {
                 if (_get_bit(blockers, bit + num_up_bits + num_down_bits)) {
                     if (flag) {
-                        mask |= chess::masks::lines[square + (bit + 1)][square];
+                        mask |= lines[square + (bit + 1)][square];
                         flag = false;
                     }
                     bitboard_operations::set_1(board, square + (bit + 1));
                 }
             }
 
-            if (flag and (square % 8) != 7) {
-                mask |= chess::masks::lines[square + (num_right_bits + 1)][square];
+            if (flag and square % 8 != 7) {
+                mask |= lines[square + (num_right_bits + 1)][square];
             }
 
             flag = true;
             for (uint8_t bit = 0; bit < num_left_bits; bit++) {
                 if (_get_bit(blockers, bit + num_up_bits + num_down_bits + num_right_bits)) {
                     if (flag) {
-                        mask |= chess::masks::lines[square - (bit + 1)][square];
+                        mask |= lines[square - (bit + 1)][square];
                         flag = false;
                     }
                     bitboard_operations::set_1(board, square - (bit + 1));
                 }
             }
 
-            if (flag and (square % 8) != 0) {
-                mask |= chess::masks::lines[square - (num_left_bits + 1)][square];
+            if (flag and square % 8 != 0) {
+                mask |= lines[square - (num_left_bits + 1)][square];
             }
 
             hash = get_rook_hash(board, square);

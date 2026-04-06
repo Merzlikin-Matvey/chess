@@ -24,7 +24,7 @@ namespace chess::engine {
         explicit TranspositionTable(size_t size_mb = 64) { resize(size_mb); }
 
         void resize(size_t size_mb) {
-            size_t num_entries = (size_mb * 1024 * 1024) / sizeof(TTEntry);
+            size_t num_entries = size_mb * 1024 * 1024 / sizeof(TTEntry);
             size_t size = 1;
             while (size * 2 <= num_entries)
                 size *= 2;

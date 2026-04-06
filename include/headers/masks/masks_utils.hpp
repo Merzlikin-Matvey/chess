@@ -4,7 +4,7 @@
 
 namespace chess::masks {
     constexpr bool _get_bit(int n, int i) {
-        return (n & (1 << i)) != 0;
+        return (n & 1 << i) != 0;
     }
 
     constexpr uint16_t _pow2(uint8_t num) {

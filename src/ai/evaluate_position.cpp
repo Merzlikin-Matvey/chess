@@ -43,9 +43,11 @@ int chess::engine::evaluate_position(Board& board, const uint8_t color) {
         }
     }
 
-    if (phase > pst::total_phase) phase = pst::total_phase;
+    if (phase > pst::total_phase) {
+        phase = pst::total_phase;
+    }
 
     const int score = (mg_score * phase + eg_score * (pst::total_phase - phase)) / pst::total_phase;
 
-    return (color == White) ? score : -score;
+    return color == White ? score : -score;
 }

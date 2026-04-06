@@ -3,11 +3,15 @@
 #include <array>
 #include <cstdint>
 
+// https://www.chessprogramming.org/PeSTO%27s_Evaluation_Function
+
+
 namespace chess::engine::pst {
+
     // Middlegame
 
     constexpr std::array mg_pawn = {
-         0,   0,   0,   0,   0,   0,   0,   0,
+         0,   0,   0,   0,   0,   0,   0,   0, // promotions
         98, 134,  61,  95,  68, 126,  34, -11,
         -6,   7,  26,  31,  65,  56,  25, -20,
        -14,  13,   6,  21,  23,  12,  17, -23,
@@ -16,6 +20,7 @@ namespace chess::engine::pst {
        -35,  -1, -20, -23, -15,  24,  38, -22,
          0,   0,   0,   0,   0,   0,   0,   0,
     };
+
 
     constexpr std::array mg_knight = {
        -167, -89, -34, -49,  61, -97, -15, -107,
@@ -140,9 +145,11 @@ namespace chess::engine::pst {
         -53, -34, -21, -11, -28, -14, -24, -43,
     };
 
+    // Piece values
     constexpr std::array mg_value = {82, 477, 337, 365, 1025, 0};
     constexpr std::array eg_value = {94, 512, 281, 297,  936, 0};
 
+    // https://www.chessprogramming.org/Tapered_Eval
     constexpr std::array phase_weight = {0, 2, 1, 1, 4, 0};
     constexpr int total_phase = 24;
 

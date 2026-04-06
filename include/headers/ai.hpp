@@ -15,11 +15,11 @@ namespace chess::engine {
         std::string search(Board& board);
         std::string root_search(Board& board, int depth);
 
-        double max(Board& board, int depth, double alpha, double beta, bool allow_null = true);
-        double min(Board& board, int depth, double alpha, double beta, bool allow_null = true);
+        int max(Board& board, int depth, int alpha, int beta, bool allow_null = true);
+        int min(Board& board, int depth, int alpha, int beta, bool allow_null = true);
 
-        double quiescence_max(Board& board, double alpha, double beta);
-        double quiescence_min(Board& board, double alpha, double beta);
+        int quiescence_max(Board& board, int alpha, int beta);
+        int quiescence_min(Board& board, int alpha, int beta);
 
         static void sort_moves(MoveArray* moves) ;
 

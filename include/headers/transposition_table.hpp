@@ -10,7 +10,7 @@ namespace chess::engine {
 
     struct TTEntry {
         uint64_t key = 0;
-        double score = 0;
+        int score = 0;
         uint32_t best_move = 0;
         int8_t depth = 0;
         TTFlag flag = TTFlag::EXACT;
@@ -41,7 +41,7 @@ namespace chess::engine {
             return nullptr;
         }
 
-        void store(const uint64_t hash, const double score, const int8_t depth, const TTFlag flag, const uint32_t best_move) {
+        void store(const uint64_t hash, const int score, const int8_t depth, const TTFlag flag, const uint32_t best_move) {
             TTEntry& entry = table[hash & mask];
             if (entry.key == 0 || entry.key == hash || depth >= entry.depth) {
                 entry.key = hash;

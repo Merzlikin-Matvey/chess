@@ -16,9 +16,9 @@ std::string chess::engine::AI::search(Board& board) {
 
 std::string chess::engine::AI::root_search(Board& board, const int depth) {
     board.get_legal_moves();
-    double score;
-    double alpha = constants::minimum;
-    double beta = constants::maximum;
+    int score;
+    int alpha = constants::minimum;
+    int beta = constants::maximum;
 
     auto moves = board.legal_moves;
     if (moves.size() == 0) {
@@ -43,7 +43,7 @@ std::string chess::engine::AI::root_search(Board& board, const int depth) {
     Move best_move = moves.moves[0];
 
     if (board.white_turn) {
-        double max_score = constants::minimum;
+        int max_score = constants::minimum;
         for (int i = 0; i < moves.size(); i++) {
             PositionState state;
             const Move move = moves.moves[i];
@@ -61,7 +61,7 @@ std::string chess::engine::AI::root_search(Board& board, const int depth) {
             }
         }
     } else {
-        double min_score = constants::maximum;
+        int min_score = constants::maximum;
         for (int i = 0; i < moves.size(); i++) {
             PositionState state;
             const Move move = moves.moves[i];

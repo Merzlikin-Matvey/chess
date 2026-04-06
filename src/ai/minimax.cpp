@@ -3,7 +3,7 @@
 #include "headers/evaluate_position.hpp"
 #include "headers/evaluating_constants.hpp"
 
-double chess::engine::AI::max(Board& board, const int depth, double alpha, double beta, const bool allow_null) {
+int chess::engine::AI::max(Board& board, const int depth, int alpha, int beta, const bool allow_null) {
     nodes_searched++;
 
     if (depth <= 0 or board.legal_moves.size() == 0) {
@@ -13,8 +13,8 @@ double chess::engine::AI::max(Board& board, const int depth, double alpha, doubl
         return evaluate_position(board, White);
     }
 
-    const double original_alpha = alpha;
-    const double original_beta = beta;
+    const int original_alpha = alpha;
+    const int original_beta = beta;
 
     uint32_t tt_move_data = 0;
     const TTEntry* entry = tt.probe(board.current_hash);
@@ -36,7 +36,7 @@ double chess::engine::AI::max(Board& board, const int depth, double alpha, doubl
         NullMoveState null_state;
         board.make_null_move(null_state);
         board.get_legal_moves();
-        const double null_score = min(board, depth - 1 - 2, alpha, beta, false);
+        const int null_score = min(board, depth - 1 - 2, alpha, beta, false);
         board.unmake_null_move(null_state);
         if (null_score >= beta) {
             return beta;
@@ -60,13 +60,13 @@ double chess::engine::AI::max(Board& board, const int depth, double alpha, doubl
 
 
     Move best_move = moves.moves[0];
-    double max_score = constants::minimum;
+    int max_score = constants::minimum;
     for (int i = 0; i < moves.size(); i++) {
         PositionState state;
         const Move move = moves.moves[i];
         board.make_move(move, state);
         board.get_legal_moves();
-        double score;
+        int score;
 
         if (
             i >= lmr_threshold
@@ -109,7 +109,7 @@ double chess::engine::AI::max(Board& board, const int depth, double alpha, doubl
     return max_score;
 }
 
-double chess::engine::AI::min(Board& board, const int depth, double alpha, double beta, const bool allow_null) {
+int chess::engine::AI::min(Board& board, const int depth, int alpha, int beta, const bool allow_null) {
     nodes_searched++;
 
     if (depth <= 0 or board.legal_moves.size() == 0) {
@@ -119,8 +119,8 @@ double chess::engine::AI::min(Board& board, const int depth, double alpha, doubl
         return evaluate_position(board, White);
     }
 
-    const double original_alpha = alpha;
-    const double original_beta = beta;
+    const int original_alpha = alpha;
+    const int original_beta = beta;
 
     uint32_t tt_move_data = 0;
     const TTEntry* entry = tt.probe(board.current_hash);
@@ -142,7 +142,7 @@ double chess::engine::AI::min(Board& board, const int depth, double alpha, doubl
         NullMoveState null_state;
         board.make_null_move(null_state);
         board.get_legal_moves();
-        const double null_score = max(board, depth - 1 - 2, alpha, beta, false);
+        const int null_score = max(board, depth - 1 - 2, alpha, beta, false);
         board.unmake_null_move(null_state);
         if (null_score <= alpha) {
             return alpha;
@@ -164,14 +164,14 @@ double chess::engine::AI::min(Board& board, const int depth, double alpha, doubl
     }
 
     Move best_move = moves.moves[0];
-    double min_score = constants::maximum;
+    int min_score = constants::maximum;
     for (int i = 0; i < moves.size(); i++) {
         PositionState state;
         const Move move = moves.moves[i];
         board.make_move(move, state);
         board.get_legal_moves();
 
-        double score;
+        int score;
 
         if (
             i >= lmr_threshold

@@ -1,18 +1,14 @@
 #pragma once
 
 #include <array>
+#include <cstdint>
 #include <iostream>
 
 typedef uint64_t Bitboard;
 
-extern "C" {
-#include "magic_numbers_ganaration/magic_numbers.h"
-}
-
 namespace chess::magic_numbers {
-    inline Bitboard generate_rook_magic_number(uint8_t square) {
-        return _generate_rook_magic_number(square);
-    }
+    Bitboard generate_rook_magic_number(uint8_t square);
+    Bitboard generate_bishop_magic_number(uint8_t square);
 
     inline std::array<Bitboard, 64> generate_rook_magic_numbers() {
         std::array<Bitboard, 64> magic_numbers{};
@@ -30,10 +26,6 @@ namespace chess::magic_numbers {
                       << "0x" << std::hex << magic_numbers[square + 2] << ", "
                       << "0x" << std::hex << magic_numbers[square + 3] << "," << std::endl;
         }
-    }
-
-    inline Bitboard generate_bishop_magic_number(uint8_t square) {
-        return _generate_bishop_magic_number(square);
     }
 
     inline std::array<Bitboard, 64> generate_bishop_magic_numbers() {

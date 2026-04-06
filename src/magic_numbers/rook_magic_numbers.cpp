@@ -1,13 +1,11 @@
-#include "headers/magic_numbers_ganaration/magic_numbers.h"
-#include "headers/magic_numbers_ganaration/bitboard_operations.h"
+#include "headers/bitboard_operations.hpp"
 
-#include <math.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <stdbool.h>
+#include <cmath>
+#include <cstdlib>
+#include <cstdint>
 
 
-const int _up_bits[64] = {
+static const int up_bits[64] = {
         6, 6, 6, 6, 6, 6, 6, 6,
         5, 5, 5, 5, 5, 5, 5, 5,
         4, 4, 4, 4, 4, 4, 4, 4,
@@ -18,7 +16,7 @@ const int _up_bits[64] = {
         0, 0, 0, 0, 0, 0, 0, 0
 };
 
-const int _down_bits[64] = {
+static const int down_bits[64] = {
         0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0,
         1, 1, 1, 1, 1, 1, 1, 1,
@@ -29,7 +27,7 @@ const int _down_bits[64] = {
         6, 6, 6, 6, 6, 6, 6, 6
 };
 
-const int _right_bits[64] = {
+static const int right_bits[64] = {
         6, 5, 4, 3, 2, 1, 0, 0,
         6, 5, 4, 3, 2, 1, 0, 0,
         6, 5, 4, 3, 2, 1, 0, 0,
@@ -40,7 +38,7 @@ const int _right_bits[64] = {
         6, 5, 4, 3, 2, 1, 0, 0
 };
 
-const int _left_bits[64] = {
+static const int left_bits[64] = {
         0, 0, 1, 2, 3, 4, 5, 6,
         0, 0, 1, 2, 3, 4, 5, 6,
         0, 0, 1, 2, 3, 4, 5, 6,
@@ -51,72 +49,78 @@ const int _left_bits[64] = {
         0, 0, 1, 2, 3, 4, 5, 6
 };
 
-Bitboard _set_rook_board(uint8_t square, uint16_t blockers) {
+namespace chess::magic_numbers {
+
+Bitboard generate_random_64bit();
+
+static Bitboard set_rook_board(uint8_t square, uint16_t blockers) {
     Bitboard board = 0;
-    const int up = _up_bits[square];
-    const int down = _down_bits[square];
-    const int right = _right_bits[square];
-    const int left = _left_bits[square];
+    const int up = up_bits[square];
+    const int down = down_bits[square];
+    const int right = right_bits[square];
+    const int left = left_bits[square];
 
     for (int i = 0; i < up; i++) {
-        if (_c_bitboard_operations_get_bit(blockers, i)){
-            _c_bitboard_operations_set_1(&board, square + (i + 1) * 8);
+        if (bitboard_operations::get_bit(blockers, i)){
+            bitboard_operations::set_1(board, square + (i + 1) * 8);
         }
     }
 
     for (int i = 0; i < down; i++) {
-        if (_c_bitboard_operations_get_bit(blockers, i + up)){
-            _c_bitboard_operations_set_1(&board, square - (i + 1) * 8);
+        if (bitboard_operations::get_bit(blockers, i + up)){
+            bitboard_operations::set_1(board, square - (i + 1) * 8);
         }
     }
 
     for (int i = 0; i < right; i++) {
-        if (_c_bitboard_operations_get_bit(blockers, i + up + down)){
-            _c_bitboard_operations_set_1(&board, square + i + 1);
+        if (bitboard_operations::get_bit(blockers, i + up + down)){
+            bitboard_operations::set_1(board, square + i + 1);
         }
     }
 
     for (int i = 0; i < left; i++) {
-        if (_c_bitboard_operations_get_bit(blockers, i + up + down + right)){
-            _c_bitboard_operations_set_1(&board, square - i - 1);
+        if (bitboard_operations::get_bit(blockers, i + up + down + right)){
+            bitboard_operations::set_1(board, square - i - 1);
         }
     }
 
     return board;
 }
 
-uint8_t _get_number_of_rook_bits(uint8_t square) {
-    return _up_bits[square] + _down_bits[square] + _right_bits[square] + _left_bits[square];
+static uint8_t get_number_of_rook_bits(uint8_t square) {
+    return up_bits[square] + down_bits[square] + right_bits[square] + left_bits[square];
 }
 
-uint16_t _get_rook_hash(Bitboard board, uint64_t magic_number, uint8_t square) {
-    return (board * magic_number) >> (64 - _get_number_of_rook_bits(square));
+static uint16_t get_rook_hash(Bitboard board, uint64_t magic_number, uint8_t square) {
+    return (board * magic_number) >> (64 - get_number_of_rook_bits(square));
 }
 
-bool _is_rook_magic_number_valid(uint64_t magic_number, uint8_t square) {
+static bool is_rook_magic_number_valid(uint64_t magic_number, uint8_t square) {
     Bitboard board;
     uint16_t hash;
-    const uint8_t number_of_bits = _get_number_of_rook_bits(square);
+    const uint8_t number_of_bits = get_number_of_rook_bits(square);
     const uint16_t number_of_positions = pow(2, number_of_bits);
-    bool* array = static_cast<bool*>(calloc(number_of_positions, sizeof(bool)));
+    auto* array = new bool[number_of_positions]();
 
     for (uint16_t i = 0; i < pow(2, number_of_bits); i++){
-        board = _set_rook_board(square, i);
-        hash = _get_rook_hash(board, magic_number, square);
+        board = set_rook_board(square, i);
+        hash = get_rook_hash(board, magic_number, square);
         if (array[hash]){
-            free(array);
+            delete[] array;
             return false;
         }
         array[hash] = true;
     }
-    free(array);
+    delete[] array;
     return true;
 }
 
-uint64_t _generate_rook_magic_number(uint8_t square) {
+Bitboard generate_rook_magic_number(uint8_t square) {
     uint64_t magic_number;
     do {
-        magic_number = _generate_random_64bit() & _generate_random_64bit() & _generate_random_64bit();
-    } while (!_is_rook_magic_number_valid(magic_number, square));
+        magic_number = generate_random_64bit() & generate_random_64bit() & generate_random_64bit();
+    } while (!is_rook_magic_number_valid(magic_number, square));
     return magic_number;
 }
+
+}  // namespace chess::magic_numbers

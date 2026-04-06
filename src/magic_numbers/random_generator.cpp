@@ -1,7 +1,10 @@
-#include "headers/magic_numbers_ganaration/magic_numbers.h"
-#include <stdlib.h>
+#include "headers/bitboard_operations.hpp"
+#include <cstdlib>
+#include <cstdint>
 
-Bitboard _generate_random_64bit() {
+namespace chess::magic_numbers {
+
+Bitboard generate_random_64bit() {
     Bitboard number = 0;
     for (int i = 0; i < 4; ++i) {
         number <<= 16;
@@ -9,3 +12,5 @@ Bitboard _generate_random_64bit() {
     }
     return number;
 }
+
+}  // namespace chess::magic_numbers

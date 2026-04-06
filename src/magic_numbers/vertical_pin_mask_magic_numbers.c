@@ -30,8 +30,8 @@ const int down_bits[64] = {
 
 Bitboard _set_vertical_pin_board(uint8_t square, uint8_t blockers){
     Bitboard board = 0;
-    int up = up_bits[square];
-    int down = down_bits[square];
+    const int up = up_bits[square];
+    const int down = down_bits[square];
 
     for (int i = 0; i < up; i++){
         if (_c_bitboard_operations_get_bit(blockers, i)){
@@ -55,7 +55,7 @@ uint16_t _get_vertical_pin_mask_hash(Bitboard board, uint64_t magic_number){
 bool is_vertical_pin_magic_number_valid(uint8_t square, uint64_t magic_number){
     Bitboard board;
     uint16_t hash;
-    uint16_t number_of_positions = pow(2, 7);
+    const uint16_t number_of_positions = pow(2, 7);
     bool* array = calloc(number_of_positions, sizeof(bool));
 
     for (uint16_t i = 0; i < number_of_positions; i++){

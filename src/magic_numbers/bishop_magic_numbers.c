@@ -55,10 +55,10 @@ const int _down_right_bits[64] = {
 
 Bitboard _set_bishop_board(uint8_t square, uint16_t blockers) {
     Bitboard board = 0;
-    int up_right = _up_right_bits[square];
-    int down_left = _down_left_bits[square];
-    int up_left = _up_left_bits[square];
-    int down_right = _down_right_bits[square];
+    const int up_right = _up_right_bits[square];
+    const int down_left = _down_left_bits[square];
+    const int up_left = _up_left_bits[square];
+    const int down_right = _down_right_bits[square];
 
     for (int i = 0; i < up_right; i++){
         if (_c_bitboard_operations_get_bit(blockers, i)){
@@ -100,8 +100,8 @@ uint16_t _get_bishop_hash(Bitboard board, uint64_t magic_number, uint8_t square)
 bool _is_bishop_magic_number_valid(uint64_t magic_number, uint8_t square) {
     Bitboard board;
     uint16_t hash;
-    uint8_t number_of_bits = _get_number_of_bishop_bits(square);
-    uint16_t number_of_positions = pow(2, number_of_bits);
+    const uint8_t number_of_bits = _get_number_of_bishop_bits(square);
+    const uint16_t number_of_positions = pow(2, number_of_bits);
     bool* array = calloc(number_of_positions, sizeof(bool));
 
     for (uint16_t i = 0; i < pow(2, number_of_bits); i++){

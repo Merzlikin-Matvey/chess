@@ -2,7 +2,6 @@
 #define CHESS_MAGIC_NUMBERS_H
 
 #include <stdint.h>
-#include <stdbool.h>
 
 typedef uint64_t Bitboard;
 

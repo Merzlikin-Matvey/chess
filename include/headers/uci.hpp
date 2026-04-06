@@ -25,8 +25,8 @@ namespace chess::uci {
         std::istream *input_stream_;
         std::ostream *output_stream_;
 
-        void command_uci(std::string line);
-        void command_isready(std::string line);
+        void command_uci(std::string line)const;
+        void command_isready(std::string line)const;
         void command_position(std::string line);
         void command_go(std::string line);
 

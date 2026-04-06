@@ -23,7 +23,7 @@ int count_positions(Board& board, int depth) {
 }
 
 int main() {
-    Board board = Board("8/ppp3p1/8/8/3p4/8/1ppp2K1/brk2Q1n b - - 12 7");
+    auto  board = Board("8/ppp3p1/8/8/3p4/8/1ppp2K1/brk2Q1n b - - 12 7");
 
     cout << "FEN: " << board.to_fen() << endl;
 

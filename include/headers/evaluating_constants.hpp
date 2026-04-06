@@ -1,9 +1,5 @@
 #pragma once
 
-#include <math.h>
-
-#include <memory>
-#include <unordered_map>
 
 namespace chess::engine::constants {
 

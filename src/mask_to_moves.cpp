@@ -2,15 +2,15 @@
 #include "headers/board.hpp"
 #include "headers/constants.hpp"
 
-void chess::Board::pawn_mask_to_moves(Bitboard mask, int delta, MoveArray* moves, bool en_passant) {
+void chess::Board::pawn_mask_to_moves(Bitboard mask, int delta, MoveArray* moves, bool en_passant)const {
     Move move;
     uint8_t attacker_index;
-    uint8_t attacker_type = Pawn;
-    uint8_t attacker_color = this->white_turn ? White : Black;
+    constexpr uint8_t attacker_type = Pawn;
+    const uint8_t attacker_color = this->white_turn ? White : Black;
     uint8_t opponent_index;
     uint8_t opponent_type;
     uint8_t opponent_color;
-    bool double_move = abs(delta) == 16;
+    const bool double_move = abs(delta) == 16;
 
     while (mask) {
         opponent_index = bitboard_operations::bitScanForward(mask);
@@ -37,7 +37,7 @@ void chess::Board::pawn_mask_to_moves(Bitboard mask, int delta, MoveArray* moves
             opponent_color = 1 - attacker_color;
         }
 
-        bool is_promotion =
+        const bool is_promotion =
             (attacker_color == White && opponent_index >= 56) || (attacker_color == Black && opponent_index <= 7);
 
         if (is_promotion) {
@@ -58,15 +58,13 @@ void chess::Board::pawn_mask_to_moves(Bitboard mask, int delta, MoveArray* moves
     }
 }
 
-void chess::Board::mask_to_moves(Bitboard mask, uint8_t attacker_index, uint8_t attacker_color, uint8_t attacker_type,
-                                 MoveArray* moves) {
-    Move move;
-    uint8_t opponent_index;
+void chess::Board::mask_to_moves(Bitboard mask, const uint8_t attacker_index, const uint8_t attacker_color, const uint8_t attacker_type,
+                                 MoveArray* moves) const {
     uint8_t opponent_type;
     uint8_t opponent_color;
 
     while (mask) {
-        opponent_index = bitboard_operations::bitScanForward(mask);
+        const uint8_t opponent_index = bitboard_operations::bitScanForward(mask);
         bitboard_operations::set_0(mask, opponent_index);
 
         if (bitboard_operations::get_bit(this->side_bitboards[attacker_color], opponent_index)) {
@@ -84,7 +82,7 @@ void chess::Board::mask_to_moves(Bitboard mask, uint8_t attacker_index, uint8_t 
             opponent_color = 1 - attacker_color;
         }
 
-        move = Move(attacker_index, attacker_color, attacker_type, opponent_index, opponent_color, opponent_type, false,
+        const auto move = Move(attacker_index, attacker_color, attacker_type, opponent_index, opponent_color, opponent_type, false,
                     false, false, false, false, false, 255);
 
         moves->push_back(move);

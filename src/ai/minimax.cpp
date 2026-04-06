@@ -13,11 +13,11 @@ double chess::engine::AI::max(Board& board, int depth, double alpha, double beta
         return evaluate_position(board, White);
     }
 
-    double original_alpha = alpha;
-    double original_beta = beta;
+    const double original_alpha = alpha;
+    const double original_beta = beta;
 
     uint32_t tt_move_data = 0;
-    TTEntry* entry = tt.probe(board.current_hash);
+    const TTEntry* entry = tt.probe(board.current_hash);
     if (entry) {
         tt_move_data = entry->best_move;
         if (entry->depth >= depth) {
@@ -36,7 +36,7 @@ double chess::engine::AI::max(Board& board, int depth, double alpha, double beta
         NullMoveState null_state;
         board.make_null_move(null_state);
         board.get_legal_moves();
-        double null_score = min(board, depth - 1 - 2, alpha, beta, false);
+        const double null_score = min(board, depth - 1 - 2, alpha, beta, false);
         board.unmake_null_move(null_state);
         if (null_score >= beta) {
             return beta;
@@ -62,7 +62,7 @@ double chess::engine::AI::max(Board& board, int depth, double alpha, double beta
     double max_score = constants::minimum;
     for (int i = 0; i < moves.size(); i++) {
         PositionState state;
-        Move move = moves.moves[i];
+        const Move move = moves.moves[i];
         board.make_move(move, state);
         board.get_legal_moves();
         double score = min(board, depth - 1, alpha, beta);
@@ -99,11 +99,11 @@ double chess::engine::AI::min(Board& board, int depth, double alpha, double beta
         return evaluate_position(board, White);
     }
 
-    double original_alpha = alpha;
-    double original_beta = beta;
+    const double original_alpha = alpha;
+    const double original_beta = beta;
 
     uint32_t tt_move_data = 0;
-    TTEntry* entry = tt.probe(board.current_hash);
+    const TTEntry* entry = tt.probe(board.current_hash);
     if (entry) {
         tt_move_data = entry->best_move;
         if (entry->depth >= depth) {
@@ -122,7 +122,7 @@ double chess::engine::AI::min(Board& board, int depth, double alpha, double beta
         NullMoveState null_state;
         board.make_null_move(null_state);
         board.get_legal_moves();
-        double null_score = max(board, depth - 1 - 2, alpha, beta, false);
+        const double null_score = max(board, depth - 1 - 2, alpha, beta, false);
         board.unmake_null_move(null_state);
         if (null_score <= alpha) {
             return alpha;

@@ -12,8 +12,8 @@ void chess::Board::clear_history() {
     hashes.clear();
 }
 
-uint8_t chess::Board::get_num_of_repetitions() {
-    zobrist::ZobristHash current_hash = hashes.back();
+uint8_t chess::Board::get_num_of_repetitions()const {
+    const zobrist::ZobristHash current_hash = hashes.back();
     int repetitions = 0;
     for (auto hash : hashes) {
         if (hash == current_hash) {

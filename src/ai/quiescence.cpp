@@ -33,7 +33,7 @@ double chess::engine::AI::quiescence_max(Board& board, double alpha, double beta
         PositionState state;
         board.make_move(moves.moves[i], state);
         board.get_legal_moves();
-        double score = quiescence_min(board, alpha, beta);
+        const double score = quiescence_min(board, alpha, beta);
         board.unmake_move(moves.moves[i], state);
 
         if (score >= beta)
@@ -48,7 +48,7 @@ double chess::engine::AI::quiescence_max(Board& board, double alpha, double beta
 double chess::engine::AI::quiescence_min(Board& board, double alpha, double beta) {
     nodes_searched++;
 
-    double standard_eval = evaluate_position(board, White);
+    const double standard_eval = evaluate_position(board, White);
     if (standard_eval <= alpha)
         return alpha;
     if (beta > standard_eval)
@@ -75,7 +75,7 @@ double chess::engine::AI::quiescence_min(Board& board, double alpha, double beta
         PositionState state;
         board.make_move(moves.moves[i], state);
         board.get_legal_moves();
-        double score = quiescence_max(board, alpha, beta);
+        const double score = quiescence_max(board, alpha, beta);
         board.unmake_move(moves.moves[i], state);
 
         if (score <= alpha)

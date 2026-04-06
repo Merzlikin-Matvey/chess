@@ -8,7 +8,7 @@
 namespace chess::engine {
     class AI {
     public:
-        AI(int begin_depth, int end_depth, size_t tt_size_mb = 1024)
+        AI(const int begin_depth, const int end_depth, const size_t tt_size_mb = 1024)
             : tt(tt_size_mb), begin_depth(begin_depth), end_depth(end_depth) {}
         AI() : AI(3, 5, 3) {}
 

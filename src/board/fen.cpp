@@ -14,7 +14,7 @@ std::array<std::array<Bitboard, 6>, 2> chess::convert_fen_to_bitboards(std::stri
     uint8_t side;
     bool still_figures = true;
 
-    for (auto symbol : fen) {
+    for (const auto symbol : fen) {
         if (symbol == '/') {
             y--;
             x = 0;
@@ -86,18 +86,18 @@ std::array<std::array<Bitboard, 6>, 2> chess::convert_fen_to_bitboards(std::stri
 
 std::array<std::array<Bitboard, 6>, 2> chess::convert_default_positions() {
     std::array<std::array<Bitboard, 6>, 2> piece_bitboards = {{{0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0}}};
-    std::string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
+    const std::string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
     return convert_fen_to_bitboards(fen);
 }
 
 std::string chess::bitboards_to_fen(std::array<std::array<Bitboard, 6>, 2> piece_bitboards) {
     std::string fen = "";
-    std::string figures = "PNBRQKpnbrqk";
+    const std::string figures = "PNBRQKpnbrqk";
 
     for (int rank = 7; rank >= 0; rank--) {
         int empty = 0;
         for (int file = 0; file < 8; file++) {
-            int square = 8 * rank + file;
+            const int square = 8 * rank + file;
 
             bool found = false;
             for (int side = 0; side < 2; side++) {

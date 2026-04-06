@@ -15,7 +15,7 @@ void chess::Board::init_mailbox() {
         for (uint8_t piece = 0; piece < 6; piece++) {
             Bitboard bb = piece_bitboards[color][piece];
             while (bb) {
-                int sq = bitboard_operations::bitScanForward(bb);
+                const int sq = bitboard_operations::bitScanForward(bb);
                 bitboard_operations::set_0(bb, sq);
                 mailbox[sq] = color << 3 | piece;
             }
@@ -92,7 +92,7 @@ chess::Board::Board(std::string fen) {
 }
 
 chess::Board::Board() {
-    std::array<std::array<Bitboard, 6>, 2> board = convert_default_positions();
+    const std::array<std::array<Bitboard, 6>, 2> board = convert_default_positions();
     piece_bitboards = board;
     side_bitboards = {0, 0};
     all = 0;
@@ -146,7 +146,7 @@ int8_t chess::Board::get_piece_type(const Board& board, uint8_t x) {
     return -1;
 }
 
-std::string chess::Board::to_fen() {
+std::string chess::Board::to_fen()const {
     std::string fen = bitboards_to_fen(piece_bitboards);
 
     fen += white_turn ? " w " : " b ";

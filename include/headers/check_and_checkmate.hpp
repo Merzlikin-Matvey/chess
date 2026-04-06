@@ -8,14 +8,14 @@
 namespace chess::masks {
 
     inline Bitboard _get_absolute_rook_mask(Board &board, uint8_t square) {
-        Bitboard mask = board.all & secondary_rook_masks[square];
-        int hash = get_rook_hash(mask, square);
+        const Bitboard mask = board.all & secondary_rook_masks[square];
+        const int hash = get_rook_hash(mask, square);
         return primary_rook_masks[square][hash];
     }
 
     inline Bitboard _get_absolute_bishop_mask(Board &board, uint8_t square) {
-        Bitboard mask = board.all & secondary_bishop_masks[square];
-        int hash = get_bishop_hash(mask, square);
+        const Bitboard mask = board.all & secondary_bishop_masks[square];
+        const int hash = get_bishop_hash(mask, square);
         return primary_bishop_masks[square][hash];
     }
 
@@ -29,11 +29,11 @@ namespace chess::masks {
 }  // namespace chess::masks
 
 inline bool chess::Board::is_position_attacked(uint8_t x) {
-    uint8_t color = white_turn ? White : Black;
-    Bitboard rook_mask = masks::_get_absolute_rook_mask(*this, x);
-    Bitboard bishop_mask = masks::_get_absolute_bishop_mask(*this, x);
-    Bitboard king_mask = masks::_get_absolute_king_mask(x);
-    Bitboard knight_mask = masks::_get_absolute_knight_mask(x);
+    const uint8_t color = white_turn ? White : Black;
+    const Bitboard rook_mask = masks::_get_absolute_rook_mask(*this, x);
+    const Bitboard bishop_mask = masks::_get_absolute_bishop_mask(*this, x);
+    const Bitboard king_mask = masks::_get_absolute_king_mask(x);
+    const Bitboard knight_mask = masks::_get_absolute_knight_mask(x);
 
     if (rook_mask & (piece_bitboards[!color][Rook] | piece_bitboards[!color][Queen])) {
         return true;
@@ -80,19 +80,19 @@ inline bool chess::Board::is_position_attacked(uint8_t x) {
 }
 
 inline bool chess::Board::is_check() {
-    uint8_t color = white_turn ? White : Black;
-    uint8_t king_index = bitboard_operations::bitScanForward(piece_bitboards[color][King]);
+    const uint8_t color = white_turn ? White : Black;
+    const uint8_t king_index = bitboard_operations::bitScanForward(piece_bitboards[color][King]);
     return is_position_attacked(king_index);
 }
 
 inline bool chess::Board::is_double_check() {
     uint16_t count = 0;
-    uint8_t king_index = bitboard_operations::bitScanForward(piece_bitboards[white_turn ? White : Black][King]);
-    uint8_t color = white_turn ? White : Black;
-    Bitboard rook_mask = masks::_get_absolute_rook_mask(*this, king_index);
-    Bitboard bishop_mask = masks::_get_absolute_bishop_mask(*this, king_index);
-    Bitboard king_mask = masks::_get_absolute_king_mask(king_index);
-    Bitboard knight_mask = masks::_get_absolute_knight_mask(king_index);
+    const uint8_t king_index = bitboard_operations::bitScanForward(piece_bitboards[white_turn ? White : Black][King]);
+    const uint8_t color = white_turn ? White : Black;
+    const Bitboard rook_mask = masks::_get_absolute_rook_mask(*this, king_index);
+    const Bitboard bishop_mask = masks::_get_absolute_bishop_mask(*this, king_index);
+    const Bitboard king_mask = masks::_get_absolute_king_mask(king_index);
+    const Bitboard knight_mask = masks::_get_absolute_knight_mask(king_index);
 
     count += bitboard_operations::count_1(rook_mask & (piece_bitboards[!color][Rook] | piece_bitboards[!color][Queen]));
     count +=
@@ -129,18 +129,18 @@ inline bool chess::Board::is_double_check() {
 }
 
 inline bool chess::Board::is_checkmate() {
-    MoveArray &moves = get_legal_moves();
+    const MoveArray &moves = get_legal_moves();
     return moves.size() == 0;
 }
 
 inline Bitboard chess::Board::get_check_mask() {
-    uint8_t color = white_turn ? White : Black;
-    uint8_t king_index = bitboard_operations::bitScanForward(piece_bitboards[color][King]);
+    const uint8_t color = white_turn ? White : Black;
+    const uint8_t king_index = bitboard_operations::bitScanForward(piece_bitboards[color][King]);
     uint8_t opponent_index;
-    Bitboard rook_mask = masks::_get_absolute_rook_mask(*this, king_index);
-    Bitboard bishop_mask = masks::_get_absolute_bishop_mask(*this, king_index);
-    Bitboard king_mask = masks::_get_absolute_king_mask(king_index);
-    Bitboard knight_mask = masks::_get_absolute_knight_mask(king_index);
+    const Bitboard rook_mask = masks::_get_absolute_rook_mask(*this, king_index);
+    const Bitboard bishop_mask = masks::_get_absolute_bishop_mask(*this, king_index);
+    const Bitboard king_mask = masks::_get_absolute_king_mask(king_index);
+    const Bitboard knight_mask = masks::_get_absolute_knight_mask(king_index);
 
     if (rook_mask & (piece_bitboards[!color][Rook] | piece_bitboards[!color][Queen])) {
         opponent_index = bitboard_operations::bitScanForward(
@@ -196,12 +196,12 @@ inline Bitboard chess::Board::get_check_mask() {
     return 0;
 }
 
-inline bool chess::Board::is_draw() {
-    uint8_t pawn_material = 1;
-    uint8_t knight_material = 3;
-    uint8_t bishop_material = 3;
-    uint8_t rook_material = 5;
-    uint8_t queen_material = 9;
+inline bool chess::Board::is_draw()const {
+    const uint8_t pawn_material = 1;
+    const uint8_t knight_material = 3;
+    const uint8_t bishop_material = 3;
+    const uint8_t rook_material = 5;
+    const uint8_t queen_material = 9;
 
     int count = 0;
     count += bitboard_operations::count_1(piece_bitboards[White][Pawn]) * pawn_material;

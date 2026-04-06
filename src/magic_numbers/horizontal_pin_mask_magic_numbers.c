@@ -31,8 +31,8 @@ const int left_bits[64] = {
 
 Bitboard _set_horizontal_pin_board(uint8_t square, uint8_t blockers){
     Bitboard board = 0;
-    int right = right_bits[square];
-    int left = left_bits[square];
+    const int right = right_bits[square];
+    const int left = left_bits[square];
 
     for (int i = 0; i < right; i++){
         if (_c_bitboard_operations_get_bit(blockers, i)){
@@ -56,7 +56,7 @@ uint16_t _get_horizontal_pin_mask_hash(Bitboard board, uint64_t magic_number){
 bool is_horizontal_pin_magic_number_valid(uint8_t square, uint64_t magic_number){
     Bitboard board;
     uint16_t hash;
-    uint16_t number_of_positions = pow(2, 7);
+    const uint16_t number_of_positions = pow(2, 7);
     bool* array = calloc(number_of_positions, sizeof(bool));
 
     for (int i = 0; i < number_of_positions; i++){

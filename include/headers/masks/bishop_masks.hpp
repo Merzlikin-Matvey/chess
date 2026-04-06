@@ -1,7 +1,6 @@
 #pragma once
 
 #include <array>
-#include <iostream>
 
 #include "headers/bitboard_lines.hpp"
 #include "headers/bitboard_operations.hpp"
@@ -29,22 +28,22 @@ namespace chess::masks {
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 2, 2, 2, 2, 2, 1, 0, 0,
         3, 3, 3, 3, 2, 1, 0, 0, 4, 4, 4, 3, 2, 1, 0, 0, 5, 5, 4, 3, 2, 1, 0, 0, 6, 5, 4, 3, 2, 1, 0, 0};
 
-    constexpr int get_bishop_hash(Bitboard board, uint8_t square) {
-        Bitboard magic_number = magic_numbers::bishop_magic_numbers[square];
-        int num_bits = bishop_up_right_bits[square] + bishop_down_right_bits[square] + bishop_up_left_bits[square] +
+    constexpr int get_bishop_hash(const Bitboard board, const uint8_t square) {
+        const Bitboard magic_number = magic_numbers::bishop_magic_numbers[square];
+        const int num_bits = bishop_up_right_bits[square] + bishop_down_right_bits[square] + bishop_up_left_bits[square] +
                        bishop_down_left_bits[square];
-        int hash = (board * magic_number) >> (64 - num_bits);
+        const int hash = (board * magic_number) >> (64 - num_bits);
         return hash;
     }
 
-    static constexpr std::array<Bitboard, 512> generate_primary_bishop_masks(uint8_t square) {
+    static constexpr std::array<Bitboard, 512> generate_primary_bishop_masks(const uint8_t square) {
         std::array<Bitboard, 512> masks = {};
         Bitboard board, mask;
-        uint8_t num_bishop_up_right_bits = bishop_up_right_bits[square];
-        uint8_t num_bishop_down_right_bits = bishop_down_right_bits[square];
-        uint8_t num_bishop_up_left_bits = bishop_up_left_bits[square];
-        uint8_t num_bishop_down_left_bits = bishop_down_left_bits[square];
-        uint8_t num_bits =
+        const uint8_t num_bishop_up_right_bits = bishop_up_right_bits[square];
+        const uint8_t num_bishop_down_right_bits = bishop_down_right_bits[square];
+        const uint8_t num_bishop_up_left_bits = bishop_up_left_bits[square];
+        const uint8_t num_bishop_down_left_bits = bishop_down_left_bits[square];
+        const uint8_t num_bits =
             num_bishop_up_right_bits + num_bishop_down_right_bits + num_bishop_up_left_bits + num_bishop_down_left_bits;
         int hash;
         bool flag;
@@ -130,12 +129,12 @@ namespace chess::masks {
         return masks;
     }
 
-    static constexpr Bitboard get_secondary_bishop_mask(uint8_t square) {
+    static constexpr Bitboard get_secondary_bishop_mask(const uint8_t square) {
         Bitboard mask = 0;
-        uint8_t num_bishop_up_right_bits = bishop_up_right_bits[square];
-        uint8_t num_bishop_down_right_bits = bishop_down_right_bits[square];
-        uint8_t num_bishop_up_left_bits = bishop_up_left_bits[square];
-        uint8_t num_bishop_down_left_bits = bishop_down_left_bits[square];
+        const uint8_t num_bishop_up_right_bits = bishop_up_right_bits[square];
+        const uint8_t num_bishop_down_right_bits = bishop_down_right_bits[square];
+        const uint8_t num_bishop_up_left_bits = bishop_up_left_bits[square];
+        const uint8_t num_bishop_down_left_bits = bishop_down_left_bits[square];
 
         for (uint8_t i = 0; i < num_bishop_up_right_bits; i++) {
             bitboard_operations::set_1(mask, square + 9 * (i + 1));

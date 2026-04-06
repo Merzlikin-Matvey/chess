@@ -10,17 +10,17 @@
 #include "headers/masks/number_of_bits.hpp"
 
 namespace chess::masks {
-    constexpr int get_vertical_pin_hash(Bitboard board, uint8_t square) {
-        Bitboard magic_number = magic_numbers::vertical_pin_magic_numbers[square];
-        int num_bits = up_bits[square] + down_bits[square];
+    constexpr int get_vertical_pin_hash(const Bitboard board, const uint8_t square) {
+        const Bitboard magic_number = magic_numbers::vertical_pin_magic_numbers[square];
+        const int num_bits = up_bits[square] + down_bits[square];
         return (board * magic_number) >> (64 - num_bits);
     }
 
-    static constexpr std::array<Bitboard, 128> generate_rook_or_queen_vertical_pin_masks(uint8_t square) {
+    static constexpr std::array<Bitboard, 128> generate_rook_or_queen_vertical_pin_masks(const uint8_t square) {
         std::array<Bitboard, 128> masks = {};
         Bitboard board, mask;
-        uint8_t num_up_bits = up_bits[square];
-        uint8_t num_down_bits = down_bits[square];
+        const uint8_t num_up_bits = up_bits[square];
+        const uint8_t num_down_bits = down_bits[square];
         int hash;
         bool flag;
 
@@ -66,11 +66,11 @@ namespace chess::masks {
         return masks;
     }
 
-    static constexpr std::array<Bitboard, 128> generate_opposite_vertical_pin_masks(uint8_t square) {
+    static constexpr std::array<Bitboard, 128> generate_opposite_vertical_pin_masks(const uint8_t square) {
         std::array<Bitboard, 128> masks = {};
         Bitboard board, mask;
-        uint8_t num_up_bits = up_bits[square];
-        uint8_t num_down_bits = down_bits[square];
+        const uint8_t num_up_bits = up_bits[square];
+        const uint8_t num_down_bits = down_bits[square];
         int hash;
         int count = 0;
 
@@ -118,11 +118,11 @@ namespace chess::masks {
         return masks;
     }
 
-    static constexpr std::array<Bitboard, 128> generate_vertical_teammate_pin_masks(uint8_t square) {
+    static constexpr std::array<Bitboard, 128> generate_vertical_teammate_pin_masks(const uint8_t square) {
         std::array<Bitboard, 128> masks = {};
         Bitboard board, mask;
-        uint8_t num_up_bits = up_bits[square];
-        uint8_t num_down_bits = down_bits[square];
+        const uint8_t num_up_bits = up_bits[square];
+        const uint8_t num_down_bits = down_bits[square];
         int hash;
         int count = 0;
 
@@ -168,7 +168,7 @@ namespace chess::masks {
         return masks;
     }
 
-    static constexpr Bitboard generate_secondary_vertical_pin_mask(uint8_t square) {
+    static constexpr Bitboard generate_secondary_vertical_pin_mask(const uint8_t square) {
         Bitboard column = bitboard_operations::columns[square % 8];
         bitboard_operations::set_0(column, square);
         return column;
@@ -188,18 +188,18 @@ namespace chess::masks {
     constexpr std::array<std::array<Bitboard, 128>, 64> opposite_vertical_pin_masks = get_opposite_vertical_pin_masks();
     constexpr std::array<std::array<Bitboard, 128>, 64> teammate_vertical_pin_masks = get_teammate_vertical_pin_masks();
 
-    inline Bitboard get_vertical_pin_mask(Board& board, uint8_t square, uint8_t color) {
-        int rook_or_queen_hash =
+    inline Bitboard get_vertical_pin_mask(Board& board, const uint8_t square, const uint8_t color) {
+        const int rook_or_queen_hash =
             get_vertical_pin_hash(secondary_vertical_pin_masks[square] & (board.piece_bitboards[!color][Rook] |
                                                                           board.piece_bitboards[!color][Queen]),
                                   square);
-        Bitboard rook_or_queen = rook_or_queen_vertical_pin_masks[square][rook_or_queen_hash];
+        const Bitboard rook_or_queen = rook_or_queen_vertical_pin_masks[square][rook_or_queen_hash];
 
-        int opposite_hash = get_vertical_pin_hash(board.side_bitboards[!color] & rook_or_queen, square);
-        Bitboard opposite = rook_or_queen & opposite_vertical_pin_masks[square][opposite_hash];
+        const int opposite_hash = get_vertical_pin_hash(board.side_bitboards[!color] & rook_or_queen, square);
+        const Bitboard opposite = rook_or_queen & opposite_vertical_pin_masks[square][opposite_hash];
 
-        int teammate_hash = get_vertical_pin_hash(board.side_bitboards[color] & opposite, square);
-        Bitboard teammate = opposite & teammate_vertical_pin_masks[square][teammate_hash];
+        const int teammate_hash = get_vertical_pin_hash(board.side_bitboards[color] & opposite, square);
+        const Bitboard teammate = opposite & teammate_vertical_pin_masks[square][teammate_hash];
 
         return teammate;
     }

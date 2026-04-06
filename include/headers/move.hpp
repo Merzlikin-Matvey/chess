@@ -3,7 +3,6 @@
 #include <algorithm>
 #include <array>
 #include <cstdint>
-#include <memory>
 #include <string>
 
 typedef uint64_t Bitboard;
@@ -74,7 +73,7 @@ namespace chess {
 
     class MoveArray {
     public:
-        MoveArray() : _size(0) {}
+        MoveArray()  {}
         std::array<Move, 218> moves{};
         int size() const { return _size; }
 

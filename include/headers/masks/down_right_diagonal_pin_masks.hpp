@@ -4,26 +4,25 @@
 #include "headers/bitboard_operations.hpp"
 #include "headers/board.hpp"
 #include "headers/constants.hpp"
-#include "headers/magic_numbers.hpp"
 #include "headers/masks/masks_utils.hpp"
 #include "headers/masks/number_of_bits.hpp"
 
 namespace chess::masks {
-    constexpr int get_down_right_pin_hash(Bitboard board, uint8_t square) {
-        Bitboard magic_number = magic_numbers::down_right_pin_magic_numbers[square];
-        int num_bits = down_right_bits[square] + up_left_bits[square];
+    constexpr int get_down_right_pin_hash(const Bitboard board, const uint8_t square) {
+        const Bitboard magic_number = magic_numbers::down_right_pin_magic_numbers[square];
+        const int num_bits = down_right_bits[square] + up_left_bits[square];
         if (num_bits == 0) {
             return 0;
         }
         return (board * magic_number) >> (64 - num_bits);
     }
 
-    static constexpr std::array<Bitboard, 128> generate_bishop_or_queen_down_right_pin_masks(uint8_t square) {
+    static constexpr std::array<Bitboard, 128> generate_bishop_or_queen_down_right_pin_masks(const uint8_t square) {
         std::array<Bitboard, 128> masks = {};
         Bitboard board, mask;
-        uint8_t num_down_right_bits = down_right_bits[square];
-        uint8_t num_up_left_bits = up_left_bits[square];
-        uint16_t num_of_permutations = 1 << (num_down_right_bits + num_up_left_bits);
+        const uint8_t num_down_right_bits = down_right_bits[square];
+        const uint8_t num_up_left_bits = up_left_bits[square];
+        const uint16_t num_of_permutations = 1 << (num_down_right_bits + num_up_left_bits);
         int hash;
         bool flag;
 
@@ -67,12 +66,12 @@ namespace chess::masks {
         return masks;
     }
 
-    static constexpr std::array<Bitboard, 128> generate_opposite_down_right_pin_masks(uint8_t square) {
+    static constexpr std::array<Bitboard, 128> generate_opposite_down_right_pin_masks(const uint8_t square) {
         std::array<Bitboard, 128> masks = {};
         Bitboard board, mask;
-        uint8_t num_down_right_bits = down_right_bits[square];
-        uint8_t num_up_left_bits = up_left_bits[square];
-        uint16_t num_of_permutations = 1 << (num_down_right_bits + num_up_left_bits);
+        const uint8_t num_down_right_bits = down_right_bits[square];
+        const uint8_t num_up_left_bits = up_left_bits[square];
+        const uint16_t num_of_permutations = 1 << (num_down_right_bits + num_up_left_bits);
         int hash;
         int count;
 
@@ -121,12 +120,12 @@ namespace chess::masks {
         return masks;
     }
 
-    static constexpr std::array<Bitboard, 128> generate_teammate_down_right_pin_masks(int square) {
+    static constexpr std::array<Bitboard, 128> generate_teammate_down_right_pin_masks(const int square) {
         std::array<Bitboard, 128> masks = {};
         Bitboard board, mask;
-        uint8_t num_down_right_bits = down_right_bits[square];
-        uint8_t num_up_left_bits = up_left_bits[square];
-        uint16_t num_of_permutations = 1 << (num_down_right_bits + num_up_left_bits);
+        const uint8_t num_down_right_bits = down_right_bits[square];
+        const uint8_t num_up_left_bits = up_left_bits[square];
+        const uint16_t num_of_permutations = 1 << (num_down_right_bits + num_up_left_bits);
         int hash;
         int count;
 
@@ -175,10 +174,10 @@ namespace chess::masks {
         return masks;
     }
 
-    static constexpr Bitboard generate_secondary_down_right_pin_mask(uint8_t square) {
+    static constexpr Bitboard generate_secondary_down_right_pin_mask(const uint8_t square) {
         Bitboard mask = 0;
-        uint8_t num_down_right_bits = down_right_bits[square];
-        uint8_t num_up_left_bits = up_left_bits[square];
+        const uint8_t num_down_right_bits = down_right_bits[square];
+        const uint8_t num_up_left_bits = up_left_bits[square];
         mask |= lines[square + 7 * num_up_left_bits][square];
         mask |= lines[square - 7 * num_down_right_bits][square];
         return mask;
@@ -200,18 +199,18 @@ namespace chess::masks {
     constexpr std::array<std::array<Bitboard, 128>, 64> bishop_or_queen_down_right_pin_masks =
         get_bishop_or_queen_down_right_pin_masks();
 
-    inline Bitboard get_down_right_pin_mask(Board& board, uint8_t square, uint8_t color) {
-        int bishop_or_queen_hash = get_down_right_pin_hash(
+    inline Bitboard get_down_right_pin_mask(Board& board, const uint8_t square, const uint8_t color) {
+        const int bishop_or_queen_hash = get_down_right_pin_hash(
             secondary_down_right_pin_masks[square] &
                 (board.piece_bitboards[!color][Bishop] | board.piece_bitboards[!color][Queen]),
             square);
-        Bitboard bishop_or_queen = bishop_or_queen_down_right_pin_masks[square][bishop_or_queen_hash];
+        const Bitboard bishop_or_queen = bishop_or_queen_down_right_pin_masks[square][bishop_or_queen_hash];
 
-        int opposite_hash = get_down_right_pin_hash(board.side_bitboards[!color] & bishop_or_queen, square);
-        Bitboard opposite = bishop_or_queen & opposite_down_right_pin_masks[square][opposite_hash];
+        const int opposite_hash = get_down_right_pin_hash(board.side_bitboards[!color] & bishop_or_queen, square);
+        const Bitboard opposite = bishop_or_queen & opposite_down_right_pin_masks[square][opposite_hash];
 
-        int teammate_hash = get_down_right_pin_hash(board.side_bitboards[color] & opposite, square);
-        Bitboard teammate = opposite & teammate_down_right_pin_masks[square][teammate_hash];
+        const int teammate_hash = get_down_right_pin_hash(board.side_bitboards[color] & opposite, square);
+        const Bitboard teammate = opposite & teammate_down_right_pin_masks[square][teammate_hash];
 
         return teammate;
     }

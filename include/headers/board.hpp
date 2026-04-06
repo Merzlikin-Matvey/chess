@@ -1,7 +1,6 @@
 #pragma once
 
 #include <array>
-#include <memory>
 #include <vector>
 
 #include "headers/move.hpp"
@@ -82,7 +81,7 @@ namespace chess {
         void add_hash_to_history(zobrist::ZobristHash hash);
         void add_hash_to_history();
         void clear_history();
-        uint8_t get_num_of_repetitions();
+        uint8_t get_num_of_repetitions()const;
 
         void move(Move move);
         void move(const std::string& move);
@@ -99,18 +98,18 @@ namespace chess {
         static MoveArray distil_pawn_moves(MoveArray moves);
         std::vector<std::string> move_history;
 
-        bool is_begin();
-        bool is_end();
+        bool is_begin()const;
+        bool is_end()const;
 
-        void pawn_mask_to_moves(Bitboard mask, int delta, MoveArray* moves, bool en_passant);
+        void pawn_mask_to_moves(Bitboard mask, int delta, MoveArray* moves, bool en_passant)const;
         void mask_to_moves(Bitboard mask, uint8_t attacker_index, uint8_t attacker_color, uint8_t attacker_type,
-                           MoveArray* moves);
+                           MoveArray* moves)const;
 
         bool is_position_attacked(uint8_t x);
         bool is_check();
         bool is_checkmate();
         bool is_double_check();
-        bool is_draw();
+        bool is_draw()const;
 
         int get_winner();
 
@@ -125,7 +124,7 @@ namespace chess {
         int8_t get_piece_type(const Board& board, uint8_t x, uint8_t y);
         int8_t get_piece_type(const Board& board, uint8_t x);
 
-        std::string to_fen();
+        std::string to_fen()const;
 
         void init_mailbox();
     };

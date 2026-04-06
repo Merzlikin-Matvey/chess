@@ -16,11 +16,11 @@ chess::uci::UCI::UCI() {
 }
 
 std::string trim(const std::string &str) {
-    size_t first = str.find_first_not_of(' ');
+    const size_t first = str.find_first_not_of(' ');
     if (std::string::npos == first) {
         return str;
     }
-    size_t last = str.find_last_not_of(' ');
+    const size_t last = str.find_last_not_of(' ');
     return str.substr(first, last - first + 1);
 }
 
@@ -54,13 +54,13 @@ void chess::uci::UCI::start_handle() {
     }
 }
 
-void chess::uci::UCI::command_uci(std::string line) {
+void chess::uci::UCI::command_uci(std::string line)const {
     send("id name ChessLib");
     send("id author Matvey Merzlikin");
     send("uciok");
 }
 
-void chess::uci::UCI::command_isready(std::string line) {
+void chess::uci::UCI::command_isready(std::string line)const {
     send("readyok");
 }
 
@@ -120,13 +120,13 @@ void chess::uci::UCI::command_position(std::string line) {
 
 void chess::uci::UCI::command_go(std::string line) {
     add_log("searching move", DEBUG);
-    auto move = ai_.search(board_);
+    const auto move = ai_.search(board_);
     send("bestmove " + move);
 }
 
 std::string get_time() {
-    std::time_t now = std::time(nullptr);
-    std::tm *local_time = std::localtime(&now);
+    const std::time_t now = std::time(nullptr);
+    const std::tm *local_time = std::localtime(&now);
     char buffer[80];
     std::strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", local_time);
     return std::string(buffer);

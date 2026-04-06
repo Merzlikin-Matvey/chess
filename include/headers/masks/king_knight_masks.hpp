@@ -1,7 +1,6 @@
 #pragma once
 
 #include <array>
-#include <memory>
 
 typedef uint64_t Bitboard;
 

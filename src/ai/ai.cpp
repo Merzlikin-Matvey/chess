@@ -25,7 +25,7 @@ std::string chess::engine::AI::root_search(Board& board, int depth) {
     sort_moves(&moves);
 
     uint32_t tt_move_data = 0;
-    TTEntry* entry = tt.probe(board.current_hash);
+    const TTEntry* entry = tt.probe(board.current_hash);
     if (entry) {
         tt_move_data = entry->best_move;
     }

@@ -24,7 +24,7 @@ namespace chess::engine {
         explicit TranspositionTable(size_t size_mb = 64) { resize(size_mb); }
 
         void resize(size_t size_mb) {
-            size_t num_entries = size_mb * 1024 * 1024 / sizeof(TTEntry);
+            const size_t num_entries = size_mb * 1024 * 1024 / sizeof(TTEntry);
             size_t size = 1;
             while (size * 2 <= num_entries)
                 size *= 2;
@@ -32,7 +32,7 @@ namespace chess::engine {
             mask = size - 1;
         }
 
-        void clear() { std::fill(table.begin(), table.end(), TTEntry{}); }
+        void clear() { std::ranges::fill(table, TTEntry{}); }
 
         TTEntry* probe(uint64_t hash) {
             TTEntry& entry = table[hash & mask];

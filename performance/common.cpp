@@ -47,14 +47,14 @@ std::string pretty_number(uint64_t n) {
 }
 
 std::string pretty_time(std::chrono::duration<double> duration){
-    double ms = std::chrono::duration<double, std::milli>(duration).count();
+    const double ms = std::chrono::duration<double, std::milli>(duration).count();
     if (ms < 1'000) {
         return round(std::to_string(ms)) + " ms";
     }
-    double s = ms / 1'000;
+    const double s = ms / 1'000;
     if (s < 60) {
         return round(std::to_string(s)) + " s";
     }
-    double m = s / 60;
+    const double m = s / 60;
     return round(std::to_string(m)) + " min";
 }

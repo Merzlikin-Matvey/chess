@@ -30,8 +30,8 @@ const int down_right_bits[64] = {
 
 Bitboard _set_down_right_pin_board(uint8_t square, uint8_t blockers){
     Bitboard board = 0;
-    int up_left = up_left_bits[square];
-    int down_right = down_right_bits[square];
+    const int up_left = up_left_bits[square];
+    const int down_right = down_right_bits[square];
 
     for (int i = 0; i < up_left; i++){
         if (_c_bitboard_operations_get_bit(blockers, i)){
@@ -53,14 +53,14 @@ uint8_t _get_number_of_down_right_pin_mask_bits(uint8_t square) {
 }
 
 uint16_t _get_down_right_pin_mask_hash(Bitboard board, uint64_t magic_number, uint8_t square){
-    uint8_t number_of_bits = _get_number_of_down_right_pin_mask_bits(square);
+    const uint8_t number_of_bits = _get_number_of_down_right_pin_mask_bits(square);
     return (uint16_t)((board * magic_number) >> (64 - number_of_bits));
 }
 
 bool is_down_right_pin_magic_number_valid(uint8_t square, uint64_t magic_number){
     Bitboard board;
     uint16_t hash;
-    uint16_t number_of_positions = pow(2, _get_number_of_down_right_pin_mask_bits(square));
+    const uint16_t number_of_positions = pow(2, _get_number_of_down_right_pin_mask_bits(square));
     bool* array = calloc(number_of_positions, sizeof(bool));
 
     for (uint16_t blocker = 0; blocker < number_of_positions; blocker++){

@@ -23,20 +23,20 @@ namespace chess::masks {
                                                      5, 6, 0, 0, 1, 2, 3, 4, 5, 6, 0, 0, 1, 2, 3, 4, 5, 6, 0, 0, 1, 2,
                                                      3, 4, 5, 6, 0, 0, 1, 2, 3, 4, 5, 6, 0, 0, 1, 2, 3, 4, 5, 6};
 
-    constexpr int get_rook_hash(Bitboard board, uint8_t square) {
-        Bitboard magic_number = magic_numbers::rook_magic_numbers[square];
-        int num_bits = rook_up_bits[square] + rook_down_bits[square] + rook_right_bits[square] + rook_left_bits[square];
+    constexpr int get_rook_hash(const Bitboard board, const uint8_t square) {
+        const Bitboard magic_number = magic_numbers::rook_magic_numbers[square];
+        const int num_bits = rook_up_bits[square] + rook_down_bits[square] + rook_right_bits[square] + rook_left_bits[square];
         return (board * magic_number) >> (64 - num_bits);
     }
 
-    constexpr std::array<Bitboard, 4096> generate_primary_rook_masks(uint8_t square) {
+    constexpr std::array<Bitboard, 4096> generate_primary_rook_masks(const uint8_t square) {
         std::array<Bitboard, 4096> masks = {};
         Bitboard board, mask;
-        uint8_t num_up_bits = rook_up_bits[square];
-        uint8_t num_down_bits = rook_down_bits[square];
-        uint8_t num_right_bits = rook_right_bits[square];
-        uint8_t num_left_bits = rook_left_bits[square];
-        uint8_t num_bits = num_up_bits + num_down_bits + num_right_bits + num_left_bits;
+        const uint8_t num_up_bits = rook_up_bits[square];
+        const uint8_t num_down_bits = rook_down_bits[square];
+        const uint8_t num_right_bits = rook_right_bits[square];
+        const uint8_t num_left_bits = rook_left_bits[square];
+        const uint8_t num_bits = num_up_bits + num_down_bits + num_right_bits + num_left_bits;
         int hash;
         bool flag;
 
@@ -119,12 +119,12 @@ namespace chess::masks {
         return masks;
     }
 
-    static constexpr Bitboard generate_secondary_rook_mask(uint8_t square) {
+    static constexpr Bitboard generate_secondary_rook_mask(const uint8_t square) {
         Bitboard mask = 0;
-        uint8_t num_up_bits = rook_up_bits[square];
-        uint8_t num_down_bits = rook_down_bits[square];
-        uint8_t num_right_bits = rook_right_bits[square];
-        uint8_t num_left_bits = rook_left_bits[square];
+        const uint8_t num_up_bits = rook_up_bits[square];
+        const uint8_t num_down_bits = rook_down_bits[square];
+        const uint8_t num_right_bits = rook_right_bits[square];
+        const uint8_t num_left_bits = rook_left_bits[square];
 
         for (uint8_t i = 0; i < num_up_bits; i++) {
             bitboard_operations::set_1(mask, square + 8 * (i + 1));

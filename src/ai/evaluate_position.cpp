@@ -3,8 +3,8 @@
 #include "headers/evaluating_constants.hpp"
 
 double chess::engine::evaluate_position(Board& board, uint8_t color) {
-    uint8_t board_color = board.white_turn ? White : Black;
-    uint8_t king_index = bitboard_operations::bitScanForward(board.piece_bitboards[color][King]);
+    const uint8_t board_color = board.white_turn ? White : Black;
+    const uint8_t king_index = bitboard_operations::bitScanForward(board.piece_bitboards[color][King]);
     double score = 0;
 
     if (board.legal_moves.size() == 0) {
@@ -129,10 +129,10 @@ double chess::engine::evaluate_position(Board& board, uint8_t color) {
         }
     }
 
-    Bitboard right_defended_pawns =
+    const Bitboard right_defended_pawns =
         (board.piece_bitboards[color][Pawn] & ~bitboard_operations::columns[7]) << 7 &
         board.piece_bitboards[color][Pawn];
-    Bitboard left_defended_pawns =
+    const Bitboard left_defended_pawns =
         (board.piece_bitboards[color][Pawn] & ~bitboard_operations::columns[0]) << 9 &
         board.piece_bitboards[color][Pawn];
 

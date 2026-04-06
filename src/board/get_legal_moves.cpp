@@ -4,11 +4,16 @@
 #include "headers/board.hpp"
 #include "headers/check_and_checkmate.hpp"
 #include "headers/constants.hpp"
-#include "headers/masks/masks.hpp"
 #include "headers/move.hpp"
+#include "headers/masks/down_right_diagonal_pin_masks.hpp"
+#include "headers/masks/horizontal_pin_masks.hpp"
+#include "headers/masks/masks.hpp"
+#include "headers/masks/pawn_masks.hpp"
+#include "headers/masks/up_right_diagonal_pin_masks.hpp"
+#include "headers/masks/vertical_pin_masks.hpp"
 
 void chess::Board::castling(MoveArray* moves) {
-    uint8_t color = white_turn ? White : Black;
+    const uint8_t color = white_turn ? White : Black;
 
     if (color == White) {
         // Long
@@ -77,8 +82,8 @@ Bitboard chess::Board::get_king_legal_moves_mask() {
 
 chess::MoveArray& chess::Board::get_legal_moves() {
     legal_moves.clear();
-    uint8_t color = white_turn ? White : Black;
-    uint8_t king_position = bitboard_operations::bitScanForward(piece_bitboards[color][King]);
+    const uint8_t color = white_turn ? White : Black;
+    const uint8_t king_position = bitboard_operations::bitScanForward(piece_bitboards[color][King]);
 
     if (is_double_check()) {
         check_status = 2;
@@ -87,22 +92,22 @@ chess::MoveArray& chess::Board::get_legal_moves() {
     }
     check_status = is_position_attacked(king_position) ? 1 : 0;
 
-    Bitboard vertical_pin_mask = masks::get_vertical_pin_mask(*this, king_position, color);
-    Bitboard horizontal_pin_mask = masks::get_horizontal_pin_mask(*this, king_position, color);
-    Bitboard up_right_pin_mask = masks::get_up_right_pin_mask(*this, king_position, color);
-    Bitboard up_left_pin_mask = masks::get_down_right_pin_mask(*this, king_position, color);
-    Bitboard pin_mask = vertical_pin_mask | horizontal_pin_mask | up_right_pin_mask | up_left_pin_mask;
-    Bitboard inverse_pin_mask = ~pin_mask;
+    const Bitboard vertical_pin_mask = masks::get_vertical_pin_mask(*this, king_position, color);
+    const Bitboard horizontal_pin_mask = masks::get_horizontal_pin_mask(*this, king_position, color);
+    const Bitboard up_right_pin_mask = masks::get_up_right_pin_mask(*this, king_position, color);
+    const Bitboard up_left_pin_mask = masks::get_down_right_pin_mask(*this, king_position, color);
+    const Bitboard pin_mask = vertical_pin_mask | horizontal_pin_mask | up_right_pin_mask | up_left_pin_mask;
+    const Bitboard inverse_pin_mask = ~pin_mask;
 
     uint8_t square;
 
     if (check_status == 1) {
-        Bitboard check_mask = get_check_mask();
+        const Bitboard check_mask = get_check_mask();
 
         // Pinned pawns
-        Bitboard vertical_pinned_pawns = piece_bitboards[color][Pawn] & vertical_pin_mask;
-        Bitboard up_right_pinned_pawns = piece_bitboards[color][Pawn] & up_right_pin_mask;
-        Bitboard up_left_pinned_pawns = piece_bitboards[color][Pawn] & up_left_pin_mask;
+        const Bitboard vertical_pinned_pawns = piece_bitboards[color][Pawn] & vertical_pin_mask;
+        const Bitboard up_right_pinned_pawns = piece_bitboards[color][Pawn] & up_right_pin_mask;
+        const Bitboard up_left_pinned_pawns = piece_bitboards[color][Pawn] & up_left_pin_mask;
         pawn_mask_to_moves(masks::get_pawn_mask(vertical_pinned_pawns, *this) & check_mask & vertical_pin_mask, 8,
                            &legal_moves, false);
         pawn_mask_to_moves(masks::get_pawn_long_mask(vertical_pinned_pawns, *this) & check_mask & vertical_pin_mask, 16,
@@ -161,7 +166,7 @@ chess::MoveArray& chess::Board::get_legal_moves() {
         }
 
         // Pawns
-        Bitboard pawns = piece_bitboards[color][Pawn] & inverse_pin_mask;
+        const Bitboard pawns = piece_bitboards[color][Pawn] & inverse_pin_mask;
         pawn_mask_to_moves(masks::get_pawn_mask(pawns, *this) & check_mask, 8, &legal_moves, false);
         pawn_mask_to_moves(masks::get_pawn_long_mask(pawns, *this) & check_mask, 16, &legal_moves, false);
         if (color == White) {
@@ -174,20 +179,20 @@ chess::MoveArray& chess::Board::get_legal_moves() {
 
         // En passant during check (only if capturing the checking pawn)
         if (en_passant_square >= 0) {
-            uint8_t captured_sq = color == White ? en_passant_square - 8 : en_passant_square + 8;
+            const uint8_t captured_sq = color == White ? en_passant_square - 8 : en_passant_square + 8;
             if (bitboard_operations::get_bit(check_mask, captured_sq)) {
-                Bitboard ep_masks[] = {masks::get_right_en_passant_mask(pawns, *this),
+                const Bitboard ep_masks[] = {masks::get_right_en_passant_mask(pawns, *this),
                                        masks::get_left_en_passant_mask(pawns, *this)};
-                int deltas_w[] = {9, 7};
-                int deltas_b[] = {7, 9};
-                int* deltas = color == White ? deltas_w : deltas_b;
+                constexpr std::array deltas_w = {9, 7};
+                constexpr std::array deltas_b = {7, 9};
+                const std::array deltas = color == White ? deltas_w : deltas_b;
 
                 for (int d = 0; d < 2; d++) {
                     Bitboard ep = ep_masks[d];
                     while (ep) {
-                        uint8_t target = bitboard_operations::bitScanForward(ep);
+                        const uint8_t target = bitboard_operations::bitScanForward(ep);
                         bitboard_operations::set_0(ep, target);
-                        uint8_t src = white_turn ? target - deltas[d] : target + deltas[d];
+                        const uint8_t src = white_turn ? target - deltas[d] : target + deltas[d];
 
                         bitboard_operations::set_0(piece_bitboards[color][Pawn], src);
                         bitboard_operations::set_0(side_bitboards[color], src);
@@ -199,7 +204,7 @@ chess::MoveArray& chess::Board::get_legal_moves() {
                         bitboard_operations::set_1(side_bitboards[color], target);
                         bitboard_operations::set_1(all, target);
 
-                        bool valid = !is_check();
+                        const bool valid = !is_check();
 
                         bitboard_operations::set_1(piece_bitboards[color][Pawn], src);
                         bitboard_operations::set_1(side_bitboards[color], src);
@@ -212,7 +217,7 @@ chess::MoveArray& chess::Board::get_legal_moves() {
                         bitboard_operations::set_0(all, target);
 
                         if (valid) {
-                            Bitboard single = 1ull << target;
+                            const Bitboard single = 1ull << target;
                             pawn_mask_to_moves(single, deltas[d], &legal_moves, true);
                         }
                     }
@@ -257,9 +262,9 @@ chess::MoveArray& chess::Board::get_legal_moves() {
         mask_to_moves(get_king_legal_moves_mask(), king_position, color, King, &legal_moves);
     } else {
         // Pinned pawns
-        Bitboard vertical_pinned_pawns = piece_bitboards[color][Pawn] & vertical_pin_mask;
-        Bitboard up_right_pinned_pawns = piece_bitboards[color][Pawn] & up_right_pin_mask;
-        Bitboard up_left_pinned_pawns = piece_bitboards[color][Pawn] & up_left_pin_mask;
+        const Bitboard vertical_pinned_pawns = piece_bitboards[color][Pawn] & vertical_pin_mask;
+        const Bitboard up_right_pinned_pawns = piece_bitboards[color][Pawn] & up_right_pin_mask;
+        const Bitboard up_left_pinned_pawns = piece_bitboards[color][Pawn] & up_left_pin_mask;
         pawn_mask_to_moves(masks::get_pawn_mask(vertical_pinned_pawns, *this), 8, &legal_moves, false);
         pawn_mask_to_moves(masks::get_pawn_long_mask(vertical_pinned_pawns, *this), 16, &legal_moves, false);
         if (color == White) {
@@ -308,7 +313,7 @@ chess::MoveArray& chess::Board::get_legal_moves() {
         }
 
         // Pawns
-        Bitboard pawns = piece_bitboards[color][Pawn] & inverse_pin_mask;
+        const Bitboard pawns = piece_bitboards[color][Pawn] & inverse_pin_mask;
         pawn_mask_to_moves(masks::get_pawn_mask(pawns, *this), 8, &legal_moves, false);
         pawn_mask_to_moves(masks::get_pawn_long_mask(pawns, *this), 16, &legal_moves, false);
         if (color == White) {
@@ -321,19 +326,19 @@ chess::MoveArray& chess::Board::get_legal_moves() {
 
         // En passant
         if (en_passant_square >= 0) {
-            uint8_t captured_sq = color == White ? en_passant_square - 8 : en_passant_square + 8;
-            Bitboard ep_masks[] = {masks::get_right_en_passant_mask(pawns, *this),
+            const uint8_t captured_sq = color == White ? en_passant_square - 8 : en_passant_square + 8;
+            const Bitboard ep_masks[] = {masks::get_right_en_passant_mask(pawns, *this),
                                    masks::get_left_en_passant_mask(pawns, *this)};
             int deltas_w[] = {9, 7};
             int deltas_b[] = {7, 9};
-            int* deltas = color == White ? deltas_w : deltas_b;
+            const int* deltas = color == White ? deltas_w : deltas_b;
 
             for (int d = 0; d < 2; d++) {
                 Bitboard ep = ep_masks[d];
                 while (ep) {
-                    uint8_t target = bitboard_operations::bitScanForward(ep);
+                    const uint8_t target = bitboard_operations::bitScanForward(ep);
                     bitboard_operations::set_0(ep, target);
-                    uint8_t src = white_turn ? target - deltas[d] : target + deltas[d];
+                    const uint8_t src = white_turn ? target - deltas[d] : target + deltas[d];
 
                     // Simulate capture
                     bitboard_operations::set_0(piece_bitboards[color][Pawn], src);
@@ -346,7 +351,7 @@ chess::MoveArray& chess::Board::get_legal_moves() {
                     bitboard_operations::set_1(side_bitboards[color], target);
                     bitboard_operations::set_1(all, target);
 
-                    bool valid = !is_check();
+                    const bool valid = !is_check();
 
                     // Undo
                     bitboard_operations::set_1(piece_bitboards[color][Pawn], src);
@@ -360,7 +365,7 @@ chess::MoveArray& chess::Board::get_legal_moves() {
                     bitboard_operations::set_0(all, target);
 
                     if (valid) {
-                        Bitboard single = 1ull << target;
+                        const Bitboard single = 1ull << target;
                         pawn_mask_to_moves(single, deltas[d], &legal_moves, true);
                     }
                 }
@@ -776,7 +781,7 @@ int chess::Board::count_legal_moves() {
 }
 
 chess::MoveArray chess::Board::get_legal_moves_for_position(uint8_t x) {
-    MoveArray moves = MoveArray();
+    auto  moves = MoveArray();
     get_legal_moves();
 
     for (int i = 0; i < legal_moves.size(); i++) {
@@ -793,14 +798,14 @@ chess::MoveArray chess::Board::distil_pawn_moves(MoveArray moves) {
 
     for (int i = 0; i < moves.size(); i++) {
         if (moves[i].piece_type() == Pawn and moves[i].attacker_color() == White and moves[i].to() >= 56) {
-            for (uint8_t promo : {Queen, Rook, Bishop, Knight}) {
-                Move m = Move::make(moves[i].from(), moves[i].to(), moves[i].piece_type(), moves[i].attacker_color(),
+            for (const uint8_t promo : {Queen, Rook, Bishop, Knight}) {
+                const Move m = Move::make(moves[i].from(), moves[i].to(), moves[i].piece_type(), moves[i].attacker_color(),
                                     moves[i].captured_type(), moves[i].captured_color(), MT_NORMAL, promo);
                 distilled_moves.push_back(m);
             }
         } else if (moves[i].piece_type() == Pawn and moves[i].attacker_color() == Black and moves[i].to() <= 7) {
-            for (uint8_t promo : {Queen, Rook, Bishop, Knight}) {
-                Move m = Move::make(moves[i].from(), moves[i].to(), moves[i].piece_type(), moves[i].attacker_color(),
+            for (const uint8_t promo : {Queen, Rook, Bishop, Knight}) {
+                const Move m = Move::make(moves[i].from(), moves[i].to(), moves[i].piece_type(), moves[i].attacker_color(),
                                     moves[i].captured_type(), moves[i].captured_color(), MT_NORMAL, promo);
                 distilled_moves.push_back(m);
             }

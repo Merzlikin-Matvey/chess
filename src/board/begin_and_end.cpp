@@ -1,17 +1,16 @@
-#include "headers/board.hpp"
 #include "headers/bitboard_operations.hpp"
+#include "headers/board.hpp"
 
-bool chess::Board::is_begin() {
+bool chess::Board::is_begin()const {
     if (num_of_moves <= 4) {
         return true;
     }
     return false;
 }
 
-bool chess::Board::is_end() {
+bool chess::Board::is_end()const {
     if (bitboard_operations::count_1(side_bitboards[0]) <= 6 || bitboard_operations::count_1(side_bitboards[1]) <= 6) {
         return true;
     }
     return false;
 }
-

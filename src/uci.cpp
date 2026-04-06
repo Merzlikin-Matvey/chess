@@ -16,12 +16,12 @@ chess::uci::UCI::UCI() {
 }
 
 std::string trim(const std::string &str) {
-    size_t first = str.find_first_not_of(' ');
+    const size_t first = str.find_first_not_of(' ');
     if (std::string::npos == first) {
         return str;
     }
-    size_t last = str.find_last_not_of(' ');
-    return str.substr(first, (last - first + 1));
+    const size_t last = str.find_last_not_of(' ');
+    return str.substr(first, last - first + 1);
 }
 
 void chess::uci::UCI::start_handle() {
@@ -51,21 +51,20 @@ void chess::uci::UCI::start_handle() {
             std::cerr << "Error: " << e.what() << std::endl;
             add_log("Error: " + std::string(e.what()), ERROR);
         }
-
     }
 }
 
-void chess::uci::UCI::command_uci(std::string line) {
+void chess::uci::UCI::command_uci(std::string line)const {
     send("id name ChessLib");
     send("id author Matvey Merzlikin");
     send("uciok");
 }
 
-void chess::uci::UCI::command_isready(std::string line) {
+void chess::uci::UCI::command_isready(std::string line)const {
     send("readyok");
 }
 
-std::vector<std::string> split(const std::string &str, char delimiter) {
+std::vector<std::string> split(const std::string &str, const char delimiter) {
     std::vector<std::string> tokens;
     std::string token;
     std::istringstream tokenStream(str);
@@ -86,10 +85,10 @@ chess::uci::PositionCommandArgs parse_position_command(std::string line) {
         args.type = "fen";
         args.fen_string = words[1] + " " + words[2] + " " + words[3] + " " + words[4] + " " + words[5] + " " + words[6];
     }
-    
+
     for (size_t i = 0; i < words.size(); ++i) {
         if (words[i] == "moves") {
-            args.moves_string = std::vector<std::string>(words.begin() + i + 1, words.end());
+            args.moves_string = std::vector(words.begin() + i + 1, words.end());
             break;
         }
     }
@@ -112,7 +111,6 @@ void chess::uci::UCI::command_position(std::string line) {
         board_ = Board(fen);
     }
 
-
     for (auto move_str : args.moves_string) {
         board_.get_legal_moves();
         board_.move(move_str);
@@ -122,13 +120,13 @@ void chess::uci::UCI::command_position(std::string line) {
 
 void chess::uci::UCI::command_go(std::string line) {
     add_log("searching move", DEBUG);
-    auto move = ai_.search(board_);
+    const auto move = ai_.search(board_);
     send("bestmove " + move);
 }
 
 std::string get_time() {
-    std::time_t now = std::time(nullptr);
-    std::tm* local_time = std::localtime(&now);
+    const std::time_t now = std::time(nullptr);
+    const std::tm *local_time = std::localtime(&now);
     char buffer[80];
     std::strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", local_time);
     return std::string(buffer);
@@ -138,7 +136,6 @@ void chess::uci::UCI::send(std::string message) const {
     *output_stream_ << message << std::endl << std::flush;
     add_log(message, OUTPUT);
 }
-
 
 void chess::uci::UCI::add_log(std::string message, UCI_LOG_TYPE type) const {
     std::string time = get_time();
@@ -166,7 +163,7 @@ void chess::uci::UCI::add_log(std::string message, UCI_LOG_TYPE type) const {
     file.flush();
 }
 
-void chess::uci::UCI::clear_logs() const{
+void chess::uci::UCI::clear_logs() const {
     std::ofstream file(logs_path, std::ios::trunc);
     file.close();
 }

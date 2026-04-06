@@ -64,8 +64,6 @@ if (CONAN)
 endif ()
 
 
-
-
 if (WASM_INTERFACE)
     find_package(emscripten REQUIRED)
 endif ()
@@ -76,31 +74,33 @@ endif ()
 
 set(public_headers
         include/chess-lib.hpp
+        include/headers/ai.hpp
+        include/headers/bitboard_lines.hpp
         include/headers/bitboard_operations.hpp
         include/headers/board.hpp
         include/headers/constants.hpp
-        include/headers/zobrist.hpp
-        include/headers/bitboard_lines.hpp
+        include/headers/evaluate_position.hpp
+        include/headers/evaluating_constants.hpp
         include/headers/fen.hpp
+        include/headers/magic_numbers_constants.hpp
+        include/headers/magic_numbers_generators/magic_numbers.hpp
+        include/headers/magic_numbers_generators/pin_mask_magic_numbers.hpp
+        include/headers/masks/bishop_masks.hpp
+        include/headers/masks/down_right_diagonal_pin_masks.hpp
+        include/headers/masks/horizontal_pin_masks.hpp
+        include/headers/masks/king_knight_masks.hpp
+        include/headers/masks/masks.hpp
+        include/headers/masks/masks_utils.hpp
+        include/headers/masks/number_of_bits.hpp
+        include/headers/masks/pawn_masks.hpp
+        include/headers/masks/rook_masks.hpp
+        include/headers/masks/up_right_diagonal_pin_masks.hpp
+        include/headers/masks/vertical_pin_masks.hpp
         include/headers/move.hpp
         include/headers/notations.hpp
-        include/headers/masks/rook_masks.hpp
-        include/headers/bitboard_lines.hpp
-        include/headers/magic_numbers.hpp
-        include/headers/masks/masks_utils.hpp
-        include/headers/masks/bishop_masks.hpp
-        include/headers/masks/king_knight_masks.hpp
-        include/headers/magic_numbers_constants.hpp
-        include/headers/masks/vertical_pin_masks.hpp
-        include/headers/masks/number_of_bits.hpp
-        include/headers/masks/up_right_diagonal_pin_masks.hpp
-        include/headers/masks/down_right_diagonal_pin_masks.hpp
-        include/headers/magic_numbers_constants.hpp
-        include/headers/pin_mask_magic_numbers.hpp
-        include/headers/masks/masks.hpp
-        include/headers/masks/pawn_masks.hpp
-        include/headers/check_and_checkmate.hpp
+        include/headers/transposition_table.hpp
         include/headers/uci.hpp
+        include/headers/zobrist.hpp
 )
 
 set(sources
@@ -109,17 +109,18 @@ set(sources
         src/board/fen.cpp
         src/board/output.cpp
         src/zobrist.cpp
+        src/board/check_and_checkmate.cpp
         src/board/history.cpp
         src/move.cpp
         src/notations.cpp
         src/board/get_legal_moves.cpp
-        src/magic_numbers/random_generator.c
-        src/magic_numbers/bishop_magic_numbers.c
-        src/magic_numbers/rook_magic_numbers.c
-        src/magic_numbers/vertical_pin_mask_magic_numbers.c
-        src/magic_numbers/horizontal_pin_mask_magic_numbers.c
-        src/magic_numbers/up_right_pin_mask_magic_numbers.c
-        src/magic_numbers/down_right_pin_mask_magic_numbers.c
+        src/magic_numbers_generators/random_generator.cpp
+        src/magic_numbers_generators/bishop_magic_numbers.cpp
+        src/magic_numbers_generators/rook_magic_numbers.cpp
+        src/magic_numbers_generators/vertical_pin_mask_magic_numbers.cpp
+        src/magic_numbers_generators/horizontal_pin_mask_magic_numbers.cpp
+        src/magic_numbers_generators/up_right_pin_mask_magic_numbers.cpp
+        src/magic_numbers_generators/down_right_pin_mask_magic_numbers.cpp
         src/pawn_mask.cpp
         src/mask_to_moves.cpp
         src/move_array.cpp

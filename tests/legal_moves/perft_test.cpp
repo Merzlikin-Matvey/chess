@@ -5,12 +5,12 @@
 
 namespace {
 
-uint64_t perft(chess::Board& board, int depth) {
+uint64_t perft(chess::Board& board, const int depth) {
     if (depth == 0) return 1;
 
     uint64_t nodes = 0;
     board.get_legal_moves();
-    chess::MoveArray moves = board.legal_moves;
+    const chess::MoveArray moves = board.legal_moves;
     chess::PositionState state;
     for (int i = 0; i < moves.size(); i++) {
         board.make_move(moves.moves[i], state);
@@ -62,22 +62,22 @@ std::vector<PerftCase> get_perft_cases() {
     };
 }
 
-class PerftTest : public ::testing::TestWithParam<std::tuple<size_t, int>> {};
+class PerftTest : public testing::TestWithParam<std::tuple<size_t, int>> {};
 
 TEST_P(PerftTest, NodeCount) {
     auto [case_idx, depth_idx] = GetParam();
-    auto cases = get_perft_cases();
+    const auto cases = get_perft_cases();
     const auto& tc = cases[case_idx];
 
     chess::Board board(tc.fen);
-    uint64_t result = perft(board, depth_idx + 1);
+    const uint64_t result = perft(board, depth_idx + 1);
     EXPECT_EQ(result, tc.expected[depth_idx])
         << tc.name << " at depth " << depth_idx + 1;
 }
 
 std::vector<std::tuple<size_t, int>> generate_params() {
     std::vector<std::tuple<size_t, int>> params;
-    auto cases = get_perft_cases();
+    const auto cases = get_perft_cases();
     for (size_t i = 0; i < cases.size(); i++) {
         for (int d = 0; d < (int)cases[i].expected.size(); d++) {
             params.emplace_back(i, d);
@@ -86,9 +86,9 @@ std::vector<std::tuple<size_t, int>> generate_params() {
     return params;
 }
 
-std::string param_name(const ::testing::TestParamInfo<std::tuple<size_t, int>>& info) {
+std::string param_name(const testing::TestParamInfo<std::tuple<size_t, int>>& info) {
     auto [case_idx, depth_idx] = info.param;
-    auto cases = get_perft_cases();
+    const auto cases = get_perft_cases();
     std::string name = cases[case_idx].name;
     for (auto& c : name) {
         if (!isalnum(c)) c = '_';

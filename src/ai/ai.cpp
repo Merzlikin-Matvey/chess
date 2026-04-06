@@ -1,5 +1,6 @@
-#include "chess-lib.hpp"
-
+#include "headers/ai.hpp"
+#include "headers/constants.hpp"
+#include "headers/evaluating_constants.hpp"
 
 std::string chess::engine::AI::search(Board& board) {
     nodes_searched = 0;
@@ -13,7 +14,7 @@ std::string chess::engine::AI::search(Board& board) {
     return best_move;
 }
 
-std::string chess::engine::AI::root_search(Board& board, int depth) {
+std::string chess::engine::AI::root_search(Board& board, const int depth) {
     board.get_legal_moves();
     double score;
     double alpha = constants::minimum;
@@ -26,7 +27,7 @@ std::string chess::engine::AI::root_search(Board& board, int depth) {
     sort_moves(&moves);
 
     uint32_t tt_move_data = 0;
-    TTEntry* entry = tt.probe(board.current_hash);
+    const TTEntry* entry = tt.probe(board.current_hash);
     if (entry) {
         tt_move_data = entry->best_move;
     }
@@ -41,7 +42,7 @@ std::string chess::engine::AI::root_search(Board& board, int depth) {
 
     Move best_move = moves.moves[0];
 
-    if (board.white_turn){
+    if (board.white_turn) {
         double max_score = constants::minimum;
         for (int i = 0; i < moves.size(); i++) {
             PositionState state;
@@ -54,13 +55,12 @@ std::string chess::engine::AI::root_search(Board& board, int depth) {
                 max_score = score;
                 best_move = move;
                 alpha = std::max(alpha, score);
-                if (alpha >= beta){
+                if (alpha >= beta) {
                     break;
                 }
             }
         }
-    }
-    else {
+    } else {
         double min_score = constants::maximum;
         for (int i = 0; i < moves.size(); i++) {
             PositionState state;
@@ -82,4 +82,3 @@ std::string chess::engine::AI::root_search(Board& board, int depth) {
 
     return best_move.to_string();
 }
-

@@ -1,12 +1,13 @@
 #include "headers/board.hpp"
-#include "headers/bitboard_operations.hpp"
-#include "headers/fen.hpp"
-#include "headers/constants.hpp"
-#include "headers/notations.hpp"
 
-#include <string>
-#include <sstream>
 #include <cstring>
+#include <sstream>
+#include <string>
+
+#include "headers/bitboard_operations.hpp"
+#include "headers/constants.hpp"
+#include "headers/fen.hpp"
+#include "headers/notations.hpp"
 
 void chess::Board::init_mailbox() {
     std::memset(mailbox, 255, 64);
@@ -14,9 +15,9 @@ void chess::Board::init_mailbox() {
         for (uint8_t piece = 0; piece < 6; piece++) {
             Bitboard bb = piece_bitboards[color][piece];
             while (bb) {
-                int sq = bitboard_operations::bitScanForward(bb);
+                const int sq = bitboard_operations::bitScanForward(bb);
                 bitboard_operations::set_0(bb, sq);
-                mailbox[sq] = (color << 3) | piece;
+                mailbox[sq] = color << 3 | piece;
             }
         }
     }
@@ -37,12 +38,12 @@ chess::Board::Board(std::array<std::array<Bitboard, 6>, 2> board) {
     current_hash = hashes.back().hash;
 }
 
-chess::Board::Board(std::string fen){
+chess::Board::Board(std::string fen) {
     std::istringstream iss(fen);
     std::string piece_placement;
     iss >> piece_placement;
 
-    piece_bitboards = chess::convert_fen_to_bitboards(piece_placement);
+    piece_bitboards = convert_fen_to_bitboards(piece_placement);
     side_bitboards = {0, 0};
     all = 0;
     for (int i = 0; i < 2; i++) {
@@ -55,7 +56,7 @@ chess::Board::Board(std::string fen){
 
     std::string active_color;
     if (iss >> active_color) {
-        white_turn = (active_color == "w");
+        white_turn = active_color == "w";
 
         std::string castling_str;
         if (iss >> castling_str) {
@@ -69,7 +70,7 @@ chess::Board::Board(std::string fen){
             std::string en_passant_str;
             if (iss >> en_passant_str) {
                 if (en_passant_str != "-") {
-                    en_passant_square = chess::position_to_number_notation(en_passant_str);
+                    en_passant_square = position_to_number_notation(en_passant_str);
                 }
 
                 std::string halfmove_str;
@@ -79,7 +80,7 @@ chess::Board::Board(std::string fen){
                     std::string fullmove_str;
                     if (iss >> fullmove_str) {
                         int fullmove = std::stoi(fullmove_str);
-                        num_of_moves = (fullmove - 1) + (white_turn ? 0.0 : 0.5);
+                        num_of_moves = fullmove - 1 + (white_turn ? 0.0 : 0.5);
                     }
                 }
             }
@@ -90,10 +91,8 @@ chess::Board::Board(std::string fen){
     current_hash = hashes.back().hash;
 }
 
-
-
 chess::Board::Board() {
-    std::array<std::array<Bitboard, 6>, 2> board = chess::convert_default_positions();
+    const std::array<std::array<Bitboard, 6>, 2> board = convert_default_positions();
     piece_bitboards = board;
     side_bitboards = {0, 0};
     all = 0;
@@ -112,7 +111,7 @@ chess::Board::Board() {
     current_hash = hashes.back().hash;
 }
 
-bool chess::Board::operator == (const Board &board) const {
+bool chess::Board::operator==(const Board& board) const {
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 6; j++) {
             if (piece_bitboards[i][j] != board.piece_bitboards[i][j]) {
@@ -123,43 +122,50 @@ bool chess::Board::operator == (const Board &board) const {
     return true;
 }
 
-
-bool chess::Board::operator != (const Board &board) const {
+bool chess::Board::operator!=(const Board& board) const {
     return !(*this == board);
 }
 
-
-int8_t chess::Board::get_piece_type(const chess::Board& board, uint8_t x, uint8_t y) {
+int8_t chess::Board::get_piece_type(const Board& board, const uint8_t x, const uint8_t y) {
     for (int i = 0; i < 6; i++) {
-        if (bitboard_operations::get_bit(board.piece_bitboards[chess::White][i], y * 8 + x)) return i;
-        if (bitboard_operations::get_bit(board.piece_bitboards[chess::Black][i], y * 8 + x)) return i + 6;
+        if (bitboard_operations::get_bit(board.piece_bitboards[White][i], y * 8 + x))
+            return i;
+        if (bitboard_operations::get_bit(board.piece_bitboards[Black][i], y * 8 + x))
+            return i + 6;
     }
     return -1;
 }
 
-int8_t chess::Board::get_piece_type(const chess::Board& board, uint8_t x) {
+int8_t chess::Board::get_piece_type(const Board& board, const uint8_t x) {
     for (int i = 0; i < 6; i++) {
-        if (bitboard_operations::get_bit(board.piece_bitboards[chess::White][i], x)) return i;
-        if (bitboard_operations::get_bit(board.piece_bitboards[chess::Black][i], x)) return i + 6;
+        if (bitboard_operations::get_bit(board.piece_bitboards[White][i], x))
+            return i;
+        if (bitboard_operations::get_bit(board.piece_bitboards[Black][i], x))
+            return i + 6;
     }
     return -1;
 }
 
-std::string chess::Board::to_fen(){
+std::string chess::Board::to_fen()const {
     std::string fen = bitboards_to_fen(piece_bitboards);
 
     fen += white_turn ? " w " : " b ";
 
     std::string castling;
-    if (w_s_castling) castling += 'K';
-    if (w_l_castling) castling += 'Q';
-    if (b_s_castling) castling += 'k';
-    if (b_l_castling) castling += 'q';
-    if (castling.empty()) castling = "-";
+    if (w_s_castling)
+        castling += 'K';
+    if (w_l_castling)
+        castling += 'Q';
+    if (b_s_castling)
+        castling += 'k';
+    if (b_l_castling)
+        castling += 'q';
+    if (castling.empty())
+        castling = "-";
     fen += castling;
 
     if (en_passant_square >= 0) {
-        fen += " " + chess::position_to_chess_notation(en_passant_square);
+        fen += " " + position_to_chess_notation(en_passant_square);
     } else {
         fen += " -";
     }
@@ -172,7 +178,7 @@ std::string chess::Board::to_fen(){
     return fen;
 }
 
-chess::Board& chess::Board::operator = (const Board& other) {
+chess::Board& chess::Board::operator=(const Board& other) {
     piece_bitboards = other.piece_bitboards;
     side_bitboards = other.side_bitboards;
     all = other.all;

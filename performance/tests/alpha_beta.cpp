@@ -10,7 +10,7 @@
 #include "headers/ai.hpp"
 
 void  run_alpha_beta() {
-    std::vector<std::string> positions = {
+    const std::vector<std::string> positions = {
         "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
         "r1bqkbnr/pppppppp/2n5/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 1 2",
         "rnbqkb1r/pppppppp/5n2/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 1 2",

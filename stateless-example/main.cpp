@@ -56,7 +56,7 @@ std::string getResult(const std::string &fen, const bool white_turn = true) {
 }
 
 int main() {
-    auto fen = "7k/8/8/8/8/q7/3q4/K7";
+    const auto fen = "7k/8/8/8/8/q7/3q4/K7";
     std::cout << getResult(fen) << std::endl;
     return 0;
 }

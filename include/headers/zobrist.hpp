@@ -1,8 +1,8 @@
 #pragma once
 
-#include <memory>
 #include <array>
 #include <cstdint>
+#include <memory>
 
 namespace chess {
     class Board;
@@ -13,8 +13,8 @@ namespace chess::zobrist {
     static constexpr uint64_t Multiplier = 0x71abc9;
     static constexpr uint64_t Summand = 0xff1b3f;
 
-    static constexpr uint64_t next_random(uint64_t previous) {
-        return (previous * Multiplier + Summand);
+    static constexpr uint64_t next_random(const uint64_t previous) {
+        return previous * Multiplier + Summand;
     }
 
     static constexpr std::array<std::array<std::array<uint64_t, 6>, 2>, 64> generate_constants() {
@@ -48,38 +48,25 @@ namespace chess::zobrist {
     }
     static constexpr std::array<uint64_t, 8> EnPassantFile = generate_en_passant_constants();
 
-
-    class ZobristHash{
+    class ZobristHash {
     public:
-        ZobristHash(const Board &board);
+        ZobristHash(const Board& board);
         ZobristHash() = default;
         ZobristHash(const uint64_t hash) : hash(hash) {}
 
         uint64_t hash;
 
-        bool operator==(const ZobristHash& other) const {
-            return this->hash == other.hash;
-        }
+        bool operator==(const ZobristHash& other) const { return this->hash == other.hash; }
 
-        bool operator!=(const ZobristHash& other) const {
-            return this->hash != other.hash;
-        }
+        bool operator!=(const ZobristHash& other) const { return this->hash != other.hash; }
 
-        bool operator<(const ZobristHash& other) const {
-            return this->hash < other.hash;
-        }
+        bool operator<(const ZobristHash& other) const { return this->hash < other.hash; }
 
-        bool operator>(const ZobristHash& other) const {
-            return this->hash > other.hash;
-        }
+        bool operator>(const ZobristHash& other) const { return this->hash > other.hash; }
 
-        bool operator<=(const ZobristHash& other) const {
-            return this->hash <= other.hash;
-        }
+        bool operator<=(const ZobristHash& other) const { return this->hash <= other.hash; }
 
-        bool operator>=(const ZobristHash& other) const {
-            return this->hash >= other.hash;
-        }
+        bool operator>=(const ZobristHash& other) const { return this->hash >= other.hash; }
 
         ZobristHash operator^(const uint64_t& other) const {
             ZobristHash result = *this;
@@ -94,5 +81,5 @@ namespace chess::zobrist {
         }
     };
 
-    std::ostream& operator<<(std::ostream &ostream, ZobristHash hash);
-}
+    std::ostream& operator<<(std::ostream& ostream, ZobristHash hash);
+}  // namespace chess::zobrist

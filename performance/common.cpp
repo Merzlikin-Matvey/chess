@@ -38,23 +38,23 @@ std::string pretty_number(double n) {
     return "TOO MUCH";
 }
 
-std::string pretty_number(long long n) {
+std::string pretty_number(const long long n) {
     return pretty_number(static_cast<double>(n));
 }
 
-std::string pretty_number(uint64_t n) {
+std::string pretty_number(const uint64_t n) {
     return pretty_number(static_cast<long long>(n));
 }
 
-std::string pretty_time(std::chrono::duration<double> duration){
-    double ms = std::chrono::duration<double, std::milli>(duration).count();
+std::string pretty_time(const std::chrono::duration<double> duration){
+    const double ms = std::chrono::duration<double, std::milli>(duration).count();
     if (ms < 1'000) {
         return round(std::to_string(ms)) + " ms";
     }
-    double s = ms / 1'000;
+    const double s = ms / 1'000;
     if (s < 60) {
         return round(std::to_string(s)) + " s";
     }
-    double m = s / 60;
+    const double m = s / 60;
     return round(std::to_string(m)) + " min";
 }

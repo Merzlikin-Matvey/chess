@@ -1,30 +1,34 @@
-#include "chess-lib.hpp"
+#include "headers/ai.hpp"
+#include "headers/constants.hpp"
 #include "headers/evaluate_position.hpp"
 #include "headers/evaluating_constants.hpp"
-#include "headers/ai.hpp"
 
-double chess::engine::AI::max(Board& board, int depth, double alpha, double beta, bool allow_null) {
+double chess::engine::AI::max(Board& board, const int depth, double alpha, double beta, const bool allow_null) {
     nodes_searched++;
 
-    if (depth <= 0 or board.legal_moves.size() == 0){
+    if (depth <= 0 or board.legal_moves.size() == 0) {
         if (depth <= 0 and board.legal_moves.size() > 0) {
             return quiescence_max(board, alpha, beta);
         }
         return evaluate_position(board, White);
     }
 
-    double original_alpha = alpha;
-    double original_beta = beta;
+    const double original_alpha = alpha;
+    const double original_beta = beta;
 
     uint32_t tt_move_data = 0;
-    TTEntry* entry = tt.probe(board.current_hash);
+    const TTEntry* entry = tt.probe(board.current_hash);
     if (entry) {
         tt_move_data = entry->best_move;
         if (entry->depth >= depth) {
-            if (entry->flag == TTFlag::EXACT) return entry->score;
-            if (entry->flag == TTFlag::LOWER_BOUND) alpha = std::max(alpha, entry->score);
-            if (entry->flag == TTFlag::UPPER_BOUND) beta = std::min(beta, entry->score);
-            if (alpha >= beta) return entry->score;
+            if (entry->flag == TTFlag::EXACT)
+                return entry->score;
+            if (entry->flag == TTFlag::LOWER_BOUND)
+                alpha = std::max(alpha, entry->score);
+            if (entry->flag == TTFlag::UPPER_BOUND)
+                beta = std::min(beta, entry->score);
+            if (alpha >= beta)
+                return entry->score;
         }
     }
 
@@ -32,7 +36,7 @@ double chess::engine::AI::max(Board& board, int depth, double alpha, double beta
         NullMoveState null_state;
         board.make_null_move(null_state);
         board.get_legal_moves();
-        double null_score = min(board, depth - 1 - 2, alpha, beta, false);
+        const double null_score = min(board, depth - 1 - 2, alpha, beta, false);
         board.unmake_null_move(null_state);
         if (null_score >= beta) {
             return beta;
@@ -41,7 +45,7 @@ double chess::engine::AI::max(Board& board, int depth, double alpha, double beta
     }
 
     auto moves = board.legal_moves;
-    if (sort_max_depth <= depth and sort_max_depth != -1){
+    if (sort_max_depth <= depth and sort_max_depth != -1) {
         sort_moves(&moves);
     }
 
@@ -56,9 +60,9 @@ double chess::engine::AI::max(Board& board, int depth, double alpha, double beta
 
     Move best_move = moves.moves[0];
     double max_score = constants::minimum;
-    for (int i = 0; i < moves.size(); i++){
+    for (int i = 0; i < moves.size(); i++) {
         PositionState state;
-        Move move = moves.moves[i];
+        const Move move = moves.moves[i];
         board.make_move(move, state);
         board.get_legal_moves();
         double score = min(board, depth - 1, alpha, beta);
@@ -68,42 +72,49 @@ double chess::engine::AI::max(Board& board, int depth, double alpha, double beta
             best_move = move;
         }
         alpha = std::max(alpha, score);
-        if (alpha >= beta){
+        if (alpha >= beta) {
             break;
         }
     }
 
     TTFlag flag;
-    if (max_score <= original_alpha) flag = TTFlag::UPPER_BOUND;
-    else if (max_score >= original_beta) flag = TTFlag::LOWER_BOUND;
-    else flag = TTFlag::EXACT;
+    if (max_score <= original_alpha)
+        flag = TTFlag::UPPER_BOUND;
+    else if (max_score >= original_beta)
+        flag = TTFlag::LOWER_BOUND;
+    else
+        flag = TTFlag::EXACT;
     tt.store(board.current_hash, max_score, depth, flag, best_move.data);
 
     return max_score;
 }
 
-double chess::engine::AI::min(Board& board, int depth, double alpha, double beta, bool allow_null){
+double chess::engine::AI::min(Board& board, const int depth, double alpha, double beta, const bool allow_null) {
     nodes_searched++;
 
-    if (depth <= 0 or board.legal_moves.size() == 0){
+    if (depth <= 0 or board.legal_moves.size() == 0) {
         if (depth <= 0 and board.legal_moves.size() > 0) {
             return quiescence_min(board, alpha, beta);
         }
         return evaluate_position(board, White);
     }
 
-    double original_alpha = alpha;
-    double original_beta = beta;
+    const double original_alpha = alpha;
+    const double original_beta = beta;
 
     uint32_t tt_move_data = 0;
-    TTEntry* entry = tt.probe(board.current_hash);
+    const TTEntry* entry = tt.probe(board.current_hash);
     if (entry) {
         tt_move_data = entry->best_move;
         if (entry->depth >= depth) {
-            if (entry->flag == TTFlag::EXACT) return entry->score;
-            if (entry->flag == TTFlag::LOWER_BOUND) alpha = std::max(alpha, entry->score);
-            if (entry->flag == TTFlag::UPPER_BOUND) beta = std::min(beta, entry->score);
-            if (alpha >= beta) return entry->score;
+            if (entry->flag == TTFlag::EXACT)
+                return entry->score;
+            if (entry->flag == TTFlag::LOWER_BOUND)
+                alpha = std::max(alpha, entry->score);
+            if (entry->flag == TTFlag::UPPER_BOUND)
+                beta = std::min(beta, entry->score);
+            if (alpha >= beta)
+                return entry->score;
         }
     }
 
@@ -111,7 +122,7 @@ double chess::engine::AI::min(Board& board, int depth, double alpha, double beta
         NullMoveState null_state;
         board.make_null_move(null_state);
         board.get_legal_moves();
-        double null_score = max(board, depth - 1 - 2, alpha, beta, false);
+        const double null_score = max(board, depth - 1 - 2, alpha, beta, false);
         board.unmake_null_move(null_state);
         if (null_score <= alpha) {
             return alpha;
@@ -120,7 +131,7 @@ double chess::engine::AI::min(Board& board, int depth, double alpha, double beta
     }
 
     auto moves = board.legal_moves;
-    if (sort_max_depth <= depth and sort_max_depth != -1){
+    if (sort_max_depth <= depth and sort_max_depth != -1) {
         sort_moves(&moves);
     }
     if (tt_move_data != 0) {
@@ -134,7 +145,7 @@ double chess::engine::AI::min(Board& board, int depth, double alpha, double beta
 
     Move best_move = moves.moves[0];
     double min_score = constants::maximum;
-    for (int i = 0; i < moves.size(); i++){
+    for (int i = 0; i < moves.size(); i++) {
         PositionState state;
         const Move move = moves.moves[i];
         board.make_move(move, state);
@@ -146,18 +157,19 @@ double chess::engine::AI::min(Board& board, int depth, double alpha, double beta
             best_move = move;
         }
         beta = std::min(beta, score);
-        if (alpha >= beta){
+        if (alpha >= beta) {
             break;
         }
     }
 
     TTFlag flag;
-    if (min_score >= original_beta) flag = TTFlag::LOWER_BOUND;
-    else if (min_score <= original_alpha) flag = TTFlag::UPPER_BOUND;
-    else flag = TTFlag::EXACT;
+    if (min_score >= original_beta)
+        flag = TTFlag::LOWER_BOUND;
+    else if (min_score <= original_alpha)
+        flag = TTFlag::UPPER_BOUND;
+    else
+        flag = TTFlag::EXACT;
     tt.store(board.current_hash, min_score, depth, flag, best_move.data);
 
     return min_score;
 }
-
-

@@ -55,7 +55,7 @@ chess::Board make_board(const LegalMovesTestData& data) {
     return chess::Board(data.fen);
 }
 
-std::string case_info(size_t i, const LegalMovesTestData& c) {
+std::string case_info(const size_t i, const LegalMovesTestData& c) {
     std::string info = "Case " + std::to_string(i) + ", FEN: " + c.fen;
     if (!c.comment.empty()) info += " (" + c.comment + ")";
     return info;

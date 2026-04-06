@@ -2,14 +2,15 @@
 
 #include <string>
 
-#include "chess-lib.hpp"
+#include "board.hpp"
 #include "transposition_table.hpp"
 
 namespace chess::engine {
-    class AI{
+    class AI {
     public:
-        AI (int begin_depth, int end_depth, size_t tt_size_mb = 1024) : tt(tt_size_mb), begin_depth(begin_depth), end_depth(end_depth) {}
-        AI () : AI(3, 5, 3) {}
+        AI(const int begin_depth, const int end_depth, const size_t tt_size_mb = 1024)
+            : tt(tt_size_mb), begin_depth(begin_depth), end_depth(end_depth) {}
+        AI() : AI(3, 5, 3) {}
 
         std::string search(Board& board);
         std::string root_search(Board& board, int depth);
@@ -20,7 +21,7 @@ namespace chess::engine {
         double quiescence_max(Board& board, double alpha, double beta);
         double quiescence_min(Board& board, double alpha, double beta);
 
-        void sort_moves(MoveArray* moves) const;
+        static void sort_moves(MoveArray* moves) ;
 
         static int evaluate_move(Move move);
 
@@ -34,4 +35,4 @@ namespace chess::engine {
         int sort_max_depth = 3, nmp_min_depth = 3;
     };
 
-}
+}  // namespace chess::engine

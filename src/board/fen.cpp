@@ -1,11 +1,12 @@
 #include "headers/fen.hpp"
-#include "headers/constants.hpp"
-#include "headers/bitboard_operations.hpp"
 
-#include <string>
 #include <iostream>
+#include <string>
 
-std::array<std::array<Bitboard, 6>, 2> chess::convert_fen_to_bitboards(std::string fen){
+#include "headers/bitboard_operations.hpp"
+#include "headers/constants.hpp"
+
+std::array<std::array<Bitboard, 6>, 2> chess::convert_fen_to_bitboards(const std::string &fen) {
     std::array<std::array<Bitboard, 6>, 2> piece_bitboards = {{{0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0}}};
     uint8_t x = 0;
     uint8_t y = 7;
@@ -13,20 +14,18 @@ std::array<std::array<Bitboard, 6>, 2> chess::convert_fen_to_bitboards(std::stri
     uint8_t side;
     bool still_figures = true;
 
-    for (auto symbol : fen){
-        if (symbol == '/'){
+    for (const auto symbol : fen) {
+        if (symbol == '/') {
             y--;
             x = 0;
-        }
-        else if (symbol == ' '){
+        } else if (symbol == ' ') {
             still_figures = false;
-        }
-        else if (still_figures){
-            if (isdigit(symbol)){
+        } else if (still_figures) {
+            if (isdigit(symbol)) {
                 x += symbol - '0';
             } else {
                 uint8_t piece;
-                switch (symbol){
+                switch (symbol) {
                     case 'P':
                         piece = Pawn;
                         side = White;
@@ -85,20 +84,19 @@ std::array<std::array<Bitboard, 6>, 2> chess::convert_fen_to_bitboards(std::stri
     return piece_bitboards;
 }
 
-std::array<std::array<Bitboard, 6>, 2> chess::convert_default_positions(){
-    std::array<std::array<Bitboard, 6>, 2> piece_bitboards = {{{0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0}}};
-    std::string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
+std::array<std::array<Bitboard, 6>, 2> chess::convert_default_positions() {
+    const std::string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
     return convert_fen_to_bitboards(fen);
 }
 
-std::string chess::bitboards_to_fen(std::array<std::array<Bitboard, 6>, 2> piece_bitboards){
+std::string chess::bitboards_to_fen(std::array<std::array<Bitboard, 6>, 2> piece_bitboards) {
     std::string fen = "";
-    std::string figures = "PNBRQKpnbrqk";
+    const std::string figures = "PNBRQKpnbrqk";
 
     for (int rank = 7; rank >= 0; rank--) {
         int empty = 0;
         for (int file = 0; file < 8; file++) {
-            int square = 8 * rank + file;
+            const int square = 8 * rank + file;
 
             bool found = false;
             for (int side = 0; side < 2; side++) {
@@ -114,9 +112,11 @@ std::string chess::bitboards_to_fen(std::array<std::array<Bitboard, 6>, 2> piece
                         break;
                     }
 
-                    if (found) break;
+                    if (found)
+                        break;
                 }
-                if (found) break;
+                if (found)
+                    break;
             }
 
             if (!found) {
@@ -134,9 +134,4 @@ std::string chess::bitboards_to_fen(std::array<std::array<Bitboard, 6>, 2> piece
     }
 
     return fen;
-
-
-
-
-
 }

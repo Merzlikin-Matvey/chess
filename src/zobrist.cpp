@@ -52,7 +52,7 @@ chess::zobrist::ZobristHash::ZobristHash(const Board &board) {
     }
 }
 
-std::ostream &chess::zobrist::operator<<(std::ostream &ostream, ZobristHash hash) {
+std::ostream &chess::zobrist::operator<<(std::ostream &ostream, const ZobristHash hash) {
     ostream << hash.hash;
     return ostream;
 }

@@ -89,7 +89,7 @@ double chess::engine::AI::max(Board& board, const int depth, double alpha, doubl
     return max_score;
 }
 
-double chess::engine::AI::min(Board& board, int depth, double alpha, double beta, bool allow_null) {
+double chess::engine::AI::min(Board& board, const int depth, double alpha, double beta, const bool allow_null) {
     nodes_searched++;
 
     if (depth <= 0 or board.legal_moves.size() == 0) {

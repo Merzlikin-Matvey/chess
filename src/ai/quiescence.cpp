@@ -2,7 +2,7 @@
 #include "headers/ai.hpp"
 #include "headers/evaluate_position.hpp"
 
-double chess::engine::AI::quiescence_max(Board& board, double alpha, double beta) {
+double chess::engine::AI::quiescence_max(Board& board, double alpha, const double beta) {
     nodes_searched++;
 
     const double standard_eval = evaluate_position(board, White);
@@ -45,7 +45,7 @@ double chess::engine::AI::quiescence_max(Board& board, double alpha, double beta
     return alpha;
 }
 
-double chess::engine::AI::quiescence_min(Board& board, double alpha, double beta) {
+double chess::engine::AI::quiescence_min(Board& board, const double alpha, double beta) {
     nodes_searched++;
 
     const double standard_eval = evaluate_position(board, White);

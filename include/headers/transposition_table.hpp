@@ -21,9 +21,9 @@ namespace chess::engine {
         uint64_t mask = 0;
 
     public:
-        explicit TranspositionTable(size_t size_mb = 64) { resize(size_mb); }
+        explicit TranspositionTable(const size_t size_mb = 64) { resize(size_mb); }
 
-        void resize(size_t size_mb) {
+        void resize(const size_t size_mb) {
             const size_t num_entries = size_mb * 1024 * 1024 / sizeof(TTEntry);
             size_t size = 1;
             while (size * 2 <= num_entries)
@@ -34,14 +34,14 @@ namespace chess::engine {
 
         void clear() { std::ranges::fill(table, TTEntry{}); }
 
-        TTEntry* probe(uint64_t hash) {
+        TTEntry* probe(const uint64_t hash) {
             TTEntry& entry = table[hash & mask];
             if (entry.key == hash)
                 return &entry;
             return nullptr;
         }
 
-        void store(uint64_t hash, double score, int8_t depth, TTFlag flag, uint32_t best_move) {
+        void store(const uint64_t hash, const double score, const int8_t depth, const TTFlag flag, const uint32_t best_move) {
             TTEntry& entry = table[hash & mask];
             if (entry.key == 0 || entry.key == hash || depth >= entry.depth) {
                 entry.key = hash;

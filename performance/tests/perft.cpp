@@ -4,7 +4,7 @@
 #include <vector>
 #include <numeric>
 
-long long perft(chess::Board& board, int depth) {
+long long perft(chess::Board& board, const int depth) {
     if (depth == 0) {
         return 1;
     }
@@ -28,7 +28,7 @@ long long perft(chess::Board& board, int depth) {
 }
 
 
-void benchmark_perft(const chess::Board& board, int max_depth) {
+void benchmark_perft(const chess::Board& board, const int max_depth) {
     std::cout << "Perft benchmark from starting position" << std::endl;
     std::cout << "---------------------------------------" << std::endl;
 
@@ -51,7 +51,7 @@ void benchmark_perft(const chess::Board& board, int max_depth) {
 
 
 
-void perft_ci(const chess::Board& board, int depth, int iterations = 10) {
+void perft_ci(const chess::Board& board, const int depth, const int iterations = 10) {
     std::cout << "\nPerft CI benchmark (depth " << depth << ", " << iterations << " iterations)" << std::endl;
     std::cout << "-----------------------------------------------" << std::endl;
 

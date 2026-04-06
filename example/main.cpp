@@ -6,7 +6,7 @@
 using namespace std;
 using namespace chess;
 
-int count_positions(Board& board, int depth) {
+int count_positions(Board& board, const int depth) {
     if (depth == 0) {
         return 1;
     }

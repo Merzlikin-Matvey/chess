@@ -5,7 +5,7 @@
 
 namespace {
 
-uint64_t perft(chess::Board& board, int depth) {
+uint64_t perft(chess::Board& board, const int depth) {
     if (depth == 0) return 1;
 
     uint64_t nodes = 0;

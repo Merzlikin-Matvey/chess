@@ -12,7 +12,7 @@ std::string chess::engine::AI::search(Board& board) {
     return best_move;
 }
 
-std::string chess::engine::AI::root_search(Board& board, int depth) {
+std::string chess::engine::AI::root_search(Board& board, const int depth) {
     board.get_legal_moves();
     double score;
     double alpha = constants::minimum;

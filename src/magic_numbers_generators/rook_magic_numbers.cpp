@@ -5,7 +5,7 @@
 #include <cstdint>
 
 
-static const int up_bits[64] = {
+static constexpr std::array up_bits = {
         6, 6, 6, 6, 6, 6, 6, 6,
         5, 5, 5, 5, 5, 5, 5, 5,
         4, 4, 4, 4, 4, 4, 4, 4,
@@ -16,7 +16,7 @@ static const int up_bits[64] = {
         0, 0, 0, 0, 0, 0, 0, 0
 };
 
-static const int down_bits[64] = {
+static constexpr std::array down_bits = {
         0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0,
         1, 1, 1, 1, 1, 1, 1, 1,
@@ -27,7 +27,7 @@ static const int down_bits[64] = {
         6, 6, 6, 6, 6, 6, 6, 6
 };
 
-static const int right_bits[64] = {
+static constexpr std::array right_bits = {
         6, 5, 4, 3, 2, 1, 0, 0,
         6, 5, 4, 3, 2, 1, 0, 0,
         6, 5, 4, 3, 2, 1, 0, 0,
@@ -38,7 +38,7 @@ static const int right_bits[64] = {
         6, 5, 4, 3, 2, 1, 0, 0
 };
 
-static const int left_bits[64] = {
+static constexpr std::array left_bits = {
         0, 0, 1, 2, 3, 4, 5, 6,
         0, 0, 1, 2, 3, 4, 5, 6,
         0, 0, 1, 2, 3, 4, 5, 6,
@@ -53,7 +53,7 @@ namespace chess::magic_numbers::generators {
 
 Bitboard generate_random_64bit();
 
-static Bitboard set_rook_board(uint8_t square, uint16_t blockers) {
+static Bitboard set_rook_board(const uint8_t square, const uint16_t blockers) {
     Bitboard board = 0;
     const int up = up_bits[square];
     const int down = down_bits[square];
@@ -87,15 +87,15 @@ static Bitboard set_rook_board(uint8_t square, uint16_t blockers) {
     return board;
 }
 
-static uint8_t get_number_of_rook_bits(uint8_t square) {
+static uint8_t get_number_of_rook_bits(const uint8_t square) {
     return up_bits[square] + down_bits[square] + right_bits[square] + left_bits[square];
 }
 
-static uint16_t get_rook_hash(Bitboard board, uint64_t magic_number, uint8_t square) {
+static uint16_t get_rook_hash(const Bitboard board, const uint64_t magic_number, const uint8_t square) {
     return (board * magic_number) >> (64 - get_number_of_rook_bits(square));
 }
 
-static bool is_rook_magic_number_valid(uint64_t magic_number, uint8_t square) {
+static bool is_rook_magic_number_valid(const uint64_t magic_number, const uint8_t square) {
     Bitboard board;
     uint16_t hash;
     const uint8_t number_of_bits = get_number_of_rook_bits(square);
@@ -115,7 +115,7 @@ static bool is_rook_magic_number_valid(uint64_t magic_number, uint8_t square) {
     return true;
 }
 
-Bitboard generate_rook_magic_number(uint8_t square) {
+Bitboard generate_rook_magic_number(const uint8_t square) {
     uint64_t magic_number;
     do {
         magic_number = generate_random_64bit() & generate_random_64bit() & generate_random_64bit();

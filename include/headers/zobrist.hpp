@@ -13,7 +13,7 @@ namespace chess::zobrist {
     static constexpr uint64_t Multiplier = 0x71abc9;
     static constexpr uint64_t Summand = 0xff1b3f;
 
-    static constexpr uint64_t next_random(uint64_t previous) {
+    static constexpr uint64_t next_random(const uint64_t previous) {
         return previous * Multiplier + Summand;
     }
 

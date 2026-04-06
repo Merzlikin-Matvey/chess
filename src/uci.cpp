@@ -64,7 +64,7 @@ void chess::uci::UCI::command_isready(std::string line)const {
     send("readyok");
 }
 
-std::vector<std::string> split(const std::string &str, char delimiter) {
+std::vector<std::string> split(const std::string &str, const char delimiter) {
     std::vector<std::string> tokens;
     std::string token;
     std::istringstream tokenStream(str);
@@ -88,7 +88,7 @@ chess::uci::PositionCommandArgs parse_position_command(std::string line) {
 
     for (size_t i = 0; i < words.size(); ++i) {
         if (words[i] == "moves") {
-            args.moves_string = std::vector<std::string>(words.begin() + i + 1, words.end());
+            args.moves_string = std::vector(words.begin() + i + 1, words.end());
             break;
         }
     }

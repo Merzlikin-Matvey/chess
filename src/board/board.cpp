@@ -126,7 +126,7 @@ bool chess::Board::operator!=(const Board& board) const {
     return !(*this == board);
 }
 
-int8_t chess::Board::get_piece_type(const Board& board, uint8_t x, uint8_t y) {
+int8_t chess::Board::get_piece_type(const Board& board, const uint8_t x, const uint8_t y) {
     for (int i = 0; i < 6; i++) {
         if (bitboard_operations::get_bit(board.piece_bitboards[White][i], y * 8 + x))
             return i;
@@ -136,7 +136,7 @@ int8_t chess::Board::get_piece_type(const Board& board, uint8_t x, uint8_t y) {
     return -1;
 }
 
-int8_t chess::Board::get_piece_type(const Board& board, uint8_t x) {
+int8_t chess::Board::get_piece_type(const Board& board, const uint8_t x) {
     for (int i = 0; i < 6; i++) {
         if (bitboard_operations::get_bit(board.piece_bitboards[White][i], x))
             return i;

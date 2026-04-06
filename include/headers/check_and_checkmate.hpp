@@ -7,28 +7,28 @@
 
 namespace chess::masks {
 
-    inline Bitboard _get_absolute_rook_mask(Board &board, uint8_t square) {
+    inline Bitboard _get_absolute_rook_mask(Board &board, const uint8_t square) {
         const Bitboard mask = board.all & secondary_rook_masks[square];
         const int hash = get_rook_hash(mask, square);
         return primary_rook_masks[square][hash];
     }
 
-    inline Bitboard _get_absolute_bishop_mask(Board &board, uint8_t square) {
+    inline Bitboard _get_absolute_bishop_mask(Board &board, const uint8_t square) {
         const Bitboard mask = board.all & secondary_bishop_masks[square];
         const int hash = get_bishop_hash(mask, square);
         return primary_bishop_masks[square][hash];
     }
 
-    inline Bitboard _get_absolute_knight_mask(uint8_t square) {
+    inline Bitboard _get_absolute_knight_mask(const uint8_t square) {
         return knight_masks[square];
     }
 
-    inline Bitboard _get_absolute_king_mask(uint8_t square) {
+    inline Bitboard _get_absolute_king_mask(const uint8_t square) {
         return king_masks[square];
     }
 }  // namespace chess::masks
 
-inline bool chess::Board::is_position_attacked(uint8_t x) {
+inline bool chess::Board::is_position_attacked(const uint8_t x) {
     const uint8_t color = white_turn ? White : Black;
     const Bitboard rook_mask = masks::_get_absolute_rook_mask(*this, x);
     const Bitboard bishop_mask = masks::_get_absolute_bishop_mask(*this, x);

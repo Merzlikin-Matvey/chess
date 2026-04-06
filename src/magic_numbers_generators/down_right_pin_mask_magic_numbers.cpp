@@ -5,7 +5,7 @@
 #include <cstdint>
 #include <cstdio>
 
-static const int up_left_bits[64] = {
+static constexpr std::array up_left_bits = {
         0, 1, 2, 3, 4, 5, 6, 7,
         0, 1, 2, 3, 4, 5, 6, 6,
         0, 1, 2, 3, 4, 5, 5, 5,
@@ -16,7 +16,7 @@ static const int up_left_bits[64] = {
         0, 0, 0, 0, 0, 0, 0, 0
 };
 
-static const int down_right_bits[64] = {
+static constexpr std::array down_right_bits = {
         0, 0, 0, 0, 0, 0, 0, 0,
         1, 1, 1, 1, 1, 1, 1, 0,
         2, 2, 2, 2, 2, 2, 1, 0,
@@ -31,7 +31,7 @@ namespace chess::magic_numbers::generators {
 
 Bitboard generate_random_64bit();
 
-static Bitboard set_down_right_pin_board(uint8_t square, uint8_t blockers){
+static Bitboard set_down_right_pin_board(const uint8_t square, const uint8_t blockers){
     Bitboard board = 0;
     const int up_left = up_left_bits[square];
     const int down_right = down_right_bits[square];
@@ -51,16 +51,16 @@ static Bitboard set_down_right_pin_board(uint8_t square, uint8_t blockers){
     return board;
 }
 
-static uint8_t get_number_of_down_right_pin_mask_bits(uint8_t square) {
+static uint8_t get_number_of_down_right_pin_mask_bits(const uint8_t square) {
     return up_left_bits[square] + down_right_bits[square];
 }
 
-static uint16_t get_down_right_pin_mask_hash(Bitboard board, uint64_t magic_number, uint8_t square){
+static uint16_t get_down_right_pin_mask_hash(const Bitboard board, const uint64_t magic_number, const uint8_t square){
     const uint8_t number_of_bits = get_number_of_down_right_pin_mask_bits(square);
     return (uint16_t)((board * magic_number) >> (64 - number_of_bits));
 }
 
-static bool is_down_right_pin_magic_number_valid(uint8_t square, uint64_t magic_number){
+static bool is_down_right_pin_magic_number_valid(const uint8_t square, const uint64_t magic_number){
     Bitboard board;
     uint16_t hash;
     const uint16_t number_of_positions = pow(2, get_number_of_down_right_pin_mask_bits(square));
@@ -80,7 +80,7 @@ static bool is_down_right_pin_magic_number_valid(uint8_t square, uint64_t magic_
     return true;
 }
 
-Bitboard generate_down_right_pin_magic_number(uint8_t square){
+Bitboard generate_down_right_pin_magic_number(const uint8_t square){
     Bitboard magic_number;
 
     for (uint8_t i = 0; i < 32; i++){

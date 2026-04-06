@@ -3,7 +3,7 @@
 #include "headers/constants.hpp"
 #include "headers/masks/pawn_masks.hpp"
 
-Bitboard chess::masks::get_pawn_mask(Bitboard pawns, Board& board) {
+Bitboard chess::masks::get_pawn_mask(const Bitboard pawns, Board& board) {
     const Bitboard empty = ~board.all;
 
     if (board.white_turn) {
@@ -13,7 +13,7 @@ Bitboard chess::masks::get_pawn_mask(Bitboard pawns, Board& board) {
     }
 }
 
-Bitboard chess::masks::get_pawn_long_mask(Bitboard pawns, Board& board) {
+Bitboard chess::masks::get_pawn_long_mask(const Bitboard pawns, Board& board) {
     const Bitboard empty = ~board.all;
 
     if (board.white_turn) {
@@ -25,7 +25,7 @@ Bitboard chess::masks::get_pawn_long_mask(Bitboard pawns, Board& board) {
     }
 }
 
-Bitboard chess::masks::get_pawn_right_mask(Bitboard pawns, Board& board) {
+Bitboard chess::masks::get_pawn_right_mask(const Bitboard pawns, Board& board) {
     if (board.white_turn) {
         return pawns << 9 & board.side_bitboards[Black] & ~bitboard_operations::columns[0];
     } else {
@@ -33,7 +33,7 @@ Bitboard chess::masks::get_pawn_right_mask(Bitboard pawns, Board& board) {
     }
 }
 
-Bitboard chess::masks::get_pawn_left_mask(Bitboard pawns, Board& board) {
+Bitboard chess::masks::get_pawn_left_mask(const Bitboard pawns, Board& board) {
     if (board.white_turn) {
         return pawns << 7 & board.side_bitboards[Black] & ~bitboard_operations::columns[7];
     } else {
@@ -41,7 +41,7 @@ Bitboard chess::masks::get_pawn_left_mask(Bitboard pawns, Board& board) {
     }
 }
 
-Bitboard chess::masks::get_left_en_passant_mask(Bitboard pawns, Board& board) {
+Bitboard chess::masks::get_left_en_passant_mask(const Bitboard pawns, Board& board) {
     const Bitboard target = 1ull << board.en_passant_square;
     if (board.white_turn) {
         return pawns << 7 & target & ~bitboard_operations::columns[7];
@@ -50,7 +50,7 @@ Bitboard chess::masks::get_left_en_passant_mask(Bitboard pawns, Board& board) {
     }
 }
 
-Bitboard chess::masks::get_right_en_passant_mask(Bitboard pawns, Board& board) {
+Bitboard chess::masks::get_right_en_passant_mask(const Bitboard pawns, Board& board) {
     const Bitboard target = 1ull << board.en_passant_square;
     if (board.white_turn) {
         return pawns << 9 & target & ~bitboard_operations::columns[0];

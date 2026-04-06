@@ -2,7 +2,7 @@
 #include "headers/board.hpp"
 #include "headers/constants.hpp"
 
-void chess::Board::pawn_mask_to_moves(Bitboard mask, int delta, MoveArray* moves, bool en_passant)const {
+void chess::Board::pawn_mask_to_moves(Bitboard mask, const int delta, MoveArray* moves, const bool en_passant)const {
     Move move;
     uint8_t attacker_index;
     constexpr uint8_t attacker_type = Pawn;

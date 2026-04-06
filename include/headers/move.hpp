@@ -87,7 +87,7 @@ namespace chess {
 
         void push_back(Move move);
         void clear();
-        void resize(int new_size) { _size = new_size; }
+        void resize(const int new_size) { _size = new_size; }
 
         std::array<Move, 218>::iterator begin() { return moves.begin(); }
 

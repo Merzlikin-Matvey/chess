@@ -58,6 +58,7 @@ double chess::engine::AI::max(Board& board, const int depth, double alpha, doubl
         }
     }
 
+
     Move best_move = moves.moves[0];
     double max_score = constants::minimum;
     for (int i = 0; i < moves.size(); i++) {
@@ -65,7 +66,26 @@ double chess::engine::AI::max(Board& board, const int depth, double alpha, doubl
         const Move move = moves.moves[i];
         board.make_move(move, state);
         board.get_legal_moves();
-        double score = min(board, depth - 1, alpha, beta);
+        double score;
+
+        if (
+            i >= lmr_threshold
+            and depth >= 3
+            and move.second_type() == None
+            and move.pawn_change_type() == None
+            and board.check_status == 0
+        ) {
+            // LMR
+            const int R = 1 + (i > 6) + (depth > 6);
+            score = min(board, depth - 1 - R, alpha, beta);
+            if (score > alpha) {
+                board.get_legal_moves();
+                score = min(board, depth - 1, alpha, beta);
+            }
+        } else {
+            score = min(board, depth - 1, alpha, beta);
+        }
+
         board.unmake_move(move, state);
         if (score > max_score) {
             max_score = score;
@@ -150,7 +170,27 @@ double chess::engine::AI::min(Board& board, const int depth, double alpha, doubl
         const Move move = moves.moves[i];
         board.make_move(move, state);
         board.get_legal_moves();
-        double score = max(board, depth - 1, alpha, beta);
+
+        double score;
+
+        if (
+            i >= lmr_threshold
+            and depth >= 3
+            and move.second_type() == None
+            and move.pawn_change_type() == None
+            and board.check_status == 0
+        ) {
+            // LMR
+            const int R = 1 + (i > 6) + (depth > 6);
+            score = max(board, depth - 1 - R, alpha, beta);
+            if (score < beta) {
+                board.get_legal_moves();
+                score = max(board, depth - 1, alpha, beta);
+            }
+        } else {
+            score = max(board, depth - 1, alpha, beta);
+        }
+
         board.unmake_move(move, state);
         if (score < min_score) {
             min_score = score;

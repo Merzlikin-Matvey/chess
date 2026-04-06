@@ -33,7 +33,7 @@ void  run_alpha_beta() {
         "r4rk1/pp3ppp/2p5/8/4Pb2/2N2N2/PPP2PPP/R4RK1 w - - 0 13",
     };
 
-    chess::engine::AI ai(1, 7);
+    chess::engine::AI ai(1, 10);
     std::vector<double> times_ms;
 
     for (int i = 0; i < positions.size(); i++) {

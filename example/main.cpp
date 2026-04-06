@@ -23,7 +23,7 @@ int count_positions(Board& board, const int depth) {
 }
 
 int main() {
-    auto  board = Board("8/ppp3p1/8/8/3p4/8/1ppp2K1/brk2Q1n b - - 12 7");
+    auto board = Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 
     cout << "FEN: " << board.to_fen() << endl;
 
@@ -32,5 +32,10 @@ int main() {
     for (int i = 0; i < board.legal_moves.size(); i++) {
         cout << board.legal_moves.moves[i].to_string() << endl;
     }
+
+    auto ai = engine::AI(1, 7);
+    ai.search(board);
+
+    return 0;
 }
 

@@ -1,9 +1,9 @@
-#include "headers/masks/pawn_masks.hpp"
-#include "headers/constants.hpp"
+#include <iostream>
+
 #include "headers/bitboard_operations.hpp"
 #include "headers/board.hpp"
-
-#include <iostream>
+#include "headers/constants.hpp"
+#include "headers/masks/pawn_masks.hpp"
 
 Bitboard chess::masks::get_pawn_mask(Bitboard pawns, Board& board) {
     Bitboard empty = ~board.all;
@@ -60,5 +60,3 @@ Bitboard chess::masks::get_right_en_passant_mask(Bitboard pawns, Board& board) {
         return (pawns >> 7) & target & ~bitboard_operations::columns[0];
     }
 }
-
-

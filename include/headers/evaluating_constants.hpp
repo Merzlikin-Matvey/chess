@@ -1,11 +1,11 @@
 #pragma once
 
-#include <memory>
 #include <math.h>
+
+#include <memory>
 #include <unordered_map>
 
 namespace chess::engine::constants {
-
 
     static constexpr double maximum = 1024;
     static constexpr double minimum = -1024;
@@ -55,4 +55,4 @@ namespace chess::engine::constants {
 
     static constexpr Bitboard center = get_center_bitboard();
 
-}
+}  // namespace chess::engine::constants

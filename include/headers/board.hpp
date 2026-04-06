@@ -1,25 +1,25 @@
 #pragma once
 
-#include <memory>
 #include <array>
+#include <memory>
 #include <vector>
 
-#include "headers/zobrist.hpp"
 #include "headers/move.hpp"
+#include "headers/zobrist.hpp"
 
 typedef uint64_t Bitboard;
 
 namespace chess {
 
     struct PositionState {
-        uint8_t  captured_type = 255;
-        uint8_t  captured_side = 255;
-        int8_t   prev_en_passant = -1;
+        uint8_t captured_type = 255;
+        uint8_t captured_side = 255;
+        int8_t prev_en_passant = -1;
         uint16_t prev_halfmove = 0;
-        bool     prev_w_l_castling = false;
-        bool     prev_w_s_castling = false;
-        bool     prev_b_l_castling = false;
-        bool     prev_b_s_castling = false;
+        bool prev_w_l_castling = false;
+        bool prev_w_s_castling = false;
+        bool prev_b_l_castling = false;
+        bool prev_b_s_castling = false;
         uint64_t prev_hash = 0;
     };
 
@@ -27,7 +27,6 @@ namespace chess {
         int8_t prev_en_passant;
         uint64_t prev_hash;
     };
-
 
     class Board {
     public:
@@ -38,21 +37,21 @@ namespace chess {
         ~Board() {}
 
         Board(const Board& other)
-                : all(other.all),
-                  piece_bitboards(other.piece_bitboards),
-                  side_bitboards(other.side_bitboards),
-                  hashes(other.hashes),
-                  current_hash(other.current_hash),
-                  white_turn(other.white_turn),
-                  w_l_castling(other.w_l_castling),
-                  w_s_castling(other.w_s_castling),
-                  b_l_castling(other.b_l_castling),
-                  b_s_castling(other.b_s_castling),
-                  en_passant_square(other.en_passant_square),
-                  halfmove_clock(other.halfmove_clock),
-                  num_of_moves(other.num_of_moves),
-                  legal_moves(other.legal_moves),
-                  move_history(other.move_history) {
+            : all(other.all),
+              piece_bitboards(other.piece_bitboards),
+              side_bitboards(other.side_bitboards),
+              hashes(other.hashes),
+              current_hash(other.current_hash),
+              white_turn(other.white_turn),
+              w_l_castling(other.w_l_castling),
+              w_s_castling(other.w_s_castling),
+              b_l_castling(other.b_l_castling),
+              b_s_castling(other.b_s_castling),
+              en_passant_square(other.en_passant_square),
+              halfmove_clock(other.halfmove_clock),
+              num_of_moves(other.num_of_moves),
+              legal_moves(other.legal_moves),
+              move_history(other.move_history) {
             std::copy(std::begin(other.mailbox), std::end(other.mailbox), std::begin(mailbox));
         }
 
@@ -86,11 +85,10 @@ namespace chess {
         uint8_t get_num_of_repetitions();
 
         void move(Move move);
-        void move(std::string move);
+        void move(const std::string& move);
 
         void make_move(Move move, PositionState& state);
         void unmake_move(Move move, const PositionState& state);
-
 
         void make_null_move(NullMoveState& state);
         void unmake_null_move(const NullMoveState& state);
@@ -105,7 +103,8 @@ namespace chess {
         bool is_end();
 
         void pawn_mask_to_moves(Bitboard mask, int delta, MoveArray* moves, bool en_passant);
-        void mask_to_moves(Bitboard mask, uint8_t attacker_index, uint8_t attacker_color, uint8_t attacker_type, MoveArray* moves);
+        void mask_to_moves(Bitboard mask, uint8_t attacker_index, uint8_t attacker_color, uint8_t attacker_type,
+                           MoveArray* moves);
 
         bool is_position_attacked(uint8_t x);
         bool is_check();
@@ -120,19 +119,18 @@ namespace chess {
 
         void castling(MoveArray* moves);
 
-        bool operator==(const Board &board) const;
-        bool operator!=(const Board &board) const;
+        bool operator==(const Board& board) const;
+        bool operator!=(const Board& board) const;
 
-        int8_t get_piece_type(const chess::Board &board, uint8_t x, uint8_t y);
-        int8_t get_piece_type(const chess::Board &board, uint8_t x);
+        int8_t get_piece_type(const chess::Board& board, uint8_t x, uint8_t y);
+        int8_t get_piece_type(const chess::Board& board, uint8_t x);
 
         std::string to_fen();
 
         void init_mailbox();
     };
 
-    std::ostream& operator<<(std::ostream &ostream, chess::Board board);
+    std::ostream& operator<<(std::ostream& ostream, chess::Board board);
     void print_bitboard(Bitboard bitboard);
 
-
-}
+}  // namespace chess

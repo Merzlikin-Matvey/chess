@@ -1,6 +1,5 @@
 #include "headers/move.hpp"
 
-
 void chess::MoveArray::push_back(chess::Move move) {
     this->moves[this->_size] = move;
     this->_size++;

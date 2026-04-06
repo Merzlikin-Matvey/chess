@@ -3,15 +3,8 @@
 #include "ai.hpp"
 #include "board.hpp"
 
-
 namespace chess::uci {
-    enum UCI_LOG_TYPE {
-        DEBUG = 0,
-        INPUT = 1,
-        OUTPUT = 2,
-        ERROR = 3
-    };
-
+    enum UCI_LOG_TYPE { DEBUG = 0, INPUT = 1, OUTPUT = 2, ERROR = 3 };
 
     struct PositionCommandArgs {
         std::string type;
@@ -42,4 +35,4 @@ namespace chess::uci {
 
         void clear_logs() const;
     };
-}
+}  // namespace chess::uci

@@ -1,9 +1,9 @@
 #pragma once
 
+#include "headers/bitboard_lines.hpp"
 #include "headers/board.hpp"
 #include "headers/constants.hpp"
 #include "headers/masks/masks.hpp"
-#include "headers/bitboard_lines.hpp"
 
 namespace chess::masks {
 
@@ -26,7 +26,7 @@ namespace chess::masks {
     inline Bitboard _get_absolute_king_mask(uint8_t square) {
         return chess::masks::king_masks[square];
     }
-}
+}  // namespace chess::masks
 
 inline bool chess::Board::is_position_attacked(uint8_t x) {
     uint8_t color = white_turn ? White : Black;
@@ -51,26 +51,25 @@ inline bool chess::Board::is_position_attacked(uint8_t x) {
         return true;
     }
 
-    if (color == White){
-        if (x + 9 < 64){
+    if (color == White) {
+        if (x + 9 < 64) {
             if (bitboard_operations::get_bit(piece_bitboards[!color][Pawn], x + 9)) {
                 return true;
             }
         }
-        if (x + 7 < 64){
+        if (x + 7 < 64) {
             if (bitboard_operations::get_bit(piece_bitboards[!color][Pawn], x + 7)) {
                 return true;
             }
         }
-    }
-    else {
-        if (x >= 9){
+    } else {
+        if (x >= 9) {
             if (bitboard_operations::get_bit(piece_bitboards[!color][Pawn], x - 9)) {
                 return true;
             }
         }
 
-        if (x >= 7){
+        if (x >= 7) {
             if (bitboard_operations::get_bit(piece_bitboards[!color][Pawn], x - 7)) {
                 return true;
             }
@@ -80,13 +79,11 @@ inline bool chess::Board::is_position_attacked(uint8_t x) {
     return false;
 }
 
-
 inline bool chess::Board::is_check() {
     uint8_t color = white_turn ? White : Black;
     uint8_t king_index = bitboard_operations::bitScanForward(piece_bitboards[color][King]);
     return is_position_attacked(king_index);
 }
-
 
 inline bool chess::Board::is_double_check() {
     uint16_t count = 0;
@@ -98,30 +95,30 @@ inline bool chess::Board::is_double_check() {
     Bitboard knight_mask = chess::masks::_get_absolute_knight_mask(king_index);
 
     count += bitboard_operations::count_1(rook_mask & (piece_bitboards[!color][Rook] | piece_bitboards[!color][Queen]));
-    count += bitboard_operations::count_1(bishop_mask & (piece_bitboards[!color][Bishop] | piece_bitboards[!color][Queen]));
+    count +=
+        bitboard_operations::count_1(bishop_mask & (piece_bitboards[!color][Bishop] | piece_bitboards[!color][Queen]));
     count += bitboard_operations::count_1(king_mask & piece_bitboards[!color][King]);
     count += bitboard_operations::count_1(knight_mask & piece_bitboards[!color][Knight]);
 
-    if (color == White){
-        if (king_index + 9 < 64){
+    if (color == White) {
+        if (king_index + 9 < 64) {
             if (bitboard_operations::get_bit(piece_bitboards[!color][Pawn], king_index + 9)) {
                 count++;
             }
         }
-        if (king_index + 7 < 64){
+        if (king_index + 7 < 64) {
             if (bitboard_operations::get_bit(piece_bitboards[!color][Pawn], king_index + 7)) {
                 count++;
             }
         }
-    }
-    else {
-        if (king_index >= 9){
+    } else {
+        if (king_index >= 9) {
             if (bitboard_operations::get_bit(piece_bitboards[!color][Pawn], king_index - 9)) {
                 count++;
             }
         }
 
-        if (king_index >= 7){
+        if (king_index >= 7) {
             if (bitboard_operations::get_bit(piece_bitboards[!color][Pawn], king_index - 7)) {
                 count++;
             }
@@ -131,12 +128,10 @@ inline bool chess::Board::is_double_check() {
     return count >= 2;
 }
 
-
 inline bool chess::Board::is_checkmate() {
-    MoveArray& moves = get_legal_moves();
+    MoveArray &moves = get_legal_moves();
     return moves.size() == 0;
 }
-
 
 inline Bitboard chess::Board::get_check_mask() {
     uint8_t color = white_turn ? White : Black;
@@ -148,12 +143,14 @@ inline Bitboard chess::Board::get_check_mask() {
     Bitboard knight_mask = chess::masks::_get_absolute_knight_mask(king_index);
 
     if (rook_mask & (piece_bitboards[!color][Rook] | piece_bitboards[!color][Queen])) {
-        opponent_index = bitboard_operations::bitScanForward(rook_mask & (piece_bitboards[!color][Rook] | piece_bitboards[!color][Queen]));
+        opponent_index = bitboard_operations::bitScanForward(
+            rook_mask & (piece_bitboards[!color][Rook] | piece_bitboards[!color][Queen]));
         return chess::masks::lines[opponent_index][king_index];
     }
 
     if (bishop_mask & (piece_bitboards[!color][Bishop] | piece_bitboards[!color][Queen])) {
-        opponent_index = bitboard_operations::bitScanForward(bishop_mask & (piece_bitboards[!color][Bishop] | piece_bitboards[!color][Queen]));
+        opponent_index = bitboard_operations::bitScanForward(
+            bishop_mask & (piece_bitboards[!color][Bishop] | piece_bitboards[!color][Queen]));
         return chess::masks::lines[opponent_index][king_index];
     }
 
@@ -167,29 +164,28 @@ inline Bitboard chess::Board::get_check_mask() {
         return chess::masks::lines[opponent_index][king_index];
     }
 
-    if (color == White){
-        if (king_index + 9 < 64){
+    if (color == White) {
+        if (king_index + 9 < 64) {
             if (bitboard_operations::get_bit(piece_bitboards[!color][Pawn], king_index + 9)) {
                 opponent_index = king_index + 9;
                 return chess::masks::lines[opponent_index][king_index];
             }
         }
-        if (king_index + 7 < 64){
+        if (king_index + 7 < 64) {
             if (bitboard_operations::get_bit(piece_bitboards[!color][Pawn], king_index + 7)) {
                 opponent_index = king_index + 7;
                 return chess::masks::lines[opponent_index][king_index];
             }
         }
-    }
-    else {
-        if (king_index >= 9){
+    } else {
+        if (king_index >= 9) {
             if (bitboard_operations::get_bit(piece_bitboards[!color][Pawn], king_index - 9)) {
                 opponent_index = king_index - 9;
                 return chess::masks::lines[opponent_index][king_index];
             }
         }
 
-        if (king_index >= 7){
+        if (king_index >= 7) {
             if (bitboard_operations::get_bit(piece_bitboards[!color][Pawn], king_index - 7)) {
                 opponent_index = king_index - 7;
                 return chess::masks::lines[opponent_index][king_index];
@@ -223,10 +219,10 @@ inline bool chess::Board::is_draw() {
 }
 
 inline int chess::Board::get_winner() {
-    if (is_checkmate()){
+    if (is_checkmate()) {
         return white_turn ? Black : White;
     }
-    if (is_draw()){
+    if (is_draw()) {
         return 2;
     }
     return -1;

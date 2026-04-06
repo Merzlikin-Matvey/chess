@@ -7,11 +7,11 @@
 typedef uint64_t Bitboard;
 
 extern "C" {
-    #include "C functions/magic_numbers.h"
+#include "C functions/magic_numbers.h"
 }
 
 namespace chess::magic_numbers {
-    inline Bitboard generate_vertical_pin_magic_number(uint8_t square){
+    inline Bitboard generate_vertical_pin_magic_number(uint8_t square) {
         return _generate_vertical_pin_magic_number(square);
     }
 
@@ -27,7 +27,7 @@ namespace chess::magic_numbers {
         _fancy_print_vertical_pin_magic_numbers();
     }
 
-    inline Bitboard generate_horizontal_pin_magic_number(uint8_t square){
+    inline Bitboard generate_horizontal_pin_magic_number(uint8_t square) {
         return ::_generate_horizontal_pin_magic_number(square);
     }
 
@@ -43,7 +43,7 @@ namespace chess::magic_numbers {
         _fancy_print_horizontal_pin_magic_numbers();
     }
 
-    inline Bitboard generate_up_right_pin_magic_number(uint8_t square){
+    inline Bitboard generate_up_right_pin_magic_number(uint8_t square) {
         return ::_generate_up_right_pin_magic_number(square);
     }
 
@@ -59,7 +59,7 @@ namespace chess::magic_numbers {
         _fancy_print_up_right_pin_magic_numbers();
     }
 
-    inline Bitboard generate_down_right_pin_magic_number(uint8_t square){
+    inline Bitboard generate_down_right_pin_magic_number(uint8_t square) {
         return ::_generate_down_right_pin_magic_number(square);
     }
 
@@ -74,4 +74,4 @@ namespace chess::magic_numbers {
     inline void fancy_print_down_right_pin_magic_numbers() {
         _fancy_print_down_right_pin_magic_numbers();
     }
-}
+}  // namespace chess::magic_numbers

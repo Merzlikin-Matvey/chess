@@ -51,7 +51,6 @@ void chess::uci::UCI::start_handle() {
             std::cerr << "Error: " << e.what() << std::endl;
             add_log("Error: " + std::string(e.what()), ERROR);
         }
-
     }
 }
 
@@ -86,7 +85,7 @@ chess::uci::PositionCommandArgs parse_position_command(std::string line) {
         args.type = "fen";
         args.fen_string = words[1] + " " + words[2] + " " + words[3] + " " + words[4] + " " + words[5] + " " + words[6];
     }
-    
+
     for (size_t i = 0; i < words.size(); ++i) {
         if (words[i] == "moves") {
             args.moves_string = std::vector<std::string>(words.begin() + i + 1, words.end());
@@ -112,7 +111,6 @@ void chess::uci::UCI::command_position(std::string line) {
         board_ = Board(fen);
     }
 
-
     for (auto move_str : args.moves_string) {
         board_.get_legal_moves();
         board_.move(move_str);
@@ -128,7 +126,7 @@ void chess::uci::UCI::command_go(std::string line) {
 
 std::string get_time() {
     std::time_t now = std::time(nullptr);
-    std::tm* local_time = std::localtime(&now);
+    std::tm *local_time = std::localtime(&now);
     char buffer[80];
     std::strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", local_time);
     return std::string(buffer);
@@ -138,7 +136,6 @@ void chess::uci::UCI::send(std::string message) const {
     *output_stream_ << message << std::endl << std::flush;
     add_log(message, OUTPUT);
 }
-
 
 void chess::uci::UCI::add_log(std::string message, UCI_LOG_TYPE type) const {
     std::string time = get_time();
@@ -166,7 +163,7 @@ void chess::uci::UCI::add_log(std::string message, UCI_LOG_TYPE type) const {
     file.flush();
 }
 
-void chess::uci::UCI::clear_logs() const{
+void chess::uci::UCI::clear_logs() const {
     std::ofstream file(logs_path, std::ios::trunc);
     file.close();
 }

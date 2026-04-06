@@ -7,7 +7,7 @@ namespace chess::masks {
         return (n & (1 << i)) != 0;
     }
 
-    constexpr uint16_t _pow2(uint8_t num){
+    constexpr uint16_t _pow2(uint8_t num) {
         return 1 << num;
     }
-}
+}  // namespace chess::masks

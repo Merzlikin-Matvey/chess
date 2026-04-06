@@ -27,7 +27,7 @@ static const int left_bits[64] = {
         0, 1, 2, 3, 4, 5, 6, 7
 };
 
-namespace chess::magic_numbers {
+namespace chess::magic_numbers::generators {
 
 Bitboard generate_random_64bit();
 

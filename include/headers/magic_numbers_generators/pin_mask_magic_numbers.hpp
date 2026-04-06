@@ -5,7 +5,7 @@
 
 typedef uint64_t Bitboard;
 
-namespace chess::magic_numbers {
+namespace chess::magic_numbers::generators {
     Bitboard generate_vertical_pin_magic_number(uint8_t square);
     Bitboard generate_horizontal_pin_magic_number(uint8_t square);
     Bitboard generate_up_right_pin_magic_number(uint8_t square);

@@ -1,8 +1,8 @@
 #pragma once
 
 #include "headers/bitboard_lines.hpp"
-#include "../magic_numbers/magic_numbers.hpp"
-#include "../magic_numbers/magic_numbers_constants.hpp"
+#include "../magic_numbers_generators/magic_numbers.hpp"
+#include "../magic_numbers_constants.hpp"
 #include "headers/masks/masks_utils.hpp"
 
 namespace chess::masks {

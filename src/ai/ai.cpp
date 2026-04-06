@@ -4,6 +4,8 @@
 
 std::string chess::engine::AI::search(Board& board) {
     nodes_searched = 0;
+    std::memset(killers, 0, sizeof(killers));
+    std::memset(history, 0, sizeof(history));
     board.get_legal_moves();
 
     std::string best_move = "";
@@ -24,21 +26,13 @@ std::string chess::engine::AI::root_search(Board& board, const int depth) {
     if (moves.size() == 0) {
         return "";
     }
-    sort_moves(&moves);
 
     uint32_t tt_move_data = 0;
     const TTEntry* entry = tt.probe(board.current_hash);
     if (entry) {
         tt_move_data = entry->best_move;
     }
-    if (tt_move_data != 0) {
-        for (int i = 1; i < moves.size(); i++) {
-            if (moves.moves[i].data == tt_move_data) {
-                std::swap(moves.moves[0], moves.moves[i]);
-                break;
-            }
-        }
-    }
+    sort_moves(&moves, 0, tt_move_data);
 
     Move best_move = moves.moves[0];
 
@@ -49,7 +43,7 @@ std::string chess::engine::AI::root_search(Board& board, const int depth) {
             const Move move = moves.moves[i];
             board.make_move(move, state);
             board.get_legal_moves();
-            score = min(board, depth - 1, alpha, beta);
+            score = min(board, depth - 1, 1, alpha, beta);
             board.unmake_move(move, state);
             if (score > max_score) {
                 max_score = score;
@@ -67,7 +61,7 @@ std::string chess::engine::AI::root_search(Board& board, const int depth) {
             const Move move = moves.moves[i];
             board.make_move(move, state);
             board.get_legal_moves();
-            score = max(board, depth - 1, alpha, beta);
+            score = max(board, depth - 1, 1, alpha, beta);
             board.unmake_move(move, state);
             if (score < min_score) {
                 min_score = score;

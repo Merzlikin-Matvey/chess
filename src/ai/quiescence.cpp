@@ -27,7 +27,7 @@ double chess::engine::AI::quiescence_max(Board& board, double alpha, const doubl
     if (capture_count == 0)
         return alpha;
     moves.resize(capture_count);
-    sort_moves(&moves);
+    sort_moves(&moves, 0, 0);
 
     for (int i = 0; i < capture_count; i++) {
         PositionState state;
@@ -69,7 +69,7 @@ double chess::engine::AI::quiescence_min(Board& board, const double alpha, doubl
     if (capture_count == 0)
         return beta;
     moves.resize(capture_count);
-    sort_moves(&moves);
+    sort_moves(&moves, 0, 0);
 
     for (int i = 0; i < capture_count; i++) {
         PositionState state;

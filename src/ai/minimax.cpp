@@ -3,7 +3,7 @@
 #include "headers/evaluate_position.hpp"
 #include "headers/evaluating_constants.hpp"
 
-double chess::engine::AI::max(Board& board, const int depth, double alpha, double beta, const bool allow_null) {
+double chess::engine::AI::max(Board& board, const int depth, const int ply, double alpha, double beta, const bool allow_null) {
     nodes_searched++;
 
     if (depth <= 0 or board.legal_moves.size() == 0) {
@@ -36,7 +36,7 @@ double chess::engine::AI::max(Board& board, const int depth, double alpha, doubl
         NullMoveState null_state;
         board.make_null_move(null_state);
         board.get_legal_moves();
-        const double null_score = min(board, depth - 1 - 2, alpha, beta, false);
+        const double null_score = min(board, depth - 1 - 2, ply + 1, alpha, beta, false);
         board.unmake_null_move(null_state);
         if (null_score >= beta) {
             return beta;
@@ -46,10 +46,8 @@ double chess::engine::AI::max(Board& board, const int depth, double alpha, doubl
 
     auto moves = board.legal_moves;
     if (sort_max_depth <= depth and sort_max_depth != -1) {
-        sort_moves(&moves);
-    }
-
-    if (tt_move_data != 0) {
+        sort_moves(&moves, ply, tt_move_data);
+    } else if (tt_move_data != 0) {
         for (int i = 1; i < moves.size(); i++) {
             if (moves.moves[i].data == tt_move_data) {
                 std::swap(moves.moves[0], moves.moves[i]);
@@ -57,7 +55,6 @@ double chess::engine::AI::max(Board& board, const int depth, double alpha, doubl
             }
         }
     }
-
 
     Move best_move = moves.moves[0];
     double max_score = constants::minimum;
@@ -77,13 +74,13 @@ double chess::engine::AI::max(Board& board, const int depth, double alpha, doubl
         ) {
             // LMR
             const int R = 1 + (i > 6) + (depth > 6);
-            score = min(board, depth - 1 - R, alpha, beta);
+            score = min(board, depth - 1 - R, ply + 1, alpha, beta);
             if (score > alpha) {
                 board.get_legal_moves();
-                score = min(board, depth - 1, alpha, beta);
+                score = min(board, depth - 1, ply + 1, alpha, beta);
             }
         } else {
-            score = min(board, depth - 1, alpha, beta);
+            score = min(board, depth - 1, ply + 1, alpha, beta);
         }
 
         board.unmake_move(move, state);
@@ -93,6 +90,11 @@ double chess::engine::AI::max(Board& board, const int depth, double alpha, doubl
         }
         alpha = std::max(alpha, score);
         if (alpha >= beta) {
+            // Beta cutoff: store killer and update history for quiet moves
+            if (move.second_type() == None) {
+                store_killer(ply, move.data);
+                update_history(move.attacker_color(), move.piece_type(), move.to(), depth);
+            }
             break;
         }
     }
@@ -109,7 +111,7 @@ double chess::engine::AI::max(Board& board, const int depth, double alpha, doubl
     return max_score;
 }
 
-double chess::engine::AI::min(Board& board, const int depth, double alpha, double beta, const bool allow_null) {
+double chess::engine::AI::min(Board& board, const int depth, const int ply, double alpha, double beta, const bool allow_null) {
     nodes_searched++;
 
     if (depth <= 0 or board.legal_moves.size() == 0) {
@@ -142,7 +144,7 @@ double chess::engine::AI::min(Board& board, const int depth, double alpha, doubl
         NullMoveState null_state;
         board.make_null_move(null_state);
         board.get_legal_moves();
-        const double null_score = max(board, depth - 1 - 2, alpha, beta, false);
+        const double null_score = max(board, depth - 1 - 2, ply + 1, alpha, beta, false);
         board.unmake_null_move(null_state);
         if (null_score <= alpha) {
             return alpha;
@@ -152,9 +154,8 @@ double chess::engine::AI::min(Board& board, const int depth, double alpha, doubl
 
     auto moves = board.legal_moves;
     if (sort_max_depth <= depth and sort_max_depth != -1) {
-        sort_moves(&moves);
-    }
-    if (tt_move_data != 0) {
+        sort_moves(&moves, ply, tt_move_data);
+    } else if (tt_move_data != 0) {
         for (int i = 1; i < moves.size(); i++) {
             if (moves.moves[i].data == tt_move_data) {
                 std::swap(moves.moves[0], moves.moves[i]);
@@ -182,13 +183,13 @@ double chess::engine::AI::min(Board& board, const int depth, double alpha, doubl
         ) {
             // LMR
             const int R = 1 + (i > 6) + (depth > 6);
-            score = max(board, depth - 1 - R, alpha, beta);
+            score = max(board, depth - 1 - R, ply + 1, alpha, beta);
             if (score < beta) {
                 board.get_legal_moves();
-                score = max(board, depth - 1, alpha, beta);
+                score = max(board, depth - 1, ply + 1, alpha, beta);
             }
         } else {
-            score = max(board, depth - 1, alpha, beta);
+            score = max(board, depth - 1, ply + 1, alpha, beta);
         }
 
         board.unmake_move(move, state);
@@ -198,6 +199,11 @@ double chess::engine::AI::min(Board& board, const int depth, double alpha, doubl
         }
         beta = std::min(beta, score);
         if (alpha >= beta) {
+            // Beta cutoff: store killer and update history for quiet moves
+            if (move.second_type() == None) {
+                store_killer(ply, move.data);
+                update_history(move.attacker_color(), move.piece_type(), move.to(), depth);
+            }
             break;
         }
     }

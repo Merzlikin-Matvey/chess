@@ -2,16 +2,16 @@
 #include "headers/constants.hpp"
 #include "headers/evaluate_position.hpp"
 
-double chess::engine::AI::quiescence_max(Board& board, double alpha, const double beta) {
+int chess::engine::AI::quiescence_max(Board& board, int alpha, const int beta) {
     nodes_searched++;
 
-    const double standard_eval = evaluate_position(board, White);
+    const int standard_eval = evaluate_position(board, White);
     if (standard_eval >= beta)
         return beta;
     if (alpha < standard_eval)
         alpha = standard_eval;
 
-    constexpr double big_delta = 9;
+    constexpr int big_delta = 900;
     if (standard_eval + big_delta < alpha)
         return alpha;
 
@@ -33,7 +33,7 @@ double chess::engine::AI::quiescence_max(Board& board, double alpha, const doubl
         PositionState state;
         board.make_move(moves.moves[i], state);
         board.get_legal_moves();
-        const double score = quiescence_min(board, alpha, beta);
+        const int score = quiescence_min(board, alpha, beta);
         board.unmake_move(moves.moves[i], state);
 
         if (score >= beta)
@@ -45,16 +45,16 @@ double chess::engine::AI::quiescence_max(Board& board, double alpha, const doubl
     return alpha;
 }
 
-double chess::engine::AI::quiescence_min(Board& board, const double alpha, double beta) {
+int chess::engine::AI::quiescence_min(Board& board, const int alpha, int beta) {
     nodes_searched++;
 
-    const double standard_eval = evaluate_position(board, White);
+    const int standard_eval = evaluate_position(board, White);
     if (standard_eval <= alpha)
         return alpha;
     if (beta > standard_eval)
         beta = standard_eval;
 
-    constexpr double big_delta = 9;
+    constexpr int big_delta = 900;
     if (standard_eval - big_delta > beta)
         return beta;
 
@@ -75,7 +75,7 @@ double chess::engine::AI::quiescence_min(Board& board, const double alpha, doubl
         PositionState state;
         board.make_move(moves.moves[i], state);
         board.get_legal_moves();
-        const double score = quiescence_max(board, alpha, beta);
+        const int score = quiescence_max(board, alpha, beta);
         board.unmake_move(moves.moves[i], state);
 
         if (score <= alpha)

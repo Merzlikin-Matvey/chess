@@ -24,20 +24,19 @@ int chess::engine::evaluate_position(Board& board, const uint8_t color) {
     for (int piece = 0; piece < 6; piece++) {
         Bitboard bb = board.piece_bitboards[White][piece];
 
-        // white
         while (bb) {
             const int sq = bitboard_operations::bitScanForward(bb);
-            mg_score += pst::mg_value[piece] + (*pst::mg_table[piece])[sq];
-            eg_score += pst::eg_value[piece] + (*pst::eg_table[piece])[sq];
+            mg_score += pst::mg_value[piece] + (*pst::mg_table[piece])[pst::mirror(sq)];
+            eg_score += pst::eg_value[piece] + (*pst::eg_table[piece])[pst::mirror(sq)];
             phase += pst::phase_weight[piece];
             bb &= bb - 1;
         }
-         // black
+
         bb = board.piece_bitboards[Black][piece];
         while (bb) {
             const int sq = bitboard_operations::bitScanForward(bb);
-            mg_score -= pst::mg_value[piece] + (*pst::mg_table[piece])[pst::mirror(sq)];
-            eg_score -= pst::eg_value[piece] + (*pst::eg_table[piece])[pst::mirror(sq)];
+            mg_score -= pst::mg_value[piece] + (*pst::mg_table[piece])[sq];
+            eg_score -= pst::eg_value[piece] + (*pst::eg_table[piece])[sq];
             phase += pst::phase_weight[piece];
             bb &= bb - 1;
         }

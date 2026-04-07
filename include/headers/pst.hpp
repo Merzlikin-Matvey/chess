@@ -7,11 +7,12 @@
 
 
 namespace chess::engine::pst {
+    // PST has mirror orientation. First row in array is for black, so we need to use mirror for white
 
     // Middlegame
 
     constexpr std::array mg_pawn = {
-         0,   0,   0,   0,   0,   0,   0,   0, // promotions
+         0,   0,   0,   0,   0,   0,   0,   0,
         98, 134,  61,  95,  68, 126,  34, -11,
         -6,   7,  26,  31,  65,  56,  25, -20,
        -14,  13,   6,  21,  23,  12,  17, -23,

@@ -163,4 +163,53 @@ namespace chess::engine::pst {
 
     constexpr int mirror(const int sq) { return sq ^ 56; }
 
+    // https://www.chessprogramming.org/Passed_Pawn
+    // Passed pawn bonuses by rank in white perspective
+    constexpr std::array passed_mg = {0,  5, 10, 15, 25, 40, 70, 0};
+    constexpr std::array passed_eg = {0, 10, 20, 40, 70, 120, 200, 0};
+
+    /*
+    Passed pawn masks
+    Example:
+    . . . x x x . .
+    . . . x x x . .
+    . . . x x x . .
+    . . . . P . . .
+    . . . . . . . .
+    . . . . . . . .
+    . . . . . . . .
+    . . . . . . . .
+    */
+    constexpr auto make_passed_masks() {
+        struct Result {
+            std::array<uint64_t, 64> white{};
+            std::array<uint64_t, 64> black{};
+        };
+        Result r{};
+
+        for (int sq = 0; sq < 64; sq++) {
+            const int file = sq % 8;
+            const int rank = sq / 8;
+
+            uint64_t wmask = 0;
+            for (int r2 = rank + 1; r2 < 8; r2++) {
+                wmask |= 1ULL << (r2 * 8 + file);
+                if (file > 0) wmask |= 1ULL << (r2 * 8 + file - 1);
+                if (file < 7) wmask |= 1ULL << (r2 * 8 + file + 1);
+            }
+            r.white[sq] = wmask;
+
+            uint64_t bmask = 0;
+            for (int r2 = rank - 1; r2 >= 0; r2--) {
+                bmask |= 1ULL << (r2 * 8 + file);
+                if (file > 0) bmask |= 1ULL << (r2 * 8 + file - 1);
+                if (file < 7) bmask |= 1ULL << (r2 * 8 + file + 1);
+            }
+            r.black[sq] = bmask;
+        }
+        return r;
+    }
+
+    constexpr auto passed_masks = make_passed_masks();
+
 }  // namespace chess::engine::pst
